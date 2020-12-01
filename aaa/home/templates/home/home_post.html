@@ -1,0 +1,43 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="fullcover">
+
+    <div class="postform">
+
+
+        <form method="post" action="{% url 'home:postview' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+            {% for message in form.errors %}
+      <p class="text-danger">{{message}}</p>
+      {% endfor %}
+        <br>
+            <textarea rows="10" type="text" name = 'heading' maxlength="1000" placeholder="Post heading/Question/title" required id="id_heading" ></textarea>
+
+<br>
+     <p>Please select a tag(must): {{form.tag}}</p>
+    <br>
+            <p>{{form.content}}</p>
+            <br>
+            <p>Add image(optional): {{form.img}}</p>
+            <p>Add pdf(optional)- {{form.pdf_name}} {{form.pdf}}</p>
+            <p>Add Links</p>
+              <div id="addlinkform{{post.pk}}">
+                 <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
+             </div>
+             <p style="text-decoration: underline;color: #000066;"><a onclick="addnewforms('addlinkform')"> Add more links</a></p>
+
+            <div class="postformbtn">
+            <button name="homepostform" value="button" type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

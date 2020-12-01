@@ -1,0 +1,56 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+<div class="arch-main">
+    {% if messages %}
+        {% for message in messages %}
+        <p style="color:red;"><b>{{message}}</b></p>
+        {% endfor %}
+        {%endif %}
+
+{% if subjects %}
+    {% for subject in subjects %}
+<div class="subject-heading">
+    <h2 style="text-decoration: underline; "><a href="{% url 'home:speciality' subject.name %}">{{subject.name}}</a></h2>
+
+    <div class="subject-detail books">
+        <h2>Book Reviews</h2>
+
+        <div class="subs">
+            {% if subject.get_books %}
+            {% for book in subject.get_books %}
+            <div onclick="bookdetails()" class="collection" style="margin: 40px; border: 5px solid black; display: flex; flex-flow: column wrap; justify-content: center; align-items: center;">
+                {% if book.backgroundPic %}
+                <a href="{% url 'home:speciality' subject.name %}"><img src="/media/{{book.backgroundPic}} "height="180px" width="180px"></a>
+                {% else %}
+                <a href="{% url 'home:speciality' subject.name  %}"><img src="{% static 'home/images/defaultbackgroundimage.jpg'%}" height="180px" width="180px"></a>
+                {% endif %}
+                {% if book.name %}
+                <p>{{book.name }}</p>
+                 {% endif %}
+
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+    </div>
+    <div class="subject-detail qb">
+        <h2>Question Bank</h2>
+        <div class="subs">
+            <div class="collections"> <h5>Hi</h5></div>
+        </div>
+    </div>
+    <div class="subject-detail presentation">
+        <h2>Posts</h2>
+        <div class="subs">
+            <div class="collections"> <h5>Hi</h5></div>
+        </div>
+    </div>
+</div>
+
+</div>
+    {% endfor %}
+
+{% endif %}
+{% endblock %}

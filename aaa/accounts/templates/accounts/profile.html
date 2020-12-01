@@ -1,0 +1,254 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="image_section">
+        {% if profile.get_backgroundpic %}
+    <style>
+        .image_section{
+            background-image: url('/media/{{profile.get_backgroundpic}}');
+            background-repeat: no-repeat;
+            background-size: 100% 400px;
+            height: 500px;
+            width: 100%;
+        }
+        @media screen and (max-width: 800px) {
+            .image_section{
+                background-image: url('/media/{{profile.get_backgroundpic}}');
+                background-size: 100% 200px;
+                height:300px;
+            }
+        }
+    </style>
+    {% else %}
+    <style>
+        .image_section{
+            background-image: url('{% static "home/images/defaultbackgroundimage.jpg" %}');
+            background-repeat: no-repeat;
+            background-size: 100% 400px;
+            height: 500px;
+            width: 100%;
+        }
+        @media screen and (max-width: 800px) {
+            .image_section{
+                background-image: url('{% static "home/images/defaultbackgroundimage.jpg" %}');
+                background-size: 100% 300px;
+                height:400px;
+            }
+        }
+    </style>
+    {% endif %}
+
+
+    <div class="profilePic">
+        {% if profile.get_profilepic %}
+    <img src="/media/{{profile.get_profilepic}}" height="190px" width="190px">
+    {% else %}
+    <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" height="190px" width="190px">
+    {% endif %}
+    </div>
+
+</div>
+
+<div class="detail-section">
+<div class="personal-details">
+ {% if messages %}
+        {% for message in messages %}
+        <p style="color:red;"><b>{{message}}</b></p>
+        {% endfor %}
+        {%endif %}
+
+    <div class="demo">
+        <h4> Personal</h4>
+        <a style="color: red; font-weight: 800;" onclick="personalform()">Edit</a>
+
+        <div class="demo-details">
+         {% if profile.name %}
+        <p>Name: {{profile.name}}</p>
+            {% else %}
+            <p>Name: <a style="color: red; font-weight: 800;" onclick="personalform()">Add name</a></p>
+     {% endif %}
+
+            {% if profile.nationality %}
+        <p>Nationality: {{profile.nationality}}</p>
+            {% else %}
+            <p>Nationality: <a style="color: red; font-weight: 800;" onclick="personalform()">Add nationality</a></p>
+     {% endif %}
+
+            {% if profile.get_degrees %}
+            <a style="color: red; font-weight: 800;" onclick="degreeform()">Add more qualifications</a> <br>
+            {% for d in profile.get_degrees %}
+        <p>{{d.get_name}} <br>at {{d.get_college}} </p>
+            {% endfor %}
+            {% else %}
+            <p>Qualification: <a style="color: red; font-weight: 800;" onclick="degreeform()">Add qualification</a></p>
+     {% endif %}
+
+            {% if profile.current_work %}
+            {% for i in profile.current_work %}
+        <p>Currently working as <br> {{i.position}} <br>at {{i.hospital.name}} </p>
+            {% endfor %}
+            {% else %}
+            <p>Working at   <a style="color: red; font-weight: 800;" onclick="workform()">Add work position</a></p>
+     {% endif %}
+
+
+    </div>
+        <div class="demo-details-form">
+
+                <div class="personal-form">
+                     <form method="post" >
+                {% csrf_token %}
+                 {% if profile.name %}
+        <p>Name: <input maxlength="50" type="text" name="name" value="{{profile.name}}" required></p>
+            {% else %}
+            <p><input maxlength="50" type="text" name="name"  placeholder="Your Name.." required></p>
+     {% endif %}
+
+            {% if profile.nationality %}
+        <p>Nationality: <input maxlength="50" type="text" name="nationality" value="{{profile.nationality}}" required></p>
+            {% else %}
+            <p><input maxlength="50" type="text" name="nationality"  placeholder="Nationality.." required ></p>
+     {% endif %}
+                    <button type="submit" name="personalformbtn" value="personalformdetails">Submit</button>
+
+               </form>
+                </div>
+
+
+                <div class="degree-form">
+                     <form method="post" >
+                {% csrf_token %}
+
+            <p>Qualification:<select name = 'degreetag'  required>{% if degree_tags %}{% for tag in degree_tags %}<option value="{{tag.name}}" label="{{tag.name}}" ></option>{%endfor %}{% endif %}</select>done at <input type="text" name="college"  placeholder=" Medical college name" required> <a style="color: red; font-weight: 800;" onclick="degreeform()">Add more qualifications</a></p>
+
+                <button type="submit" name="degreeformbtn" value="degreeformdetails">Submit</button>
+
+                    </form>
+                </div>
+
+
+
+
+                <div class="work-form">
+                     <form method="post" >
+                {% csrf_token %}
+            {% if profile.current_work %}
+                    {% for work in profile.current_work %}
+        <p>Currently working as <input maxlength="50" type="text" name="position" value=" {{work.position}}" placeholder=" Position at work" required> <br><br> at <input type="text" name="hospital" placeholder=" Hospital name" value="{{work.college}}" required > </p>
+                    {% endfor %}
+                    {% else %}
+        <p>Currently working as <input maxlength="50" type="text" name="position" placeholder=" Position at work" required> <br> <br>at <input type="text" name="hospital" placeholder=" Hospital name"  required ></p>
+     {% endif %}
+                <button type="submit" name="workformbtn" value="workform">Submit</button>
+
+                    </form>
+                </div>
+
+        </div>
+    </div>
+
+
+    <div class="contact-me">
+        <h4>
+            Contact
+
+        </h4>
+        <a onclick="showeditforms()">Edit</a>
+
+    <div class="contact-details">
+        {% if messages %}
+        {% for message in messages %}
+        <p style="color:red;"><b>{{message}}</b></p>
+        {% endfor %}
+        {%endif %}
+
+         {% if profile.get_contact %}
+        {% for key, value in profile.get_contact.items %}
+        {% if key == 'links' %}
+           <p> {% for i in value%}{{ i.link_name }} : <a href="{{i.link}}">{{i.link}}</a> <br>{%endfor%}</p>
+        {%else%}
+        <p>{{ key }} : {{ value }}</p>
+        {%endif%}
+        {% endfor %}
+
+     {% endif %}
+
+
+    </div>
+        <div class="contact-details-form">
+
+             {% if profile.user %}
+        <p>Email id: {{profile.user.email}}</p>
+     {% endif %}
+            <form method="post" >
+                {% csrf_token %}
+        {% if profile.get_links %}
+        {% for i in profile.get_links %}
+          <p> <input maxlength="50" type="text" name="link_name" value="{{i.link_name}}" required > : <input maxlength="1000" type="url" name="link" value="{{i.link}}" required></p>
+            {% endfor %}
+            <p style="text-decoration: underline; color: blue;" onclick="addnewforms()">Add more links</p>
+            <div id="addlinkform">
+
+           </div>
+        {% else %}
+                <div id="addlinkform">
+           </div>
+            <p style="text-decoration: underline; color: blue;" onclick="addnewforms()">Add links to your website/cv</p>
+        {% endif %}
+
+        {% if profile.phone %}
+        <p>Phone: <input maxlength="10" type="text" name="phone" value="{{profile.phone}}"> </p>
+        {% else %}
+            <p>Phone: <input maxlength="10" type="text" name="phone" placeholder="Phone number,"> </p>
+     {% endif %}
+                <button name="contact_form_button" type="submit" value="contact_form">Submit</button>
+        </form>
+        </div>
+
+    </div>
+</div>
+
+
+    <div class="cv">
+        {% if messages %}
+        {% for message in messages %}
+        <p style="color:red;"><b>{{message}}</b></p>
+        {% endfor %}
+        {%endif %}
+            {% if profiledetailform.errors %}
+        {% for error in profiledetailform.errors %}
+        <p style="color:red;"><b>{{error}}</b></p>
+        {% endfor %}
+        {%endif %}
+
+        {% if profile.get_details %}
+        {% for det in profile.get_details %}
+        <div class="cv-details">
+
+            <h4 style="text-decoration: underline; text-transform: uppercase;">{{det.heading}}.</h4>
+            <a style="color: red; font-weight: 800;" onclick="(function (){var details = document.getElementById('cv-details-{{det.heading}}');
+    document.getElementById('details-text-area-{{det.heading}}').display='none';
+    details.style.display = 'block';})();">Edit</a>
+            <form style="display: none" id = 'cv-details-{{det.heading}}' method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p><textarea required name="{{det.heading}}" type="text" maxlength="1000" rows = "15" cols="80" >{{det.details}}</textarea></p>
+                <button name="profdetailsform" type="submit" value="profdetails">Submit</button>
+            </form>
+           <div id="details-text-area-{{det.heading}}">
+                {% if det.details %}
+            <p>{{det.details}}</p>
+            {% endif %}
+            {% if det.pdf%}
+            <p> <a href="/media/{{det.pdf}}">{{det.pdf_name}}:</a> </p>
+            {% endif%}
+           </div>
+            </div>
+
+         {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,780 @@
+
+
+/*  Classes and tags for base.html   */
+
+.top {
+    display: flex;
+    flex-flow: row wrap;
+    background-color: #E6FAFF;
+    margin: 0;
+    height:200px;
+    width:100%;
+}
+
+
+.top h1 {
+    color: #000066;
+    font-family: 'Heebo', sans-serif;
+    letter-spacing: 13px;
+    margin: 0;
+    line-height: 180px;
+    font-size: 150px;
+}
+
+nav .stacks{
+    background-color: white;
+    display: none;
+}
+nav{
+    display: flex;
+    background-color: #000066;
+    flex-flow: row wrap;
+    height: 50px;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+nav a {
+    text-decoration: none;
+    font-family: 'Overlock', cursive;
+    color: white;
+    border:12px solid #000066;
+    font-size: 16px;
+}
+
+nav .dropdown {
+    border:8px solid #000066;
+    display: flex;
+    flex-flow: column wrap;
+    z-index: 1;
+}
+
+nav .dropdown:hover {
+    border-color: black;
+    background-color: black;
+    z-index: 1;
+
+}
+
+nav .dropdown1 {
+    border:8px solid #000066;
+    display: flex;
+    flex-flow: column wrap;
+    z-index: 1;
+}
+
+nav .dropdown1:hover {
+    border-color: black;
+    background-color: black;
+    z-index: 1;
+
+}
+nav .dropdownbtn {
+    background-color: #000066;
+    color: white;
+    font-family: 'Overlock', cursive;
+    border-style: solid;
+    border-color: #000066;
+
+    font-size: 16px;
+}
+nav .dropdownbtn:hover{
+    background-color: black;
+    border-color: black;
+}
+nav .dropdownlist{
+    border-top-color: #000066;
+    display: none;
+    z-index: 1;
+    flex-flow: column wrap;
+    background-color: black;
+
+
+}
+nav .dropdownlist a {
+    border:12px solid black;
+
+
+}
+nav .dropdownlist1{
+    border-top-color: #000066;
+    display: none;
+    z-index: 1;
+    flex-flow: column wrap;
+    background-color: black;
+
+}
+nav .dropdownlist1 a {
+    border:12px solid black;
+
+
+}
+
+nav .search_icon {
+    border-radius: 50%;
+    background-color: #000066;
+    color: white;
+    height: 25px;
+    width: 25px;
+    font-size: 15px;
+    text-align: center;
+
+}
+nav .search_icon:hover{
+    background-color: white;
+    color: #000066;
+}
+
+nav .search_input{
+    display: none;
+}
+footer .neeche{
+    height:80px;
+    background-color: #000066;
+    color: white;
+    width:100%;
+    text-align: center;
+}
+
+
+/*  Classes and tags for login.html   */
+
+
+
+.fullcover {
+    display: flex;
+    height: 100%;
+    width:100%;
+    flex-flow: column wrap;
+    background-color: #dafcff;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.login{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    background-color: white;
+
+}
+
+
+.login h1 {
+
+    color: #000066;
+    font-family: 'Heebo', sans-serif;
+
+    margin: 40px auto;
+
+    font-size: 50px;
+}
+.login form {
+    display: block;
+    background-color: white;
+    font-family: 'Heebo', sans-serif;
+    font-size: 15px;
+    width: 50%;
+    text-align: center;
+}
+
+.login form input{
+    border-radius: 4px;
+    width: 200px ;
+    height:30px;
+
+}
+
+.login form button {
+    border-radius: 4px;
+    width:65px;
+    height:40px;
+    background-color: #000066;
+    color: white;
+}
+
+.login p {
+
+    font-family: 'Heebo', sans-serif;
+    font-size: 15px;
+}
+
+/*  Classes and tags for search.html   */
+
+.search-container{
+    display: flex;
+    flex-flow: column wrap;
+    font-family: 'Overlock', cursive;
+}
+.search-form{
+    display: flex;
+    flex-flow: column wrap;
+}
+.search-form input{
+    font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    z-index: -1;
+    width: 95% ;
+    height:40px;
+    font-size: 20px;
+}
+.search-form button{
+    border-radius: 4px;
+    width:65px;
+    height:40px;
+    background-color: #000066;
+    color: white;
+}
+.post-results{
+    border: 5px outset saddlebrown;
+    display: flex;
+    flex-flow: column wrap;
+    padding: 20px;
+}
+
+/*  Classes and tags for home_post_form.html   */
+
+.postform{
+    background-color: white;
+    width:60%;
+    height: auto;
+
+}
+.postform input{
+    border: 5px solid white ;
+}
+#id_heading{
+    font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 95% ;
+    height:200px;
+    font-size: 20px;
+}
+#id_content{
+    font-family: 'Overlock', cursive;
+     border-radius: 4px;
+    width: 95% ;
+    height:250px;
+    font-size: 20px;
+}
+#id_link{
+    border-radius: 4px;
+    width: 95% ;
+    height:40px;
+    font-size: 15px;
+}
+.postformbtn{
+    margin: 0 auto;
+
+    width: 70px;
+}
+.postform button{
+    border-radius: 4px;
+
+    width:65px;
+    height:40px;
+    background-color: #000066;
+    color: white;
+
+
+}
+
+/*  Id's of various tags and background colors   */
+
+#Mcq {
+
+    background-color: #ffdb2d;
+    color:black;
+
+
+}
+#Q-A {
+
+    background-color: #ff301d;
+    color:white;
+
+
+}
+#Reviews {
+
+    background-color: #ffa89c;
+    color: #000000;
+
+}
+#Conference {
+
+    background-color: #000066;
+    color: white;
+
+
+}
+#Event {
+
+    background-color: #ff8e42;
+    color:black;
+
+}
+#Articles {
+
+    background-color: #e3abff;
+    color:black;
+
+
+}
+.degree {
+
+    background-color: #000066;
+    color:white;
+    font-weight: 400;
+    font-size: 15px;
+    width: auto;
+    height: auto;
+    text-align: center;
+}
+ /*  Classes and tags for home.html   */
+.tags {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.home-container{
+    display: flex;
+    flex-flow: column wrap;
+    font-family: 'Overlock', cursive;
+    width: 100%;
+    height: auto;
+
+}
+.home-post{
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+    height: auto;
+    border-top: 5px outset #6F0E0E;
+    border-bottom: 5px outset #6F0E0E;
+
+}
+.home-post-heading{
+    width: 100%;
+    height: auto;
+}
+.home-post-content{
+    font-size: 18px;
+    width: 100%;
+}
+.home-post-img{
+
+    display: flex;
+
+    justify-content: center;
+    flex-flow: column wrap;
+}
+.home-post-img img{
+    align-self: center;
+}
+
+.comments{
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+.home-post-comment-single{
+    border: 5px outset grey;
+    margin-bottom: 20px;
+    display: flex;
+    flex-flow: column wrap;
+}
+.comment-create-form{
+    border: 5px outset black;
+
+}
+.comment-create-form form{
+    display: flex;
+    flex-flow: column wrap;
+}
+.comment-create-form textarea{
+    width: 60%;
+    height: 200px;
+    font-size: 18px;
+    font-family: 'Overlock', cursive;
+}
+.comment-create-form input{
+    border-radius: 4px;
+    height: 35px;
+    font-size: 14px;
+    font-family: 'Overlock', cursive;
+
+}
+.comment-create-form button{
+     border-radius: 4px;
+
+    width:65px;
+    height:40px;
+    background-color: #000066;
+    color: white;
+    align-self: center;
+}
+/*  Classes and tags for specialitytag.html   */
+
+#subject-intro-add textarea {
+
+}
+
+
+/*  Classes and tags for profile.html   */
+
+.image_section{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+
+.image_section .profilePic{
+
+    height: 200px;
+    width: 200px;
+
+}
+
+.detail-section{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-family: 'Overlock', cursive;
+    background-color: #fff8f3;
+}
+
+
+.detail-section h4 {
+    font-size: 30px;
+    font-family: 'Overlock', cursive;
+    margin-bottom: 0;
+    line-height: 30px;
+
+    text-decoration: underline;
+}
+.personal-details{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    border-right: 5px solid black;
+    margin-left: 30px;
+    padding-right: 10px;
+    background-color: white;
+
+}
+.personal-details input{
+    border-radius: 4px;
+    width: 200px ;
+    height:30px;
+    font-family: 'Overlock', cursive;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+
+
+
+.contact-details-form{
+    display: none;
+}
+
+
+.personal-form{
+    display: none;
+}
+.degree-form{
+    display: none;
+}
+.work-form{
+    display: none;
+}
+
+
+
+.cv{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    margin-left: 50px;
+    background-color: white;
+    flex-grow: 1;
+}
+.cv-details{
+
+}
+.cv-details h4 {
+    font-size: 24px;
+}
+.cv-details-form{
+    display: none;
+}
+
+
+/*  Classes and tags for arch.html   */
+
+.arch-main{
+    display: flex;
+    flex-flow:column wrap;
+    font-family: 'Overlock', cursive;
+
+}
+.arch-row{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+
+}
+.arch-box {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid green;
+    height: 200px;
+    width: 200px;
+    margin: 50px 50px;
+}
+
+/*  Classes and tags for archdetail.html   */
+
+
+
+.edit-book-form{
+    display:none;
+     margin: 90px;
+    border: 10px outset saddlebrown;
+}
+.create-book-form{
+    display: none;
+    margin: 90px;
+    border: 10px outset saddlebrown;
+
+}
+.create-book-form input{
+    border-radius: 4px;
+    width: 200px ;
+    height:30px;
+
+}
+
+.edit-book-form input{
+    border-radius: 4px;
+    width: 200px ;
+    height:30px;
+
+}
+.subject-details-review{
+    display: flex;
+    flex-flow: column wrap;
+
+    margin: 90px;
+
+}
+.subject-heading{
+    display: flex;
+    flex-flow:column wrap;
+}
+.subject-detail{
+    margin: 20px;
+    display: flex;
+    flex-flow:column wrap;
+}
+.subs{
+    display: flex;
+    flex-flow:row wrap;
+
+}
+
+.books {
+    background-color: #FFEBCD;
+
+}
+
+.presentation{
+    background-color: #FFF5EE;
+    color:#000066;
+}
+.qb {
+    background-color: #F4A460;
+    color: white;
+}
+
+.book-form{
+        background-color: #FFEBCD;
+
+    display: flex;
+    flex-flow:column wrap;
+    border: 10px outset saddlebrown;
+}
+.book-cover-form{
+    display: flex;
+    flex-flow:row wrap;
+}
+.book-poster{
+        display: flex;
+    flex-flow:column wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+}
+.book-review-form{
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+        display: flex;
+    flex-flow:column wrap;
+}
+.book-content-form{
+
+        display: flex;
+    flex-flow:column wrap;
+}
+.book-content-form h4{
+    display: flex;
+    align-items: center;
+    background-color: #841010;
+    color: white;
+    height: 50px;
+}
+.book-content-form textarea{
+    background-color: #FFEBCD;
+    font-size: 20px;
+    font-family: 'Overlock', cursive;
+}
+.book-review-content-form{
+    background-color: #D2B48C;
+        display: flex;
+    flex-flow:column wrap;
+    border-top: 5px solid black;
+}
+
+
+
+    @media screen and (max-width: 800px) {
+        /*  Classes and tags for base.html   */
+        .top h1 {
+    letter-spacing: 5px;
+    margin: 0;
+    line-height: 100px;
+    font-size: 80px;
+            align-self: center;
+}
+        .home-post-img {
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: center;
+
+        }
+        nav {
+            height: auto;
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            border: 1px solid red;
+
+        }
+
+        .nav-item{
+            display: none;
+        }
+        .navform{
+            display: none;
+        }
+        nav .stacks{
+            display: flex;
+            margin: 0;
+        }
+
+        #drop {
+            display:none;
+        }
+        #drop1{
+            display: none;
+        }
+        .comment-create-form textarea{
+    width: 95%;
+    border-radius: 4px;
+        border: none;
+
+}
+        /*  Classes and tags for login.html   */
+
+        .login{
+            width: 100%;
+        }
+        .login .logo h1 {
+            font-size: 40px;
+
+        }
+          /*  Classes and tags for home_post.html   */
+        .postform{
+          background-color: white;
+          width:100%;
+         height: auto;
+
+        }
+        .home-post-heading{
+            font-size: 15px;
+            font-family: 'Overlock', cursive;
+
+        }
+
+        .home-post-img{
+         height: 250px;
+        width: 100%;
+        }
+
+        .personal-details{
+            width: 100%;
+            margin-right: 5px;
+            border-right-color: white ;
+
+
+        }
+        .personal-details input{
+    border-radius: 4px;
+    width: 100% ;
+    height:30px;
+    font-family: 'Overlock', cursive;
+    font-size: 18px;
+    font-weight: 400;
+}
+        .cv{
+            width: 100%;
+            margin-left: 30px;
+            margin-right: 5px;
+
+        }
+
+        .create-book-form{
+            margin:0;
+            border: none;
+        }
+        .edit-book-form{
+            margin: 0;
+            border: 2px solid brown;
+        }
+        .book-form{
+            border: none;
+        }
+        .book-poster{
+            margin: 10px auto;
+            border: none;
+
+        }
+
+        .subject-details-review{
+            margin: 0;
+        }
+
+    }

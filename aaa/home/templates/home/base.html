@@ -1,0 +1,87 @@
+
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <title>All about anesthesia</title>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'home/css/base.css' %}">
+    <script src="{% static 'home/js/base.js' %}" type="text/javascript" charset="utf-8"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overlock&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="top">
+<h1>
+   AAA
+</h1>
+</div>
+
+<nav class="navbar ">
+
+  <!--Button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContents" aria-controls="navContents" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-dark navbar-toggler-icon"></span>
+        </button>
+  <div class="collapse navbar-collapse" id="navContents -->
+
+  <!-- Links -->
+    <div class="stacks" onclick="openmenu()">
+        <img src="{% static 'home/images/stacks.png' %}" height="40px" width="40px">
+    </div>
+      <a class="nav-link nav-item" href="{% url 'home:home' %}">Home</a>
+    <div class="dropdown1" id = 'drop'>
+        <button onmouseover="dropdownlist1(this);" class="dropdownbtn" >Sub specialities</button>
+        <div class="dropdownlist1">
+            {% if tag_speciality %}
+            {% for tag in tag_speciality %}
+            <a class="nav-link nav-item" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>
+            {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+
+      <a class="nav-link nav-item" href="#">Conferences</a>
+      <a class="nav-item nav-link " href="{% url 'archives:home_archives'  %}">Archives</a>
+
+    <a class="nav-item nav-link" href="{% url 'home:search' %}">Search</a>
+{%if request.user.is_authenticated %}
+    <div class="dropdown" id="drop1" >
+        <button onmouseover="dropdownlist(this);" class="dropdownbtn" >P</button>
+        <div class="dropdownlist">
+            {%if request.user.is_authenticated %}
+    <a class="nav-link nav-item myprof" href="{% url 'accounts:myprofile' %}"> myProfile </a>
+    <a class="nav-link nav-item myprof" href="{% url 'accounts:logout' %}">Logout</a>
+
+    {% else %}
+    <a class="nav-link nav-item myprof" href="{% url 'accounts:login' %}">login</a>
+    {%endif %}
+
+        </div>
+    </div>
+    {% else %}
+    <a class="nav-item nav-link" href="{% url 'accounts:staff' %}">Join</a>
+{% endif %}
+</nav>
+<div class="empty"></div>
+{% block main%}
+{% endblock %}
+
+{% block js%}
+{% endblock %}
+</body>
+<footer>
+    <div class="neeche">
+    <p>social media icons</p>
+</div>
+
+
+
+</footer>
+
+
+</html>

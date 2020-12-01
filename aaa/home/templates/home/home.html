@@ -1,0 +1,164 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+
+
+<div class="home-container">
+    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
+    {% if posts %}
+    {% for post in posts %}
+
+    <div class="home-post">
+        {% if post.tag %}
+        <div class="tags">
+            {% for tag in post.get_tags %}
+            {% if tag.is_degree %}
+            <p class="degree"><a style="text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p> <br>
+            {% else %}
+            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" id = '{{tag.name}}'><a style="text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p> <br>
+
+            {% endif %}
+            {% endfor %}
+        </div>
+            {% endif %}
+        {% if request.user.is_authenticated and request.user == post.user%}
+    <script>
+        var delpost{{post.pk}} = '{% url "home:deletepost" post.pk %}'
+    </script>
+    <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{post.pk}})">Delete post</a></p>
+    {%endif %}
+        <div class="home-post-heading">
+            <h3>{{post.heading}}</h3>
+            <p style="color: #000066"><b>{{post.user.username}} | {{post.posted_on}}</b></p>
+
+
+        </div>
+
+
+        {% if post.img %}
+        <div class="home-post-img">
+            <img  src="/media/{{post.img}}" width="250px" height="250px">
+        </div>
+
+        {% endif  %}
+
+
+        {% if post.content %}
+        <div class="home-post-content">
+            <p>{{post.content|linebreaks }}</p>
+        </div>
+        {% endif  %}
+
+
+        {% if post.get_links %}
+        <b>Attached links</b>
+        {% for i in post.get_links %}
+        <div class="home-post-link">
+            <a href="{{i.link}}"><p>{{i.link_name}}: {{i.link}}</p></a>
+        </div>
+        {%endfor%}
+        {% endif  %}
+
+        {% if post.pdf %}
+        <b>Attached Pdfs</b>
+        <div class="home-post-pdf">
+            <a href="{{post.pdf}}"><p>{{post.pdf_name}}: {{post.pdf}}</p></a>
+        </div>
+        {% endif  %}
+        <div id="comments{{post.pk}}" class="comments ">
+            <h2 style="text-decoration: underline">Comments</h2>
+        {% if post.get_comments %}
+        <div class="home-post-comments">
+        {% for comment in post.get_comments %}
+            <div class="home-post-comment-single">
+                <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
+{% if request.user.is_authenticated and request.user == comment.user%}
+    <script>
+        var delpost{{comment.pk}} = '{% url "home:deletecomment" comment.pk %}'
+    </script>
+    <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{comment.pk}})">Delete Comment.</a></p>
+    {%endif %}
+
+          {% if comment.img %}
+
+        <div  class="home-post-img">
+            <img  src="/media/{{comment.img}}" width="250px" height="250px">
+        </div>
+
+        {% endif  %}
+
+
+
+        {% if comment.text %}
+        <div class="home-post-content">
+            <p>{{comment.text|linebreaks }}</p>
+        </div>
+        {% endif  %}
+
+
+
+
+        {% if comment.get_links %}
+                <b>Attached links</b>
+        {% for i in comment.get_links %}
+        <div class="home-post-link">
+            <a href="{{i.link}}"><p>{{i.link_name}}: {{i.link}}</p></a>
+        </div>
+        {%endfor%}
+        {% endif  %}
+        {% if comment.pdf %}
+                <b>Attached pdfs</b>
+        <div class="home-post-pdf">
+            <a href="{{comment.pdf}}"><p>{{comment.pdf_name}}: {{comment.pdf}}</p></a>
+        </div>
+        {% endif  %}
+                </div>
+        {% endfor %}
+        </div>
+        {% endif  %}
+            <p style="text-decoration: underline; color: #000066"><a onclick="commentform()">Add Comment</a></p>
+        <div class="comment-create-form">
+         <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
+                {% csrf_token %}
+            <p>Add image: <input type="file" name="image" ></p>
+<br>
+            <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
+    <br>
+            <p><input name="pdf_name" type="text" placeholder="Add pdf name" maxlength="20" value="">: <input type="file" name="pdf"></p>
+             <div id="addlinkform{{post.pk}}">
+                 <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
+             </div>
+             <p style="text-decoration: underline;color: #000066;"><a onclick="addnewlinkforms('addlinkform{{post.pk}}')"> Add more links</a></p>
+            <button name="createcomment" type="submit" value="createcomment">Submit</button>
+            </form>
+
+            </div>
+
+        </div>
+        </div>
+    <p onclick="expand(this, 'comments{{post.pk}}')" style="color: blue; text-decoration: underline;" class="more">more</p>
+
+
+
+
+
+
+
+
+
+
+
+    {% for message in messages %}
+      <p style="color: red; font-weight: 400">{{message}}</p>
+      {% endfor %}
+
+
+    </div>
+
+
+
+
+    {% endfor  %}
+    {% endif  %}
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+<form method="post">
+  <h4>Are you sure you want to delete? {{ obj.text }}</h4>
+  <p> <input type="submit" name="" value="Yes"> <a href="{% url 'accounts:profile' %}">Cancel</a></p>
+</form>
+
+{% endblock %}

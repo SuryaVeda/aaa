@@ -1,0 +1,204 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+
+<div class="search-container">
+
+    <div class="search-form">
+        <form method="get" action="{% url 'home:search' %}">
+        {% csrf_token %}
+        <p><input name="searchinput" placeholder="type search text. maxlength of 100 words..." type="text" maxlength="100" value="" required></p>
+        <button type="submit" name="searchbtn" value="searchsubmit">Submit</button>
+
+
+    </form>
+    </div>
+
+    <div class="post-results">
+        {% if posts %}
+        {% for post in posts %}
+        <div class="home-post">
+        {% if post.tag %}
+        <div class="tags">
+            {% for tag in post.get_tags %}
+            <p id = '{{tag.name}}'><a href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p> <br>
+            {% endfor %}
+        </div>
+            {% endif %}
+        {% if request.user.is_authenticated and request.user == post.user%}
+    <script>
+        var delpost{{post.pk}} = '{% url "home:deletepost" post.pk %}'
+    </script>
+    <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{post.pk}})">Delete post</a></p>
+    {%endif %}
+        <div class="home-post-heading">
+            <h3>{{post.heading}}</h3>
+            <p style="color: #000066"><b>{{post.user.username}} | {{post.posted_on}}</b></p>
+
+
+        </div>
+
+
+        {% if post.img %}
+        {% for image in post.getimages %}
+        <div class="home-post-img">
+            <img src="/media/{{image.img}}" width="250px">
+        </div>
+        {%endfor%}
+        {% endif  %}
+
+
+        {% if post.content %}
+        <div class="home-post-content">
+            <p>{{post.content}}</p>
+        </div>
+        {% endif  %}
+
+
+        {% if post.link %}
+        {% for i in post.getlinks %}
+        <div class="home-post-link">
+            <a href="{{i.link}}"><p>{{i.link_name}}</p></a>
+        </div>
+        {%endfor%}
+        {% endif  %}
+
+        {% if post.pdf %}
+        <div class="home-post-pdf">
+            <a href="{{post.pdf}}"><p>{{post.pdf_name}}</p></a>
+        </div>
+        {% endif  %}
+
+        {% if post.comments %}
+        <div class="home-post-comments">
+        {% for comment in post.get_comments %}
+            <div class="home-post-comment-single">
+
+
+          {% if comment.img %}
+        {% for image in comment.getimages %}
+        <div class="home-post-img">
+            <img src="/media/{{image.img}}" width="250px">
+        </div>
+        {%endfor%}
+        {% endif  %}
+
+
+
+        {% if comment.text %}
+        <div class="home-post-content">
+            <p>{{comment.text}}</p>
+        </div>
+        {% endif  %}
+
+
+
+
+        {% if comment.link %}
+        {% for i in comment.getlinks %}
+        <div class="home-post-link">
+            <a href="{{i.link}}"><p>{{i.link_name}}</p></a>
+        </div>
+        {%endfor%}
+        {% endif  %}
+        {% if post.pdf %}
+        <div class="home-post-pdf">
+            <a href="{{comment.pdf}}"><p>{{comment.pdf_name}}</p></a>
+        </div>
+        {% endif  %}
+                </div>
+        {% endfor %}
+        </div>
+        {% endif  %}
+
+
+    </div>
+        {% endfor %}
+        {% else %}
+        <p>No results in posts </p>
+        {% endif %}
+    </div>
+    <div class="post-results">
+
+        <div class="subject-details-review">
+
+        {% if books %}
+        {% for book in books %}
+            <h2 style="text-decoration: underline; ">{{book.get_subject_name}}</h2>
+        {% if request.user.is_authenticated and request.user.is_admin %}
+
+    <p><a style="text-decoration: underline; color: blue;" onclick="addbookform()">Add a book </a> |  <a style="text-decoration: underline; color: blue;" onclick="editbookform()">Edit a book </a></p>
+{% endif %}
+
+
+        <div class="book-form" style="margin: 40px 0;border-bottom: 5px solid black;">
+            <div class="book-cover-form">
+            <div class="book-poster">
+                {% if request.user.is_authenticated and request.user.is_admin and request.user == book.user %}
+            <script>var deleteurl{{book.pk}} = '{% url "archives:deletebook" book.pk %}'</script>
+            <p><a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{book.pk}})">Remove the book </a></p>
+            {% endif %}
+                {% if book.backgroundPic %}
+                <img src="/media/{{book.backgroundPic}}" width="180px" height="180px">
+                {% else %}
+                <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
+
+                {% endif %}
+                {% if book.get_source_link %}
+                {% for i in book.get_source_link %}
+
+                <p><a href="{{i.1}}" > GET</a></p>
+                {%endfor %}
+
+               {% endif %}
+            </div>
+            <div class="book-review-form">
+                {% if book.name %}
+               <p> Name: {{book.name}}</p>
+              {% endif %}
+
+                {% if book.latest %}
+               <p> Last Edition: {{book.latest}}</p>
+                {% endif %}
+
+            </div>
+                </div>
+            <div class="book-content-form">
+                <h4>Review</h4>
+
+                   {% if book.get_reviews %}
+                     {%for rev in book.get_reviews %}
+                      {% if rev.details%}
+
+                         <p style="color: #000066"><b>{{rev.post_details}}</b></p>
+                {% if request.user.is_authenticated and request.user.is_admin and request.user == rev.user %}
+            <script>var deleteurl{{rev.pk}} = '{% url "archives:deletereview" rev.pk %}';</script>
+            <p><a style="text-decoration: underline; color: #000066" onclick="removereview(deleteurl{{rev.pk}})">Remove the review </a></p>
+            {% endif %}
+
+                          <p>{{rev.details|linebreaks }}</p>
+                      {% endif %}
+
+                     {%endfor%}
+
+                   {% endif %}
+
+            </div>
+
+        </div>
+
+ {% endfor %}
+        {% else %}
+        <p>No results in Books </p>
+            {% endif %}
+    </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+{% endblock %}

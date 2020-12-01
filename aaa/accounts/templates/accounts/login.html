@@ -1,0 +1,68 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+<meta name="google-signin-client_id" content="458074446981-mkq40bu39qe7eahf85umpfhmv05h8lkq.apps.googleusercontent.com">
+<link rel="stylesheet" type="text/css" href="{% static 'home/CSS/base.css' %}">
+
+
+
+
+
+<div class="fullcover">
+<div class="login">
+    <h1>all about anesthesia</h1>
+
+  {% if messages %}
+    {% for message in messages %}
+      <p style="color: red; font-weight: 400; font-size: 14px;">{{message}}</p>
+      {%endfor %}
+  {% endif %}
+    <form method="post" action="{% url 'accounts:login' %}">
+    {% csrf_token %}
+   <p>{{form.email}}</p>
+    {% for message in form.email.errors %}
+      <p class="text-danger">{{message}}</p>
+      {% endfor %}
+        <br>
+    <br>
+
+    <p>{{form.password}}</p>
+    {% for message in form.password.errors %}
+      <p class="text-danger">{{message}}</p>
+      {% endfor %}
+    <br>
+    <br>
+        <br>
+
+    <button type="submit" value="login">login</button>
+    <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+   {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'accounts:password_reset' %}">Lost password?</a></p>
+
+    <p><b>Or</b></p>
+    <p>Don't have an account? <a href="{% url 'accounts:staff' %}">Sign Up</a> </p>
+    <p><b>Or</b></p>
+  <div id="goo" class="g-signin2" data-onsuccess="onSignIn" >
+</div>
+</div>
+
+</div>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        var myJson = JSON.stringify(profile);
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        var json = JSON.stringify(profile);
+        var url = 'https://mypassions.site/accounts/google?id_token=' + id_token+ '&profile=' + json;
+        return document.location.href = url;
+        
+       
+      }
+    </script>
+{% endblock %}

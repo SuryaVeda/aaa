@@ -1,0 +1,363 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block main %}
+
+
+
+
+{% if tag.is_degree %}
+<div class="arch-main">
+    {% if request.user.is_authenticated and request.user.is_admin %}
+
+      <div class="create-book-form">
+
+     <form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity(event)">
+        {% csrf_token %}
+        <div class="book-form">
+            <div class="book-cover-form">
+            <div class="book-poster">
+
+                <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
+
+                <p>Add image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image"></p>
+
+
+                <p>GET:  <input placeholder="Add link name"  type="text" maxlength="20" name = 'link_name' value="" > :  <input placeholder="Add link url.." type="url" name = 'link' value=""></p>
+            </div>
+            <div class="book-review-form">
+                <p> <input type="text" name ='book_name'  placeholder="Add book name..." maxlength="100" required></p>
+
+            <p>Subject :<select name = 'subjecttag'  required> <option selected value="{{tag.name}}" label="{{tag.name}}" ></option></select> </p>
+
+                <p> <input type="text" name ='latest'  placeholder="Add latest edition" maxlength="20" required></p>
+
+            </div>
+                </div>
+            <div class="book-content-form">
+                <h4>Review</h4>
+
+               <textarea rows="15" cols="20" type="text" placeholder="Add Review" name = 'review' maxlength="2000" required></textarea>
+
+            </div>
+
+        </div>
+
+
+        <button  type="submit" name="addbookformbtn" value="bookbtn">Submit</button>
+    </form>
+
+        </div>
+
+    <div class="edit-book-form">
+
+        {% if tag.get_books %}
+            {% for book in tag.get_books %}
+
+        <form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity()">
+        {% csrf_token %}
+        <div class="book-form">
+            <div class="book-cover-form">
+            <div class="book-poster">
+                {% if book.backgroundPic %}
+                <img src="/media/{{book.backgroundPic}}" width="180px" height="180px">
+                 <p>Change image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image" ></p>
+                {% else %}
+                <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
+
+                <p>Add image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image"></p>
+                {% endif %}
+                {% if book.get_source_link %}
+                {% for i in book.get_source_link %}
+
+                <p>GET:  <input  type="text" maxlength="20" name = 'link_name' value="{{i.0}}" > :  <input type="url" name = 'link' value="{{i.1}}"></p>
+                {%endfor %}
+
+                {% else %}
+                <p>GET:  <input  type="text" maxlength="20" name = 'link_name' value="" > :  <input type="url" name = 'link' value=""></p>
+                {% endif %}
+            </div>
+            <div class="book-review-form">
+                {% if book.name %}
+               <p> <input type="text" name ='book_name' value="{{book.name}}" placeholder="Add book name" maxlength="100" required></p>
+                {% else %}
+                <p> <input type="text" name ='book_name'  placeholder="Add book name..." maxlength="100" required></p>
+                {% endif %}
+
+            <p>Subject :<select name = 'subjecttag'  required><option selected value="{{tag.name}}" label="{{tag.name}}" ></option></select> </p>
+                {% if book.latest %}
+
+                <p> <input type="text" name ='latest' value="{{book.latest}}" placeholder="Add latest edition" maxlength="20" required></p>
+                {% else %}
+                <p> <input type="text" name ='latest'  placeholder="Add latest edition" maxlength="20" required></p>
+
+                {% endif %}
+
+            </div>
+                </div>
+            <div class="book-content-form">
+                <h4>Reviews</h4>
+
+                   {% if book.get_reviews %}
+                     {%for rev in book.get_reviews %}
+                      {% if rev.details and rev.user == request.user %}
+                        <div class="book-review-content-form">
+                             <p style="color: #000066"><b>{{rev.post_details}}</b></p>
+
+                        <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required>{{rev.details}}</textarea>
+
+                        </div>
+
+                        {% else %}
+                <div class="book-review-content-form">
+                    <p style="color: #000066"><b>{{rev.post_details}}</b></p>
+                          <p>{{rev.details|linebreaks }}</p>
+                </div>
+
+
+                      {% endif %}
+
+                     {%endfor%}
+                {% has_review request.user book as ex %}
+                {% if not x %}
+                      <div class="book-review-content-form">
+                    <p>Add your review</p>
+                <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required></textarea>
+
+                </div>
+                {% endif %}
+                    {% else %}
+                  <p>Add your review</p>
+                <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required></textarea>
+
+
+                   {% endif %}
+                {% if book.has_review == False %}
+                <p>Add your review</p>
+                <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required>{{rev.details}}</textarea>
+                {% endif %}
+            </div>
+
+        </div>
+
+
+        <button type="submit" name="bookformbtn" value="{{book.pk}}">Submit</button>
+    </form>
+
+    {% endfor %}
+        {% endif %}
+        </div>
+
+
+
+
+    {% endif %}
+<div class="subject-heading">
+    <h2 style="text-decoration: underline; ">{{tag.name}}</h2>
+
+    <div class="subject-intro">
+        {% if tag.get_details %}
+        {% for i in tag.get_details %}
+        <div class="showsubjectintro">
+        <h2 style="text-decoration: underline; font-weight: 600; color: #000066;">{{i.heading}}.</h2>
+        <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro({{i.heading}}, {{i.details}})">Edit</a></p>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <p><a style="text-decoration: underline; color: blue;" onclick="addsubjectintro()">Add more details </a></p>
+
+
+        <form style="display: none" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p><input required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
+                <p><textarea style="height: 300px; width: 80%;@media screen and (max-width: 800px) {width: 100%;}"  required name="details" type="text" maxlength="50" >{{i.details}} </textarea></p>
+
+                <button name="edittagdetail" type="submit" value="profdetails">Submit</button>
+            </form>
+
+        <form style="display: none;" method="post" id="subject-intro-add" enctype="application/x-www-form-urlencoded">
+             {% csrf_token %}
+              <p><input required name="heading" type="text" maxlength="50" value=""></p> <br>
+                <p><textarea style="height: 300px; width: 80%;@media screen and (max-width: 800px) {width: 100%;}" required name="details" type="text" maxlength="50" > </textarea></p>
+
+                <button name="addtagdetail" type="submit" value="profdetails">Submit</button>
+
+         </form>
+
+    </div>
+        {% if request.user.is_authenticated and request.user.is_admin %}
+
+    <p><a style="text-decoration: underline; color: blue;" onclick="addbookform()">Add a book </a> |  <a style="text-decoration: underline; color: blue;" onclick="editbookform()">Edit a book </a></p>
+{% endif %}
+
+
+    <div class="subject-detail books">
+        <h2>Book Reviews</h2>
+            <div class="subject-details-review">
+
+        {% if tag.get_books %}
+            {% for book in tag.get_books %}
+
+
+        <div class="book-form" style="margin: 40px 0;border-bottom: 5px solid black;">
+            <div class="book-cover-form">
+            <div class="book-poster">
+                {% if request.user.is_authenticated and request.user.is_admin and request.user == book.user %}
+            <script>var deleteurl{{book.pk}} = '{% url "archives:deletebook" book.pk %}'</script>
+            <p><a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{book.pk}})">Remove the book </a></p>
+            {% endif %}
+                {% if book.backgroundPic %}
+                <img src="/media/{{book.backgroundPic}}" width="180px" height="180px">
+                {% else %}
+                <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
+
+                {% endif %}
+                {% if book.get_source_link %}
+                {% for i in book.get_source_link %}
+
+                <p><a href="{{i.1}}" > GET</a></p>
+                {%endfor %}
+
+               {% endif %}
+            </div>
+            <div class="book-review-form">
+                {% if book.name %}
+               <p> Name: {{book.name}}</p>
+              {% endif %}
+
+                {% if book.latest %}
+               <p> Last Edition: {{book.latest}}</p>
+                {% endif %}
+
+            </div>
+                </div>
+            <div class="book-content-form">
+                <h4>Review</h4>
+
+                   {% if book.get_reviews %}
+                     {%for rev in book.get_reviews %}
+                      {% if rev.details%}
+
+                         <p style="color: #000066"><b>{{rev.post_details}}</b></p>
+                {% if request.user.is_authenticated and request.user.is_admin and request.user == rev.user %}
+            <script>var deleteurl{{rev.pk}} = '{% url "archives:deletereview" rev.pk %}';</script>
+            <p><a style="text-decoration: underline; color: #000066" onclick="removereview(deleteurl{{rev.pk}})">Remove the review </a></p>
+            {% endif %}
+
+                          <p>{{rev.details|linebreaks }}</p>
+                      {% endif %}
+
+                     {%endfor%}
+
+                   {% endif %}
+
+            </div>
+
+        </div>
+
+ {% endfor %}
+            {% endif %}
+    </div>
+    </div>
+    <div class="subject-detail qb">
+        <h2>Question Bank</h2>
+        <div class="subs">
+            <div class="collections"> <h5>Hi</h5></div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+{% else %}
+<h3>{{tag.name}}</h3>
+{% endif %}
+
+
+<div class="home-container">
+    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
+
+{% if posts %}
+    {% for post in posts %}
+    <div class="home-post">
+        {% if post.tag %}
+        <div class="tags">
+            {% for tag in post.get_tags %}
+            <p id = '{{tag.name}}'><a href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p> <br>
+            {% endfor %}
+        </div>
+            {% endif %}
+        <div class="home-post-heading">
+            <h3>{{post.heading}}</h3>
+            <p style="color: #000066"><b>{{post.user.username}} | {{post.posted_on}}</b></p>
+
+
+        </div>
+
+
+        {% if post.img %}
+        <div class="home-post-img">
+            <img src="/media/{{post.img}}" width="250px">
+        </div>
+        {% endif  %}
+
+
+        {% if post.content %}
+        <div class="home-post-content">
+            <p>{{post.content}}</p>
+        </div>
+        {% endif  %}
+
+
+        {% if post.link %}
+        <div class="home-post-link">
+            <a href="{{post.link}}"><p>{{post.link_name}}</p></a>
+        </div>
+        {% endif  %}
+
+        {% if post.pdf %}
+        <div class="home-post-pdf">
+            <a href="{{post.pdf}}"><p>{{post.pdf_name}}</p></a>
+        </div>
+        {% endif  %}
+
+        {% if post.comments %}
+        <div class="home-post-comments">
+        {% for comment in post.get_comments %}
+            <div class="home-post-comment-single">
+          {% if comment.img %}
+        <div class="home-post-img">
+            <img src="/media/{{comment.img}}">
+        </div>
+        {% endif  %}
+
+
+        {% if comment.text %}
+        <div class="home-post-content">
+            <p>{{comment.text}}</p>
+        </div>
+        {% endif  %}
+
+
+        {% if comment.link %}
+        <div class="home-post-link">
+            <a href="{{comment.link}}"><p>{{comment.link_name}}</p></a>
+        </div>
+        {% endif  %}
+
+        {% if post.pdf %}
+        <div class="home-post-pdf">
+            <a href="{{comment.pdf}}"><p>{{comment.pdf_name}}</p></a>
+        </div>
+        {% endif  %}
+                </div>
+        {% endfor %}
+        </div>
+        {% endif  %}
+
+
+    </div>
+    {% endfor  %}
+    {% endif  %}
+</div>
+{% endblock %}

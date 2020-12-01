@@ -1,0 +1,33 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+<div class="arch-main">
+
+    <div class="arch-row">
+     <div class="arch-box">
+         <h2><a href="{% url 'archives:archdetail' %}">Books</a> </h2>
+     </div>
+        <div class="arch-box">
+            <h2><a href="{% url 'archives:archdetail' %}">Presentations</a> </h2>
+     </div>
+        <div class="arch-box">
+            <h2><a href="{% url 'archives:archdetail' %}">Lectures</a> </h2>
+     </div>
+    </div>
+    <div class="arch-row">
+
+        <div class="arch-box">
+            <h2><a href="{% url 'archives:archdetail' %}">Videos</a> </h2>
+
+     </div>
+        <div class="arch-box">
+            <h2><a href="{% url 'archives:archdetail' %}">Competition</a> </h2>
+
+     </div>
+        <div class="arch-box">
+            <h2><a href="{% url 'archives:archdetail' %}">Research</a> </h2>
+     </div>
+    </div>
+</div>
+
+{% endblock %}
