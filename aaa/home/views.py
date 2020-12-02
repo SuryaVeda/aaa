@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Post,Comment, Tag, PostLink
 from archives.models import Book
-from accounts.models import User
+from accounts.models import User, ProfileDetail
 from home.mixins import ValidateLinkMixin, ValidateTextMixin, ValidateFileMixin
 from .forms import CreatePostForm
 from .decorators import staff_required
@@ -94,6 +94,29 @@ def delete_comment_view(request,pk):
         messages.error(request, 'select valid post')
 
         return redirect('home:home')
+def delete_tagdetail_view(request,pk,detail_pk):
+    if pk and request.user.is_authenticated:
+        try:
+            print(type(pk))
+            y = Tag.objects.get(pk = pk)
+            x = y.get_details
+            print(x)
+            for i in x:
+                if i.pk == detail_pk :
+                    print(i)
+                    i.delete()
+                else:
+                    messages.error(request, 'not a valid user')
+
+            return redirect('home:home')
+        except:
+            print('some problem')
+            messages.error(request, 'post is not present in database')
+            return redirect('home:home')
+    else:
+        messages.error(request, 'select valid post')
+
+        return redirect('home:home')
 
 def create_post_view(request):
     template_name = 'home/home_post.html'
@@ -112,9 +135,66 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                 self.save_comment(kwargs['pk'])
         if self.request.POST.get('homepostform'):
             self.save_homepost()
+        if self.request.POST.get('addtagdetail'):
+            self.save_tagdetail(kwargs['pk'])
+        if self.request.POST.get('edittagdetail'):
+            print(kwargs['detail_pk'])
+            self.edit_tagdetail(kwargs['pk'], kwargs['detail_pk'])
 
 
         return redirect('home:home')
+    def save_tagdetail(self, pk):
+        print(self.request.POST)
+        text_dict = self.clean_text(['heading', 'details'])
+        try:
+            x = Tag.objects.get(pk = int(pk))
+            if x.get_details:
+                for i in x.get_details:
+                    if i.heading == text_dict['heading']:
+                        messages.error(self.request, 'Subject details with above heading already present. Kindly edit instead of adding new one')
+                        return False
+            tagdetailobj = ProfileDetail.objects.create(heading=text_dict['heading'],
+                                                        details=text_dict['details'],
+                                                        )
+            x.details.add(tagdetailobj)
+            x.save()
+
+
+
+        except:
+            print('prob in saving')
+            pass
+
+
+
+
+
+    def edit_tagdetail(self, pk, detail_pk):
+        print(self.request.POST)
+        print(detail_pk)
+        text_dict = self.clean_text(['heading', 'details'])
+        try:
+            x = Tag.objects.get(pk=int(pk))
+            print(x)
+            if x.get_details:
+                print(x.get_details)
+                for i in x.get_details:
+                    print(i.pk)
+                    if i.pk == int(detail_pk):
+                        i.heading = text_dict['heading']
+                        i.details = text_dict['details']
+                        i.save()
+                        print('success')
+                        return i
+                    else:
+                        messages.error(self.request,
+                                       'Subject details with above heading not present')
+                return False
+
+        except:
+            messages.error(self.request,
+                           'Error in saving')
+            return False
 
     def save_homepost(self):
         link_dict = self.clean_links()

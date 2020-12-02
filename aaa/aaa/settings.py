@@ -20,12 +20,38 @@ print(BASE_DIR)
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+if DEBUG:
+    SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'aaa',
+            'USER': 'sk',
+            'PASSWORD': 'su221997',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
+    ALLOWED_HOSTS = []
+
+else:
+    SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'aaa',
+            'USER': 'sk',
+            'PASSWORD': 'sk',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'allaboutanaesthesia.co']
 
 AUTH_USER_MODEL = 'accounts.User'
 # Application definition
