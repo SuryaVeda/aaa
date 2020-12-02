@@ -159,28 +159,41 @@
         {% if tag.get_details %}
         {% for i in tag.get_details %}
         <div class="showsubjectintro">
-        <h2 style="text-decoration: underline; font-weight: 600; color: #000066;">{{i.heading}}.</h2>
-        <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro({{i.heading}}, {{i.details}})">Edit</a></p>
+        <h2 style="text-decoration: underline; font-weight: 600; color: #000066;">{{i.heading}}</h2>
+            <script>
+                var action{{i.pk}} = "{% url 'home:edittagdetail' tag.pk i.pk %}";
+                console.log(action{{i.pk}});
+            </script>
+            {% if request.user.is_authenticated and request.user.is_admin  %}
+            <script>var deleteurl{{i.pk}} = '{% url "home:deletetagdetail" tag.pk i.pk %}'</script>
+            <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro(action{{i.pk}}, '{{i.heading}}', '{{i.details}}') ">Edit</a> | <a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{i.pk}})">Remove detail </a></p>
+            {% endif %}
+        <p></p>
+            {% if i.details %}
+            <p>{{i.details|linebreaks }}</p>
+            {% else %}
+        <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro(action{{i.pk}}, '{{i.heading}}', '{{i.details}}')">Edit </a>| <a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{i.pk}})">Remove detail </a></p>
+            {% endif %}
         </div>
         {% endfor %}
         {% endif %}
         <p><a style="text-decoration: underline; color: blue;" onclick="addsubjectintro()">Add more details </a></p>
 
 
-        <form style="display: none" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
+        <form style="display: none;" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <p><input required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
-                <p><textarea style="height: 300px; width: 80%;@media screen and (max-width: 800px) {width: 100%;}"  required name="details" type="text" maxlength="50" >{{i.details}} </textarea></p>
+                <p><input style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
+                <p><textarea style="height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive; @media screen and (max-width: 800px) {width: 100%;}"  required name="details" type="text" maxlength="50" >{{i.details}} </textarea></p>
 
-                <button name="edittagdetail" type="submit" value="profdetails">Submit</button>
+                <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="edittagdetail" type="submit" value="profdetails">Submit</button>
             </form>
 
-        <form style="display: none;" method="post" id="subject-intro-add" enctype="application/x-www-form-urlencoded">
+        <form style="display: none;" action="{% url 'home:addtagdetail' tag.pk %}" method="post" id="subject-intro-add" enctype="application/x-www-form-urlencoded">
              {% csrf_token %}
-              <p><input required name="heading" type="text" maxlength="50" value=""></p> <br>
-                <p><textarea style="height: 300px; width: 80%;@media screen and (max-width: 800px) {width: 100%;}" required name="details" type="text" maxlength="50" > </textarea></p>
+              <p><input style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value=""></p> <br>
+                <p><textarea style="height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;@media screen and (max-width: 800px) {width: 100%;}" required name="details" type="text" maxlength="50" > </textarea></p>
 
-                <button name="addtagdetail" type="submit" value="profdetails">Submit</button>
+                <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="addtagdetail" type="submit" value="profdetails">Submit</button>
 
          </form>
 

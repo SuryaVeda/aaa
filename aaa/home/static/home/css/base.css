@@ -1,6 +1,12 @@
 
 
+textarea {  background-color: #FFEBCD;  font-size: 20px;  font-family: 'Overlock', cursive;  }  input {  border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;  }
+
+
 /*  Classes and tags for base.html   */
+
+
+
 
 .top {
     display: flex;
@@ -195,7 +201,6 @@ footer .neeche{
     background-color: #000066;
     color: white;
 }
-
 .login p {
 
     font-family: 'Heebo', sans-serif;
@@ -420,9 +425,7 @@ footer .neeche{
 }
 /*  Classes and tags for specialitytag.html   */
 
-#subject-intro-add textarea {
 
-}
 
 
 /*  Classes and tags for profile.html   */

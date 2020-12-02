@@ -232,12 +232,14 @@ function commentform(){
        subdetails[i].style.display= 'block';}
 }
 
-function editsubjectintro(heading, details) {
-     for(var i = 0; i < document.getElementsByClassName('showsubjectintro').length; i++){
-       document.getElementsByClassName('showsubjectintro')[i].style.display= 'none';}
+function editsubjectintro(action, heading, details) {
+       document.getElementsByClassName('showsubjectintro')[0].style.display= 'none';
     document.getElementById('subject-intro-edit').style.display = 'block';
+    console.log(action);
+    document.getElementById('subject-intro-edit').action = action;
     document.getElementsByName('heading')[0].value = heading;
     document.getElementsByName('details')[0].value = details;
+    
 
 }
 function addsubjectintro() {
