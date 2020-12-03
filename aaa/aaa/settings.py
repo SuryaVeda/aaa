@@ -23,7 +23,7 @@ print(BASE_DIR)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
