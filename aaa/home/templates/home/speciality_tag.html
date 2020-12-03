@@ -179,19 +179,48 @@
         {% endif %}
         <p><a style="text-decoration: underline; color: blue;" onclick="addsubjectintro()">Add more details </a></p>
 
+ <style>
+                #subject-intro-edit textarea{
+                    height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;
+                }
+                #subject-intro-add textarea{
+                    height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;
+                }
+                #subject-intro-add input{
+                        width:40%;
+                }
 
+                #subject-intro-edit input{
+                        width: 40%;
+                }
+                @media screen and (max-width: 800px) {
+                    #subject-intro-add textarea{
+                        width: 100%;
+                    }
+                    #subject-intro-add input{
+                        width:100%;
+                    }
+                    #subject-intro-edit textarea{
+                        width: 100%;
+                    }
+                    #subject-intro-edit input{
+                        width: 100%;
+                    }
+                }
+            </style>
         <form style="display: none;" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <p><input style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
-                <p><textarea style="height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive; @media screen and (max-width: 800px) {width: 100%;}"  required name="details" type="text" maxlength="50" >{{i.details}} </textarea></p>
+                <p><input placeholder="Add heading.." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
+                <p><textarea   required name="details" type="text" maxlength="50" >{{i.details}} </textarea></p>
 
                 <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="edittagdetail" type="submit" value="profdetails">Submit</button>
             </form>
 
         <form style="display: none;" action="{% url 'home:addtagdetail' tag.pk %}" method="post" id="subject-intro-add" enctype="application/x-www-form-urlencoded">
              {% csrf_token %}
-              <p><input style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value=""></p> <br>
-                <p><textarea style="height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;@media screen and (max-width: 800px) {width: 100%;}" required name="details" type="text" maxlength="50" > </textarea></p>
+
+              <p><input placeholder="Add heading..." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value=""></p> <br>
+                <p><textarea placeholder="Add details..." required name="details" type="text" maxlength="50" > </textarea></p>
 
                 <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="addtagdetail" type="submit" value="profdetails">Submit</button>
 

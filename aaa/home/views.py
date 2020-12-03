@@ -12,29 +12,46 @@ import bleach
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
+
 def home_view(request):
-    template_name = 'home/home.html'
-    posts = Post.objects.order_by('pk')
-    users = User.objects.all()
-    tag_speciality = Tag.objects.filter(is_speciality = True)
-    context = {'posts':posts, 'users':users, 'tag_speciality':tag_speciality}
-    return render(request, template_name, context)
+    if request.user.is_authenticated and request.user.is_staff:
+        template_name = 'home/home.html'
+        posts = Post.objects.order_by('pk')
+        users = User.objects.all()
+        tag_speciality = Tag.objects.filter(is_speciality=True)
+        context = {'posts': posts, 'users': users, 'tag_speciality': tag_speciality}
+        return render(request, template_name, context)
+    else:
+        return redirect('accounts:login')
+
 
 
 
 def speciality_view(request, speciality_type):
-    template_name = 'home/speciality_tag.html'
-    tag = Tag.objects.get(name=speciality_type)
-    subjects =list(Tag.objects.filter(is_degree = True, is_speciality = False))+ list(Tag.objects.filter(is_speciality = True))
+    if request.user.is_authenticated and request.user.is_staff:
+        template_name = 'home/speciality_tag.html'
+        tag = Tag.objects.get(name=speciality_type)
+        subjects = list(Tag.objects.filter(is_degree=True, is_speciality=False)) + list(
+            Tag.objects.filter(is_speciality=True))
 
-    posts = Post.objects.filter(tag=tag).order_by('pk')
-    tag_speciality = Tag.objects.filter(is_degree=True)
-    context = {'tag':tag, 'tag_speciality':tag_speciality, 'posts':posts, 'subjects':subjects}
-    return render(request, template_name, context)
+        posts = Post.objects.filter(tag=tag).order_by('pk')
+        tag_speciality = Tag.objects.filter(is_degree=True)
+        context = {'tag': tag, 'tag_speciality': tag_speciality, 'posts': posts, 'subjects': subjects}
+        return render(request, template_name, context)
+    else:
+        return redirect('accounts:login')
+
 
 
 class SearchView(TemplateView):
+
     template_name = 'home/search.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.is_staff:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('accounts:login')
     def get_posts(self):
         searchInput = self.request.GET.get('searchinput')
         if not searchInput:
@@ -119,30 +136,38 @@ def delete_tagdetail_view(request,pk,detail_pk):
         return redirect('home:home')
 
 def create_post_view(request):
-    template_name = 'home/home_post.html'
-    form = CreatePostForm()
-    tag_speciality = Tag.objects.filter(is_degree=True)
-    context = {'form': form, 'tag_speciality': tag_speciality}
-    return render(request, template_name, context)
+    if request.user.is_authenticated and request.user.is_staff:
+        template_name = 'home/home_post.html'
+        form = CreatePostForm()
+        tag_speciality = Tag.objects.filter(is_degree=True)
+        context = {'form': form, 'tag_speciality': tag_speciality}
+        return render(request, template_name, context)
+    else:
+        return redirect('accounts:login')
+
 
 class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, TemplateView):
     template_name = 'home/home.html'
+
     def post(self, *args, **kwargs):
-        print(self.request.POST)
-        if self.request.POST.get('createcomment'):
-            if kwargs['pk']:
-                print(kwargs['pk'])
-                self.save_comment(kwargs['pk'])
-        if self.request.POST.get('homepostform'):
-            self.save_homepost()
-        if self.request.POST.get('addtagdetail'):
-            self.save_tagdetail(kwargs['pk'])
-        if self.request.POST.get('edittagdetail'):
-            print(kwargs['detail_pk'])
-            self.edit_tagdetail(kwargs['pk'], kwargs['detail_pk'])
+        if self.request.user.is_staff and self.request.user.is_authenticated:
+            print(self.request.POST)
+            if self.request.POST.get('createcomment'):
+                if kwargs['pk']:
+                    print(kwargs['pk'])
+                    self.save_comment(kwargs['pk'])
+            if self.request.POST.get('homepostform'):
+                self.save_homepost()
+            if self.request.POST.get('addtagdetail'):
+                self.save_tagdetail(kwargs['pk'])
+            if self.request.POST.get('edittagdetail'):
+                print(kwargs['detail_pk'])
+                self.edit_tagdetail(kwargs['pk'], kwargs['detail_pk'])
 
+            return redirect('home:home')
+        else:
+            return redirect('accounts:login')
 
-        return redirect('home:home')
     def save_tagdetail(self, pk):
         print(self.request.POST)
         text_dict = self.clean_text(['heading', 'details'])

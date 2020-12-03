@@ -14,6 +14,11 @@ from django.core.files.storage import FileSystemStorage
 class ArchivePage(TemplateView):
     template_name = 'home/archie.html'
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.is_staff:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('accounts:login')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
@@ -147,6 +152,7 @@ class CleanImageMixin:
 
 
 class BookFormMixin(CleanImageMixin,CleanLinkMixin,CleanTextMixin):
+
     def save_book_form(self):
 
         textlist = ['book_name', 'subjecttag', 'latest', 'review']
@@ -219,8 +225,14 @@ class BookFormMixin(CleanImageMixin,CleanLinkMixin,CleanTextMixin):
 
 
 class ArchDetail(BookFormMixin,TemplateView):
+
     template_name = 'home/archdetail.html'
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.is_staff:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('accounts:login')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['subjects'] = list(Tag.objects.filter(is_degree = True, is_speciality = False))+ list(Tag.objects.filter(is_speciality = True))
@@ -239,14 +251,19 @@ class ArchDetail(BookFormMixin,TemplateView):
         return context
 
     def post(self, *args, **kwargs):
-        print(self.request.POST)
-        print(self.request.POST.get('image'))
-        if self.request.POST.get('addbookformbtn'):
-            self.save_book_form()
-        if self.request.POST.get('bookformbtn'):
-            self.edit_book_form()
+        if self.request.user.is_authenticated and self.request.user.is_staff:
+            print(self.request.POST)
+            print(self.request.POST.get('image'))
+            if self.request.POST.get('addbookformbtn'):
+                self.save_book_form()
+            if self.request.POST.get('bookformbtn'):
+                self.edit_book_form()
+            return redirect('archives:archdetail')
+        else:
+            return redirect('accounts:login')
 
-        return redirect('archives:archdetail')
+
+
 
 class Test(TemplateView):
     template_name = 'home/test.html'
@@ -259,7 +276,7 @@ class Test(TemplateView):
         return redirect('archives:test')
 
 def delete_book_view(request, pk):
-    if pk:
+    if pk and request.user.is_authenticated and request.user.is_admin:
         try:
             x = Book.objects.get(pk=pk)
             if x.user == request.user:
@@ -273,7 +290,7 @@ def delete_book_view(request, pk):
             return redirect('home:home')
 
 def delete_review_view(request, pk):
-    if pk:
+    if pk and request.user.is_authenticated and request.user.is_admin:
         try:
             x = Review.objects.get(pk=pk)
             if x.user == request.user:

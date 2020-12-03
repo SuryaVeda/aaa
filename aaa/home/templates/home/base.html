@@ -75,10 +75,11 @@ nav .dropdown {
     z-index: 1;
 }
 
-nav .dropdown:hover .dropdown:active {
+nav .dropdown:hover, .dropdown:active  {
     border-color: black;
     background-color: black;
     z-index: 1;
+     -webkit-user-select: none; -webkit-touch-callout: none;
 
 }
 
@@ -809,6 +810,7 @@ var degreeForm = document.getElementsByClassName('degree-form');
 var workForm = document.getElementsByClassName('work-form');
 var demodDetails = document.getElementsByClassName('demo-details');
 
+
 window.onclick = function () {
 
     if (!event.target.matches('.navbar')) {
@@ -834,6 +836,8 @@ window.onclick = function () {
     }
 };
 window.onload = function () {
+    document.getElementsByClassName('dropdown')[0].addEventListener("touchstart", function(){}, true);
+
     for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
         if (document.getElementsByClassName('comments')[i].clientHeight > 300 ) {
       console.log(true);
@@ -1054,7 +1058,6 @@ function addsubjectintro() {
 }
 
     </script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
 
 
 </head>
@@ -1076,6 +1079,7 @@ function addsubjectintro() {
     <div class="stacks" onclick="openmenu()">
         <img src="{% static 'home/images/stacks.png' %}" height="40px" width="40px">
     </div>
+    {% if request.user.is_authenticated and request.user.is_staff %}
       <a class="nav-link nav-item" href="{% url 'home:home' %}">Home</a>
     <div class="dropdown1" id = 'drop'>
         <button onmouseover="dropdownlist1(this);" class="dropdownbtn" >Sub specialities</button>
@@ -1093,9 +1097,10 @@ function addsubjectintro() {
       <a class="nav-item nav-link " href="{% url 'archives:home_archives'  %}">Archives</a>
 
     <a class="nav-item nav-link" href="{% url 'home:search' %}">Search</a>
-{%if request.user.is_authenticated %}
+{% endif %}
+    {%if request.user.is_authenticated %}
     <div class="dropdown" id="drop1" >
-        <button onclick="dropdownlist(this);" class="dropdownbtn" >P</button>
+        <button onmouseover="dropdownlist(this);" class="dropdownbtn" >P</button>
         <div class="dropdownlist">
             {%if request.user.is_authenticated %}
     <a class="nav-link nav-item myprof" href="{% url 'accounts:myprofile' %}"> myProfile </a>
@@ -1112,6 +1117,11 @@ function addsubjectintro() {
 {% endif %}
 </nav>
 <div class="empty"></div>
+{% if messages %}
+    {% for message in messages %}
+    <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
+    {% endfor %}
+    {% endif %}
 {% block main%}
 {% endblock %}
 

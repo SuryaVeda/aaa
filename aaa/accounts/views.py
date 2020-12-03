@@ -3,7 +3,7 @@ from .forms import *
 from .models import Profile,User,ProfileDetail, Work, Degree, MedicalCollege
 from home.models import Tag, ImageAdd, PostLink
 from home.mixins import *
-
+from home.decorators import staff_required
 from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -18,8 +18,10 @@ from django.core.validators import URLValidator, EmailValidator
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 
 # Create your views here.
+
 def login_view(request):
     template_name = 'accounts/login.html'
     form = LoginForm()
@@ -196,9 +198,13 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
             return redirect('accounts:staff')
         return self.user
 
-
 class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixin, ContactFormMixin, TemplateView):
     template_name = 'accounts/profile.html'
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.is_staff:
+            return render(request, self.template_name, self.get_context_data())
+        else:
+            return redirect('accounts:login')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = Profile.objects.get(user=self.request.user)
@@ -208,7 +214,7 @@ class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixi
         return context
 
     def post(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and self.request.is_staff:
             if self.request.method == 'POST':
                 print(self.request.POST)
                 self.myprofile= Profile.objects.get(user=self.request.user)
@@ -233,5 +239,5 @@ class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixi
                 print('not a post request')
                 return redirect('accounts:myprofile')
         else:
-            return redirect('accounts:myprofile')
+            return redirect('accounts:login')
 

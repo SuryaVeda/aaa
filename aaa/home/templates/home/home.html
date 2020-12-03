@@ -4,8 +4,15 @@
 
 
 <div class="home-container">
+    {% if request.user.is_authenticated and request.user.is_staff %}
+    {% if messages %}
+    {% for message in messages %}
+    <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
+    {% endfor %}
+    {% endif %}
     <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
-    {% if posts %}
+    {% endif %}
+    {% if posts and request.user.is_authenticated and request.user.is_staff %}
     {% for post in posts %}
 
     <div class="home-post">
