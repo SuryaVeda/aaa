@@ -59,7 +59,7 @@ else:
             'PORT': '5432',
         }
     }
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'allaboutanaesthesia.co', '68.183.94.63']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost','www.allaboutanaesthesia.co', 'allaboutanaesthesia.co', '68.183.94.63']
 
 AUTH_USER_MODEL = 'accounts.User'
 # Application definition
