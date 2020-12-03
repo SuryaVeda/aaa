@@ -23,7 +23,7 @@ print(BASE_DIR)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
@@ -51,7 +51,7 @@ else:
             'PORT': '5432',
         }
     }
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'allaboutanaesthesia.co']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'allaboutanaesthesia.co', '68.183.94.63']
 
 AUTH_USER_MODEL = 'accounts.User'
 # Application definition
