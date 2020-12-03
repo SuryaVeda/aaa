@@ -34,7 +34,7 @@
     </div>
       <a class="nav-link nav-item" href="{% url 'home:home' %}">Home</a>
     <div class="dropdown1" id = 'drop'>
-        <button onclick="dropdownlist1(this);" class="dropdownbtn" >Sub specialities</button>
+        <button onmouseover="dropdownlist1(this);" class="dropdownbtn" >Sub specialities</button>
         <div class="dropdownlist1">
             {% if tag_speciality %}
             {% for tag in tag_speciality %}
