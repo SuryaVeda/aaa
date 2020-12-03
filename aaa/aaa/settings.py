@@ -43,6 +43,7 @@ else:
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     MEDIA_URL = '/media/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    print(STATIC_ROOT)
     STATIC_URL = '/static/'
     FILE_UPLOAD_PERMISSIONS = 0o640
     SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
