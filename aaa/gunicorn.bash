@@ -23,10 +23,8 @@ export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
 export PYTHONPATH=$DJANGODIR:$PYTHONPATH
 # Create the run directory if it doesn't exist
 $LOGFILE=/home/sk/aaa/logs/gunicorn.log
-RUNDIR=$(dirname $SOCKFILE)
-LOGDIR=$(dirname $LOGFILE)
-test -d $RUNDIR || mkdir -p $RUNDIR
-test -d $LOGDIR || mkdir -p $LOGDIR
+
+
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
 exec ../bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
