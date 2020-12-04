@@ -35,7 +35,7 @@
     <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{post.pk}})">Delete post</a></p>
     {%endif %}
         <div class="home-post-heading">
-            <h3>{{post.heading}}</h3>
+            <h3>{{post.heading | linebreaks }}</h3>
             <p style="color: #000066"><b>{{post.user.username}} | {{post.posted_on}}</b></p>
 
 
