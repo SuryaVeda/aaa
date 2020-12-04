@@ -214,7 +214,7 @@ class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixi
         return context
 
     def post(self, *args, **kwargs):
-        if self.request.user.is_authenticated and self.request.is_staff:
+        if self.request.user.is_authenticated and self.request.user.is_staff:
             if self.request.method == 'POST':
                 print(self.request.POST)
                 self.myprofile= Profile.objects.get(user=self.request.user)

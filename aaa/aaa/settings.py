@@ -23,8 +23,15 @@ print(BASE_DIR)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
+x = os.environ['DEBUG']
+print(x)
+print(type(x))
+if x == '0':
+    DEBUG=False
+else:
+    DEBUG=True
+print(type(DEBUG))
+print(DEBUG)
 if DEBUG:
     SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
     DATABASES = {

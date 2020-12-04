@@ -162,11 +162,13 @@
         <h2 style="text-decoration: underline; font-weight: 600; color: #000066;">{{i.heading}}</h2>
             <script>
                 var action{{i.pk}} = "{% url 'home:edittagdetail' tag.pk i.pk %}";
+                var headingsubjectintro = '{{i.heading}}';
+                var detailsubjectintro =`{{i.details}}`;
                 console.log(action{{i.pk}});
             </script>
             {% if request.user.is_authenticated and request.user.is_admin  %}
             <script>var deleteurl{{i.pk}} = '{% url "home:deletetagdetail" tag.pk i.pk %}'</script>
-            <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro(action{{i.pk}}, '{{i.heading}}', '{{i.details}}') ">Edit</a> | <a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{i.pk}})">Remove detail </a></p>
+            <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro(action{{i.pk}}, headingsubjectintro, detailsubjectintro) ">Edit</a> | <a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{i.pk}})">Remove detail </a></p>
             {% endif %}
         <p></p>
             {% if i.details %}
