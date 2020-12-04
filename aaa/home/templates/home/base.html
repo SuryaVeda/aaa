@@ -30,10 +30,10 @@
 
 .top {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     background-color: #E6FAFF;
     margin: 0;
-    height:200px;
+    height:auto;
     width:100%;
 }
 
@@ -43,8 +43,15 @@
     font-family: 'Heebo', sans-serif;
     letter-spacing: 13px;
     margin: 0;
-    line-height: 180px;
+    padding: 0;
+    line-height: 150px;
     font-size: 150px;
+}
+.top p {
+    margin-top: 0;
+    margin-bottom: 10px ;
+    margin-left: 5px;
+    line-height: 30px;
 }
 
 nav .stacks{
@@ -686,13 +693,17 @@ footer .neeche{
 
     @media screen and (max-width: 800px) {
         /*  Classes and tags for base.html   */
+
         .top h1 {
     letter-spacing: 5px;
     margin: 0;
-    line-height: 100px;
+    line-height: 80px;
     font-size: 80px;
             align-self: center;
 }
+        .top p{
+            align-self: center;
+        }
         .home-post-img {
             display: flex;
             flex-flow: column wrap;
@@ -705,7 +716,6 @@ footer .neeche{
             flex-flow: column wrap;
             justify-content: space-between;
             align-items: flex-start;
-            border: 1px solid red;
 
         }
 
@@ -1050,6 +1060,7 @@ function addsubjectintro() {
 <h1>
    AAA
 </h1>
+    <p style="font-size: 35px; color: #000066">All About Anaesthesia</p>
 </div>
 
 <nav  id="navy">
@@ -1063,7 +1074,7 @@ function addsubjectintro() {
     <div style=" margin: 0" class="stacks" onclick="openmenu()">
         <img src="{% static 'home/images/stacks.png' %}" height="40px" width="40px">
     </div>
-    {% if request.user.is_authenticated and request.user.is_staff %}
+    {% if request.user %}
       <a class="nav-link nav-item" href="{% url 'home:home' %}">Home</a>
     <div class="dropdown1" >
     <a  onclick=" dropdownlistfunction()" class="nav-item nav-link" >Sub specialities</a>

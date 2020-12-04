@@ -14,12 +14,11 @@ from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 def home_view(request):
-    if request.user.is_authenticated:
+    if request.user:
         template_name = 'home/home.html'
         posts = Post.objects.order_by('pk')
-        users = User.objects.all()
         tag_speciality = Tag.objects.filter(is_speciality=True)
-        context = {'posts': posts, 'users': users, 'tag_speciality': tag_speciality}
+        context = {'posts': posts,  'tag_speciality': tag_speciality}
         return render(request, template_name, context)
     else:
         return redirect('accounts:login')
@@ -28,7 +27,7 @@ def home_view(request):
 
 
 def speciality_view(request, speciality_type):
-    if request.user.is_authenticated:
+    if request.user:
         template_name = 'home/speciality_tag.html'
         tag = Tag.objects.get(name=speciality_type)
         subjects = list(Tag.objects.filter(is_degree=True, is_speciality=False)) + list(
@@ -48,7 +47,7 @@ class SearchView(TemplateView):
     template_name = 'home/search.html'
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user:
             return render(request, self.template_name, self.get_context_data())
         else:
             return redirect('accounts:login')
