@@ -13,7 +13,7 @@ function a (){
 python manage.py $1 $2
 }
 function push() {
-cd ..
+cd ~/desktop/aaa
 git add aaa
 git commit -m 'x'
 git push origin main
