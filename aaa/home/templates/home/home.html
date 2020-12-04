@@ -28,7 +28,7 @@
             {% endfor %}
         </div>
             {% endif %}
-        {% if request.user.is_authenticated and request.user == post.user%}
+        {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin %}
     <script>
         var delpost{{post.pk}} = '{% url "home:deletepost" post.pk %}'
     </script>
