@@ -83,7 +83,7 @@ def delete_post_view(request,pk):
     if pk and request.user.is_authenticated:
         try:
             x = Post.objects.get(pk = pk)
-            if x.user == request.user:
+            if x.user == request.user or request.user.is_admin:
                 x.delete()
             else:
                 messages.error(request, 'not a valid user')
@@ -99,7 +99,7 @@ def delete_comment_view(request,pk):
     if pk and request.user.is_authenticated:
         try:
             x = Comment.objects.get(pk = pk)
-            if x.user == request.user:
+            if x.user == request.user or request.user.is_admin:
                 x.delete()
             else:
                 messages.error(request, 'not a valid user')
@@ -112,7 +112,7 @@ def delete_comment_view(request,pk):
 
         return redirect('home:home')
 def delete_tagdetail_view(request,pk,detail_pk):
-    if pk and request.user.is_authenticated:
+    if pk and request.user.is_authenticated and request.user.is_admin:
         try:
             print(type(pk))
             y = Tag.objects.get(pk = pk)

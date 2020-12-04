@@ -279,7 +279,7 @@ def delete_book_view(request, pk):
     if pk and request.user.is_authenticated and request.user.is_admin:
         try:
             x = Book.objects.get(pk=pk)
-            if x.user == request.user:
+            if x.user == request.user or request.user.is_admin:
                 x.delete()
             else:
                 messages.error(request, 'not a valid user')
@@ -293,7 +293,7 @@ def delete_review_view(request, pk):
     if pk and request.user.is_authenticated and request.user.is_admin:
         try:
             x = Review.objects.get(pk=pk)
-            if x.user == request.user:
+            if x.user == request.user or request.user.is_admin:
                 x.delete()
             else:
                 messages.error(request, 'not a valid user')
