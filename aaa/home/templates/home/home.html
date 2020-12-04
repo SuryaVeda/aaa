@@ -107,7 +107,7 @@
         </div>
         {%endfor%}
         {% endif  %}
-        
+
                 </div>
         {% endfor %}
         </div>
@@ -116,11 +116,11 @@
         <div class="comment-create-form">
          <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
                 {% csrf_token %}
-            <p>Add image: <input type="file" name="image" ></p>
+            <p>Add image: <input type="hidden" name="image" ></p>
 <br>
             <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
     <br>
-            <p><input name="pdf_name" type="text" placeholder="Add pdf name" maxlength="20" value="">: <input type="file" name="pdf"></p>
+            <p><input name="pdf_name" type="hidden" placeholder="Add pdf name" maxlength="20" value="">: <input type="hidden" name="pdf"></p>
              <div id="addlinkform{{post.pk}}">
                  <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
              </div>
