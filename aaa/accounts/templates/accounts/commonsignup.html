@@ -9,20 +9,45 @@
 {% endfor %}
 {% endif %}
 {% if regular == 'True' %}
-<form method="post" action="{% url 'accounts:staff' %}" enctype="application/x-www-form-urlencoded">
+<style>
+    .extradetails{
+        display: flex;
+        flex-flow: column wrap;
+
+
+    }
+    .extradetails input {
+        font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 200px ;
+    height:30px;
+    }
+    .extradetails button{
+        align-self: center;
+        border-radius: 4px;
+    width:65px;
+    height:40px;
+    background-color: #000066;
+    color: white;
+
+    }
+</style>
+<div class="extradetails">
+    <p style="color: red; font-weight: 600;">This website is only intended for residents of Anaesthesia.</p>
+<form style="display: flex; flex-flow: column wrap;"  method="post" action="{% url 'accounts:staff' %}" enctype="application/x-www-form-urlencoded">
 {% csrf_token %}
     {% if google == 'True' %}
 
 <p>Type a Password for your account: <input type="password" name="password" maxlength="20"></p>
 {% endif %}
- <p>This website is only intended for residents of Anaesthesia.</p>
+
 <p>Qualification:<select name = 'degreetag'  required><option type="text" value="MBBS" label="MBBS" ></option></select>done at <input type="text" name="college"  placeholder=" Medical college name" required> </p>
 <p>Qualification:<select name = 'degreetag'  required><option type="text" value="GENERAL ANAESTHESIA" label="MD ANAESTHESIA" ></option></select>pursuing/done at <input type="text" name="college"  placeholder=" Medical college name" required> </p>
 <p>Final year of MD: <input type="text" name="finalyear" placeholder="Final year of MD(expected/done)"></p>
 <p>Currently working as <input maxlength="50" type="text" name="position" placeholder=" Position at work" required> <br> <br>at <input type="text" name="hospital" placeholder=" Hospital name"  required ></p>
 <button type="submit" name="profileformbtn" value="profileformdetails">Submit</button>
 </form>
-
+</div>
 {% else %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/CSS/base.css' %}">
 
