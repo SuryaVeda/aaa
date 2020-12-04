@@ -26,10 +26,10 @@ print(BASE_DIR)
 x = os.environ['DEBUG']
 print(x)
 print(type(x))
-if x == '0':
-    DEBUG=False
-else:
+if x == '1':
     DEBUG=True
+else:
+    DEBUG=False
 print(type(DEBUG))
 print(DEBUG)
 if DEBUG:
