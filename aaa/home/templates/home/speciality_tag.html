@@ -213,7 +213,7 @@
         <form style="display: none;" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <p><input placeholder="Add heading.." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
-                <p><textarea   required name="details" type="text" maxlength="50" >{{i.details}} </textarea></p>
+                <p><textarea   required name="details" type="text" maxlength="5000" >{{i.details}} </textarea></p>
 
                 <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="edittagdetail" type="submit" value="profdetails">Submit</button>
             </form>
@@ -222,7 +222,7 @@
              {% csrf_token %}
 
               <p><input placeholder="Add heading..." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value=""></p> <br>
-                <p><textarea placeholder="Add details..." required name="details" type="text" maxlength="50" > </textarea></p>
+                <p><textarea placeholder="Add details..." required name="details" type="text" maxlength="500" > </textarea></p>
 
                 <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="addtagdetail" type="submit" value="profdetails">Submit</button>
 
