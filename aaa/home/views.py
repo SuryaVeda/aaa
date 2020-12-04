@@ -34,7 +34,7 @@ def speciality_view(request, speciality_type):
             Tag.objects.filter(is_speciality=True))
 
         posts = Post.objects.filter(tag=tag).order_by('pk')
-        tag_speciality = Tag.objects.filter(is_degree=True)
+        tag_speciality = Tag.objects.filter(is_speciality=True)
         context = {'tag': tag, 'tag_speciality': tag_speciality, 'posts': posts, 'subjects': subjects}
         return render(request, template_name, context)
     else:
