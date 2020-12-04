@@ -116,7 +116,7 @@
         <div class="comment-create-form">
          <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
                 {% csrf_token %}
-            <p>Add image: <input type="hidden" name="image" ></p>
+            <p> <input type="hidden" name="image" ></p>
 <br>
             <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
     <br>
