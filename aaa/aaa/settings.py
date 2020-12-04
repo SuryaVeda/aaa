@@ -23,12 +23,15 @@ print(BASE_DIR)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-x = os.environ['DEBUG']
-print(x)
-print(type(x))
-if x == '1':
-    DEBUG=True
-else:
+try:
+    x = os.environ['DEBUG']
+    print(x)
+    print(type(x))
+    if x == '1':
+        DEBUG = True
+    else:
+        DEBUG = False
+except:
     DEBUG=False
 print(type(DEBUG))
 print(DEBUG)
