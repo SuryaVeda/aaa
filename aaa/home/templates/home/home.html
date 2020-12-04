@@ -20,9 +20,9 @@
         <div class="tags">
             {% for tag in post.get_tags %}
             {% if tag.is_degree %}
-            <p class="degree"><a style="text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p> <br>
+            <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
             {% else %}
-            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" id = '{{tag.name}}'><a style="text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p> <br>
+            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" id = '{{tag.name}}'><a style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
 
             {% endif %}
             {% endfor %}
@@ -154,10 +154,6 @@
 
 
 
-
-    {% for message in messages %}
-      <p style="color: red; font-weight: 400">{{message}}</p>
-      {% endfor %}
 
 
     </div>
