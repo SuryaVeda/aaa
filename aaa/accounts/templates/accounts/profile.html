@@ -42,12 +42,11 @@
 
     <div class="profilePic">
         {% if profile.get_profilepic %}
-    <img src="/media/{{profile.get_profilepic}}" height="190px" width="190px">
-    {% else %}
-    <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" height="190px" width="190px">
+    <a href="{% url 'home:home' %}"><img src="/media/{{profile.get_profilepic}}" height="190px" width="190px"></a>
+        {% else %}
+    <a href="{% url 'home:home' %}"><img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" height="190px" width="190px"></a>
     {% endif %}
     </div>
-
 </div>
 
 <div class="detail-section">
@@ -97,7 +96,7 @@
         <div class="demo-details-form">
 
                 <div class="personal-form">
-                     <form method="post" >
+                     <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                  {% if profile.name %}
         <p>Name: <input maxlength="50" type="text" name="name" value="{{profile.name}}" required></p>
@@ -110,7 +109,10 @@
             {% else %}
             <p><input maxlength="50" type="text" name="nationality"  placeholder="Nationality.." required ></p>
      {% endif %}
-                    <button type="submit" name="personalformbtn" value="personalformdetails">Submit</button>
+             <p>Add background pic: <input type="file" name = 'profileimage'></p>
+                <p>Add proilepic pic: <input type="file" name = 'backgroundimage'></p>
+
+                    <button style="border-radius: 4px;width:65px;height:40px;background-color: #000066;color: white;" type="submit" name="personalformbtn" value="personalformdetails">Submit</button>
 
                </form>
                 </div>
@@ -122,7 +124,7 @@
 
             <p>Qualification:<select name = 'degreetag'  required>{% if degree_tags %}{% for tag in degree_tags %}<option value="{{tag.name}}" label="{{tag.name}}" ></option>{%endfor %}{% endif %}</select>done at <input type="text" name="college"  placeholder=" Medical college name" required> <a style="color: red; font-weight: 800;" onclick="degreeform()">Add more qualifications</a></p>
 
-                <button type="submit" name="degreeformbtn" value="degreeformdetails">Submit</button>
+                <button style="border-radius: 4px;width:65px;height:40px;background-color: #000066;color: white;"  type="submit" name="degreeformbtn" value="degreeformdetails">Submit</button>
 
                     </form>
                 </div>
@@ -140,7 +142,7 @@
                     {% else %}
         <p>Currently working as <input maxlength="50" type="text" name="position" placeholder=" Position at work" required> <br> <br>at <input type="text" name="hospital" placeholder=" Hospital name"  required ></p>
      {% endif %}
-                <button type="submit" name="workformbtn" value="workform">Submit</button>
+                <button style="border-radius: 4px;width:65px;height:40px;background-color: #000066;color: white;"  type="submit" name="workformbtn" value="workform">Submit</button>
 
                     </form>
                 </div>
@@ -157,11 +159,7 @@
         <a onclick="showeditforms()">Edit</a>
 
     <div class="contact-details">
-        {% if messages %}
-        {% for message in messages %}
-        <p style="color:red;"><b>{{message}}</b></p>
-        {% endfor %}
-        {%endif %}
+
 
          {% if profile.get_contact %}
         {% for key, value in profile.get_contact.items %}
@@ -185,7 +183,7 @@
                 {% csrf_token %}
         {% if profile.get_links %}
         {% for i in profile.get_links %}
-          <p> <input maxlength="50" type="text" name="link_name" value="{{i.link_name}}" required > : <input maxlength="1000" type="url" name="link" value="{{i.link}}" required></p>
+          <p> <input maxlength="50" type="text" name="link_name" value="{{i.link_name}}"  > : <input maxlength="1000" type="url" name="link" value="{{i.link}}" ></p>
             {% endfor %}
             <p style="text-decoration: underline; color: blue;" onclick="addnewforms()">Add more links</p>
             <div id="addlinkform">
@@ -202,7 +200,7 @@
         {% else %}
             <p>Phone: <input maxlength="10" type="text" name="phone" placeholder="Phone number,"> </p>
      {% endif %}
-                <button name="contact_form_button" type="submit" value="contact_form">Submit</button>
+                <button style="border-radius: 4px;width:65px;height:40px;background-color: #000066;color: white;"  name="contact_form_button" type="submit" value="contact_form">Submit</button>
         </form>
         </div>
 
@@ -211,16 +209,7 @@
 
 
     <div class="cv">
-        {% if messages %}
-        {% for message in messages %}
-        <p style="color:red;"><b>{{message}}</b></p>
-        {% endfor %}
-        {%endif %}
-            {% if profiledetailform.errors %}
-        {% for error in profiledetailform.errors %}
-        <p style="color:red;"><b>{{error}}</b></p>
-        {% endfor %}
-        {%endif %}
+
 
         {% if profile.get_details %}
         {% for det in profile.get_details %}
@@ -233,7 +222,7 @@
             <form style="display: none" id = 'cv-details-{{det.heading}}' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <p><textarea required name="{{det.heading}}" type="text" maxlength="1000" rows = "15" cols="80" >{{det.details}}</textarea></p>
-                <button name="profdetailsform" type="submit" value="profdetails">Submit</button>
+                <button style="border-radius: 4px;width:65px;height:40px;background-color: #000066;color: white;" name="profdetailsform" type="submit" value="profdetails">Submit</button>
             </form>
            <div id="details-text-area-{{det.heading}}">
                 {% if det.details %}

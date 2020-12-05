@@ -174,7 +174,8 @@ class ProfileDetail(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.SET_NULL, null=True, blank=True)
-    pic = models.ManyToManyField('home.ImageAdd', blank=True)
+    profilepic = models.ImageField(blank=True, null = True, upload_to = 'profilepic/%Y/%m/$D/')
+    backgroundpic = models.ImageField(blank=True, null = True, upload_to = 'backgroundpic/%Y/%m/$D/')
     name = models.CharField(max_length=50, null=True, blank=True)
     dob = models.DateField(blank=True, null=True)
     nationality = models.CharField(max_length=50, null=True, blank=True)
@@ -193,6 +194,22 @@ class Profile(models.Model):
         except:
             return 'some problem in getting user'
 
+    def compressImage(self, image):
+        im = Image.open(image)
+        output = BytesIO()
+        im = im.resize((900, 600))
+        im.save(output, format='JPEG', quality=60)
+        output.seek(0)
+        newimage = InMemoryUploadedFile(output, 'ImageField', '%s.jpg' % image.name.split('.')[0], 'image/jpeg',
+                                        sys.getsizeof(output), None)
+        return newimage
+
+    def save(self, *args, **kwargs):
+        if self.backgroundpic:
+            self.backgroundpic = self.compressImage(self.backgroundpic)
+        if self.profilepic:
+            self.profilepic = self.compressImage(self.profilepic)
+        super(Profile, self).save(*args, **kwargs)
 
     def get_work(self):
         a = self.work.all()
@@ -260,15 +277,15 @@ class Profile(models.Model):
         return e
     def get_backgroundpic(self):
         try:
-            a = self.pic.get(name='backgroundpic')
-            return a.img
+            a = self.profilepic
+            return a
         except:
             return False
 
     def get_profilepic(self):
         try:
-            a = self.pic.get(name='profilepic')
-            return a.img
+            a = self.backgroundpic
+            return a
         except:
             return False
 

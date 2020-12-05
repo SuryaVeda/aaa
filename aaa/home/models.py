@@ -71,7 +71,7 @@ class Tag(models.Model):
             return False
 
 class Comment(models.Model):
-    date = models.DateTimeField(default=timezone.now())
+    date = models.DateTimeField(default=timezone.make_aware(datetime.datetime.now(), timezone.get_default_timezone()))
     user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, blank = True )
     text = models.TextField(max_length=500, blank=True, null=True)
     img = models.ImageField(blank=True, null = True, upload_to = 'commentimages/%Y/%m/$D/')
@@ -121,7 +121,7 @@ class Comment(models.Model):
 
 
 class Post(models.Model):
-    date = models.DateTimeField(default=timezone.now())
+    date = models.DateTimeField(auto_now_add=True,auto_now=False, null=True)
     user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, blank = True )
 
     heading = models.CharField(max_length=1000, null=False, blank=False)
@@ -139,7 +139,7 @@ class Post(models.Model):
             elif self.user:
                 return self.user.username
             elif self.date:
-                return self.posted_on()
+                return self.posted_on
             else:
                 return 'no heading'
         except:
@@ -181,8 +181,14 @@ class Post(models.Model):
         else:
             return a
 
+    @property
     def posted_on(self):
-        return self.date.strftime('%d %b %Y %I %M %p')
+
+        try:
+            x = '{0}  |  {1} '.format(self.user.username, self.date.strftime('%d %b %Y %I %M %p'))
+            return x
+        except:
+            return 'Group Admin'
 
 
 

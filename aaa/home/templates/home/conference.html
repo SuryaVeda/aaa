@@ -1,8 +1,6 @@
 {% extends 'home/base.html' %}
 {% load static %}
-
 {% block main %}
-
 
 <div class="home-container">
     {% if request.user.is_authenticated and request.user.is_staff %}
@@ -148,10 +146,4 @@
 
 
     </div>
-
-
-
-
-
-
 {% endblock %}

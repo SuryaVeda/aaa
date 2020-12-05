@@ -6,7 +6,7 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files import File
-import sys,os
+import sys,os, datetime
 
 
 # Create your models here.
@@ -80,7 +80,7 @@ class Book(models.Model):
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, blank=True)
-    date = models.DateTimeField(default=timezone.now())
+    date = models.DateTimeField(default=timezone.make_aware(datetime.datetime.now(), timezone.get_default_timezone()))
     details = models.CharField(max_length=2000, blank=True, null=True)
 
     def __str__(self):

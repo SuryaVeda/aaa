@@ -1093,7 +1093,7 @@ function addsubjectintro() {
         </div>
     </div>
 
-      <a class="nav-link nav-item" href="#">Conferences</a>
+      <a class="nav-link nav-item" href="{% url 'home:conf' %}">Conferences</a>
       <a class="nav-item nav-link " href="{% url 'archives:home_archives'  %}">Archives</a>
 
     <a class="nav-item nav-link" href="{% url 'home:search' %}">Search</a>
@@ -1117,11 +1117,7 @@ function addsubjectintro() {
 {% endif %}
 </nav>
 <div class="empty"></div>
-{% if messages %}
-    {% for message in messages %}
-    <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
-    {% endfor %}
-    {% endif %}
+
 {% block main%}
 {% endblock %}
 

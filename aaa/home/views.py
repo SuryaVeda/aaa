@@ -8,7 +8,7 @@ from .decorators import staff_required
 from django.utils import timezone
 from django.contrib import messages
 from django.views.generic import TemplateView
-import bleach
+import bleach, datetime
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
@@ -24,7 +24,10 @@ def home_view(request):
         return redirect('accounts:login')
 
 
-
+def show_conferences(request):
+    a= Tag.objects.get(name = 'Conferences')
+    posts = a.post_set.all().order_by('pk')
+    return render(request, 'home/conference.html', {'posts':posts})
 
 def speciality_view(request, speciality_type):
     if request.user:
@@ -159,9 +162,21 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                 self.save_homepost()
             if self.request.POST.get('addtagdetail'):
                 self.save_tagdetail(kwargs['pk'])
+                try:
+                    x = Tag.objects.get(pk=int(kwargs['pk']))
+                    return redirect('speciality', args = (x.name,))
+                except:
+                    return redirect('home:home')
+
             if self.request.POST.get('edittagdetail'):
                 print(kwargs['detail_pk'])
                 self.edit_tagdetail(kwargs['pk'], kwargs['detail_pk'])
+
+                try:
+                    x = Tag.objects.get(pk=int(kwargs['pk']))
+                    return redirect('speciality', args=(x.name,))
+                except:
+                    return redirect('home:home')
 
             return redirect('home:home')
         else:
@@ -229,10 +244,15 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
             if self.request.user.is_staff or self.request.user.is_admin:
                 form.save(commit=False)
                 form.user = self.request.user
-                form.date = timezone.now()
 
                 a = form.save(commit=True)
+                print (a)
+                print(a.user)
+                a.user = self.request.user
+                a.save()
+                print(a.user)
 
+                print(a.date)
                 if link_dict:
                     if link_dict['links']:
                         for i in link_dict['links']:
@@ -254,7 +274,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
         link_dict = self.clean_links()
         try:
             post = Post.objects.get(pk=pk)
-            x = Comment.objects.create(user=self.request.user, date=timezone.now())
+            x = Comment.objects.create(user=self.request.user)
             if not text_dict['text']:
                 messages.error(self.request, 'kindly enter comment text')
                 return False

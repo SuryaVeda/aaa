@@ -4,7 +4,7 @@ from .models import *
 from accounts.models import User, Profile
 from home.models import  Tag, PostLink
 from .forms import *
-import bleach
+import bleach, datetime
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
@@ -177,7 +177,7 @@ class BookFormMixin(CleanImageMixin,CleanLinkMixin,CleanTextMixin):
                     a.links.add(i)
 
             a.save()
-            x = Review.objects.create(user=self.request.user, book=a, date=timezone.now(), details=text_dict['review'])
+            x = Review.objects.create(user=self.request.user, book=a, date=timezone.make_aware(datetime.datetime.now(), timezone.get_default_timezone()), details=text_dict['review'])
 
 
         else:
@@ -216,7 +216,7 @@ class BookFormMixin(CleanImageMixin,CleanLinkMixin,CleanTextMixin):
                 x.details = text_dict['review']
                 x.save()
             except:
-                x= Review.objects.create(user=self.request.user, book=a, date=timezone.now(), details=text_dict['review'])
+                x= Review.objects.create(user=self.request.user, book=a, date=timezone.make_aware(datetime.datetime.now(), timezone.get_default_timezone()), details=text_dict['review'])
 
         else:
             messages.error(self.request, 'kindly fill form accurately')

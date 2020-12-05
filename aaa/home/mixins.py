@@ -220,16 +220,23 @@ class DegreeFormMixin:
 
 
 
-class PersonalFormMixin:
-    def validate_personal_form(self, name, nationality):
+class PersonalFormMixin(ValidateFileMixin):
+    def validate_personal_form(self, name, nationality, imagelist):
         if name:
             new_name = bleach.clean(name, strip=True)
         if nationality:
             new_nation = bleach.clean(nationality, strip=True)
+        imagedict = self.clean_file(imagelist)
 
         new_dic = {}
         new_dic['name']=new_name
         new_dic['nationality']=new_nation
+        print(imagedict)
+        try:
+            new_dic['profilepic'] = imagedict['profileimage']
+            new_dic['backgroundpic'] = imagedict['backgroundimage']
+        except:
+            pass
 
         return new_dic
     def save_personal_form(self):
@@ -238,7 +245,7 @@ class PersonalFormMixin:
 
         nationality = self.request.POST.get('nationality')
         if name and nationality:
-            personaldic = self.validate_personal_form(name, nationality)
+            personaldic = self.validate_personal_form(name, nationality, ['profileimage', 'backgroundimage'])
         else:
             messages.error(self.request, 'kindly enter both the fields')
             return False
@@ -249,7 +256,13 @@ class PersonalFormMixin:
             a = self.myprofile
             a.name = personaldic.get('name')
             a.nationality = personaldic.get('nationality')
-
+            try:
+                if personaldic.get('profilepic'):
+                    a.profilepic = personaldic.get('profilepic')
+                if personaldic.get('backgroundpic'):
+                    a.backgroundpic = personaldic.get('backgroundpic')
+            except:
+                pass
             a.save()
         except:
             pass
@@ -306,21 +319,24 @@ class ContactFormMixin:
             return False
         phone = self.request.POST.get('phone')
         contactdic = self.validate_contact_form(linkName, linkUrl, phone)
-        if contactdic.get('links'):
-            self.myprofile.links.clear()
-            for i in contactdic.get('links'):
-                try:
-                    PostLink.objects.filter(link=i[1], link_name=i[0]).delete()
-                except:
-                    pass
-                a = PostLink.objects.create(user=self.request.user, link=i[1], link_name=i[0])
-                self.myprofile.links.add(a)
+        try:
+            if contactdic.get('links'):
+                self.myprofile.links.clear()
+                for i in contactdic.get('links'):
+                    try:
+                        PostLink.objects.filter(link=i[1], link_name=i[0]).delete()
+                    except:
+                        pass
+                    a = PostLink.objects.create(user=self.request.user, link=i[1], link_name=i[0])
+                    self.myprofile.links.add(a)
+                    self.myprofile.save()
+            else:
+                pass
+            if contactdic.get('phone'):
+                self.myprofile.phone = contactdic.get('phone')
                 self.myprofile.save()
-        else:
-            pass
-        if contactdic.get('phone'):
-            self.myprofile.phone = contactdic.get('phone')
-            self.myprofile.save()
-        else:
+            else:
+                pass
+        except:
             pass
         return True
