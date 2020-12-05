@@ -1,18 +1,17 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block main %}
-
-
-{% if messages %}
-{% for message in messages %}
-<p>{{message}}</p>
-{% endfor %}
-{% endif %}
-{% if regular == 'True' %}
 <style>
+
     .extradetails{
         display: flex;
         flex-flow: column wrap;
+        background-color: white;
+        width: 50%;
+        border: 5px solid black;
+        margin: 0 auto;
+        align-items: center;
+        justify-content: center;
 
 
     }
@@ -32,29 +31,16 @@
     color: white;
 
     }
+    @media screen and (max-width: 800px) {
+        .extradetails {
+            width: 100%;
+        }
+    }
 </style>
-<div class="extradetails">
-    <p style="color: red; font-weight: 600;">This website is only intended for residents of Anaesthesia.</p>
-<form style="display: flex; flex-flow: column wrap;"  method="post" action="{% url 'accounts:staff' %}" enctype="application/x-www-form-urlencoded">
-{% csrf_token %}
-    {% if google == 'True' %}
+<div class="originalsignup">
 
-<p>Type a Password for your account: <input type="password" name="password" maxlength="20"></p>
-{% endif %}
 
-<p>Qualification:<select name = 'degreetag'  required><option type="text" value="MBBS" label="MBBS" ></option></select>done at <input type="text" name="college"  placeholder=" Medical college name" required> </p>
-<p>Qualification:<select name = 'degreetag'  required><option type="text" value="GENERAL ANAESTHESIA" label="MD ANAESTHESIA" ></option></select>pursuing/done at <input type="text" name="college"  placeholder=" Medical college name" required> </p>
-<p>Final year of MD: <input type="text" name="finalyear" placeholder="Final year of MD(expected/done)"></p>
-<p>Currently working as <input maxlength="50" type="text" name="position" placeholder=" Position at work" required> <br> <br>at <input type="text" name="hospital" placeholder=" Hospital name"  required ></p>
-<button type="submit" name="profileformbtn" value="profileformdetails">Submit</button>
-</form>
-</div>
-{% else %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/CSS/base.css' %}">
-
-<meta name="google-signin-client_id" content="1013516845533-j5e2jgv5d7fcqfhecd0ailf6nto35k1v.apps.googleusercontent.com">
-<div class="fullcover">
-    <div class="login">
+    <div class="extradetails">
 
     <h1>Sign Up</h1>
         {% if messages %}
@@ -62,65 +48,25 @@
       <p style="color: red; font-weight: 400; font-size: 14px;">{{message}}</p>
       {%endfor %}
   {% endif %}
-    <form  method="post" action="{%url 'accounts:staff'%}">
+    <form style="display: flex; flex-flow: column wrap;"  method="post" action="{% url 'accounts:staff' %}" enctype="application/x-www-form-urlencoded">
       {% csrf_token %}
-      <p>{{form.username}}</p>
-        {% if form.username.errors %}
-        {{form.username.errors}}
-        {%endif%}
-        <br>
-    <br>
- <p>{{form.email}}</p>
-{% if form.errors %}
-        {{form.email.errors}}
-        {%endif%}
-        <br>
-    <br>
+    <p style="color: red; font-weight: 600;">This website is only intended for residents of Anaesthesia.</p>
+        <p>Username: <input name="username" type="text" maxlength="20" value="{{username}}"></p>
+        <p>Email: <input name="email" type="email" maxlength="100" value="{{email}}"></p>
+<p>Type a Password for your account: <input type="password" name="password" maxlength="20"></p>
 
+<p>Qualification:<select name = 'degreetag'  required><option type="text" value="MBBS" label="MBBS" ></option></select>done at <input type="text" name="college"  placeholder=" Medical college name" required> </p>
+<p>Qualification:<select name = 'degreetag'  required><option type="text" value="GENERAL ANAESTHESIA" label="MD ANAESTHESIA" ></option></select>pursuing/done at <input type="text" name="college"  placeholder=" Medical college name" required> </p>
+<p>Final year of MD: <input type="text" name="finalyear" placeholder="Final year of MD(expected/done)"></p>
+<p>Currently working as <input maxlength="50" type="text" name="position" placeholder=" Position at work" required> <br> <br>at <input type="text" name="hospital" placeholder=" Hospital name"  required ></p>
+<button type="submit" name="profileformbtn" value="profileformdetails">Submit</button>
 
-
-      <button type="submit" name="signupbutton" value="signupform">submit</button>
     </form>
-    <p>Already a member. <a href="{% url 'accounts:login' %}">Log In</a> </p>
-    <p><b>Or</b></p>
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
-  </div>
+
 </div>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-          var newprofile = {name:profile.getName(), email:profile.getEmail(), image_url:profile.getImageUrl(), id_token :googleUser.getAuthResponse().id_token};
-        //console.log(newprofile);
-        var csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-        var myJson = JSON.stringify(newprofile);
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState ==4  && this.status == 302) {
-                var json = JSON.parse(this.responseText);
-                console.log(json.success);
-                window.location.href = json.success;
-            }
-        };
-
-        xhttp.open("POST", "{% url 'accounts:staff' %}", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("csrfmiddlewaretoken=" + csrf + "&profile="+ myJson);
-
-          //console.log(myJson);
-        // The ID token you need to pass to your backend:
-        // var id_token = googleUser.getAuthResponse().id_token;
-        // var json = JSON.stringify(profile);
-        //var url = 'https://mypassions.site/accounts/google?id_token=' + id_token+ '&profile=' + json;
-        //console.log(document.location.href = url);
-        //return document.location.href = url;
 
 
-      }
-    </script>
 
-{% endif %}
 
 
 

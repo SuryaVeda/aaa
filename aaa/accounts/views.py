@@ -65,7 +65,6 @@ def user_signout(request):
 
 class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
     template_name = 'accounts/commonsignup.html'
-    user = {}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -74,75 +73,95 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['google'] = self.google
-        context['regular'] = self.regular
-        if self.google =='False' and self.regular=='False':
-            context['form'] = StaffRegisterForm()
+        context['form'] = StaffRegisterForm()
 
         return context
     def get(self, request, *args, **kwargs):
-        jsonobj = self.request.GET.get('google_success')
-        if jsonobj:
-            self.regular = 'True'
-            self.google = 'True'
-            SignupView.user = json.loads(jsonobj)
-            print(SignupView.user)
 
-            return render(request, self.template_name, self.get_context_data())
-        else:
-            self.request= 'False'
-            self.google = 'False'
-            return render(request, self.template_name, self.get_context_data())
 
-    def post(self,*args,**kwargs):
-        if self.request.POST.get('profile'):
-            a = self.validate_google_login()
-            x = redirect('accounts:staff')
-            print(json.dumps(a))
-            url = x.url + '?google_success=' + json.dumps(a)
-            return JsonResponse(status=x.status_code, data={'success': url})
-
-        if self.request.POST.get('signupbutton'):
-            self.validate_native_signup()
-            self.regular = 'True'
-            self.google = 'False'
-            print('google signup successfull')
-            return render(self.request, self.template_name, self.get_context_data())
-        if self.request.POST.get('profileformbtn'):
-            print(self.request.POST)
-            print(SignupView.user)
+        if request.GET.get('email') and request.GET.get('username'):
+            email = request.GET.get('email')
             try:
-                password = self.request.POST.get('password')
-                if password:
-                    SignupView.user['password'] = password
+                User.objects.get(email=email)
+                messages.error(self.request, 'user with above email already exists!!, Kindly go to log in page')
+                return redirect('accounts:staff')
             except:
                 pass
+
+            username = request.GET.get('username')
+            context = {'email' : email, 'username':username}
+            return render(request, 'accounts/commonsignup.html', context)
+        elif request.GET.get('profile'):
+            user = self.validate_google_login()
+            x = redirect('/accounts/signup/{0}/{1}'.format(user['email'], user['username']))
+            return JsonResponse(status=x.status_code, data={'success': x.url})
+        else:
+
+            return render(request, 'accounts/signup.html', self.get_context_data())
+
+    def post(self,*args,**kwargs):
+
+        if self.request.POST.get('profileformbtn'):
+            print(self.request.POST)
+            user = {}
+            email = self.request.POST.get('email')
+            username = self.request.POST.get('username')
+            password = self.request.POST.get('password')
+
+            try:
+
+                if email and username and password:
+                    validate_email = EmailValidator()
+
+                    try:
+                        email = bleach.clean(email, strip=True)
+                        validate_email(email)
+                        username = bleach.clean(username, strip=True)
+                        password = bleach.clean(password, strip=True)
+                    except:
+                        messages.error(self.request, 'Enter email, username or password correctly.')
+                        return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
+
+                    user['email'] = email
+                    user['username'] = username
+                    user['password'] = password
+                else:
+                    messages.error(self.request, 'Enter username, email, password correctly.')
+                    return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
+            except:
+                messages.error(self.request, 'Enter username, email, password correctly.')
+                return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
             try:
                 degreelist = self.save_degree_form()
                 if not degreelist:
-                    return redirect('accounts:staff')
-                SignupView.user['degree'] = degreelist
+                    return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
+                user['degree'] = degreelist
             except:
                 messages.error(self.request, 'unable to save qualifications')
-                return redirect('accounts:staff')
+                return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
 
             try:
                 workobj = self.save_work_form()
                 if workobj:
-                    SignupView.user['work'] = workobj
+                    user['work'] = workobj
+                else:
+                    user['work'] = ''
 
             except:
-                pass
-            if SignupView.user['email'] and SignupView.user['password']:
-                usr = User.objects.create_staff(SignupView.user['email'], SignupView.user['username'],
-                                                SignupView.user['password'])
+                user['work'] = ''
+            if user['email'] and user['password'] and user['username']:
+                usr = User.objects.create_staff(user['email'], user['username'],
+                                                user['password'])
                 usr.staff = False
-                usr.username = SignupView.user['username']
+                usr.username = user['username']
                 usr.save()
                 profile = usr.save_profile
-                for i in SignupView.user['degree']:
-                    profile.degree.add(i)
-                profile.work.add(SignupView.user['work'])
+                for i in user['degree']:
+                    if i:
+                        profile.degree.add(i)
+                if user['work']:
+                    profile.work.add(user['work'])
+
                 profile.save()
                 return redirect('accounts:login')
             else:
@@ -158,15 +177,16 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
             print(name)
             print(email)
             if name and email:
+                user = {}
                 try:
                     User.objects.get(email=email)
                     messages.error(self.request, 'user with above email already exists!!, Kindly go to log in page')
                     x= redirect('accounts:login')
                     return JsonResponse(status=x.status_code, data={'success': x.url})
                 except:
-                    self.user['username'] = name
-                    self.user['email'] = email
-                    return self.user
+                    user['username'] = name
+                    user['email'] = email
+                    return user
             else:
                 x = redirect('accounts:staff')
                 print(x)
@@ -178,31 +198,6 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
             x = redirect('accounts:staff')
             return JsonResponse(status=x.status_code, data={'success': x.url})
 
-    def validate_native_signup(self):
-        validate_email = EmailValidator()
-        email = self.request.POST.get('email')
-        password = self.request.POST.get('password')
-        username = self.request.POST.get('username')
-        try:
-            validate_email(email)
-            try:
-                User.objects.get(email = email)
-                messages.error(self.request, 'user with above email already exists!!, Kindly go to log in page')
-                return redirect('accounts:staff')
-            except:
-                self.user['email'] = email
-                print(self.user)
-
-        except:
-            messages.error(self.request, 'Enter Valid email')
-            return redirect('accounts:staff')
-        if username and password:
-            self.user['username']=bleach.clean(username, strip=True)
-            self.user['password']= password
-        else:
-            messages.error(self.request, 'Enter Username and password correctly')
-            return redirect('accounts:staff')
-        return self.user
 
 class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixin, ContactFormMixin, TemplateView):
     template_name = 'accounts/profile.html'

@@ -17,30 +17,6 @@ class StaffRegisterForm(forms.ModelForm):
         self.fields['password'].widget.attrs['placeholder'] = 'Password'
 
 
-    def clean_email(self, email):
-        email = self.cleaned_data.get('email')
-        qs = User.objects.filter(email=email)
-        if qs.exists():
-            return email
-        else:
-            return False
-
-    def clean_password(self):
-        password = self.cleaned_data.get("password")
-
-        if password:
-            return password
-        else:
-            return False
-
-    @transaction.atomic
-    def save(self, commit=True):
-        user = super(StaffRegisterForm, self).save(commit = False)
-        user.set_password(self.cleaned_data['password1'])
-        user.staff = True
-        if commit:
-           user.save()
-        return user
 
 
 class AdminRegisterForm(UserCreationForm):
