@@ -23,6 +23,29 @@ print(BASE_DIR)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+print(type(DEBUG))
+print(DEBUG)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+print(STATIC_ROOT)
+STATIC_URL = '/static/'
+FILE_UPLOAD_PERMISSIONS = 0o640
+SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'aaa',
+        'USER': 'sk',
+        'PASSWORD': 'sk',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.allaboutanaesthesia.co', 'allaboutanaesthesia.co', '68.183.94.63']
+"""
+
 try:
     x = os.environ['DEBUG']
     print(x)
@@ -33,8 +56,6 @@ try:
         DEBUG = False
 except:
     DEBUG=False
-print(type(DEBUG))
-print(DEBUG)
 if DEBUG:
     SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
     DATABASES = {
@@ -72,7 +93,7 @@ else:
         }
     }
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost','www.allaboutanaesthesia.co', 'allaboutanaesthesia.co', '68.183.94.63']
-
+"""
 AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
