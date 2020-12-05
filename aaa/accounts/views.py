@@ -91,10 +91,7 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
             username = request.GET.get('username')
             context = {'email' : email, 'username':username}
             return render(request, 'accounts/commonsignup.html', context)
-        elif request.GET.get('profile'):
-            user = self.validate_google_login()
-            x = redirect('/accounts/signup/{0}/{1}'.format(user['email'], user['username']))
-            return JsonResponse(status=x.status_code, data={'success': x.url})
+
         else:
 
             return render(request, 'accounts/signup.html', self.get_context_data())
@@ -168,41 +165,12 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
                 messages.error(self.request, 'Invalid user details')
                 return redirect('accounts:staff')
 
-    def validate_google_login(self):
-        try:
-            profile = self.request.POST.get('profile')
-            j = json.loads(profile)
-            name = j["name"]
-            email = j["email"]
-            print(name)
-            print(email)
-            if name and email:
-                user = {}
-                try:
-                    User.objects.get(email=email)
-                    messages.error(self.request, 'user with above email already exists!!, Kindly go to log in page')
-                    x= redirect('accounts:login')
-                    return JsonResponse(status=x.status_code, data={'success': x.url})
-                except:
-                    user['username'] = name
-                    user['email'] = email
-                    return user
-            else:
-                x = redirect('accounts:staff')
-                print(x)
-                return JsonResponse(status=x.status_code, data={'success': x.url})
-
-
-        except:
-            messages.error(self.request, 'Unable to validate your google details. Kindly signup from the website.')
-            x = redirect('accounts:staff')
-            return JsonResponse(status=x.status_code, data={'success': x.url})
 
 
 class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixin, ContactFormMixin, TemplateView):
     template_name = 'accounts/profile.html'
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.is_staff:
+        if request.user.is_authenticated :
             return render(request, self.template_name, self.get_context_data())
         else:
             return redirect('accounts:login')

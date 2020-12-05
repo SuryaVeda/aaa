@@ -59,28 +59,42 @@
 
     <div class="demo">
         <h4> Personal</h4>
+        {% if request.user.is_staff %}
         <a style="color: red; font-weight: 800;" onclick="personalform()">Edit</a>
+            {% endif %}
 
         <div class="demo-details">
          {% if profile.name %}
         <p>Name: {{profile.name}}</p>
             {% else %}
+
+
+            {% if request.user.is_staff %}
             <p>Name: <a style="color: red; font-weight: 800;" onclick="personalform()">Add name</a></p>
+            {% endif %}
      {% endif %}
 
             {% if profile.nationality %}
         <p>Nationality: {{profile.nationality}}</p>
             {% else %}
+            {% if request.user.is_staff %}
             <p>Nationality: <a style="color: red; font-weight: 800;" onclick="personalform()">Add nationality</a></p>
+            {% endif %}
+
+
      {% endif %}
 
             {% if profile.get_degrees %}
+            {% if request.user.is_staff %}
             <a style="color: red; font-weight: 800;" onclick="degreeform()">Add more qualifications</a> <br>
+            {% endif %}
             {% for d in profile.get_degrees %}
         <p>{{d.get_name}} <br>at {{d.get_college}} </p>
             {% endfor %}
             {% else %}
+            {% if request.user.is_staff %}
             <p>Qualification: <a style="color: red; font-weight: 800;" onclick="degreeform()">Add qualification</a></p>
+            {% endif %}
      {% endif %}
 
             {% if profile.current_work %}
@@ -88,7 +102,9 @@
         <p>Currently working as <br> {{i.position}} <br>at {{i.hospital.name}} </p>
             {% endfor %}
             {% else %}
+            {% if request.user.is_staff %}
             <p>Working at   <a style="color: red; font-weight: 800;" onclick="workform()">Add work position</a></p>
+            {% endif %}
      {% endif %}
 
 
@@ -212,13 +228,18 @@
 
 
         {% if profile.get_details %}
+        {% if not request.user.is_staff %}
+        <p style="font-size: 20px; color: red;font-weight: 700;">You need to be authorized by Admin to update below details </p>
+        {% endif %}
         {% for det in profile.get_details %}
         <div class="cv-details">
 
             <h4 style="text-decoration: underline; text-transform: uppercase;">{{det.heading}}.</h4>
+            {% if request.user.is_staff %}
             <a style="color: red; font-weight: 800;" onclick="(function (){var details = document.getElementById('cv-details-{{det.heading}}');
     document.getElementById('details-text-area-{{det.heading}}').display='none';
     details.style.display = 'block';})();">Edit</a>
+            {% endif %}
             <form style="display: none" id = 'cv-details-{{det.heading}}' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <p><textarea required name="{{det.heading}}" type="text" maxlength="1000" rows = "15" cols="80" >{{det.details}}</textarea></p>

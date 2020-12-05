@@ -23,7 +23,7 @@
             {% if tag.is_degree %}
             <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
             {% else %}
-            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" id = '{{tag.name}}'><a style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
 
             {% endif %}
             {% endfor %}
@@ -113,7 +113,6 @@
         {% endfor %}
         </div>
         {% endif  %}
-            <p style="text-decoration: underline; color: #000066"><a onclick="commentform()">Add Comment</a></p>
         <div class="comment-create-form">
          <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
                 {% csrf_token %}
@@ -132,8 +131,9 @@
             </div>
 
         </div>
+        <p onclick="expand(this, 'comments{{post.pk}}')" style="color: red; text-decoration: underline;" class="more">See Comments</p>
         </div>
-    <p onclick="expand(this, 'comments{{post.pk}}')" style="color: red; text-decoration: underline;" class="more">more</p>
+
 
 
 

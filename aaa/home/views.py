@@ -16,12 +16,22 @@ from django.core.files.storage import FileSystemStorage
 def home_view(request):
     if request.user:
         template_name = 'home/home.html'
-        posts = Post.objects.order_by('pk')
+        posts = Post.objects.order_by('date').reverse()
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context = {'posts': posts,  'tag_speciality': tag_speciality}
         return render(request, template_name, context)
     else:
         return redirect('accounts:login')
+
+
+class StaffError(TemplateView):
+    template_name = 'home/stafferror.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
+        return context
 
 
 def show_conferences(request):
@@ -75,7 +85,11 @@ class SearchView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
         context['posts'] = self.get_posts()
-        context['books'] = self.get_books()
+        if self.request.user.is_staff:
+            context['books'] = self.get_books()
+        else:
+            context['books'] = False
+
         context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
         return context
 

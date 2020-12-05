@@ -179,8 +179,9 @@
         </div>
         {% endfor %}
         {% endif %}
+        {% if request.user.is_authenticated and request.user.is_admin  %}
         <p><a style="text-decoration: underline; color: blue;" onclick="addsubjectintro()">Add more details </a></p>
-
+        {% endif %}
  <style>
                 #subject-intro-edit textarea{
                     height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;
@@ -210,6 +211,7 @@
                     }
                 }
             </style>
+        {% if request.user.is_authenticated and request.user.is_admin  %}
         <form style="display: none;" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <p><input placeholder="Add heading.." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
@@ -227,14 +229,14 @@
                 <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="addtagdetail" type="submit" value="profdetails">Submit</button>
 
          </form>
-
+        {% endif %}
     </div>
         {% if request.user.is_authenticated and request.user.is_admin %}
 
     <p><a style="text-decoration: underline; color: blue;" onclick="addbookform()">Add a book </a> |  <a style="text-decoration: underline; color: blue;" onclick="editbookform()">Edit a book </a></p>
 {% endif %}
 
-
+{% if request.user.is_staff %}
     <div class="subject-detail books">
         <h2>Book Reviews</h2>
             <div class="subject-details-review">
@@ -306,10 +308,12 @@
     <div class="subject-detail qb">
         <h2>Question Bank</h2>
         <div class="subs">
-            <div class="collections"> <h5>Hi</h5></div>
+            <div class="collections"> <h5>Will be uploaded soon...</h5></div>
         </div>
     </div>
-
+{% else %}
+    <p style="font-weight: 700;color: red; font-size: 20px;"> You need to be authorized by Admin to view Book Reviews and Question banks </p>
+    {% endif %}
 </div>
 
 </div>
@@ -319,8 +323,10 @@
 
 
 <div class="home-container">
-    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
+            {% if request.user.is_authenticated and request.user.is_staff %}
 
+    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
+{% endif %}
 {% if posts %}
     {% for post in posts %}
        <div class="home-post">
@@ -330,7 +336,7 @@
             {% if tag.is_degree %}
             <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
             {% else %}
-            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" id = '{{tag.name}}'><a style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
 
             {% endif %}
             {% endfor %}
@@ -387,7 +393,7 @@
         {% for comment in post.get_comments %}
             <div class="home-post-comment-single">
                 <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
-{% if request.user.is_authenticated and request.user == comment.user%}
+{% if request.user.is_staff and request.user == comment.user%}
     <script>
         var delpost{{comment.pk}} = '{% url "home:deletecomment" comment.pk %}'
     </script>
@@ -431,7 +437,6 @@
         {% endfor %}
         </div>
         {% endif  %}
-            <p style="text-decoration: underline; color: #000066"><a onclick="commentform()">Add Comment</a></p>
         <div class="comment-create-form">
          <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
                 {% csrf_token %}
@@ -450,8 +455,9 @@
             </div>
 
         </div>
+                   <p onclick="expand(this, 'comments{{post.pk}}')" style="color: red; text-decoration: underline;" class="more">See Comments</p>
+
         </div>
-    <p onclick="expand(this, 'comments{{post.pk}}')" style="color: blue; text-decoration: underline;" class="more">more</p>
 
 
     {% endfor  %}

@@ -263,10 +263,11 @@ footer .neeche{
     color: white;
 }
 .post-results{
-    border: 5px outset saddlebrown;
+    border: 5px outset dimgrey;
     display: flex;
     flex-flow: column wrap;
     padding: 20px;
+    margin: 20px;
 }
 
 /*  Classes and tags for home_post_form.html   */
@@ -338,9 +339,9 @@ footer .neeche{
     color: #000000;
 
 }
-#Conference {
+#Conferences {
 
-    background-color: #000066;
+    background-color: darkred;
     color: white;
 
 
@@ -388,8 +389,8 @@ footer .neeche{
     flex-flow: column wrap;
     width: 100%;
     height: auto;
-    border-top: 5px outset #6F0E0E;
-    border-bottom: 5px outset #6F0E0E;
+    border: 5px outset darkgray;
+    border-bottom: 5px outset #000066;
 
 }
 .home-post-heading{
@@ -824,7 +825,7 @@ window.onclick = function (event) {
         console.log('yeah');
 
 } else {
-        console.log('hello baby');
+
         var drop_down_list = document.getElementById('dropdownlist');
             drop_down_list.style.display = 'none';
         var drop_down_list1 = document.getElementById('dropdownlist1');
@@ -835,7 +836,7 @@ window.onload = function () {
     for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
         if (document.getElementsByClassName('comments')[i].clientHeight > 300 ) {
       console.log(true);
-      document.getElementsByClassName('comments')[i].style.height = '300px';
+      document.getElementsByClassName('comments')[i].style.height = '1px';
       document.getElementsByClassName('more')[i].style.display = 'block';}}
 };
 

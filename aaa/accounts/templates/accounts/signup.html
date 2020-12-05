@@ -35,43 +35,9 @@
 
     </form>
     <p>Already a member. <a href="{% url 'accounts:login' %}">Log In</a> </p>
-    <p><b>Or</b></p>
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
-  </div>
+
 </div>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<script>
 
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-          var newprofile = {name:profile.getName(), email:profile.getEmail(), image_url:profile.getImageUrl(), id_token :googleUser.getAuthResponse().id_token};
-        //console.log(newprofile);
-        var myJson = JSON.stringify(newprofile);
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState ==4  && this.status == 302) {
-                var json = JSON.parse(this.responseText);
-                console.log(json.success);
-                window.location.href = json.success;
-            }
-        };
-
-        xhttp.open("GET", "{% url 'accounts:staff' %}", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("&profile="+ myJson);
-
-          //console.log(myJson);
-        // The ID token you need to pass to your backend:
-        // var id_token = googleUser.getAuthResponse().id_token;
-        // var json = JSON.stringify(profile);
-        //var url = 'https://mypassions.site/accounts/google?id_token=' + id_token+ '&profile=' + json;
-        //console.log(document.location.href = url);
-        //return document.location.href = url;
-
-
-      }
-    </script>
 </div>
 
 

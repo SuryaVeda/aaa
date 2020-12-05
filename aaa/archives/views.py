@@ -18,7 +18,7 @@ class ArchivePage(TemplateView):
         if request.user.is_authenticated and request.user.is_staff:
             return render(request, self.template_name, self.get_context_data())
         else:
-            return redirect('accounts:login')
+            return redirect('home:stafferror')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
@@ -232,7 +232,7 @@ class ArchDetail(BookFormMixin,TemplateView):
         if request.user.is_authenticated and request.user.is_staff:
             return render(request, self.template_name, self.get_context_data())
         else:
-            return redirect('accounts:login')
+            return redirect('home:stafferror')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['subjects'] = list(Tag.objects.filter(is_degree = True, is_speciality = False))+ list(Tag.objects.filter(is_speciality = True))
@@ -260,7 +260,7 @@ class ArchDetail(BookFormMixin,TemplateView):
                 self.edit_book_form()
             return redirect('archives:archdetail')
         else:
-            return redirect('accounts:login')
+            return redirect('home:stafferror')
 
 
 
@@ -288,6 +288,8 @@ def delete_book_view(request, pk):
         except:
             messages.error(request, 'Book doesnot exist')
             return redirect('home:home')
+    else:
+        return ('home:stafferror')
 
 def delete_review_view(request, pk):
     if pk and request.user.is_authenticated and request.user.is_admin:
@@ -302,3 +304,5 @@ def delete_review_view(request, pk):
         except:
             messages.error(request, 'Book doesnot exist')
             return redirect('home:home')
+    else:
+        return ('home:stafferror')
