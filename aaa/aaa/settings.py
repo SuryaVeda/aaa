@@ -23,7 +23,9 @@ print(BASE_DIR)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+
+"""DEBUG = True
 print(type(DEBUG))
 print(DEBUG)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -93,7 +95,6 @@ else:
         }
     }
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost','www.allaboutanaesthesia.co', 'allaboutanaesthesia.co', '68.183.94.63']
-"""
 AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
