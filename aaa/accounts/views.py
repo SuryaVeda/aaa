@@ -98,6 +98,7 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
         if self.request.POST.get('profile'):
             a = self.validate_google_login()
             x = redirect('accounts:staff')
+            print(json.dumps(a))
             url = x.url + '?google_success=' + json.dumps(a)
             return JsonResponse(status=x.status_code, data={'success': url})
 
@@ -132,17 +133,21 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
 
             except:
                 pass
-            usr = User.objects.create_staff(SignupView.user['email'], SignupView.user['username'], SignupView.user['password'])
-            usr.staff = False
-            usr.username = SignupView.user['username']
-            usr.save()
-            profile = usr.save_profile
-            for i in SignupView.user['degree']:
-                profile.degree.add(i)
-            profile.work.add(SignupView.user['work'])
-            profile.save()
-            return redirect('accounts:login')
-
+            if SignupView.user['email'] and SignupView.user['password']:
+                usr = User.objects.create_staff(SignupView.user['email'], SignupView.user['username'],
+                                                SignupView.user['password'])
+                usr.staff = False
+                usr.username = SignupView.user['username']
+                usr.save()
+                profile = usr.save_profile
+                for i in SignupView.user['degree']:
+                    profile.degree.add(i)
+                profile.work.add(SignupView.user['work'])
+                profile.save()
+                return redirect('accounts:login')
+            else:
+                messages.error(self.request, 'Invalid user details')
+                return redirect('accounts:staff')
 
     def validate_google_login(self):
         try:
@@ -186,6 +191,7 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
                 return redirect('accounts:staff')
             except:
                 self.user['email'] = email
+                print(self.user)
 
         except:
             messages.error(self.request, 'Enter Valid email')
