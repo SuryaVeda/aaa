@@ -19,6 +19,7 @@ class Manage(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data( **kwargs)
         context['users'] = User.objects.all()
+        return context
 def email(request):
     subject = 'You visited conference page'
     message = ' it  means a world to us '
