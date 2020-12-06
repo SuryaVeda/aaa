@@ -212,5 +212,4 @@ class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixi
                 print('not a post request')
                 return redirect('accounts:myprofile')
         else:
-            return redirect('accounts:login')
-
+            pass
