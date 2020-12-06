@@ -1,22 +1,19 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block main %}
-<div class="originalsignup">
-<link rel="stylesheet" type="text/css" href="{% static 'home/CSS/base.css' %}">
 
 <meta name="google-signin-client_id" content="1013516845533-j5e2jgv5d7fcqfhecd0ailf6nto35k1v.apps.googleusercontent.com">
 <div class="fullcover">
     <div class="login">
-
-    <h1>Sign Up</h1>
-        {% if messages %}
+    <h1 style="font-size: 25px;">All About Anaesthesia</h1>
+    <h2 style="font-size: 25px;margin-bottom: 35px; color: #000066">Sign up</h2>
+   {% if messages %}
     {% for message in messages %}
       <p style="color: red; font-weight: 400; font-size: 14px;">{{message}}</p>
       {%endfor %}
   {% endif %}
-    <form style="display: flex; flex-flow: column wrap;"  method="get" action="{% url 'accounts:staff' %}" enctype="application/x-www-form-urlencoded">
+    <form style=" display: flex; flex-flow: column wrap; justify-content: center; align-items: center"  method="get" action="{% url 'accounts:staff' %}" enctype="application/x-www-form-urlencoded">
       {% csrf_token %}
-        <div class="initialform">
       <p>{{form.username}}</p>
         {% if form.username.errors %}
         {{form.username.errors}}
@@ -29,9 +26,8 @@
         {%endif%}
         <br>
     <br>
-            <button type="submit" name="signup" value="profileformdetails">Submit</button>
+            <button style="align-self: center;" type="submit" name="signup" value="profileformdetails">Submit</button>
 
-</div>
 
     </form>
     <p>Already a member. <a href="{% url 'accounts:login' %}">Log In</a> </p>
