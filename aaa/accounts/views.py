@@ -22,6 +22,15 @@ from django.utils.decorators import method_decorator
 
 # Create your views here.
 
+'''  user = authenticate(request, email=form.cleaned_data.get('email'), password=form.cleaned_data.get('password'))
+    if user is not None:
+        login(request, user)
+        return redirect('home:home')
+    else:
+        messages.error(request, "Credentials are either wrong or not registered.")
+        print('see try statemetn')
+        return redirect('accounts:login')'''
+
 def login_view(request):
 
     template_name = 'accounts/login.html'
@@ -31,14 +40,11 @@ def login_view(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             try:
-                user = authenticate(request, email=form.cleaned_data.get('email'), password=form.cleaned_data.get('password'))
-                if user is not None:
-                    login(request, user)
+                x = User.objects.get(email=form.cleaned_data.get('email'))
+                if x.password == form.cleaned_data.get('password'):
+                    request.session['user_id'] = x.id
                     return redirect('home:home')
-                else:
-                    messages.error(request, "Credentials are either wrong or not registered.")
-                    print('see try statemetn')
-                    return redirect('accounts:login')
+
 
             except:
                 print('see except statement')

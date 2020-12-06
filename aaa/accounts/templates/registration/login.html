@@ -1,0 +1,73 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+<meta name="google-signin-client_id" content="458074446981-mkq40bu39qe7eahf85umpfhmv05h8lkq.apps.googleusercontent.com">
+<link rel="stylesheet" type="text/css" href="{% static 'home/CSS/login.css' %}">
+   <div class="designe container-fluid">
+    <div class="errors">
+    {% if form.errors %}
+
+      <p>Your username and password didn't match. Please try again.</p>
+      {{form.errors}}
+    {% endif %}
+
+    {% if next %}
+      {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+      {% else %}
+        <p>Please login to see this page.</p>
+      {% endif %}
+    {% endif %}
+</div>
+<div class="login">
+  <div class="logo">
+    <h1>P</h1>
+  </div>
+    <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Email...">
+    {% for message in form.email.errors %}
+      <p class="text-danger">{{message}}</p>
+      {% endfor %}
+        <br>
+    <br>
+
+    <input type="password" name="password" placeholder="Password...">
+    {% for message in form.password.errors %}
+      <p class="text-danger">{{message}}</p>
+      {% endfor %}
+    <br>
+    <br>
+        <br>
+
+    <button type="submit" value="login" class="btn">login</button>
+    <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+    <p><b>Or</b></p>
+    <p>Don't have an account? <a href="{% url 'accounts:staff' %}">Sign Up</a> </p>
+    <p><b>Or</b></p>
+<div id="goo" class="g-signin2" data-onsuccess="onSignIn" >
+</div>
+</div>
+</div>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        var myJson = JSON.stringify(profile);
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        var json = JSON.stringify(profile);
+        var url = 'https://mypassions.site/accounts/google?id_token=' + id_token+ '&profile=' + json;
+        return document.location.href = url;
+        
+       
+      }
+    </script>
+{% endblock %}

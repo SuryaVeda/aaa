@@ -24,11 +24,6 @@ print(BASE_DIR)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-from string import ascii_lowercase
-from random import random
-def secret(x):
-        lis = list(ascii_lowercase)
-        return"".join( [lis[int(random() * 26)] for _ in range(x)] )
 
 
 """DEBUG = True
