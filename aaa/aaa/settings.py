@@ -78,12 +78,7 @@ if DEBUG:
     MEDIA_URL = '/media/'
 
 else:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    MEDIA_URL = '/media/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    print(STATIC_ROOT)
-    STATIC_URL = '/static/'
-    FILE_UPLOAD_PERMISSIONS = 0o640
+
     SECRET_KEY = 'gxofretqnkshnfcztefozzqypeiozuifpaxtblzsiifyxkhybbqbwnukbrfbikzimnmrjddyvdbopuvgrddpwlckjlakmqttbacynlcyxnclfqejeptkkazspdsolyqardpjbzokbbdcezqqjhyaqqoiornkwxvwcekkplewbppcfqgvdiadpaztzvjetcuqqzphalwz'
     DATABASES = {
         'default': {
@@ -96,6 +91,13 @@ else:
         }
     }
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost','www.allaboutanaesthesia.co', 'allaboutanaesthesia.co', '68.183.94.63']
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_URL = '/media/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    print(STATIC_ROOT)
+    STATIC_URL = '/static/'
+    FILE_UPLOAD_PERMISSIONS = 0o640
+
 AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 

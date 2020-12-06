@@ -27,6 +27,7 @@ def email(request):
     send_mail( subject, message, email_from, recipient_list )
     return redirect('home:home')
 def home_view(request):
+    print(request.user)
     if request.user:
         template_name = 'home/home.html'
         posts = Post.objects.order_by('date').reverse()
