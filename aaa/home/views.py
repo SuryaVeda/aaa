@@ -13,6 +13,12 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from  django.core.mail import send_mail
 # Create your views here.
+
+class Manage(TemplateView):
+    template_name = 'home/manage.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data( **kwargs)
+        context['users'] = User.objects.all()
 def email(request):
     subject = 'You visited conference page'
     message = ' it  means a world to us '

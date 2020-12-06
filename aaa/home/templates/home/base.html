@@ -1132,6 +1132,10 @@ function addsubjectintro() {
       <a class="nav-item nav-link " href="{% url 'archives:home_archives'  %}">Archives</a>
 
     <a class="nav-item nav-link" href="{% url 'home:search' %}">Search</a>
+    {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
+        <a class="nav-item nav-link" href="{% url 'home:manage' %}">Manage</a>
+
+    {% endif %}
 {% endif %}
     {%if request.user.is_authenticated %}
     <div class="dropdown"  >

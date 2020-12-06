@@ -65,7 +65,7 @@ try:
 except:
     DEBUG=False
 if DEBUG:
-    SECRET_KEY = secret(120)
+    SECRET_KEY = 'gxofretqnkshnfcztefozzqypeiozuifpaxtblzsiifyxkhybbqbwnukbrfbikzimnmrjddyvdbopuvgrddpwlckjlakmqttbacynlcyxnclfqejeptkkazspdsolyqardpjbzokbbdcezqqjhyaqqoiornkwxvwcekkplewbppcfqgvdiadpaztzvjetcuqqzphalwz'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',

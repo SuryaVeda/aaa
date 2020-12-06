@@ -1,0 +1,50 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block main %}
+
+<style>
+    .manage {
+        display: flex;
+        flex-flow: column wrap;
+    }
+    .users {
+      display: flex;
+        flex-flow: column wrap;
+    }
+    .user{
+        display: flex;
+        flex-flow: column wrap;
+    }
+    .userdetails{
+        display: flex;
+        flex-flow: row wrap;
+    }
+</style>
+<div class="manage">
+<div class="users">
+        <h1>Manage Users</h1>
+{% for user in users %}
+    <div class="user">
+        <div class="userdetails">
+            <img src="{%static 'home/defaultimg.jpg'  %}" height="200px" width="200px">
+            <p>Name: {{user.username }}</p>
+            <p>Email: {{user.email }}</p>
+        </div>
+        <div class="userdetails">
+            <h3>Privileges</h3>
+            {% if user.is_admin %}
+            <p>User has <b style="color: red; font-size: 20px">Admin</b> privileges..</p>
+            {% elif user.is_staff %}
+            <p>User has <b style="color: red; font-size: 20px">Staff</b> privileges..</p>
+
+            {% else %}
+            <p> User has just visitor privileges </p>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endfor %}
+</div>
+</div>
+{% endblock %}

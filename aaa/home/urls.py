@@ -7,6 +7,7 @@ app_name = 'home'
 
 urlpatterns = [
 path('', views.home_view, name = 'home'),
+path('managewebsite', views.Manage.as_view(), name='manage'),
 path('errors', views.StaffError.as_view(), name = 'stafferror'),
 path('conferences', views.show_conferences, name = 'conf'),
 path('searchPage', views.SearchView.as_view(), name = 'search'),
