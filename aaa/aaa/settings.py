@@ -89,7 +89,7 @@ else:
     print(STATIC_ROOT)
     STATIC_URL = '/static/'
     FILE_UPLOAD_PERMISSIONS = 0o640
-    SECRET_KEY = secret(120)
+    SECRET_KEY = 'gxofretqnkshnfcztefozzqypeiozuifpaxtblzsiifyxkhybbqbwnukbrfbikzimnmrjddyvdbopuvgrddpwlckjlakmqttbacynlcyxnclfqejeptkkazspdsolyqardpjbzokbbdcezqqjhyaqqoiornkwxvwcekkplewbppcfqgvdiadpaztzvjetcuqqzphalwz'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
