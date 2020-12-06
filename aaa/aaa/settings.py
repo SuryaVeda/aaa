@@ -189,7 +189,8 @@ EMAIL_HOST_USER = 'suryaaddu@gmail.com'
 EMAIL_HOST_PASSWORD = 'Surya@@1997'
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
-
+LOGIN_URL='/accounts/login/'
+LOGIN_REDIRECT_URL='/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
