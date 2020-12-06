@@ -10,9 +10,16 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 import bleach, datetime
 from django.core.files.storage import FileSystemStorage
-
+from django.conf import settings
+from  django.core.mail import send_mail
 # Create your views here.
-
+def email(request):
+    subject = 'You visited conference page'
+    message = ' it  means a world to us '
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['suryaveda@hotmail.com',]
+    send_mail( subject, message, email_from, recipient_list )
+    return redirect('home:home')
 def home_view(request):
     if request.user:
         template_name = 'home/home.html'

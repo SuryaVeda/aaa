@@ -23,6 +23,11 @@ print(BASE_DIR)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+from string import ascii_lowercase
+from random import random
+def secret(x):
+        lis = list(ascii_lowercase)
+        return"".join( [lis[int(random() * 26)] for _ in range(x)] )
 
 
 """DEBUG = True
@@ -59,7 +64,7 @@ try:
 except:
     DEBUG=False
 if DEBUG:
-    SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
+    SECRET_KEY = secret(120)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -83,7 +88,7 @@ else:
     print(STATIC_ROOT)
     STATIC_URL = '/static/'
     FILE_UPLOAD_PERMISSIONS = 0o640
-    SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
+    SECRET_KEY = secret(120)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -175,7 +180,12 @@ USE_I18N = True
 
 USE_L10N = True
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'suryaaddu@gmail.com'
+EMAIL_HOST_PASSWORD = 'Surya@@1997'
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 # Static files (CSS, JavaScript, Images)

@@ -23,6 +23,8 @@ from django.utils.decorators import method_decorator
 # Create your views here.
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home:home')
     template_name = 'accounts/login.html'
     form = LoginForm()
     tag_speciality = Tag.objects.filter(is_speciality=True)
@@ -77,8 +79,8 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
 
         return context
     def get(self, request, *args, **kwargs):
-
-
+        if request.user.is_authenticated:
+            return redirect('home:home')
         if request.GET.get('email') and request.GET.get('username'):
             email = request.GET.get('email')
             try:
@@ -89,14 +91,17 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
                 pass
 
             username = request.GET.get('username')
-            context = {'email' : email, 'username':username}
+            context = {'email': email, 'username': username}
             return render(request, 'accounts/commonsignup.html', context)
 
         else:
 
             return render(request, 'accounts/signup.html', self.get_context_data())
 
+
     def post(self,*args,**kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('home:home')
 
         if self.request.POST.get('profileformbtn'):
             print(self.request.POST)
@@ -117,21 +122,24 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
                         password = bleach.clean(password, strip=True)
                     except:
                         messages.error(self.request, 'Enter email, username or password correctly.')
-                        return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
+                        return render(self.request, 'accounts/commonsignup.html',
+                                      {'email': email, 'username': username})
 
                     user['email'] = email
                     user['username'] = username
                     user['password'] = password
                 else:
                     messages.error(self.request, 'Enter username, email, password correctly.')
-                    return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
+                    return render(self.request, 'accounts/commonsignup.html',
+                                  {'email': email, 'username': username})
             except:
                 messages.error(self.request, 'Enter username, email, password correctly.')
                 return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
             try:
                 degreelist = self.save_degree_form()
                 if not degreelist:
-                    return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
+                    return render(self.request, 'accounts/commonsignup.html',
+                                  {'email': email, 'username': username})
                 user['degree'] = degreelist
             except:
                 messages.error(self.request, 'unable to save qualifications')
@@ -164,7 +172,6 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
             else:
                 messages.error(self.request, 'Invalid user details')
                 return redirect('accounts:staff')
-
 
 
 class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixin, ContactFormMixin, TemplateView):
