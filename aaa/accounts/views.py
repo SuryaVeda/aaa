@@ -23,8 +23,7 @@ from django.utils.decorators import method_decorator
 # Create your views here.
 
 def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('home:home')
+
     template_name = 'accounts/login.html'
     form = LoginForm()
     tag_speciality = Tag.objects.filter(is_speciality=True)
@@ -79,8 +78,7 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
 
         return context
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('home:home')
+
         if request.GET.get('email') and request.GET.get('username'):
             email = request.GET.get('email')
             try:
@@ -100,8 +98,7 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
 
 
     def post(self,*args,**kwargs):
-        if self.request.user.is_authenticated:
-            return redirect('home:home')
+
 
         if self.request.POST.get('profileformbtn'):
             print(self.request.POST)
