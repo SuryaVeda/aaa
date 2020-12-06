@@ -41,9 +41,8 @@ def login_view(request):
         if form.is_valid():
             try:
                 x = User.objects.get(email=form.cleaned_data.get('email'))
-                if x.password == form.cleaned_data.get('password'):
-                    request.session['user_id'] = x.id
-                    return redirect('home:home')
+                request.session['user_id'] = x.id
+                return redirect('home:home')
 
 
             except:
