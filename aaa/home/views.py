@@ -59,7 +59,7 @@ def show_conferences(request):
 def speciality_view(request, speciality_type):
     if request.user:
         template_name = 'home/speciality_tag.html'
-        
+
         try:
             tag = Tag.objects.get(name=speciality_type)
 
