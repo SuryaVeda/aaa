@@ -46,7 +46,7 @@ class Tag(models.Model):
     details=models.ManyToManyField('accounts.ProfileDetail', blank=True)
     @property
     def get_details(self):
-        d = list(self.details.all())
+        d = list(self.details.all().order_by('pk'))
         if len(d) >= 1:
             return d
         else:

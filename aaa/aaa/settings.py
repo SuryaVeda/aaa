@@ -11,11 +11,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+from dotenv import load_dotenv
+load_dotenv()
+import os,json
 from django.urls import reverse_lazy
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -26,28 +27,7 @@ print(BASE_DIR)
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-"""DEBUG = True
-print(type(DEBUG))
-print(DEBUG)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-print(STATIC_ROOT)
-STATIC_URL = '/static/'
-FILE_UPLOAD_PERMISSIONS = 0o640
-SECRET_KEY = '^z8exncqp_&!f)_5j&!iue=lp4#%t=@^#1gnxk-_j2-0=jmsqd'
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'aaa',
-        'USER': 'sk',
-        'PASSWORD': 'sk',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.allaboutanaesthesia.co', 'allaboutanaesthesia.co', '68.183.94.63']
-"""
+
 
 try:
     x = os.environ['DEBUG']
@@ -59,45 +39,34 @@ try:
         DEBUG = False
 except:
     DEBUG=False
-if DEBUG:
-    SECRET_KEY = 'gxofretqnkshnfcztefozzqypeiozuifpaxtblzsiifyxkhybbqbwnukbrfbikzimnmrjddyvdbopuvgrddpwlckjlakmqttbacynlcyxnclfqejeptkkazspdsolyqardpjbzokbbdcezqqjhyaqqoiornkwxvwcekkplewbppcfqgvdiadpaztzvjetcuqqzphalwz'
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'aaa',
-            'USER': 'sk',
-            'PASSWORD': 'su221997',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
+
+SECRET_KEY = os.getenv('secretkey')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('databasename'),
+        'USER': os.getenv('databaseuser'),
+        'PASSWORD': os.getenv('databasepassword'),
+        'HOST': os.getenv('databasehost'),
+        'PORT': int(os.getenv('databaseport')),
     }
+}
+
+if DEBUG:
+
     ALLOWED_HOSTS = []
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATIC_URL = '/static/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    MEDIA_URL = '/media/'
+
 
 else:
-
-    SECRET_KEY = 'gxofretqnkshnfcztefozzqypeiozuifpaxtblzsiifyxkhybbqbwnukbrfbikzimnmrjddyvdbopuvgrddpwlckjlakmqttbacynlcyxnclfqejeptkkazspdsolyqardpjbzokbbdcezqqjhyaqqoiornkwxvwcekkplewbppcfqgvdiadpaztzvjetcuqqzphalwz'
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'aaa',
-            'USER': 'sk',
-            'PASSWORD': 'sk',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
-    }
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost','www.allaboutanaesthesia.co', 'allaboutanaesthesia.co', '68.183.94.63']
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    MEDIA_URL = '/media/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    print(STATIC_ROOT)
-    STATIC_URL = '/static/'
+    x = os.getenv('allowedhosts')
+    ALLOWED_HOSTS = x.split(',')
     FILE_UPLOAD_PERMISSIONS = 0o640
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
@@ -179,11 +148,11 @@ USE_I18N = True
 USE_L10N = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = os.getenv('emailhost')
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'suryaaddu@gmail.com'
-EMAIL_HOST_PASSWORD = 'Surya@@1997'
+EMAIL_PORT = int(os.getenv('emailport'))
+EMAIL_HOST_USER = os.getenv('emailuser')
+EMAIL_HOST_PASSWORD = os.getenv('emailpassword')
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 

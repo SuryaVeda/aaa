@@ -30,6 +30,7 @@ def email(request):
 def home_view(request):
     print(request.user)
     if request.user:
+
         template_name = 'home/home.html'
         posts = Post.objects.order_by('date').reverse()
         tag_speciality = Tag.objects.filter(is_speciality=True)
@@ -57,14 +58,22 @@ def show_conferences(request):
 def speciality_view(request, speciality_type):
     if request.user:
         template_name = 'home/speciality_tag.html'
-        tag = Tag.objects.get(name=speciality_type)
-        subjects = list(Tag.objects.filter(is_degree=True, is_speciality=False)) + list(
-            Tag.objects.filter(is_speciality=True))
+        email(request)
+        try:
+            tag = Tag.objects.get(name=speciality_type)
 
-        posts = Post.objects.filter(tag=tag).order_by('pk')
-        tag_speciality = Tag.objects.filter(is_speciality=True)
-        context = {'tag': tag, 'tag_speciality': tag_speciality, 'posts': posts, 'subjects': subjects}
-        return render(request, template_name, context)
+            if speciality_type=='NEET SS':
+                template_name = 'home/neet.html'
+            subjects = list(Tag.objects.filter(is_degree=True))
+
+            posts = Post.objects.filter(tag=tag).order_by('pk')
+            tag_speciality = Tag.objects.filter(is_speciality=True)
+            context = {'tag': tag, 'tag_speciality': tag_speciality, 'posts': posts, 'subjects': subjects}
+            return render(request, template_name, context)
+        except:
+            messages.error(request, 'unable to fetch the page.', extra_tags=request.user.email)
+            return redirect('home:home')
+
     else:
         return redirect('accounts:login')
 
@@ -144,6 +153,7 @@ def delete_comment_view(request,pk):
         return redirect('home:home')
 def delete_tagdetail_view(request,pk,detail_pk):
     if pk and request.user.is_authenticated and request.user.is_admin:
+
         try:
             print(type(pk))
             y = Tag.objects.get(pk = pk)
@@ -156,7 +166,7 @@ def delete_tagdetail_view(request,pk,detail_pk):
                 else:
                     messages.error(request, 'not a valid user')
 
-            return redirect('home:home')
+            return redirect('/home/{0}'.format(y.name))
         except:
             print('some problem')
             messages.error(request, 'post is not present in database')
@@ -193,7 +203,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                 self.save_tagdetail(kwargs['pk'])
                 try:
                     x = Tag.objects.get(pk=int(kwargs['pk']))
-                    return redirect('speciality', args = (x.name,))
+                    return redirect('/home/{0}'.format(x.name))
                 except:
                     return redirect('home:home')
 
@@ -203,7 +213,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
 
                 try:
                     x = Tag.objects.get(pk=int(kwargs['pk']))
-                    return redirect('speciality', args=(x.name,))
+                    return redirect('/home/{0}'.format(x.name))
                 except:
                     return redirect('home:home')
 
