@@ -28,7 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 
-
+x = os.getenv('allowedhosts')
+print(x.split(','))
+print(type(x.split(',')))
 try:
     x = os.environ['DEBUG']
     print(x)
@@ -46,7 +48,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.getenv('databasename'),
         'USER': os.getenv('databaseuser'),
-        'PASSWORD': os.getenv('databasepassword'),
+        'PASSWORD': os.getenv('databasepass'),
         'HOST': os.getenv('databasehost'),
         'PORT': int(os.getenv('databaseport')),
     }

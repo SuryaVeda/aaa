@@ -53,12 +53,13 @@ class StaffError(TemplateView):
 def show_conferences(request):
     a= Tag.objects.get(name = 'Conferences')
     posts = a.post_set.all().order_by('pk')
-    return render(request, 'home/conference.html', {'posts':posts})
+    tag_speciality = Tag.objects.filter(is_speciality=True)
+    return render(request, 'home/conference.html', {'posts':posts,'tag_speciality': tag_speciality})
 
 def speciality_view(request, speciality_type):
     if request.user:
         template_name = 'home/speciality_tag.html'
-        email(request)
+        
         try:
             tag = Tag.objects.get(name=speciality_type)
 
