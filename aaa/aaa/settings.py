@@ -53,13 +53,14 @@ DATABASES = {
 }
 
 if DEBUG:
-
+    x = os.getenv('allowedhosts')
+    print(x.split(','))
     ALLOWED_HOSTS = []
-
 
 else:
     x = os.getenv('allowedhosts')
-    ALLOWED_HOSTS = x.split(',')
+    print(x.split(','))
+    ALLOWED_HOSTS = ['allaboutanaesthesia.co']
     FILE_UPLOAD_PERMISSIONS = 0o640
 
 
