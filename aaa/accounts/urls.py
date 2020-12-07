@@ -10,5 +10,6 @@ path('signup/staff_signup', views.SignupView.as_view(), name='staff' ),
 path('signup/<str:email>/<str:username>', views.SignupView.as_view(), name = 'commonsignup'),
 path('signout', views.user_signout, name = 'logout' ),
 path('profile', views.MyProfile.as_view(), name = 'myprofile' ),
+path('changeuserprivileges/<int:pk>', views.ChangeUser.as_view(), name = 'changeuser' ),
 
 ]

@@ -174,6 +174,55 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
                 messages.error(self.request, 'Invalid user details')
                 return redirect('accounts:staff')
 
+class ChangeUser(View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com':
+            return redirect('home:manage')
+        else:
+            return redirect('home:home')
+
+    def post(self, *args, **kwargs):
+        if self.request.user.is_admin and self.request.user.email == 'vijay.adabala96@gmail.com' or self.request.user.email == 'suryaveda@hotmail.com':
+            if self.request.POST.get('promoteadmin'):
+                try:
+                    x = User.objects.get(pk = kwargs.get('pk'))
+                    x.admin = True
+                    x.staff = True
+                    x.save()
+                    print(x.is_admin)
+                except:
+                    messages.error(self.request, 'User doesnot exist', extra_tags='{0}'.format(self.request.user.email))
+                    return redirect('home:manage')
+            if self.request.POST.get('promotestaff'):
+                try:
+                    x = User.objects.get(pk=kwargs.get('pk'))
+                    x.staff = True
+                    x.admin = False
+                    x.save()
+                    print(x.is_staff)
+                except:
+                    messages.error(self.request, 'User doesnot exist', extra_tags='{0}'.format(self.request.user.email))
+                    return redirect('home:manage')
+            if self.request.POST.get('demotestaff'):
+                try:
+                    x = User.objects.get(pk=kwargs.get('pk'))
+                    x.admin = False
+                    x.staff = True
+                    x.save()
+                    print(x.is_admin)
+                except:
+                    messages.error(self.request, 'User doesnot exist', extra_tags='{0}'.format(self.request.user.email))
+                    return redirect('home:manage')
+            if self.request.POST.get('deleteuser'):
+                try:
+                    x = User.objects.get(pk=kwargs.get('pk'))
+                    x.delete()
+                except:
+                    messages.error(self.request, 'User doesnot exist', extra_tags='{0}'.format(self.request.user.email))
+                    return redirect('home:manage')
+            return redirect('home:manage')
+        else:
+            return redirect('home:home')
 
 class MyProfile(DetailFormMixin, WorkFormMixin, DegreeFormMixin,PersonalFormMixin, ContactFormMixin, TemplateView):
     template_name = 'accounts/profile.html'

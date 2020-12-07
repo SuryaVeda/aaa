@@ -14,6 +14,9 @@
     .user{
         display: flex;
         flex-flow: column wrap;
+        border-right: 5px solid grey;
+        border-bottom: 5px outset #000066;
+        margin-top: 30px;
     }
     .userdetails{
         display: flex;
@@ -31,7 +34,12 @@
 {% for user in users %}
     <div class="user">
         <div class="userdetails">
-            <img src="{%static 'home/defaultimg.jpg'  %}" height="200px" width="200px" style="margin-right: 20px">
+            {% if user.profile.get_profilepic%}
+            <img src="/media/{{user.profile.get_profilepic}}" height="200px" width="200px" style="margin-right: 20px">
+
+           {%else%}
+            <img src="{%static 'home/images/defaultimg.png'  %}" height="200px" width="200px" style="margin-right: 20px">
+           {% endif %}
             <div class="userpersonal" style="flex-grow:1;display: flex; flex-flow: column wrap;justify-content: flex-start; align-items: flex-start;">
                 <p>Name: {{user.username }}</p>
             <p>Email: {{user.email }}</p>
@@ -42,22 +50,68 @@
             <div class="priv">
             <h3>Privileges</h3>
             {% if user.is_admin %}
+
             <p>User has <b style="color: red; font-size: 20px">Admin</b> privileges..</p>
-                <p><button>Demote to staff.</button></p>
+                <div style="display: flex; flex-flow: row wrap;">
+                    {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
+
+                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                    {% csrf_token %}
+                    <p><button name="demotestaff" value="demoting staff">Demote to staff.</button></p>
+                </form>
+
+                {%endif %}
+                </div>
+
+
             {% elif user.is_staff %}
             <p>User has <b style="color: red; font-size: 20px">Staff</b> privileges..</p>
                 <div style="display: flex; flex-flow: row wrap;">
-                    <p><button>Promote to Admin.</button></p>
-                    <p><button>Delete User.</button></p>
+                    {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
+
+                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                       {% csrf_token %}
+
+                    <p><button name = 'promoteadmin' value="promote to admin">Promote to Admin.</button></p>
+                </form>
+
+                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                                       {% csrf_token %}
+
+                    <p><button type="submit"  name="deleteuser" value="delete user">Delete user.</button></p>
+                </form>
+
+                    {%endif %}
                 </div>
 
 
             {% else %}
             <p> User has just visitor privileges </p>
                <div style="display: flex; flex-flow: row wrap;">
-                    <p><button>Promote to Admin.</button></p>
-                    <p><button>Promote to Staff.</button></p>
-                     <p><button>Delete User.</button></p>
+                   {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
+
+                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                                        {% csrf_token %}
+
+                    <p><button name = 'promoteadmin' value="promote to admin">Promote to Admin.</button></p>
+                </form>
+                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                    {% csrf_token %}
+
+                    <p><button name = 'promotestaff' value="promote to staff">Promote to Staff.</button></p>
+                </form>
+
+
+
+                <form method="post"  action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                    {% csrf_token %}
+
+
+                    <p><button type="submit" name="deleteuser" value="delete user">Delete user.</button></p>
+                </form>
+
+                    {%endif %}
+
 
                 </div>
             {% endif %}
@@ -65,6 +119,7 @@
         </div>
 
     </div>
+
 
 {% endfor %}
 </div>
