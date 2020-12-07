@@ -39,7 +39,6 @@ try:
         DEBUG = False
 except:
     DEBUG=False
-DEBUG=True
 SECRET_KEY = os.getenv('secretkey')
 DATABASES = {
     'default': {
