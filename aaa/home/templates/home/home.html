@@ -16,20 +16,20 @@
     {% if posts and request.user%}
     {% for post in posts %}
 
-    <div class="home-post">
+       <div class="home-post">
         {% if post.tag %}
         <div class="tags">
             {% for tag in post.get_tags %}
             {% if tag.is_degree %}
             <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
             {% else %}
-            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
 
             {% endif %}
             {% endfor %}
         </div>
             {% endif %}
-        {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin %}
+        {% if request.user.is_authenticated and request.user == post.user%}
     <script>
         var delpost{{post.pk}} = '{% url "home:deletepost" post.pk %}'
     </script>
@@ -80,14 +80,20 @@
         {% for comment in post.get_comments %}
             <div class="home-post-comment-single">
                 <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
-{% if request.user.is_authenticated and request.user == comment.user%}
+{% if request.user.is_staff and request.user == comment.user%}
     <script>
         var delpost{{comment.pk}} = '{% url "home:deletecomment" comment.pk %}'
     </script>
     <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{comment.pk}})">Delete Comment.</a></p>
     {%endif %}
 
+          {% if comment.img %}
 
+        <div  class="home-post-img">
+            <img  src="/media/{{comment.img}}" width="250px" height="250px">
+        </div>
+
+        {% endif  %}
 
 
 
@@ -108,7 +114,12 @@
         </div>
         {%endfor%}
         {% endif  %}
-
+        {% if comment.pdf %}
+                <b>Attached pdfs</b>
+        <div class="home-post-pdf">
+            <a href="{{comment.pdf}}"><p>{{comment.pdf_name}}: {{comment.pdf}}</p></a>
+        </div>
+        {% endif  %}
                 </div>
         {% endfor %}
         </div>
@@ -116,11 +127,11 @@
         <div class="comment-create-form">
          <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
                 {% csrf_token %}
-            <p> <input type="hidden" name="image" ></p>
+            <p>Add image: <input type="file" name="image" ></p>
 <br>
             <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
     <br>
-            <p><input name="pdf_name" type="hidden" placeholder="Add pdf name" maxlength="20" value="">: <input type="hidden" name="pdf"></p>
+            <p><input name="pdf_name" type="text" placeholder="Add pdf name" maxlength="20" value="">: <input type="file" name="pdf"></p>
              <div id="addlinkform{{post.pk}}">
                  <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
              </div>
@@ -131,8 +142,9 @@
             </div>
 
         </div>
+                   <p onclick="expand(this, 'comments{{post.pk}}')" style="color: red; text-decoration: underline;" class="more">See Comments</p>
+
         </div>
-    <p onclick="expand(this, 'comments{{post.pk}}')" style="color: red; text-decoration: underline;" class="more">more</p>
 
 
 
