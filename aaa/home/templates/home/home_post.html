@@ -17,7 +17,30 @@
             <textarea rows="10" type="text" name = 'heading' maxlength="1000" placeholder="Post heading/Question/title" required id="id_heading" ></textarea>
 
 <br>
-     <p>Please select a tag(must): {{form.tag}}</p>
+            {% if tags %}
+            <p><b>Kindly select a tag.</b></p>
+            <div class="tagform" style="display: flex; flex-flow: row wrap">
+
+
+           <div class="tagrow" style="display: flex; flex-flow: column wrap">
+               {% for tag in tag_speciality %}
+                <p><label for="id_tag_1"><input type="checkbox" name="tag" value="{{tag.pk}}" placeholder="Tags" id="id_tag_{{tag.pk}}">
+ {{tag.name}}</label></p>
+            {% endfor %}
+           </div>
+                <div class="tagrow" style="display: flex; flex-flow: column wrap; flex-grow: 1; align-items: center">
+                    {% for tag in tags %}
+                    {% if not tag.is_degree%}
+                    <p><label for="id_tag_1"><input type="checkbox" name="tag" value="{{tag.pk}}" placeholder="Tags" id="id_tag_{{tag.pk}}">
+ {{tag.name}}</label></p>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+
+            </div>
+     {% endif %}
+
     <br>
             <p>{{form.content}}</p>
             <br>

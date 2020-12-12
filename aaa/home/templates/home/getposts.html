@@ -1,23 +1,185 @@
-{% extends 'home/base.html' %}
-{% load static %}
+{% if posts and user %}
+<style>
+    #Mcq {
 
-{% block main %}
+    background-color: #ffdb2d;
+    color:black;
 
 
-<div class="home-container">
-    <p onclick="needmore()">More posts</p>
-    {% if request.user.is_authenticated and request.user.is_staff %}
-    {% if messages %}
-    {% for message in messages %}
-    <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
-    {% endfor %}
-    {% endif %}
-    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
-    {% endif %}
-    <div class="someclass">    {% if posts and request.user%}
+}
+#Q-A {
+
+    background-color: #ff301d;
+    color:white;
+
+
+}
+#Reviews {
+
+    background-color: #ffa89c;
+    color: #000000;
+
+}
+#Conferences {
+
+    background-color: darkred;
+    color: white;
+
+
+}
+#Event {
+
+    background-color: #ff8e42;
+    color:black;
+
+}
+#Articles {
+
+    background-color: #e3abff;
+    color:black;
+
+
+}
+.degree {
+
+    background-color: #000066;
+    color:white;
+    font-weight: 400;
+    font-size: 15px;
+    width: auto;
+    height: auto;
+    text-align: center;
+}
+ /*  Classes and tags for home.html   */
+.tags {
+    display: flex;
+    flex-flow: row wrap;
+
+}
+
+.home-container{
+    display: flex;
+    flex-flow: column wrap;
+    font-family: 'Overlock', cursive;
+    width: 100%;
+    height: auto;
+
+}
+.home-post{
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+    height: auto;
+    border-top: 1px solid black;
+    border-right: 5px outset darkgray;
+    border-bottom: 5px outset #000066;
+    margin-top: 10px;
+
+}
+.home-post-heading{
+    width: 100%;
+    height: auto;
+}
+.home-post-content{
+    font-size: 18px;
+    width: 100%;
+}
+.home-post-img{
+
+    display: flex;
+
+    justify-content: center;
+    flex-flow: column wrap;
+}
+.home-post-img img{
+    align-self: center;
+}
+.degree a {
+    margin:5px;text-decoration:none;color: white;
+}
+.notdegree a{
+    text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;
+}
+.comments{
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+.home-post-comment-single{
+    border-bottom: 5px outset grey;
+
+    margin-bottom: 20px;
+    display: flex;
+    flex-flow: column wrap;
+}
+.comment-create-form{
+
+}
+.comment-create-form form{
+    display: flex;
+    flex-flow: column wrap;
+}
+.comment-create-form textarea{
+    width: 60%;
+    height: 200px;
+    font-size: 18px;
+    font-family: 'Overlock', cursive;
+}
+.comment-create-form input{
+    border-radius: 4px;
+    height: 35px;
+    font-size: 14px;
+    font-family: 'Overlock', cursive;
+
+}
+.comment-create-form button{
+     border-radius: 4px;
+
+    width:65px;
+    height:40px;
+    background-color: #000066;
+    color: white;
+    align-self: center;
+}
+    @media screen and (max-width: 800px) {
+          .home-post-img {
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: center;
+
+
+        }
+           .comment-create-form textarea{
+    width: 95%;
+    border-radius: 4px;
+        border: none;
+
+}
+    }
+</style>
+<script>
+    window.onclick = function (event) {
+
+    if (document.getElementById('navy').contains(event.target)) {
+        console.log('yeah');
+
+} else {
+
+        var drop_down_list = document.getElementById('dropdownlist');
+            drop_down_list.style.display = 'none';
+        var drop_down_list1 = document.getElementById('dropdownlist1');
+            drop_down_list1.style.display = 'none';
+    }
+};
+for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
+    console.log('yes');
+document.getElementsByClassName('comments')[i].style.height = '1px';
+      document.getElementsByClassName('more')[i].style.display = 'block';}
+
+</script>
     {% for post in posts %}
-
-       <div class="home-post">
+<div class="home-post">
         {% if post.tag %}
         <div class="tags">
             {% for tag in post.get_tags %}
@@ -30,7 +192,7 @@
             {% endfor %}
         </div>
             {% endif %}
-        {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+        {% if user.is_authenticated and user == post.user or user.is_admin%}
     <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
     {% csrf_token %}
         <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Post" style="text-decoration: underline; color: #000066" >
@@ -81,7 +243,7 @@
         {% for comment in post.get_comments %}
             <div class="home-post-comment-single">
                 <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
-{% if request.user.is_staff and request.user == comment.user%}
+{% if user.is_staff and user == comment.user%}
     <script>
         var delpost{{comment.pk}} = '{% url "home:deletecomment" comment.pk %}'
     </script>
@@ -149,39 +311,9 @@
 
 
 {% endfor  %}
-    {% endif  %}
-</div>
-
-
-    </div>
-
-
 <script>
-    function needmore() {
-        var x = document.getElementsByClassName('home-post');
-    console.log(x.length);
-    newhttp = new XMLHttpRequest();
-    newhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-      var homecontainer = document.getElementsByClassName('home-container')[0];
-      console.log(this.responseText);
-      homepost = document.createElement('div');
-      homepost.innerHTML = this.responseText;
-
-      homecontainer.append(homepost);
-for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
-    console.log('yes');
-document.getElementsByClassName('comments')[i].style.height = '1px';
-      document.getElementsByClassName('more')[i].style.display = 'block';}
-  }
-};
-    newhttp.open('GET', "/getnewposts" + "/"+x.length);
-    newhttp.send();
-    }
-
 
 
 </script>
+    {% endif  %}
 
-
-{% endblock %}

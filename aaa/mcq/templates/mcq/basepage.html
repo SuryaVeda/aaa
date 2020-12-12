@@ -1,0 +1,487 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block main %}
+
+
+{% if general %}
+
+<style>
+.arch-box{
+    width: 250px;
+    height: 250px;
+}
+</style>
+<div class="arch-main">
+
+    <div class="arch-row">
+        {% for tag in tag_speciality %}
+     <div class="arch-box">
+         <h2><a href="{% url 'mcq:subjectquestions' tag.pk %}">{{tag.name}}</a> </h2>
+     </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% else %}
+<style>
+    .mcqcover{
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        font-family: 'Overlock', cursive;
+        font-size: 15px;
+        line-height: 25px;
+    }
+    .questionbankheading{
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        color: #FFFFE0;
+        font-weight: 100;
+        background-color: #800000;
+        margin-bottom: 25px;
+    }
+    .questionbankheading a{
+        color: #FFFFE0;
+    }
+    .mcqcover a{
+        text-decoration: underline;
+        font-weight: 500;
+    }
+    .mcqbox{
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .mcqblock{
+        display: none;
+        flex-flow: column wrap;
+        border-bottom: 5px outset blue;
+        border-right: 5px outset blue;
+        border-top: 1px groove gray;
+        justify-content: space-between;
+        margin: 50px 0 50px 0;
+        min-height: 350px;
+        width: 600px;
+    }
+    .mcqblock p {
+        margin: 5px;
+    }
+    .flashcardbox{
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .flashcardblock{
+        display: none;
+        min-height: 350px;
+        width: 600px;
+        margin: 50px 0 50px 0;
+        background-color: #FFDAB9;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+
+
+
+    }
+    .flashcards {
+        background-color: white;
+        display: flex;
+        flex-flow: column wrap;
+        width: 92%;
+        align-items: center;
+        min-height: 280px;
+        border:10px solid  #FFDAB9 ;
+        justify-content: center;
+
+    }
+    .qabox{
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: auto;
+    }
+    .qa{
+        font-family: 'Overlock', cursive;
+        font-size: 15px;
+        text-space: 5px;
+        line-height: 25px;
+    }
+
+     @media screen and (max-width: 800px) {
+         .mcqblock{
+            width: 100%;
+             margin: 0;
+             margin-bottom: 20px;
+        }
+        .flashcardblock{
+            width:100%;
+             margin: 0;
+            margin-bottom: 20px;
+        }
+        .qa{
+            width: 100%;
+             margin: 0;
+        }
+     }
+</style>
+<div class="mcqcover">
+    {% if messages.extratags == request.user.email %}
+    {% for message in messages %}
+    <b style="color: red;">{{message}}</b>
+    {% endfor %}
+
+    {% endif %}
+    <div class="questionbankheading">
+         <h1 >{{tag.name}}</h1>
+    <h2 >Question bank </h2>
+    <b  > Add  <a href="{% url 'mcq:createq' 'mcq'  %}">Mcq</a> | <a href="{% url 'mcq:createq'  'flashcard' %}">Flashcards</a> | <a href="{% url 'mcq:createq' 'qa'  %}">Case</a> </b>
+
+    </div>
+
+    <div  class="mcqbox">
+        <h3 style="align-self: flex-start; ">MCQ based Questions</h3>
+        <b style="align-self: flex-start" >Add <a href="{% url 'mcq:createq' 'mcq'  %}">Mcq</a></b>
+        {% for post in questionbank %}
+        {% if post.is_mcq %}
+        <div class="mcqblock" >
+           <b style="align-self: flex-end; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+    <form onsubmit="deletequestion(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+        <input  type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
+    </form>
+    {%endif %}</b>
+            <p>{{post.question|linebreaks}}</p>
+            <b style="display: none;color: red;" id = "mcq{{post.pk}}">{{post.answer|linebreaks }}</b>
+
+
+            <p onclick="revealmcq(document.getElementById('mcq{{post.pk}}'))" style="align-self: center;color: rebeccapurple; font-weight: 600;">See Answer</p>
+<p style=" align-self: center; background-color: #000066; color: white; "><a onclick="previousquestion(document.getElementsByClassName('mcqblock'))">PREV</a>   |    <a onclick="nextquestion(document.getElementsByClassName('mcqblock'), 'mcq', 'mcqblock')">NEXT</a></p>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+
+
+
+
+    </div>
+    <div class="flashcardbox">
+        <h3 style="align-self: flex-start">Flash Cards</h3>
+        <b style="align-self: flex-start">Add  <a href="{% url 'mcq:createq'  'flashcard' %}">Flashcards</a></b>
+            {% for post in flashcards %}
+        {% if post.is_flashcard %}
+        <div style="" class="flashcardblock">
+            <div class="flashcards">
+                <div style="display:flex; align-items:flex-end;flex-grow: 2;align-self: center;">
+                    <b  id = flashcardq{{post.pk}}>{{post.question|linebreaks}}</b>
+
+                </div>
+            <b style="display: none" id = flashcarda{{post.pk}}>{{post.answer|linebreaks}}</b>
+            <b onclick="showflashcard(this, document.getElementById('flashcardq{{post.pk}}'),document.getElementById('flashcarda{{post.pk}}'))" style=" align-self: center;color: rebeccapurple; font-weight: 600;">See Answer</b>
+              <div style="display: flex; flex-direction: column; justify-content: flex-end; flex-grow:1 ">
+                  <p style=" align-self: center; border: 1px solid black; "><a onclick="previousquestion(document.getElementsByClassName('flashcardblock'))">PREV</a>   |    <a onclick="nextquestion(document.getElementsByClassName('flashcardblock'),'flashcard', 'flashcardblock')">NEXT</a></p>
+            <b style="align-self: center; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+    <form onsubmit="deletequestion(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+        <input  type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
+    </form>
+    {%endif %}</b>
+              </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+    <div class="qabox">
+        <h3>Case Based Questions</h3>
+        <p  >Add <a href="{% url 'mcq:createq' 'qa'  %}">Case</a> </p>
+
+        {% for post in cases %}
+        {% if post.is_qa %}
+        <div class="qa">
+                       <b style="align-self: flex-start; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+    <form onsubmit="deletequestion(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+        <input  type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
+    </form>
+    {%endif %}</b>
+
+            <p>{{post.question|linebreaks}}</p>
+            <p>{{post.answer|linebreaks}}</p>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="testing">
+
+    </div>
+
+</div>
+<script>
+var mcqbox = document.getElementsByClassName('mcqbox')[0];
+var flashcardbox = document.getElementsByClassName('flashcardbox')[0];
+var mcqblock = document.getElementsByClassName('mcqblock');
+var flashcardblock= document.getElementsByClassName('flashcardblock');
+var testing = document.getElementsByClassName('testing')[0];
+var startx;
+var starty;
+var endx;
+var endy;
+
+var xdist;
+var ydist;
+var starttime;
+var endtime;
+var elapsedtime;
+
+
+
+
+window.onload = function () {
+    mcqblock[0].style.display = "flex";
+    console.log(flashcardblock);
+    flashcardblock[0].style.display = "flex";
+
+};
+
+function deletequestion(e,pk) {
+    e.preventDefault();
+    var message = confirm('Are you sure you want to delete the post');
+    if (message==true){
+        var dhttp = new XMLHttpRequest();
+        dhttp.onreadystatechange = function() {
+        if (this.readyState == 4 ) {
+
+         var x = JSON.parse(this.responseText);
+         console.log(x.success) ;
+         window.location.href = x.success;
+
+        }
+                                                };
+        console.log("");
+
+        dhttp.open('POST', '/mcq/deletequestions' + '/' + pk );
+        dhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        dhttp.send("csrfmiddlewaretoken=" +document.getElementsByName('csrfmiddlewaretoken')[0].value +  "&deletepostbtn=Deletepost");
+
+        console.log(true);
+    }
+    else{
+        console.log(false);
+    }
+}
+function revealmcq( element) {
+element.style.display = 'block';
+}
+function showflashcard(x,q, a) {
+    q.style.display = 'none';
+    a.style.display='block';
+    x.style.display = 'none';
+
+}
+
+function needmore(x,type, classname) {
+
+    newhttp = new XMLHttpRequest();
+
+    newhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      console.log('text recieved');
+      jsontext = JSON.parse(this.responseText);
+      console.log(jsontext.length);
+      console.log(mcqblock.length);
+      var box = document.getElementsByClassName(x[0].parentNode.className);
+      console.log(box);
+      for (var i=0; i<jsontext.length; i++) {
+          console.log(jsontext[i]);
+          var mcq = document.createElement('div');
+
+          mcq.innerHTML = jsontext[i];
+          mcq.classList.add(classname);
+
+          box[0].append(mcq);
+      }
+      console.log(x.length);
+
+
+
+  }
+};
+    newhttp.open('GET', "/mcq/getnewquestions" + "/"+x.length +'?type=' + type + '&tag=' +'{{tag.pk}}');
+    newhttp.send();
+    }
+
+   mcqbox.addEventListener('touchstart', function (e) {
+       console.log(e);
+       var touchobj = e.changedTouches[0];
+       startx = touchobj.pageX;
+       starty = touchobj.pageY;
+       starttime = new Date().getTime();
+       testing.innerHTML = x +" , " + y;
+
+
+   }, false);
+
+   mcqbox.addEventListener('touchend', function (e) {
+       console.log(e);
+       var touchobj = e.changedTouches[0];
+       endx = touchobj.pageX;
+       endy = touchobj.pageY;
+
+       endtime = new Date().getTime();
+       elapsedtime = (endtime - starttime)/1000;
+       xdist = endx-startx;
+       ydist = endy-starty;
+       if (elapsedtime <= 2) {
+           if (Math.abs(xdist) >= 30 && Math.abs(ydist) <=100 ){
+              if (xdist > 0){
+                  for (var i = 0; i <mcqblock.length; i++) {
+                      if (window.getComputedStyle(mcqblock[i]).display == 'flex'){
+
+                          if (i-1 >= 0) {
+                              mcqblock[i-1].style.display = 'flex';
+                              mcqblock[i].style.display = 'none';
+                              break;
+                          } else {
+                              console.log('NOOOoooooo');
+                              testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards right" + "Reached END" ;
+                          }
+
+                      }
+                  }
+
+
+              } else {
+                  for (var i = 0; i <mcqblock.length; i++) {
+                      if (window.getComputedStyle(mcqblock[i]).display == 'flex'){
+
+                          if (i < mcqblock.length-1) {
+                              mcqblock[i+1].style.display = 'flex';
+                              mcqblock[i].style.display = 'none';
+                              break;
+                          } else {
+                              needmore(document.getElementsByClassName('mcqblock'), 'mcq', 'mcqblock');
+                              testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards left" + "Reached END" ;
+
+                          }
+
+                      }
+                  }
+              }
+
+           }
+       }
+
+
+
+   }, false);
+
+
+
+   flashcardbox.addEventListener('touchstart', function (e) {
+       console.log(e);
+       var touchobj = e.changedTouches[0];
+       startx = touchobj.pageX;
+       starty = touchobj.pageY;
+       starttime = new Date().getTime();
+       testing.innerHTML = x +" , " + y;
+
+
+   }, false);
+
+
+ flashcardbox.addEventListener('touchend', function (e) {
+       console.log(e);
+       var touchobj = e.changedTouches[0];
+       endx = touchobj.pageX;
+       endy = touchobj.pageY;
+
+       endtime = new Date().getTime();
+       elapsedtime = (endtime - starttime)/1000;
+       xdist = endx-startx;
+       ydist = endy-starty;
+       if (elapsedtime <= 2) {
+           if (Math.abs(xdist) >= 30 && Math.abs(ydist) <=100 ){
+              if (xdist > 0){
+                  for (var i = 0; i <flashcardblock.length; i++) {
+                      if (window.getComputedStyle(flashcardblock[i]).display == 'flex'){
+
+                          if (i-1 >= 0) {
+                              flashcardblock[i-1].style.display = 'flex';
+                              flashcardblock[i].style.display = 'none';
+                              break;
+                          } else {
+                              console.log('NOOOoooooo');
+                              testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards right" + "Reached END" ;
+                          }
+
+                      }
+                  }
+
+
+              } else {
+                  for (var i = 0; i <flashcardblock.length; i++) {
+                      if (window.getComputedStyle(flashcardblock[i]).display == 'flex'){
+
+                          if (i < flashcardblock.length-1) {
+                              flashcardblock[i+1].style.display = 'flex';
+                              flashcardblock[i].style.display = 'none';
+                              break;
+                          } else {
+                              needmore(document.getElementsByClassName('flashcardblock'), 'flashcard', 'flashcardblock');
+                              testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards left" + "Reached END" ;
+
+                          }
+
+                      }
+                  }
+              }
+
+           }
+       }
+
+
+
+   }, false);
+
+    function nextquestion(block, type, classname) {
+        console.log(block);
+        for (var i = 0; i <block.length; i++) {
+                      if (window.getComputedStyle(block[i]).display == 'flex'){
+
+                          if (i < block.length-1) {
+                              block[i+1].style.display = 'flex';
+                              block[i].style.display = 'none';
+                              break;
+                          } else {
+                              needmore(block, type, classname);
+                              testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards left" + "Reached END" ;}}}
+    }
+    function previousquestion(block) {
+        console.log(block);
+        for (var i = 0; i <block.length; i++) {
+                      if (window.getComputedStyle(block[i]).display == 'flex'){
+
+                          if (i-1 >= 0) {
+                              block[i-1].style.display = 'flex';
+                              block[i].style.display = 'none';
+                              break;
+                          } else {
+                              console.log('NOOOoooooo');
+                              testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards right" + "Reached END" ;}}}
+    }
+
+
+</script>
+{% endif %}
+{% endblock %}

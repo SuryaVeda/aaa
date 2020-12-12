@@ -69,6 +69,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
 INSTALLED_APPS = [
+    'mcq',
     'archives',
     'home',
     'accounts',

@@ -1,0 +1,131 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block main %}
+
+<style>
+    .tagrow{
+        flex-grow: 1;
+        align-items: flex-start;
+        height: 200px;
+    }
+    #id_heading{
+        border: none;
+    }
+
+    .errorlist li {
+        font-size: 20px; color: red; font-weight: 700;
+    }
+    @media screen and (max-width: 800px) {
+        .tagrow{
+            height: auto;
+        }
+
+    }
+</style>
+
+
+<div class="fullcover">
+    <div class="postform">
+
+        <form style="display: flex;flex-flow: column wrap" method="post" enctype="multipart/form-data">
+            {% if form.errors %}
+
+            <p >{{form.errors}}</p>
+
+            {% endif %}
+    {% csrf_token %}
+
+            {% if tags %}
+            <p><b>Kindly select a tag:</b></p>
+            <div class="tagform" style="display: flex; flex-flow: row wrap">
+
+
+           <div class="tagrow" style="display: flex; flex-flow: column wrap">
+               {% for tag in tags %}
+               {% if tag.is_speciality %}
+                <p><label for="id_tag_1"><input type="checkbox" name="tag" value="{{tag.pk}}" placeholder="Tags" id="id_tag_{{tag.pk}}">
+ {{tag.name}}</label></p>
+               {% endif %}
+            {% endfor %}
+           </div>
+
+
+            </div>
+     {% endif %}
+
+{% if type == 'mcq' %}
+            <style>
+                 #id_answer{
+        font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 95% ;
+    height:auto;
+    font-size: 20px;
+    border: none;
+    }
+                #id_heading {
+                    min-height: 400px ;
+                }
+            </style>
+                <textarea type="text" name = 'question' maxlength="10000" placeholder="Enter Mcq question along with options " required id="id_heading" ></textarea>
+
+     <p>Add Image for Question (optional):  <input type="file" name=" qimage" ></p>
+            <textarea  type="text" name = 'answer' maxlength="500" placeholder="Type correct answer for above mcq" required id="id_answer" ></textarea>
+     <p>Add Image for Answer (optional):  <input type="file" name=" aimage" ></p>
+{% endif %}
+
+{% if type == 'flashcard' %}
+            <style>
+                 #id_answer{
+        font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 95% ;
+    min-height:300px;
+    font-size: 20px;
+    border: none;
+    }
+                #id_heading {
+                    min-height: 100px ;
+                }
+            </style>
+                <textarea type="text" name = 'question' maxlength="200" placeholder="Enter Question for flashcard " required id="id_heading" ></textarea>
+
+     <p>Add Image for Flashcard Question (optional):  <input type="file" name=" qimage" ></p>
+            <textarea  type="text" name = 'answer' maxlength="5000" placeholder="Type Answer for Flashcard" required id="id_answer" ></textarea>
+     <p>Add Image for Flashcard Answer (optional):  <input type="file" name=" aimage" ></p>
+{% endif %}
+
+{% if type == 'qa' %}
+            <style>
+                 #id_answer{
+        font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 95% ;
+    min-height:500px;
+    font-size: 20px;
+    border: none;
+    }
+                #id_heading {
+                    min-height: 600px ;
+                }
+            </style>
+                <textarea type="text" name = 'question' maxlength="100000" placeholder="Enter Case Along with Questions  " required id="id_heading" ></textarea>
+
+     <p>Add Image for Case (optional):  <input type="file" name=" qimage" ></p>
+            <textarea  type="text" name = 'answer' maxlength="150000" placeholder="Enter Case discussions along with answers" required id="id_answer" ></textarea>
+     <p>Add Image for Case Explanation (optional):  <input type="file" name=" aimage" ></p>
+{% endif %}
+    <p>Add Links (optional)</p>
+              <div id="addlinkform{{post.pk}}">
+                 <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
+             </div>
+             <p style="text-decoration: underline;color: #000066;"><a onclick="addnewforms('addlinkform')"> Add more links</a></p>
+
+    <button style="align-self: center" name="qbank" value="qbank" type="submit">Submit</button>
+
+</form>
+
+    </div>
+</div>
+{% endblock %}

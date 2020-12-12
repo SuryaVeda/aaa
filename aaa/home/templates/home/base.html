@@ -416,6 +416,7 @@ footer .neeche{
     flex-flow: column wrap;
     width: 100%;
     height: auto;
+    border-top: 1px solid black;
     border-right: 5px outset darkgray;
     border-bottom: 5px outset #000066;
     margin-top: 10px;
@@ -439,7 +440,12 @@ footer .neeche{
 .home-post-img img{
     align-self: center;
 }
-
+.degree a {
+    margin:5px;text-decoration:none;color: white;
+}
+.notdegree a{
+    text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;
+}
 .comments{
     height: auto;
     overflow: hidden;
@@ -1071,7 +1077,32 @@ function deletepost(x) {
         console.log(false);
     }
 }
+function deleteposte(e,pk) {
+    e.preventDefault();
+    var message = confirm('Are you sure you want to delete the post');
+    if (message==true){
+        var dhttp = new XMLHttpRequest();
+        dhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 302) {
+         var x = JSON.parse(this.responseText);
+         console.log(x.success) ;
+         window.location.href = x.success;
 
+        }
+                                                };
+        console.log("");
+
+        dhttp.open('POST', '/delete_post' + '/' + pk );
+        dhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        dhttp.send("csrfmiddlewaretoken=" +document.getElementsByName('csrfmiddlewaretoken')[0].value +  "&deletepostbtn=Deletepost");
+
+        window.location.href = x;
+        console.log(true);
+    }
+    else{
+        console.log(false);
+    }
+}
 function commentform(){
     var subdetails = document.getElementsByClassName('comment-create-form');
     for(var i = 0; i < subdetails.length; i++){
@@ -1159,7 +1190,13 @@ function addsubjectintro() {
 {% endif %}
 </nav>
 <div class="empty"></div>
-
+{% if messages %}
+{% for message in messages %}
+{% if message.extra_tags == request.user.email %}
+<p style="color: red;font-weight: 700; font-size: 20px">{{message}}</p>
+{% endif %}
+{% endfor %}
+{% endif %}
 {% block main%}
 {% endblock %}
 

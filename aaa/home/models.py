@@ -44,6 +44,13 @@ class Tag(models.Model):
     is_speciality=models.BooleanField(default=False)
     is_degree = models.BooleanField(default=False)
     details=models.ManyToManyField('accounts.ProfileDetail', blank=True)
+
+    @property
+    def get_questions(self):
+        try:
+            return self.questionbank_set.all()
+        except:
+            return False
     @property
     def get_details(self):
         d = list(self.details.all().order_by('pk'))

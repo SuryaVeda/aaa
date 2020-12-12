@@ -2,14 +2,57 @@
 {% load static %}
 {% load custom_tags %}
 {% block main %}
+ <style>
+                #subject-intro-edit textarea{
+                    height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;
+                }
+                #subject-intro-add textarea{
+                    height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;
+                }
+                #subject-intro-add input{
+                        width:40%;
+                }
 
+                #subject-intro-edit input{
+                        width: 40%;
+                }
+                .qb {
+                    display: flex;
+                    flex-flow: row wrap;
+                    justify-content: space-between;
+                    background-color: white;
+                }
+                .subs {
+                    height: 250px;
+                    width: 250px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                }
+                @media screen and (max-width: 800px) {
+                    #subject-intro-add textarea{
+                        width: 100%;
+                    }
+                    #subject-intro-add input{
+                        width:100%;
+                    }
+                    #subject-intro-edit textarea{
+                        width: 100%;
+                    }
+                    #subject-intro-edit input{
+                        width: 100%;
+                    }
+                }
+            </style>
 
 
 
 {% if tag.is_degree %}
 <div class="arch-main">
-    {% if request.user.is_authenticated and request.user.is_admin %}
 
+
+    {% if request.user.is_authenticated and request.user.is_admin %}
       <div class="create-book-form">
 
      <form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity(event)">
@@ -48,11 +91,10 @@
     </form>
 
         </div>
-
-    <div class="edit-book-form">
+      <div class="edit-book-form">
 
         {% if tag.get_books %}
-            {% for book in tag.get_books %}
+          {% for book in tag.get_books %}
 
         <form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity()">
         {% csrf_token %}
@@ -144,18 +186,21 @@
         <button type="submit" name="bookformbtn" value="{{book.pk}}">Submit</button>
     </form>
 
-    {% endfor %}
-        {% endif %}
+         {% endfor %}
+          {% endif %}
         </div>
-
-
-
-
     {% endif %}
+
+
+
 <div class="subject-heading">
+
     <h2 style="text-decoration: underline; ">{{tag.name}}</h2>
 
+<!-- Add details button and add, edit forms -->
     <div class="subject-intro">
+
+        <!-- All details of a Subject  -->
         {% if tag.get_details %}
         {% for i in tag.get_details %}
         <div class="showsubjectintro">
@@ -179,38 +224,15 @@
         </div>
         {% endfor %}
         {% endif %}
+
+        <!-- Add details Button of a Subject  -->
+
         {% if request.user.is_authenticated and request.user.is_admin  %}
         <p><a style="text-decoration: underline; color: blue;" onclick="addsubjectintro()">Add more details </a></p>
         {% endif %}
- <style>
-                #subject-intro-edit textarea{
-                    height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;
-                }
-                #subject-intro-add textarea{
-                    height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;
-                }
-                #subject-intro-add input{
-                        width:40%;
-                }
 
-                #subject-intro-edit input{
-                        width: 40%;
-                }
-                @media screen and (max-width: 800px) {
-                    #subject-intro-add textarea{
-                        width: 100%;
-                    }
-                    #subject-intro-add input{
-                        width:100%;
-                    }
-                    #subject-intro-edit textarea{
-                        width: 100%;
-                    }
-                    #subject-intro-edit input{
-                        width: 100%;
-                    }
-                }
-            </style>
+        <!-- Add details Form and Edit details Form of a Subject  -->
+
         {% if request.user.is_authenticated and request.user.is_admin  %}
         <form style="display: none;" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -219,7 +241,6 @@
 
                 <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="edittagdetail" type="submit" value="profdetails">Submit</button>
             </form>
-
         <form style="display: none;" action="{% url 'home:addtagdetail' tag.pk %}" method="post" id="subject-intro-add" enctype="application/x-www-form-urlencoded">
              {% csrf_token %}
 
@@ -230,12 +251,18 @@
 
          </form>
         {% endif %}
+
+
     </div>
+
+
+    <!-- Add book and Edit book forms -->
         {% if request.user.is_authenticated and request.user.is_admin %}
+         <p><a style="text-decoration: underline; color: blue;" onclick="addbookform()">Add a book </a> |  <a style="text-decoration: underline; color: blue;" onclick="editbookform()">Edit a book </a></p>
+        {% endif %}
 
-    <p><a style="text-decoration: underline; color: blue;" onclick="addbookform()">Add a book </a> |  <a style="text-decoration: underline; color: blue;" onclick="editbookform()">Edit a book </a></p>
-{% endif %}
 
+ <!-- Shows books in each subject -->
 {% if request.user.is_staff %}
     <div class="subject-detail books">
         <h2>Book Reviews</h2>
@@ -305,12 +332,33 @@
             {% endif %}
     </div>
     </div>
-    <div class="subject-detail qb">
+
+
+ <!-- Shows question banks for each subject -->
+
+    <div class="subject-detail">
         <h2>Question Bank</h2>
-        <div class="subs">
-            <div class="collections"> <h5>Will be uploaded soon...</h5></div>
+
+        <div class="qb">
+            <div onclick="openquestionbank()" style="background-color: purple;color: white" class="subs">
+            <h3>MCQ</h3>
         </div>
+        <div onclick="openquestionbank()" style="background-color: #191970; color: white;" class="subs">
+            <h3>Flash Cards</h3>
+        </div>
+        <div onclick="openquestionbank()" style="background-color: #FFF8DC; color: black" class="subs">
+            <h3>Case based questions</h3>
+        </div>
+        </div>
+
+
     </div>
+    <script>
+        function openquestionbank() {
+             window.location.href = "{% url 'mcq:subjectquestions' tag.pk  %}"
+        }
+
+        </script>
 {% else %}
     <p style="font-weight: 700;color: red; font-size: 20px;"> You need to be authorized by Admin to view Book Reviews and Question banks </p>
     {% endif %}
