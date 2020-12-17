@@ -1,0 +1,3624 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: accounts_degree; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_degree (
+    id integer NOT NULL,
+    name_id integer,
+    finalyear date,
+    college_id integer
+);
+
+
+ALTER TABLE public.accounts_degree OWNER TO sk;
+
+--
+-- Name: accounts_degree_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_degree_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_degree_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_degree_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_degree_id_seq OWNED BY public.accounts_degree.id;
+
+
+--
+-- Name: accounts_medicalcollege; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_medicalcollege (
+    id integer NOT NULL,
+    name character varying(100)
+);
+
+
+ALTER TABLE public.accounts_medicalcollege OWNER TO sk;
+
+--
+-- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_medicalcollege_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_medicalcollege_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_medicalcollege_id_seq OWNED BY public.accounts_medicalcollege.id;
+
+
+--
+-- Name: accounts_profile; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_profile (
+    id integer NOT NULL,
+    user_id integer,
+    dob date,
+    name character varying(50),
+    nationality character varying(50),
+    phone character varying(10),
+    backgroundpic character varying(100),
+    profilepic character varying(100)
+);
+
+
+ALTER TABLE public.accounts_profile OWNER TO sk;
+
+--
+-- Name: accounts_profile_degree; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_profile_degree (
+    id integer NOT NULL,
+    profile_id integer NOT NULL,
+    degree_id integer NOT NULL
+);
+
+
+ALTER TABLE public.accounts_profile_degree OWNER TO sk;
+
+--
+-- Name: accounts_profile_degree_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_profile_degree_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_profile_degree_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_profile_degree_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_profile_degree_id_seq OWNED BY public.accounts_profile_degree.id;
+
+
+--
+-- Name: accounts_profile_details; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_profile_details (
+    id integer NOT NULL,
+    profile_id integer NOT NULL,
+    profiledetail_id integer NOT NULL
+);
+
+
+ALTER TABLE public.accounts_profile_details OWNER TO sk;
+
+--
+-- Name: accounts_profile_details_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_profile_details_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_profile_details_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_profile_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_profile_details_id_seq OWNED BY public.accounts_profile_details.id;
+
+
+--
+-- Name: accounts_profile_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_profile_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_profile_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_profile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_profile_id_seq OWNED BY public.accounts_profile.id;
+
+
+--
+-- Name: accounts_profile_links; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_profile_links (
+    id integer NOT NULL,
+    profile_id integer NOT NULL,
+    postlink_id integer NOT NULL
+);
+
+
+ALTER TABLE public.accounts_profile_links OWNER TO sk;
+
+--
+-- Name: accounts_profile_links_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_profile_links_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_profile_links_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_profile_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_profile_links_id_seq OWNED BY public.accounts_profile_links.id;
+
+
+--
+-- Name: accounts_profile_work; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_profile_work (
+    id integer NOT NULL,
+    profile_id integer NOT NULL,
+    work_id integer NOT NULL
+);
+
+
+ALTER TABLE public.accounts_profile_work OWNER TO sk;
+
+--
+-- Name: accounts_profile_work_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_profile_work_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_profile_work_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_profile_work_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_profile_work_id_seq OWNED BY public.accounts_profile_work.id;
+
+
+--
+-- Name: accounts_profiledetail; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_profiledetail (
+    id integer NOT NULL,
+    heading character varying(50),
+    details character varying(1500),
+    pdf character varying(100)
+);
+
+
+ALTER TABLE public.accounts_profiledetail OWNER TO sk;
+
+--
+-- Name: accounts_profiledetail_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_profiledetail_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_profiledetail_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_profiledetail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_profiledetail_id_seq OWNED BY public.accounts_profiledetail.id;
+
+
+--
+-- Name: accounts_user; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    email character varying(255) NOT NULL,
+    username character varying(20) NOT NULL,
+    is_active boolean NOT NULL,
+    staff boolean NOT NULL,
+    admin boolean NOT NULL
+);
+
+
+ALTER TABLE public.accounts_user OWNER TO sk;
+
+--
+-- Name: accounts_user_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_user_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_user_id_seq OWNED BY public.accounts_user.id;
+
+
+--
+-- Name: accounts_work; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.accounts_work (
+    id integer NOT NULL,
+    "position" character varying(50),
+    is_current boolean NOT NULL,
+    hospital_id integer
+);
+
+
+ALTER TABLE public.accounts_work OWNER TO sk;
+
+--
+-- Name: accounts_work_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.accounts_work_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_work_id_seq OWNER TO sk;
+
+--
+-- Name: accounts_work_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.accounts_work_id_seq OWNED BY public.accounts_work.id;
+
+
+--
+-- Name: archives_book; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.archives_book (
+    id integer NOT NULL,
+    name character varying(100),
+    latest character varying(30),
+    "backgroundPic" character varying(100),
+    subject_id integer,
+    user_id integer
+);
+
+
+ALTER TABLE public.archives_book OWNER TO sk;
+
+--
+-- Name: archives_book_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.archives_book_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.archives_book_id_seq OWNER TO sk;
+
+--
+-- Name: archives_book_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.archives_book_id_seq OWNED BY public.archives_book.id;
+
+
+--
+-- Name: archives_book_links; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.archives_book_links (
+    id integer NOT NULL,
+    book_id integer NOT NULL,
+    postlink_id integer NOT NULL
+);
+
+
+ALTER TABLE public.archives_book_links OWNER TO sk;
+
+--
+-- Name: archives_book_links_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.archives_book_links_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.archives_book_links_id_seq OWNER TO sk;
+
+--
+-- Name: archives_book_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.archives_book_links_id_seq OWNED BY public.archives_book_links.id;
+
+
+--
+-- Name: archives_review; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.archives_review (
+    id integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    details character varying(2000),
+    book_id integer,
+    user_id integer
+);
+
+
+ALTER TABLE public.archives_review OWNER TO sk;
+
+--
+-- Name: archives_review_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.archives_review_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.archives_review_id_seq OWNER TO sk;
+
+--
+-- Name: archives_review_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.archives_review_id_seq OWNED BY public.archives_review.id;
+
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO sk;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO sk;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO sk;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO sk;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO sk;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO sk;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO sk;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO sk;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO sk;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO sk;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO sk;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO sk;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO sk;
+
+--
+-- Name: home_comment; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_comment (
+    id integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    text text,
+    user_id integer,
+    pdf character varying(100),
+    pdf_name character varying(50),
+    img character varying(100)
+);
+
+
+ALTER TABLE public.home_comment OWNER TO sk;
+
+--
+-- Name: home_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_comment_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_comment_id_seq OWNER TO sk;
+
+--
+-- Name: home_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_comment_id_seq OWNED BY public.home_comment.id;
+
+
+--
+-- Name: home_comment_link; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_comment_link (
+    id integer NOT NULL,
+    comment_id integer NOT NULL,
+    postlink_id integer NOT NULL
+);
+
+
+ALTER TABLE public.home_comment_link OWNER TO sk;
+
+--
+-- Name: home_comment_link_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_comment_link_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_comment_link_id_seq OWNER TO sk;
+
+--
+-- Name: home_comment_link_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_comment_link_id_seq OWNED BY public.home_comment_link.id;
+
+
+--
+-- Name: home_imageadd; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_imageadd (
+    id integer NOT NULL,
+    img character varying(100),
+    user_id integer,
+    name character varying(20)
+);
+
+
+ALTER TABLE public.home_imageadd OWNER TO sk;
+
+--
+-- Name: home_imageadd_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_imageadd_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_imageadd_id_seq OWNER TO sk;
+
+--
+-- Name: home_imageadd_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_imageadd_id_seq OWNED BY public.home_imageadd.id;
+
+
+--
+-- Name: home_post; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_post (
+    id integer NOT NULL,
+    date timestamp with time zone,
+    heading character varying(1000) NOT NULL,
+    content character varying(1000),
+    user_id integer,
+    pdf character varying(100),
+    pdf_name character varying(50),
+    img character varying(100)
+);
+
+
+ALTER TABLE public.home_post OWNER TO sk;
+
+--
+-- Name: home_post_comments; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_post_comments (
+    id integer NOT NULL,
+    post_id integer NOT NULL,
+    comment_id integer NOT NULL
+);
+
+
+ALTER TABLE public.home_post_comments OWNER TO sk;
+
+--
+-- Name: home_post_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_post_comments_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_post_comments_id_seq OWNER TO sk;
+
+--
+-- Name: home_post_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_post_comments_id_seq OWNED BY public.home_post_comments.id;
+
+
+--
+-- Name: home_post_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_post_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_post_id_seq OWNER TO sk;
+
+--
+-- Name: home_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_post_id_seq OWNED BY public.home_post.id;
+
+
+--
+-- Name: home_post_link; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_post_link (
+    id integer NOT NULL,
+    post_id integer NOT NULL,
+    postlink_id integer NOT NULL
+);
+
+
+ALTER TABLE public.home_post_link OWNER TO sk;
+
+--
+-- Name: home_post_link_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_post_link_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_post_link_id_seq OWNER TO sk;
+
+--
+-- Name: home_post_link_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_post_link_id_seq OWNED BY public.home_post_link.id;
+
+
+--
+-- Name: home_post_tag; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_post_tag (
+    id integer NOT NULL,
+    post_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE public.home_post_tag OWNER TO sk;
+
+--
+-- Name: home_post_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_post_tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_post_tag_id_seq OWNER TO sk;
+
+--
+-- Name: home_post_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_post_tag_id_seq OWNED BY public.home_post_tag.id;
+
+
+--
+-- Name: home_postlink; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_postlink (
+    id integer NOT NULL,
+    link character varying(400),
+    link_name character varying(50),
+    user_id integer
+);
+
+
+ALTER TABLE public.home_postlink OWNER TO sk;
+
+--
+-- Name: home_postlink_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_postlink_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_postlink_id_seq OWNER TO sk;
+
+--
+-- Name: home_postlink_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_postlink_id_seq OWNED BY public.home_postlink.id;
+
+
+--
+-- Name: home_tag; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_tag (
+    id integer NOT NULL,
+    name character varying(40),
+    is_speciality boolean NOT NULL,
+    is_degree boolean NOT NULL
+);
+
+
+ALTER TABLE public.home_tag OWNER TO sk;
+
+--
+-- Name: home_tag_details; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.home_tag_details (
+    id integer NOT NULL,
+    tag_id integer NOT NULL,
+    profiledetail_id integer NOT NULL
+);
+
+
+ALTER TABLE public.home_tag_details OWNER TO sk;
+
+--
+-- Name: home_tag_details_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_tag_details_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_tag_details_id_seq OWNER TO sk;
+
+--
+-- Name: home_tag_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_tag_details_id_seq OWNED BY public.home_tag_details.id;
+
+
+--
+-- Name: home_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.home_tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.home_tag_id_seq OWNER TO sk;
+
+--
+-- Name: home_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.home_tag_id_seq OWNED BY public.home_tag.id;
+
+
+--
+-- Name: mcq_qimage; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.mcq_qimage (
+    id integer NOT NULL,
+    image character varying(100),
+    aimage boolean NOT NULL,
+    qimage boolean NOT NULL,
+    qinstance_id integer
+);
+
+
+ALTER TABLE public.mcq_qimage OWNER TO sk;
+
+--
+-- Name: mcq_qimage_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.mcq_qimage_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.mcq_qimage_id_seq OWNER TO sk;
+
+--
+-- Name: mcq_qimage_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.mcq_qimage_id_seq OWNED BY public.mcq_qimage.id;
+
+
+--
+-- Name: mcq_qtag; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.mcq_qtag (
+    id integer NOT NULL,
+    name character varying(20) NOT NULL,
+    subject boolean NOT NULL,
+    degree boolean NOT NULL
+);
+
+
+ALTER TABLE public.mcq_qtag OWNER TO sk;
+
+--
+-- Name: mcq_qtag_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.mcq_qtag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.mcq_qtag_id_seq OWNER TO sk;
+
+--
+-- Name: mcq_qtag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.mcq_qtag_id_seq OWNED BY public.mcq_qtag.id;
+
+
+--
+-- Name: mcq_questionbank; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.mcq_questionbank (
+    id integer NOT NULL,
+    date date NOT NULL,
+    question character varying(1000000),
+    answer character varying(1000000),
+    mcq boolean NOT NULL,
+    flashcard boolean NOT NULL,
+    qa boolean NOT NULL,
+    user_id integer
+);
+
+
+ALTER TABLE public.mcq_questionbank OWNER TO sk;
+
+--
+-- Name: mcq_questionbank_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.mcq_questionbank_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.mcq_questionbank_id_seq OWNER TO sk;
+
+--
+-- Name: mcq_questionbank_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.mcq_questionbank_id_seq OWNED BY public.mcq_questionbank.id;
+
+
+--
+-- Name: mcq_questionbank_links; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.mcq_questionbank_links (
+    id integer NOT NULL,
+    questionbank_id integer NOT NULL,
+    postlink_id integer NOT NULL
+);
+
+
+ALTER TABLE public.mcq_questionbank_links OWNER TO sk;
+
+--
+-- Name: mcq_questionbank_links_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.mcq_questionbank_links_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.mcq_questionbank_links_id_seq OWNER TO sk;
+
+--
+-- Name: mcq_questionbank_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.mcq_questionbank_links_id_seq OWNED BY public.mcq_questionbank_links.id;
+
+
+--
+-- Name: mcq_questionbank_tag; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.mcq_questionbank_tag (
+    id integer NOT NULL,
+    questionbank_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE public.mcq_questionbank_tag OWNER TO sk;
+
+--
+-- Name: mcq_questionbank_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.mcq_questionbank_tag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.mcq_questionbank_tag_id_seq OWNER TO sk;
+
+--
+-- Name: mcq_questionbank_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.mcq_questionbank_tag_id_seq OWNED BY public.mcq_questionbank_tag.id;
+
+
+--
+-- Name: accounts_degree id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_degree ALTER COLUMN id SET DEFAULT nextval('public.accounts_degree_id_seq'::regclass);
+
+
+--
+-- Name: accounts_medicalcollege id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_medicalcollege ALTER COLUMN id SET DEFAULT nextval('public.accounts_medicalcollege_id_seq'::regclass);
+
+
+--
+-- Name: accounts_profile id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile ALTER COLUMN id SET DEFAULT nextval('public.accounts_profile_id_seq'::regclass);
+
+
+--
+-- Name: accounts_profile_degree id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_degree ALTER COLUMN id SET DEFAULT nextval('public.accounts_profile_degree_id_seq'::regclass);
+
+
+--
+-- Name: accounts_profile_details id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_details ALTER COLUMN id SET DEFAULT nextval('public.accounts_profile_details_id_seq'::regclass);
+
+
+--
+-- Name: accounts_profile_links id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_links ALTER COLUMN id SET DEFAULT nextval('public.accounts_profile_links_id_seq'::regclass);
+
+
+--
+-- Name: accounts_profile_work id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_work ALTER COLUMN id SET DEFAULT nextval('public.accounts_profile_work_id_seq'::regclass);
+
+
+--
+-- Name: accounts_profiledetail id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profiledetail ALTER COLUMN id SET DEFAULT nextval('public.accounts_profiledetail_id_seq'::regclass);
+
+
+--
+-- Name: accounts_user id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_user ALTER COLUMN id SET DEFAULT nextval('public.accounts_user_id_seq'::regclass);
+
+
+--
+-- Name: accounts_work id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_work ALTER COLUMN id SET DEFAULT nextval('public.accounts_work_id_seq'::regclass);
+
+
+--
+-- Name: archives_book id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book ALTER COLUMN id SET DEFAULT nextval('public.archives_book_id_seq'::regclass);
+
+
+--
+-- Name: archives_book_links id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book_links ALTER COLUMN id SET DEFAULT nextval('public.archives_book_links_id_seq'::regclass);
+
+
+--
+-- Name: archives_review id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_review ALTER COLUMN id SET DEFAULT nextval('public.archives_review_id_seq'::regclass);
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: home_comment id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_comment ALTER COLUMN id SET DEFAULT nextval('public.home_comment_id_seq'::regclass);
+
+
+--
+-- Name: home_comment_link id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_comment_link ALTER COLUMN id SET DEFAULT nextval('public.home_comment_link_id_seq'::regclass);
+
+
+--
+-- Name: home_imageadd id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_imageadd ALTER COLUMN id SET DEFAULT nextval('public.home_imageadd_id_seq'::regclass);
+
+
+--
+-- Name: home_post id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post ALTER COLUMN id SET DEFAULT nextval('public.home_post_id_seq'::regclass);
+
+
+--
+-- Name: home_post_comments id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_comments ALTER COLUMN id SET DEFAULT nextval('public.home_post_comments_id_seq'::regclass);
+
+
+--
+-- Name: home_post_link id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_link ALTER COLUMN id SET DEFAULT nextval('public.home_post_link_id_seq'::regclass);
+
+
+--
+-- Name: home_post_tag id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_tag ALTER COLUMN id SET DEFAULT nextval('public.home_post_tag_id_seq'::regclass);
+
+
+--
+-- Name: home_postlink id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_postlink ALTER COLUMN id SET DEFAULT nextval('public.home_postlink_id_seq'::regclass);
+
+
+--
+-- Name: home_tag id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_tag ALTER COLUMN id SET DEFAULT nextval('public.home_tag_id_seq'::regclass);
+
+
+--
+-- Name: home_tag_details id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_tag_details ALTER COLUMN id SET DEFAULT nextval('public.home_tag_details_id_seq'::regclass);
+
+
+--
+-- Name: mcq_qimage id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_qimage ALTER COLUMN id SET DEFAULT nextval('public.mcq_qimage_id_seq'::regclass);
+
+
+--
+-- Name: mcq_qtag id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_qtag ALTER COLUMN id SET DEFAULT nextval('public.mcq_qtag_id_seq'::regclass);
+
+
+--
+-- Name: mcq_questionbank id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank ALTER COLUMN id SET DEFAULT nextval('public.mcq_questionbank_id_seq'::regclass);
+
+
+--
+-- Name: mcq_questionbank_links id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_links ALTER COLUMN id SET DEFAULT nextval('public.mcq_questionbank_links_id_seq'::regclass);
+
+
+--
+-- Name: mcq_questionbank_tag id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_tag ALTER COLUMN id SET DEFAULT nextval('public.mcq_questionbank_tag_id_seq'::regclass);
+
+
+--
+-- Data for Name: accounts_degree; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_degree (id, name_id, finalyear, college_id) FROM stdin;
+1	7	\N	1
+2	1	\N	1
+3	7	\N	2
+4	1	\N	3
+5	1	\N	4
+6	7	\N	5
+7	1	\N	6
+8	7	\N	8
+9	1	\N	9
+10	7	\N	10
+11	1	\N	10
+12	7	\N	11
+13	1	\N	12
+14	1	\N	13
+15	1	\N	15
+16	7	\N	17
+17	1	\N	18
+\.
+
+
+--
+-- Data for Name: accounts_medicalcollege; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_medicalcollege (id, name) FROM stdin;
+1	AIIMS RISHIKESH
+2	Siddhartha medical college
+3	AIIMS Rishikesh
+4	NOT YET
+5	Santosh medical college 
+6	BPS GMC SONEPAT
+7	AIIMS RISHIKESH 
+8	AIIMS
+9	Aiims
+10	aiims
+11	DRPGMC, Tanda, kangra, HP
+12	GMCH AURANGABAD, MAHARASHTRA
+13	Nizams Institute of Medical Sciences
+14	Aiims Rishikesh 
+15	BPS GMC SONIPAT
+16	AIIMS Rishikesh 
+17	RD gardi medical college
+18	SGMH
+\.
+
+
+--
+-- Data for Name: accounts_profile; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_profile (id, user_id, dob, name, nationality, phone, backgroundpic, profilepic) FROM stdin;
+2	3	\N	Vijay Adabala	\N	\N	\N	\N
+9	12	\N	drniyati	\N	\N		
+10	13	\N	Poojitha Reddy	\N	\N		
+1	2	\N	sk	Indian	\N	backgroundpic/2020/12/$D/IMG-20201009-WA0001.jpg	profilepic/2020/12/$D/IMG-20201108-WA0002.jpg
+11	14	\N	RSharma	\N	\N		
+12	15	\N	drravi86	\N	\N		
+\.
+
+
+--
+-- Data for Name: accounts_profile_degree; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_profile_degree (id, profile_id, degree_id) FROM stdin;
+1	1	1
+2	1	2
+3	2	3
+4	2	4
+15	9	12
+16	9	13
+17	10	3
+18	10	14
+19	11	6
+20	11	15
+21	12	16
+22	12	17
+\.
+
+
+--
+-- Data for Name: accounts_profile_details; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_profile_details (id, profile_id, profiledetail_id) FROM stdin;
+1	1	5
+2	1	6
+3	1	7
+4	1	8
+5	1	9
+6	1	10
+7	2	11
+8	2	12
+9	2	13
+10	2	14
+11	2	15
+12	2	16
+43	9	51
+44	9	52
+45	9	53
+46	9	54
+47	9	55
+48	9	56
+49	10	57
+50	10	58
+51	10	59
+52	10	60
+53	10	61
+54	10	62
+55	11	64
+56	11	65
+57	11	66
+58	11	67
+59	11	68
+60	11	69
+61	12	70
+62	12	71
+63	12	72
+64	12	73
+65	12	74
+66	12	75
+\.
+
+
+--
+-- Data for Name: accounts_profile_links; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_profile_links (id, profile_id, postlink_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: accounts_profile_work; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_profile_work (id, profile_id, work_id) FROM stdin;
+1	1	1
+2	2	2
+8	9	8
+9	10	9
+10	11	10
+11	12	11
+\.
+
+
+--
+-- Data for Name: accounts_profiledetail; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
+4	About	 	
+5	personal statement		
+6	experience		
+7	education		
+8	recommendation		
+9	accomplishments		
+10	interests		
+11	personal statement		
+12	experience		
+13	education		
+14	recommendation		
+15	accomplishments		
+16	interests		
+19	personal statement		
+20	experience		
+21	education		
+22	recommendation		
+23	accomplishments		
+24	interests		
+17	About	 Its a superspeciality branch after MD/DNB Anaesthesiology	
+25	Course details	 It mainly deals with the chronic pain management of the patients.	
+27	personal statement		
+28	experience		
+29	education		
+30	recommendation		
+31	accomplishments		
+32	interests		
+33	personal statement		
+34	experience		
+35	education		
+36	recommendation		
+37	accomplishments		
+38	interests		
+39	personal statement		
+40	experience		
+41	education		
+42	recommendation		
+43	accomplishments		
+44	interests		
+45	personal statement		
+46	experience		
+47	education		
+48	recommendation		
+49	accomplishments		
+50	interests		
+51	personal statement		
+52	experience		
+53	education		
+54	recommendation		
+55	accomplishments		
+56	interests		
+57	personal statement		
+58	experience		
+59	education		
+60	recommendation		
+61	accomplishments		
+62	interests		
+64	personal statement		
+65	experience		
+66	education		
+67	recommendation		
+68	accomplishments		
+69	interests		
+70	personal statement		
+71	experience		
+72	education		
+73	recommendation		
+74	accomplishments		
+75	interests		
+\.
+
+
+--
+-- Data for Name: accounts_user; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_user (id, password, last_login, email, username, is_active, staff, admin) FROM stdin;
+3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2020-12-06 13:09:24.715997+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t
+12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2020-12-06 12:11:35.032613+00	drnitiarora@gmail.com	drniyati	t	t	t
+2	pbkdf2_sha256$216000$akbPDd7f4wGX$rQpVKfOlfm9MYJXULL6JT9oOj8sFUYzNoZx9Vd15p8k=	2020-12-07 03:10:06.88564+00	suryaveda@hotmail.com	sk	t	t	t
+13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t
+14	pbkdf2_sha256$216000$48gahPt14eWL$/QklznDQS9pzOOsos8UmOIqEBMCbDN5aV/tCsspLaHY=	\N	drsharma.ruhi@gmail.com	RSharma	t	t	t
+15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t
+\.
+
+
+--
+-- Data for Name: accounts_work; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.accounts_work (id, "position", is_current, hospital_id) FROM stdin;
+1	SR	t	1
+2	Senior resident	t	3
+3	Intern	t	1
+4	Senior resident 	t	1
+5	Senior Resident	t	7
+6	Sr 	t	8
+7	aiims	t	10
+8	Senior resident	t	1
+9	Senior resident academic 	t	14
+10	Senior resident 	t	16
+11	Acad senior resident ( Dm pain)	t	3
+\.
+
+
+--
+-- Data for Name: archives_book; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.archives_book (id, name, latest, "backgroundPic", subject_id, user_id) FROM stdin;
+4	Morgan and Mikhail's Clinical Anesthesiology	6th edition	bookimages/2020/12/$D/morgan_image_045zsYU_YxUZUwM.jpg	1	3
+5	Miller's Anesthesia	9th edition	bookimages/2020/12/$D/millers_image_0FSZLw2_KfwWCXZ.jpg	1	3
+6	Practical Management of Pain 	5th edition	bookimages/2020/12/$D/practical_management_of_pain_n6WDa0T_qb5T1wA.jpg	3	3
+\.
+
+
+--
+-- Data for Name: archives_book_links; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.archives_book_links (id, book_id, postlink_id) FROM stdin;
+2	4	9
+3	5	10
+4	6	11
+\.
+
+
+--
+-- Data for Name: archives_review; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.archives_review (id, date, details, book_id, user_id) FROM stdin;
+4	2020-12-05 17:33:16.679014+00	Its a basic text book for all the Anesthesiologists. All the topics are well explained.	4	3
+5	2020-12-05 17:59:43.238286+00	its vast and topics are explained in detailed way.. use it as a reference textbook	5	3
+6	2020-12-05 18:16:06.752517+00	each topic was explained in detail. use it as a reference text book	6	3
+\.
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add book	1	add_book
+2	Can change book	1	change_book
+3	Can delete book	1	delete_book
+4	Can view book	1	view_book
+5	Can add review	2	add_review
+6	Can change review	2	change_review
+7	Can delete review	2	delete_review
+8	Can view review	2	view_review
+9	Can add comment	3	add_comment
+10	Can change comment	3	change_comment
+11	Can delete comment	3	delete_comment
+12	Can view comment	3	view_comment
+13	Can add post	4	add_post
+14	Can change post	4	change_post
+15	Can delete post	4	delete_post
+16	Can view post	4	view_post
+17	Can add tag	5	add_tag
+18	Can change tag	5	change_tag
+19	Can delete tag	5	delete_tag
+20	Can view tag	5	view_tag
+21	Can add image add	6	add_imageadd
+22	Can change image add	6	change_imageadd
+23	Can delete image add	6	delete_imageadd
+24	Can view image add	6	view_imageadd
+25	Can add post link	7	add_postlink
+26	Can change post link	7	change_postlink
+27	Can delete post link	7	delete_postlink
+28	Can view post link	7	view_postlink
+29	Can add user	8	add_user
+30	Can change user	8	change_user
+31	Can delete user	8	delete_user
+32	Can view user	8	view_user
+33	Can add profile	9	add_profile
+34	Can change profile	9	change_profile
+35	Can delete profile	9	delete_profile
+36	Can view profile	9	view_profile
+37	Can add profile detail	10	add_profiledetail
+38	Can change profile detail	10	change_profiledetail
+39	Can delete profile detail	10	delete_profiledetail
+40	Can view profile detail	10	view_profiledetail
+41	Can add degree	11	add_degree
+42	Can change degree	11	change_degree
+43	Can delete degree	11	delete_degree
+44	Can view degree	11	view_degree
+45	Can add medical college	12	add_medicalcollege
+46	Can change medical college	12	change_medicalcollege
+47	Can delete medical college	12	delete_medicalcollege
+48	Can view medical college	12	view_medicalcollege
+49	Can add work	13	add_work
+50	Can change work	13	change_work
+51	Can delete work	13	delete_work
+52	Can view work	13	view_work
+53	Can add log entry	14	add_logentry
+54	Can change log entry	14	change_logentry
+55	Can delete log entry	14	delete_logentry
+56	Can view log entry	14	view_logentry
+57	Can add permission	15	add_permission
+58	Can change permission	15	change_permission
+59	Can delete permission	15	delete_permission
+60	Can view permission	15	view_permission
+61	Can add group	16	add_group
+62	Can change group	16	change_group
+63	Can delete group	16	delete_group
+64	Can view group	16	view_group
+65	Can add content type	17	add_contenttype
+66	Can change content type	17	change_contenttype
+67	Can delete content type	17	delete_contenttype
+68	Can view content type	17	view_contenttype
+69	Can add session	18	add_session
+70	Can change session	18	change_session
+71	Can delete session	18	delete_session
+72	Can view session	18	view_session
+73	Can add q tag	19	add_qtag
+74	Can change q tag	19	change_qtag
+75	Can delete q tag	19	delete_qtag
+76	Can view q tag	19	view_qtag
+77	Can add question bank	20	add_questionbank
+78	Can change question bank	20	change_questionbank
+79	Can delete question bank	20	delete_questionbank
+80	Can view question bank	20	view_questionbank
+81	Can add qimage	21	add_qimage
+82	Can change qimage	21	change_qimage
+83	Can delete qimage	21	delete_qimage
+84	Can view qimage	21	view_qimage
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+4	2020-12-04 13:50:58.129872+00	3	vijay.adabala96@gmail.com	2	[{"changed": {"fields": ["Admin", "Staff"]}}]	8	2
+5	2020-12-05 14:55:06.217775+00	5	drsharma.ruhi@gmail.com	2	[{"changed": {"fields": ["Admin", "Staff"]}}]	8	2
+6	2020-12-05 15:21:25.838254+00	6	Example@gmail.com	3		8	2
+7	2020-12-05 15:22:15.790867+00	4	drsharma.ruhi@gmail.com	1	[{"added": {}}]	9	2
+8	2020-12-05 15:25:34.410074+00	4	drsharma.ruhi@gmail.com	3		9	2
+9	2020-12-05 15:25:41.163996+00	5	ss@gmail.com	3		9	2
+10	2020-12-05 15:25:50.229645+00	5	drsharma.ruhi@gmail.com	3		8	2
+11	2020-12-05 15:25:50.232891+00	7	ss@gmail.com	3		8	2
+12	2020-12-05 15:26:08.621685+00	4	suryaaddu@gmail.com	3		8	2
+13	2020-12-05 15:41:35.568339+00	3	some problem in getting user	3		9	2
+14	2020-12-05 15:45:31.03827+00	8	suryaaddu@gmail.com	3		8	2
+15	2020-12-05 20:39:04.569419+00	9	suryaaddu@gmail.com	3		8	2
+16	2020-12-05 20:44:07.260903+00	11	skk@gmail.com	3		8	2
+17	2020-12-06 13:10:02.033804+00	12	drnitiarora@gmail.com	2	[{"changed": {"fields": ["Admin", "Staff"]}}]	8	3
+18	2020-12-06 23:15:50.009925+00	8	some problem in getting user	3		9	2
+19	2020-12-06 23:15:50.013505+00	7	some problem in getting user	3		9	2
+20	2020-12-06 23:15:50.015791+00	6	some problem in getting user	3		9	2
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	archives	book
+2	archives	review
+3	home	comment
+4	home	post
+5	home	tag
+6	home	imageadd
+7	home	postlink
+8	accounts	user
+9	accounts	profile
+10	accounts	profiledetail
+11	accounts	degree
+12	accounts	medicalcollege
+13	accounts	work
+14	admin	logentry
+15	auth	permission
+16	auth	group
+17	contenttypes	contenttype
+18	sessions	session
+19	mcq	qtag
+20	mcq	questionbank
+21	mcq	qimage
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	accounts	0001_initial	2020-12-03 00:26:33.984032+00
+2	home	0001_initial	2020-12-03 00:26:34.035648+00
+3	home	0002_auto_20201115_1708	2020-12-03 00:26:34.155284+00
+4	home	0003_auto_20201115_2103	2020-12-03 00:26:34.198403+00
+5	home	0004_auto_20201116_0318	2020-12-03 00:26:34.249644+00
+6	home	0005_auto_20201116_0347	2020-12-03 00:26:34.286577+00
+7	home	0006_auto_20201116_0419	2020-12-03 00:26:34.340373+00
+8	home	0007_auto_20201116_0605	2020-12-03 00:26:34.374259+00
+9	home	0008_auto_20201116_0614	2020-12-03 00:26:34.411568+00
+10	home	0009_auto_20201118_0732	2020-12-03 00:26:34.442718+00
+11	home	0010_auto_20201119_0244	2020-12-03 00:26:34.486118+00
+12	home	0011_auto_20201119_0248	2020-12-03 00:26:34.589698+00
+13	home	0012_auto_20201119_0307	2020-12-03 00:26:34.682062+00
+14	home	0013_auto_20201120_0945	2020-12-03 00:26:34.721519+00
+15	home	0014_auto_20201120_1025	2020-12-03 00:26:34.753158+00
+16	home	0015_auto_20201120_1036	2020-12-03 00:26:34.786078+00
+17	home	0016_auto_20201120_1037	2020-12-03 00:26:34.855419+00
+18	home	0017_auto_20201120_1043	2020-12-03 00:26:34.903766+00
+19	home	0018_auto_20201120_1104	2020-12-03 00:26:34.952755+00
+20	home	0019_auto_20201120_1235	2020-12-03 00:26:35.00678+00
+21	home	0020_auto_20201120_1242	2020-12-03 00:26:35.040972+00
+22	home	0021_auto_20201121_1537	2020-12-03 00:26:35.07461+00
+23	home	0022_auto_20201121_1538	2020-12-03 00:26:35.108212+00
+24	home	0023_auto_20201121_1554	2020-12-03 00:26:35.139044+00
+25	home	0024_auto_20201121_1708	2020-12-03 00:26:35.174098+00
+26	home	0025_auto_20201121_1838	2020-12-03 00:26:35.205265+00
+27	home	0026_auto_20201121_1839	2020-12-03 00:26:35.238692+00
+28	home	0027_auto_20201121_1839	2020-12-03 00:26:35.274537+00
+29	home	0028_auto_20201121_1840	2020-12-03 00:26:35.311205+00
+30	home	0029_auto_20201121_1841	2020-12-03 00:26:35.344592+00
+31	home	0030_auto_20201122_1029	2020-12-03 00:26:35.389802+00
+32	home	0031_auto_20201122_1035	2020-12-03 00:26:35.427248+00
+33	home	0032_auto_20201122_1147	2020-12-03 00:26:35.462008+00
+34	home	0033_auto_20201122_1521	2020-12-03 00:26:35.498643+00
+35	home	0034_auto_20201123_1228	2020-12-03 00:26:35.531392+00
+36	accounts	0002_auto_20201120_0945	2020-12-03 00:26:35.659232+00
+37	accounts	0003_auto_20201120_1025	2020-12-03 00:26:35.705354+00
+38	accounts	0004_auto_20201120_1036	2020-12-03 00:26:35.759274+00
+39	accounts	0005_auto_20201120_1037	2020-12-03 00:26:35.852193+00
+40	accounts	0006_auto_20201120_1235	2020-12-03 00:26:35.925971+00
+41	accounts	0007_auto_20201120_1242	2020-12-03 00:26:35.959696+00
+42	accounts	0008_auto_20201121_1537	2020-12-03 00:26:36.175339+00
+43	accounts	0009_degree_finalyear	2020-12-03 00:26:36.242985+00
+44	accounts	0010_auto_20201121_1554	2020-12-03 00:26:36.314365+00
+45	accounts	0011_personaldetail_position	2020-12-03 00:26:36.355691+00
+46	accounts	0012_auto_20201121_1839	2020-12-03 00:26:36.444366+00
+47	accounts	0013_auto_20201121_1839	2020-12-03 00:26:36.561337+00
+48	accounts	0014_auto_20201121_1840	2020-12-03 00:26:36.632399+00
+49	accounts	0015_personaldetail_work	2020-12-03 00:26:36.687983+00
+50	accounts	0016_auto_20201122_1029	2020-12-03 00:26:36.736313+00
+51	accounts	0017_auto_20201122_1035	2020-12-03 00:26:36.872517+00
+52	accounts	0018_remove_personaldetail_degree	2020-12-03 00:26:36.905866+00
+53	accounts	0019_auto_20201123_1228	2020-12-03 00:26:37.358402+00
+54	accounts	0020_profiledetail_pdf	2020-12-03 00:26:37.390194+00
+55	contenttypes	0001_initial	2020-12-03 00:26:37.40185+00
+56	admin	0001_initial	2020-12-03 00:26:37.436426+00
+57	admin	0002_logentry_remove_auto_add	2020-12-03 00:26:37.465489+00
+58	admin	0003_logentry_add_action_flag_choices	2020-12-03 00:26:37.489045+00
+59	home	0035_auto_20201123_1522	2020-12-03 00:26:37.539535+00
+60	home	0036_auto_20201123_1959	2020-12-03 00:26:37.589555+00
+61	home	0037_auto_20201124_1008	2020-12-03 00:26:37.641754+00
+62	archives	0001_initial	2020-12-03 00:26:37.715186+00
+63	archives	0002_auto_20201129_2235	2020-12-03 00:26:37.845046+00
+64	archives	0003_auto_20201129_2255	2020-12-03 00:26:37.874374+00
+65	archives	0004_auto_20201130_1238	2020-12-03 00:26:37.903044+00
+66	archives	0005_auto_20201130_1249	2020-12-03 00:26:37.934045+00
+67	archives	0006_auto_20201201_2139	2020-12-03 00:26:37.962538+00
+68	archives	0007_auto_20201203_0556	2020-12-03 00:26:37.988872+00
+69	contenttypes	0002_remove_content_type_name	2020-12-03 00:26:38.032311+00
+70	auth	0001_initial	2020-12-03 00:26:38.139695+00
+71	auth	0002_alter_permission_name_max_length	2020-12-03 00:26:38.190046+00
+72	auth	0003_alter_user_email_max_length	2020-12-03 00:26:38.200248+00
+73	auth	0004_alter_user_username_opts	2020-12-03 00:26:38.210041+00
+74	auth	0005_alter_user_last_login_null	2020-12-03 00:26:38.219953+00
+75	auth	0006_require_contenttypes_0002	2020-12-03 00:26:38.222838+00
+76	auth	0007_alter_validators_add_error_messages	2020-12-03 00:26:38.232227+00
+77	auth	0008_alter_user_username_max_length	2020-12-03 00:26:38.242739+00
+78	auth	0009_alter_user_last_name_max_length	2020-12-03 00:26:38.252494+00
+79	auth	0010_alter_group_name_max_length	2020-12-03 00:26:38.290782+00
+80	auth	0011_update_proxy_permissions	2020-12-03 00:26:38.327839+00
+81	auth	0012_alter_user_first_name_max_length	2020-12-03 00:26:38.3378+00
+82	home	0038_auto_20201129_2235	2020-12-03 00:26:38.533995+00
+83	home	0039_auto_20201129_2255	2020-12-03 00:26:38.602326+00
+84	home	0040_auto_20201130_1238	2020-12-03 00:26:38.780745+00
+85	home	0041_auto_20201130_1249	2020-12-03 00:26:38.873001+00
+86	home	0042_auto_20201201_2139	2020-12-03 00:26:38.969517+00
+87	home	0043_auto_20201203_0556	2020-12-03 00:26:39.037652+00
+88	sessions	0001_initial	2020-12-03 00:26:39.046722+00
+89	accounts	0021_auto_20201205_1851	2020-12-05 15:02:16.175791+00
+90	archives	0007_auto_20201205_1718	2020-12-05 15:02:16.208544+00
+91	archives	0008_auto_20201205_1753	2020-12-05 15:02:16.240333+00
+92	archives	0009_auto_20201205_1757	2020-12-05 15:02:16.270363+00
+93	archives	0010_auto_20201205_1800	2020-12-05 15:02:16.301599+00
+94	archives	0011_auto_20201205_1851	2020-12-05 15:02:16.330601+00
+95	archives	0012_merge_20201205_2032	2020-12-05 15:02:16.333787+00
+96	home	0043_auto_20201205_1718	2020-12-05 15:02:16.401252+00
+97	home	0044_auto_20201205_1753	2020-12-05 15:02:16.466805+00
+98	home	0045_auto_20201205_1757	2020-12-05 15:02:16.531936+00
+99	home	0046_auto_20201205_1800	2020-12-05 15:02:16.568758+00
+100	home	0047_auto_20201205_1851	2020-12-05 15:02:16.606251+00
+101	home	0048_merge_20201205_2032	2020-12-05 15:02:16.609908+00
+102	archives	0013_auto_20201205_2036	2020-12-05 15:06:03.507111+00
+103	home	0049_auto_20201205_2036	2020-12-05 15:06:03.568786+00
+104	archives	0014_auto_20201206_0207	2020-12-05 20:37:50.849862+00
+105	home	0050_auto_20201206_0207	2020-12-05 20:37:50.885431+00
+106	archives	0015_auto_20201206_0443	2020-12-05 23:13:47.721877+00
+107	home	0051_auto_20201206_0443	2020-12-05 23:13:47.758199+00
+108	archives	0012_auto_20201206_0743	2020-12-06 07:51:09.75689+00
+109	archives	0016_merge_20201206_1225	2020-12-06 07:51:09.761247+00
+110	archives	0017_auto_20201206_1300	2020-12-06 07:51:09.788664+00
+111	archives	0018_auto_20201206_1321	2020-12-06 07:51:09.816545+00
+112	home	0048_auto_20201206_0743	2020-12-06 07:51:09.85141+00
+113	home	0052_merge_20201206_1225	2020-12-06 07:51:09.854486+00
+114	home	0053_auto_20201206_1300	2020-12-06 07:51:09.890298+00
+115	home	0054_auto_20201206_1321	2020-12-06 07:51:09.92728+00
+116	archives	0019_auto_20201207_0749	2020-12-07 02:19:47.069007+00
+117	home	0055_auto_20201207_0749	2020-12-07 02:19:47.106532+00
+118	archives	0013_auto_20201212_1138	2020-12-12 11:01:45.489938+00
+119	archives	0014_auto_20201212_1150	2020-12-12 11:01:45.51928+00
+120	archives	0020_merge_20201212_1631	2020-12-12 11:01:45.522208+00
+121	home	0049_auto_20201212_1138	2020-12-12 11:01:45.557209+00
+122	home	0050_auto_20201212_1150	2020-12-12 11:01:45.590972+00
+123	home	0056_merge_20201212_1631	2020-12-12 11:01:45.594175+00
+124	mcq	0001_initial	2020-12-12 11:01:45.69445+00
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+8pswjy5ohsckdh6tw6i4pqqqi3t2q8zl	.eJxVjDsOwjAQBe_iGll24i8lfc5g7a4XHEC2FCcV4u4QKQW0b2beSyTY1pK2zkuaszgLLU6_GwI9uO4g36HemqRW12VGuSvyoF1OLfPzcrh_BwV6-dYjWh0pRlTZM47IQNF6O1AgRm3gms0QtBuN8mBVMJocKO-CNpaZAoj3B-tnN84:1kkw14:BGVYqR6eBgLrkIkze3lm_RbIOGguVATsV4_2uABoqZc	2020-12-17 21:19:54.514968+00
+sw26gs63of42qc4jw6wntpuugl20vrmr	.eJxVjMsOwiAURP-FtSHIq-DSfb-BXLgXqRpISrsy_ruSdKHLmXNmXizAvpWwd1rDguzCJDv9dhHSg-oAeId6azy1uq1L5EPhB-18bkjP6-H-HRTo5bsmdMIonbVxKGR0eRJ-hGS89Uk5rbSzGFFG69U5A2i0E5FHYU3OSbL3B9AKN8c:1klEFA:zmFpCi3e-Vla5Ha_x12O4Hn8135LtxS7C5UVCkzYXHo	2020-12-18 16:47:40.484189+00
+cbzk5q0ytlcc4vnwx5dslofr83vy7sgn	.eJxVjMEOwiAQBf-FsyHQZYF69N5vIMCCVA0kpT0Z_9026UGvM_Pemzm_rcVtPS1uJnZlwC6_LPj4TPUQ9PD13nhsdV3mwI-En7bzqVF63c7276D4Xva1RNRWaQgWIeJoMVK2gGRADcqitN5kOQqkAMl4YVQWsKNBZGEiacU-X62DNsU:1klYr0:9bFuk5Zp5jV-B9mW8W7-ayW3lD2JNzSOw2_Hx4yjJ1E	2020-12-19 14:48:06.132908+00
+2670q7tx082hs8hmbs1wvjpd6zjrzss0	.eJxVjEEKwjAQAP-Ss4RkY7bWo3ffEDbZrKlKA017Ev8ugSL0OjPMR20tL2FidYWTCrStJfyJAnVgkdIrz13wk-ZH1anO6zJF3RO926bvlfP7treHQaFW-hZSYjs4Q95yEnHgo0XxFrI1yBl5jHJGGqMfwLkkxJ5IEB3wRQyq7w-SwjwX:1klopo:qxhDGYOyJiOIFXWp6YSGrEPsGA9RLhSIqGZ_P9IbwuA	2020-12-20 07:51:56.020715+00
+nz5xxqi52mfv58ix86ypm89ze7kadjv0	.eJxVjDsOwjAQBe_iGln-EpuSnjNYu94NDiBbipMKcXcSKQW0b2beWyRYl5LWznOaSFyENuL0OyLkJ9ed0APqvcnc6jJPKHdFHrTLWyN-XQ_376BAL1sdghrOHAw6b6yKkPUAaInZZvSBLbhgvYcYKNPmRnCoLKHTaoyjIS8-X_uLOAY:1klst5:scAavIzzqG7BMl1nekMjV1vtAL7lmXvREZ9BuQQ073E	2020-12-20 12:11:35.03517+00
+adkcnvzxmsxv22yht9d86l2b7h458t7u	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1km3EA:1pPJ02y18m_hEbUaCp1IgR6KW3Qes1W3GV09UKV5tjM	2020-12-20 23:14:02.070735+00
+vnvavfs3qreazuzrneh0rq8h3ver4l98	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1km6uc:Fo3fhI_88ougJPDxqJGcL3PSBkoC7CWWeB266hOtsLE	2020-12-21 03:10:06.888216+00
+vtiqycuogsictiglp9tdggkla1ck4wq5	.eJxVjDsOwjAQBe_iGllak9i7lPScwdqPTQIokfKpIu4OkVJA-2bmbS7zunR5ncuUe3MXB2d3-h2F9VmGndiDh_vodRyWqRe_K_6gs7-NVl7Xw_076HjuvrUoak1YAYlCigYsZBRZrCFtW-DUIAEilmQRAUBIm1BLrIHJirr3BxAWOGU:1kmBmZ:OzLnOjdjtgU1JAumJ-g5o6J3K1V4BD1v4XqCpCBz4k8	2020-12-21 08:22:07.953281+00
+dy0zt22ocznqwstr68i12vp6h7gv4mn1	.eJxVjMsOwiAQAP-FsyHLUh716L3fQJaFStXQpLQn478bkh70OjOZtwh07CUcLW9hSeIqlBGXXxiJn7l2kx5U76vkte7bEmVP5GmbnNaUX7ez_RsUaqV_gdSICpENj84PkX1OEZKyAysC0kmzM8560HFG9lo5wBmydegBjRWfL-5NNvs:1kmXWW:li0Q8twLcz9BhQN2pXlOh9lJ2l_y5jM6LZQd1-TWvBc	2020-12-22 07:35:00.325473+00
+\.
+
+
+--
+-- Data for Name: home_comment; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdin;
+1	2020-12-04 01:07:10.064085+00	Comment testing	\N	commentsPosts/pdf/2020/12/$D/commentpdfs/test	test	commentimages/2020/12/$D/20160403_180527_Wq9Ty9P.jpg
+3	2020-12-04 19:31:08.145292+00	Where is the conference?	3		\N	
+4	2020-12-04 19:32:49.661529+00	Calcutta.	2		\N	
+6	2020-12-04 19:36:50.577643+00	Jan 22- Jan 24.	2		\N	
+\.
+
+
+--
+-- Data for Name: home_comment_link; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_comment_link (id, comment_id, postlink_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: home_imageadd; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_imageadd (id, img, user_id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: home_post; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img) FROM stdin;
+10	2020-12-05 16:40:43.569854+00	INDIAN ASSOCIATION OF CARDIOVASCULAR THORACIC ANESTHESIOLOGISTS 24TH ANNUAL CONFERENCE 2021FEBRUARY 26, 2021 - FEBRUARY 28, 2021MADURAI , INDIA	\N	3		\N	
+11	2020-12-05 16:44:24.203572+00	This is to inform all the respected members of ISNACC that, due to the current COVID 19 pandemic situation, the ISNACC 2021 conference has been shifted to 2022 in Kolkata. Sorry for inconvenience!	\N	3		\N	
+12	2020-12-05 16:45:54.703597+00	16TH ASIAN AND OCEANIC SOCIETY OF REGIONAL ANAESTHESIA AND PAIN MANAGEMENT CONFERENCE & 11TH AORA NATIONAL CONFERENCE 2021APRIL 16, 2021 - APRIL 18, 2021MUMBAI , INDIA	\N	3		\N	
+13	2020-12-05 18:08:57.361696+00	Pediatric pain can be assessed via FLACC scale, which includes all except:\r\nFacial expression\r\nLeg movement \r\nActivity \r\nCoughing	\N	3		\N	
+\.
+
+
+--
+-- Data for Name: home_post_comments; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_post_comments (id, post_id, comment_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: home_post_link; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_post_link (id, post_id, postlink_id) FROM stdin;
+5	10	6
+6	11	7
+7	12	8
+\.
+
+
+--
+-- Data for Name: home_post_tag; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
+18	10	9
+19	10	5
+20	11	9
+21	11	4
+22	12	1
+23	12	3
+24	12	9
+25	13	8
+26	13	3
+\.
+
+
+--
+-- Data for Name: home_postlink; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
+1	https://example.com	example link	\N
+2	https://example2.com	example 2	\N
+3	https://allaboutanaesthesia.co/create_post	Fgg	\N
+4	https://allaboutanaesthesia.co/create_post		2
+5	http://www.iactacon2021.com/	link address	3
+6	http://www.iactacon2021.com/	link address	3
+7	http://www.isnacckolkata2021.com/	link address	3
+8	https://www.aora-aosra2021.com/	link address	3
+9	http://gen.lib.rus.ec/book/index.php?md5=EC0E83E7DAB519A917963C3DFDC2A9C5		3
+10	https://cloudflare-ipfs.com/ipfs/bafykbzaceb47mokyxjermb6shxz334rexbvxtyxzfj3vgbwfoocg5me6tdgue?filename=Michael%20Gropper%2C%20Lars%20Eriksson%2C%20Lee%20Fleisher%2C%20Jeanine%20Wiener-Kronish%2C%20Neal%20Cohen%2C%20Kate%20Leslie%20-%20Miller%27s%20Anesthesia.%202_2-Elsevier%20%282020%29.pdf		3
+11	https://cloudflare-ipfs.com/ipfs/bafykbzacecqd6nmaletkzl4oui75hcjajajkbnsc4smq35bzuheqtlrc4qzvu?filename=%28PRACTICAL%20MANAGEMENT%20OF%20PAIN%20%28RAJ%29%29%20Honorio%20Benzon%20MD%2C%20James%20P.%20Rathmell%20MD%2C%20Christopher%20L.%20Wu%2C%20Dennis%20C.%20Turk%2C%20Charles%20E.%20Argoff%20MD%20-%20Raj%27s%20Practical%20Management%20of%20Pain-Mosby%20%282008%29.pdf		3
+\.
+
+
+--
+-- Data for Name: home_tag; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_tag (id, name, is_speciality, is_degree) FROM stdin;
+6	CRITICAL CARE	t	t
+1	GENERAL ANAESTHESIA	t	t
+8	Mcq	f	f
+9	Conferences	f	f
+5	CARDIO ANAESTHESIA	t	t
+7	MBBS	f	t
+4	NEURO ANAESTHESIA	t	t
+3	PAIN MEDICINE	t	t
+2	ONCO ANAESTHESIA	t	t
+10	NEET SS	f	f
+\.
+
+
+--
+-- Data for Name: home_tag_details; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.home_tag_details (id, tag_id, profiledetail_id) FROM stdin;
+4	5	4
+5	3	17
+7	3	25
+\.
+
+
+--
+-- Data for Name: mcq_qimage; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.mcq_qimage (id, image, aimage, qimage, qinstance_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: mcq_qtag; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.mcq_qtag (id, name, subject, degree) FROM stdin;
+\.
+
+
+--
+-- Data for Name: mcq_questionbank; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.mcq_questionbank (id, date, question, answer, mcq, flashcard, qa, user_id) FROM stdin;
+1	2020-12-12	Example Mcq Question\n\na) Example option 1\n\na) Example option 2\n\na) Example option 3\n\na) Example option 4	a) Example option 4	t	f	f	2
+\.
+
+
+--
+-- Data for Name: mcq_questionbank_links; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.mcq_questionbank_links (id, questionbank_id, postlink_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: mcq_questionbank_tag; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
+1	1	6
+\.
+
+
+--
+-- Name: accounts_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_degree_id_seq', 17, true);
+
+
+--
+-- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 18, true);
+
+
+--
+-- Name: accounts_profile_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 22, true);
+
+
+--
+-- Name: accounts_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 66, true);
+
+
+--
+-- Name: accounts_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_profile_id_seq', 12, true);
+
+
+--
+-- Name: accounts_profile_links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_profile_links_id_seq', 1, false);
+
+
+--
+-- Name: accounts_profile_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 11, true);
+
+
+--
+-- Name: accounts_profiledetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 75, true);
+
+
+--
+-- Name: accounts_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_user_id_seq', 15, true);
+
+
+--
+-- Name: accounts_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.accounts_work_id_seq', 11, true);
+
+
+--
+-- Name: archives_book_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.archives_book_id_seq', 6, true);
+
+
+--
+-- Name: archives_book_links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.archives_book_links_id_seq', 4, true);
+
+
+--
+-- Name: archives_review_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.archives_review_id_seq', 6, true);
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 84, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 20, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 21, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 124, true);
+
+
+--
+-- Name: home_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_comment_id_seq', 6, true);
+
+
+--
+-- Name: home_comment_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_comment_link_id_seq', 1, false);
+
+
+--
+-- Name: home_imageadd_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_imageadd_id_seq', 1, false);
+
+
+--
+-- Name: home_post_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_post_comments_id_seq', 6, true);
+
+
+--
+-- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_post_id_seq', 13, true);
+
+
+--
+-- Name: home_post_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_post_link_id_seq', 7, true);
+
+
+--
+-- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 26, true);
+
+
+--
+-- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 11, true);
+
+
+--
+-- Name: home_tag_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_tag_details_id_seq', 9, true);
+
+
+--
+-- Name: home_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.home_tag_id_seq', 10, true);
+
+
+--
+-- Name: mcq_qimage_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.mcq_qimage_id_seq', 1, false);
+
+
+--
+-- Name: mcq_qtag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.mcq_qtag_id_seq', 1, false);
+
+
+--
+-- Name: mcq_questionbank_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 1, true);
+
+
+--
+-- Name: mcq_questionbank_links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.mcq_questionbank_links_id_seq', 1, false);
+
+
+--
+-- Name: mcq_questionbank_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 1, true);
+
+
+--
+-- Name: accounts_degree accounts_degree_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_degree
+    ADD CONSTRAINT accounts_degree_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_medicalcollege accounts_medicalcollege_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_medicalcollege
+    ADD CONSTRAINT accounts_medicalcollege_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_profile_degree accounts_profile_degree_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_degree
+    ADD CONSTRAINT accounts_profile_degree_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_profile_degree accounts_profile_degree_profile_id_degree_id_cb34d673_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_degree
+    ADD CONSTRAINT accounts_profile_degree_profile_id_degree_id_cb34d673_uniq UNIQUE (profile_id, degree_id);
+
+
+--
+-- Name: accounts_profile_details accounts_profile_details_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_details
+    ADD CONSTRAINT accounts_profile_details_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_profile_details accounts_profile_details_profile_id_profiledetail_de3ff4ff_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_details
+    ADD CONSTRAINT accounts_profile_details_profile_id_profiledetail_de3ff4ff_uniq UNIQUE (profile_id, profiledetail_id);
+
+
+--
+-- Name: accounts_profile_links accounts_profile_links_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_links
+    ADD CONSTRAINT accounts_profile_links_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_profile_links accounts_profile_links_profile_id_postlink_id_7853a592_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_links
+    ADD CONSTRAINT accounts_profile_links_profile_id_postlink_id_7853a592_uniq UNIQUE (profile_id, postlink_id);
+
+
+--
+-- Name: accounts_profile accounts_profile_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile
+    ADD CONSTRAINT accounts_profile_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_profile accounts_profile_user_id_key; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile
+    ADD CONSTRAINT accounts_profile_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: accounts_profile_work accounts_profile_work_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_work
+    ADD CONSTRAINT accounts_profile_work_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_profile_work accounts_profile_work_profile_id_work_id_ee104f21_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_work
+    ADD CONSTRAINT accounts_profile_work_profile_id_work_id_ee104f21_uniq UNIQUE (profile_id, work_id);
+
+
+--
+-- Name: accounts_profiledetail accounts_profiledetail_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profiledetail
+    ADD CONSTRAINT accounts_profiledetail_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_user accounts_user_email_key; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_user
+    ADD CONSTRAINT accounts_user_email_key UNIQUE (email);
+
+
+--
+-- Name: accounts_user accounts_user_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_user
+    ADD CONSTRAINT accounts_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: accounts_work accounts_work_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_work
+    ADD CONSTRAINT accounts_work_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: archives_book_links archives_book_links_book_id_postlink_id_898f77f7_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book_links
+    ADD CONSTRAINT archives_book_links_book_id_postlink_id_898f77f7_uniq UNIQUE (book_id, postlink_id);
+
+
+--
+-- Name: archives_book_links archives_book_links_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book_links
+    ADD CONSTRAINT archives_book_links_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: archives_book archives_book_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book
+    ADD CONSTRAINT archives_book_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: archives_review archives_review_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_review
+    ADD CONSTRAINT archives_review_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: home_comment_link home_comment_link_comment_id_postlink_id_359300f8_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_comment_link
+    ADD CONSTRAINT home_comment_link_comment_id_postlink_id_359300f8_uniq UNIQUE (comment_id, postlink_id);
+
+
+--
+-- Name: home_comment_link home_comment_link_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_comment_link
+    ADD CONSTRAINT home_comment_link_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_comment home_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_comment
+    ADD CONSTRAINT home_comment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_imageadd home_imageadd_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_imageadd
+    ADD CONSTRAINT home_imageadd_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_post_comments home_post_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_comments
+    ADD CONSTRAINT home_post_comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_post_comments home_post_comments_post_id_comment_id_8ad8d225_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_comments
+    ADD CONSTRAINT home_post_comments_post_id_comment_id_8ad8d225_uniq UNIQUE (post_id, comment_id);
+
+
+--
+-- Name: home_post_link home_post_link_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_link
+    ADD CONSTRAINT home_post_link_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_post_link home_post_link_post_id_postlink_id_2dfeadfd_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_link
+    ADD CONSTRAINT home_post_link_post_id_postlink_id_2dfeadfd_uniq UNIQUE (post_id, postlink_id);
+
+
+--
+-- Name: home_post home_post_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post
+    ADD CONSTRAINT home_post_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_post_tag home_post_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_tag
+    ADD CONSTRAINT home_post_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_post_tag home_post_tag_post_id_tag_id_c0d3cc9a_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_tag
+    ADD CONSTRAINT home_post_tag_post_id_tag_id_c0d3cc9a_uniq UNIQUE (post_id, tag_id);
+
+
+--
+-- Name: home_postlink home_postlink_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_postlink
+    ADD CONSTRAINT home_postlink_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_tag_details home_tag_details_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_tag_details
+    ADD CONSTRAINT home_tag_details_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: home_tag_details home_tag_details_tag_id_profiledetail_id_757fb382_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_tag_details
+    ADD CONSTRAINT home_tag_details_tag_id_profiledetail_id_757fb382_uniq UNIQUE (tag_id, profiledetail_id);
+
+
+--
+-- Name: home_tag home_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_tag
+    ADD CONSTRAINT home_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mcq_qimage mcq_qimage_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_qimage
+    ADD CONSTRAINT mcq_qimage_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mcq_qtag mcq_qtag_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_qtag
+    ADD CONSTRAINT mcq_qtag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mcq_questionbank_links mcq_questionbank_links_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_links
+    ADD CONSTRAINT mcq_questionbank_links_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mcq_questionbank_links mcq_questionbank_links_questionbank_id_postlink_bfa51f8a_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_links
+    ADD CONSTRAINT mcq_questionbank_links_questionbank_id_postlink_bfa51f8a_uniq UNIQUE (questionbank_id, postlink_id);
+
+
+--
+-- Name: mcq_questionbank mcq_questionbank_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank
+    ADD CONSTRAINT mcq_questionbank_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mcq_questionbank_tag mcq_questionbank_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_tag
+    ADD CONSTRAINT mcq_questionbank_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mcq_questionbank_tag mcq_questionbank_tag_questionbank_id_tag_id_9e0abeb0_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_tag
+    ADD CONSTRAINT mcq_questionbank_tag_questionbank_id_tag_id_9e0abeb0_uniq UNIQUE (questionbank_id, tag_id);
+
+
+--
+-- Name: accounts_degree_college_id_c59b83b3; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_degree_college_id_c59b83b3 ON public.accounts_degree USING btree (college_id);
+
+
+--
+-- Name: accounts_degree_name_id_e0646dd8; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_degree_name_id_e0646dd8 ON public.accounts_degree USING btree (name_id);
+
+
+--
+-- Name: accounts_profile_degree_degree_id_45e3a976; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_profile_degree_degree_id_45e3a976 ON public.accounts_profile_degree USING btree (degree_id);
+
+
+--
+-- Name: accounts_profile_degree_profile_id_d8debafd; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_profile_degree_profile_id_d8debafd ON public.accounts_profile_degree USING btree (profile_id);
+
+
+--
+-- Name: accounts_profile_details_profile_id_12788375; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_profile_details_profile_id_12788375 ON public.accounts_profile_details USING btree (profile_id);
+
+
+--
+-- Name: accounts_profile_details_profiledetail_id_4dec50f9; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_profile_details_profiledetail_id_4dec50f9 ON public.accounts_profile_details USING btree (profiledetail_id);
+
+
+--
+-- Name: accounts_profile_links_postlink_id_6fa68e43; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_profile_links_postlink_id_6fa68e43 ON public.accounts_profile_links USING btree (postlink_id);
+
+
+--
+-- Name: accounts_profile_links_profile_id_2b3610c9; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_profile_links_profile_id_2b3610c9 ON public.accounts_profile_links USING btree (profile_id);
+
+
+--
+-- Name: accounts_profile_work_profile_id_91668178; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_profile_work_profile_id_91668178 ON public.accounts_profile_work USING btree (profile_id);
+
+
+--
+-- Name: accounts_profile_work_work_id_3ede65cb; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_profile_work_work_id_3ede65cb ON public.accounts_profile_work USING btree (work_id);
+
+
+--
+-- Name: accounts_user_email_b2644a56_like; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_user_email_b2644a56_like ON public.accounts_user USING btree (email varchar_pattern_ops);
+
+
+--
+-- Name: accounts_work_hospital_id_9315e14b; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX accounts_work_hospital_id_9315e14b ON public.accounts_work USING btree (hospital_id);
+
+
+--
+-- Name: archives_book_links_book_id_45be69b7; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX archives_book_links_book_id_45be69b7 ON public.archives_book_links USING btree (book_id);
+
+
+--
+-- Name: archives_book_links_postlink_id_55109a43; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX archives_book_links_postlink_id_55109a43 ON public.archives_book_links USING btree (postlink_id);
+
+
+--
+-- Name: archives_book_subject_id_00f5e058; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX archives_book_subject_id_00f5e058 ON public.archives_book USING btree (subject_id);
+
+
+--
+-- Name: archives_book_user_id_7303c0ae; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX archives_book_user_id_7303c0ae ON public.archives_book USING btree (user_id);
+
+
+--
+-- Name: archives_review_book_id_10782510; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX archives_review_book_id_10782510 ON public.archives_review USING btree (book_id);
+
+
+--
+-- Name: archives_review_user_id_86d31e21; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX archives_review_user_id_86d31e21 ON public.archives_review USING btree (user_id);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: home_comment_link_comment_id_adcb440e; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_comment_link_comment_id_adcb440e ON public.home_comment_link USING btree (comment_id);
+
+
+--
+-- Name: home_comment_link_postlink_id_a51d5422; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_comment_link_postlink_id_a51d5422 ON public.home_comment_link USING btree (postlink_id);
+
+
+--
+-- Name: home_comment_user_id_842649c8; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_comment_user_id_842649c8 ON public.home_comment USING btree (user_id);
+
+
+--
+-- Name: home_imageadd_user_id_c17e3d18; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_imageadd_user_id_c17e3d18 ON public.home_imageadd USING btree (user_id);
+
+
+--
+-- Name: home_post_comments_comment_id_ada7a211; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_post_comments_comment_id_ada7a211 ON public.home_post_comments USING btree (comment_id);
+
+
+--
+-- Name: home_post_comments_post_id_0a8e55cc; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_post_comments_post_id_0a8e55cc ON public.home_post_comments USING btree (post_id);
+
+
+--
+-- Name: home_post_link_post_id_e79c6a16; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_post_link_post_id_e79c6a16 ON public.home_post_link USING btree (post_id);
+
+
+--
+-- Name: home_post_link_postlink_id_9e2d7f2b; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_post_link_postlink_id_9e2d7f2b ON public.home_post_link USING btree (postlink_id);
+
+
+--
+-- Name: home_post_tag_post_id_54dcd670; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_post_tag_post_id_54dcd670 ON public.home_post_tag USING btree (post_id);
+
+
+--
+-- Name: home_post_tag_tag_id_16765cf3; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_post_tag_tag_id_16765cf3 ON public.home_post_tag USING btree (tag_id);
+
+
+--
+-- Name: home_post_user_id_4e975327; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_post_user_id_4e975327 ON public.home_post USING btree (user_id);
+
+
+--
+-- Name: home_postlink_user_id_290baca6; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_postlink_user_id_290baca6 ON public.home_postlink USING btree (user_id);
+
+
+--
+-- Name: home_tag_details_profiledetail_id_bc0e9252; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_tag_details_profiledetail_id_bc0e9252 ON public.home_tag_details USING btree (profiledetail_id);
+
+
+--
+-- Name: home_tag_details_tag_id_b6252073; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX home_tag_details_tag_id_b6252073 ON public.home_tag_details USING btree (tag_id);
+
+
+--
+-- Name: mcq_qimage_qinstance_id_35f03787; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX mcq_qimage_qinstance_id_35f03787 ON public.mcq_qimage USING btree (qinstance_id);
+
+
+--
+-- Name: mcq_questionbank_links_postlink_id_3ac350df; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX mcq_questionbank_links_postlink_id_3ac350df ON public.mcq_questionbank_links USING btree (postlink_id);
+
+
+--
+-- Name: mcq_questionbank_links_questionbank_id_917a4489; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX mcq_questionbank_links_questionbank_id_917a4489 ON public.mcq_questionbank_links USING btree (questionbank_id);
+
+
+--
+-- Name: mcq_questionbank_tag_questionbank_id_a55c4614; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX mcq_questionbank_tag_questionbank_id_a55c4614 ON public.mcq_questionbank_tag USING btree (questionbank_id);
+
+
+--
+-- Name: mcq_questionbank_tag_tag_id_6eecb6d9; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX mcq_questionbank_tag_tag_id_6eecb6d9 ON public.mcq_questionbank_tag USING btree (tag_id);
+
+
+--
+-- Name: mcq_questionbank_user_id_b7672e56; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX mcq_questionbank_user_id_b7672e56 ON public.mcq_questionbank USING btree (user_id);
+
+
+--
+-- Name: accounts_degree accounts_degree_college_id_c59b83b3_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_degree
+    ADD CONSTRAINT accounts_degree_college_id_c59b83b3_fk_accounts_ FOREIGN KEY (college_id) REFERENCES public.accounts_medicalcollege(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_degree accounts_degree_name_id_e0646dd8_fk_home_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_degree
+    ADD CONSTRAINT accounts_degree_name_id_e0646dd8_fk_home_tag_id FOREIGN KEY (name_id) REFERENCES public.home_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile_degree accounts_profile_deg_degree_id_45e3a976_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_degree
+    ADD CONSTRAINT accounts_profile_deg_degree_id_45e3a976_fk_accounts_ FOREIGN KEY (degree_id) REFERENCES public.accounts_degree(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile_degree accounts_profile_deg_profile_id_d8debafd_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_degree
+    ADD CONSTRAINT accounts_profile_deg_profile_id_d8debafd_fk_accounts_ FOREIGN KEY (profile_id) REFERENCES public.accounts_profile(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile_details accounts_profile_det_profile_id_12788375_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_details
+    ADD CONSTRAINT accounts_profile_det_profile_id_12788375_fk_accounts_ FOREIGN KEY (profile_id) REFERENCES public.accounts_profile(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile_details accounts_profile_det_profiledetail_id_4dec50f9_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_details
+    ADD CONSTRAINT accounts_profile_det_profiledetail_id_4dec50f9_fk_accounts_ FOREIGN KEY (profiledetail_id) REFERENCES public.accounts_profiledetail(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile_links accounts_profile_lin_profile_id_2b3610c9_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_links
+    ADD CONSTRAINT accounts_profile_lin_profile_id_2b3610c9_fk_accounts_ FOREIGN KEY (profile_id) REFERENCES public.accounts_profile(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile_links accounts_profile_links_postlink_id_6fa68e43_fk_home_postlink_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_links
+    ADD CONSTRAINT accounts_profile_links_postlink_id_6fa68e43_fk_home_postlink_id FOREIGN KEY (postlink_id) REFERENCES public.home_postlink(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile accounts_profile_user_id_49a85d32_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile
+    ADD CONSTRAINT accounts_profile_user_id_49a85d32_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile_work accounts_profile_wor_profile_id_91668178_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_work
+    ADD CONSTRAINT accounts_profile_wor_profile_id_91668178_fk_accounts_ FOREIGN KEY (profile_id) REFERENCES public.accounts_profile(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_profile_work accounts_profile_work_work_id_3ede65cb_fk_accounts_work_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_profile_work
+    ADD CONSTRAINT accounts_profile_work_work_id_3ede65cb_fk_accounts_work_id FOREIGN KEY (work_id) REFERENCES public.accounts_work(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: accounts_work accounts_work_hospital_id_9315e14b_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.accounts_work
+    ADD CONSTRAINT accounts_work_hospital_id_9315e14b_fk_accounts_ FOREIGN KEY (hospital_id) REFERENCES public.accounts_medicalcollege(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_book_links archives_book_links_book_id_45be69b7_fk_archives_book_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book_links
+    ADD CONSTRAINT archives_book_links_book_id_45be69b7_fk_archives_book_id FOREIGN KEY (book_id) REFERENCES public.archives_book(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_book_links archives_book_links_postlink_id_55109a43_fk_home_postlink_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book_links
+    ADD CONSTRAINT archives_book_links_postlink_id_55109a43_fk_home_postlink_id FOREIGN KEY (postlink_id) REFERENCES public.home_postlink(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_book archives_book_subject_id_00f5e058_fk_home_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book
+    ADD CONSTRAINT archives_book_subject_id_00f5e058_fk_home_tag_id FOREIGN KEY (subject_id) REFERENCES public.home_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_book archives_book_user_id_7303c0ae_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_book
+    ADD CONSTRAINT archives_book_user_id_7303c0ae_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_review archives_review_book_id_10782510_fk_archives_book_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_review
+    ADD CONSTRAINT archives_review_book_id_10782510_fk_archives_book_id FOREIGN KEY (book_id) REFERENCES public.archives_book(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_review archives_review_user_id_86d31e21_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_review
+    ADD CONSTRAINT archives_review_user_id_86d31e21_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_comment_link home_comment_link_comment_id_adcb440e_fk_home_comment_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_comment_link
+    ADD CONSTRAINT home_comment_link_comment_id_adcb440e_fk_home_comment_id FOREIGN KEY (comment_id) REFERENCES public.home_comment(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_comment_link home_comment_link_postlink_id_a51d5422_fk_home_postlink_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_comment_link
+    ADD CONSTRAINT home_comment_link_postlink_id_a51d5422_fk_home_postlink_id FOREIGN KEY (postlink_id) REFERENCES public.home_postlink(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_comment home_comment_user_id_842649c8_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_comment
+    ADD CONSTRAINT home_comment_user_id_842649c8_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_imageadd home_imageadd_user_id_c17e3d18_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_imageadd
+    ADD CONSTRAINT home_imageadd_user_id_c17e3d18_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_post_comments home_post_comments_comment_id_ada7a211_fk_home_comment_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_comments
+    ADD CONSTRAINT home_post_comments_comment_id_ada7a211_fk_home_comment_id FOREIGN KEY (comment_id) REFERENCES public.home_comment(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_post_comments home_post_comments_post_id_0a8e55cc_fk_home_post_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_comments
+    ADD CONSTRAINT home_post_comments_post_id_0a8e55cc_fk_home_post_id FOREIGN KEY (post_id) REFERENCES public.home_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_post_link home_post_link_post_id_e79c6a16_fk_home_post_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_link
+    ADD CONSTRAINT home_post_link_post_id_e79c6a16_fk_home_post_id FOREIGN KEY (post_id) REFERENCES public.home_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_post_link home_post_link_postlink_id_9e2d7f2b_fk_home_postlink_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_link
+    ADD CONSTRAINT home_post_link_postlink_id_9e2d7f2b_fk_home_postlink_id FOREIGN KEY (postlink_id) REFERENCES public.home_postlink(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_post_tag home_post_tag_post_id_54dcd670_fk_home_post_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_tag
+    ADD CONSTRAINT home_post_tag_post_id_54dcd670_fk_home_post_id FOREIGN KEY (post_id) REFERENCES public.home_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_post_tag home_post_tag_tag_id_16765cf3_fk_home_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post_tag
+    ADD CONSTRAINT home_post_tag_tag_id_16765cf3_fk_home_tag_id FOREIGN KEY (tag_id) REFERENCES public.home_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_post home_post_user_id_4e975327_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_post
+    ADD CONSTRAINT home_post_user_id_4e975327_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_postlink home_postlink_user_id_290baca6_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_postlink
+    ADD CONSTRAINT home_postlink_user_id_290baca6_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_tag_details home_tag_details_profiledetail_id_bc0e9252_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_tag_details
+    ADD CONSTRAINT home_tag_details_profiledetail_id_bc0e9252_fk_accounts_ FOREIGN KEY (profiledetail_id) REFERENCES public.accounts_profiledetail(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: home_tag_details home_tag_details_tag_id_b6252073_fk_home_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.home_tag_details
+    ADD CONSTRAINT home_tag_details_tag_id_b6252073_fk_home_tag_id FOREIGN KEY (tag_id) REFERENCES public.home_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: mcq_qimage mcq_qimage_qinstance_id_35f03787_fk_mcq_questionbank_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_qimage
+    ADD CONSTRAINT mcq_qimage_qinstance_id_35f03787_fk_mcq_questionbank_id FOREIGN KEY (qinstance_id) REFERENCES public.mcq_questionbank(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: mcq_questionbank_links mcq_questionbank_lin_questionbank_id_917a4489_fk_mcq_quest; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_links
+    ADD CONSTRAINT mcq_questionbank_lin_questionbank_id_917a4489_fk_mcq_quest FOREIGN KEY (questionbank_id) REFERENCES public.mcq_questionbank(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: mcq_questionbank_links mcq_questionbank_links_postlink_id_3ac350df_fk_home_postlink_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_links
+    ADD CONSTRAINT mcq_questionbank_links_postlink_id_3ac350df_fk_home_postlink_id FOREIGN KEY (postlink_id) REFERENCES public.home_postlink(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: mcq_questionbank_tag mcq_questionbank_tag_questionbank_id_a55c4614_fk_mcq_quest; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_tag
+    ADD CONSTRAINT mcq_questionbank_tag_questionbank_id_a55c4614_fk_mcq_quest FOREIGN KEY (questionbank_id) REFERENCES public.mcq_questionbank(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: mcq_questionbank_tag mcq_questionbank_tag_tag_id_6eecb6d9_fk_home_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank_tag
+    ADD CONSTRAINT mcq_questionbank_tag_tag_id_6eecb6d9_fk_home_tag_id FOREIGN KEY (tag_id) REFERENCES public.home_tag(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: mcq_questionbank mcq_questionbank_user_id_b7672e56_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.mcq_questionbank
+    ADD CONSTRAINT mcq_questionbank_user_id_b7672e56_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

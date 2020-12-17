@@ -6,6 +6,7 @@ from .models import Tag
 app_name = 'home'
 
 urlpatterns = [
+path('getnewposts/<int:pk>', views.GetPosts.as_view(), name = 'getposts'),
 path('', views.home_view, name = 'home'),
 path('managewebsite', views.Manage.as_view(), name='manage'),
 path('errors', views.StaffError.as_view(), name = 'stafferror'),

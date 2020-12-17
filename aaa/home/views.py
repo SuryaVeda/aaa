@@ -13,6 +13,8 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from  django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
+from django.views import View
+
 # Create your views here.
 
 class Manage(TemplateView):
@@ -354,3 +356,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
             post.save()
         except:
             messages.error(self.request, 'error in saving')
+
+
+class GetPosts(View):
+    pass

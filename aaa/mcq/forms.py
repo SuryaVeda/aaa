@@ -5,14 +5,19 @@ from django.contrib import messages
 from home.models import PostLink
 from .models import Qimage,QuestionBank
 import bleach
+from django.core.validators import ProhibitNullCharactersValidator
+
 class QuestionBankForm(ModelForm,ValidateLinkMixin, ValidateFileMixin):
     def __init__(self,*args, type=None, request=None,  **kwargs):
         self.type = type
         self.request = request
 
         super().__init__(*args, **kwargs)
-        self.fields['question'].validators = []
-        self.fields['answer'].validators = []
+        null = ProhibitNullCharactersValidator()
+        print(null)
+        self.fields['question'].validators.remove(null)
+        self.fields['answer'].validators.remove(null)
+
     def save(self, commit=True ):
         if not self.type:
             messages.error(self.request, 'Not a valid form', extra_tags=self.request.user.email)
