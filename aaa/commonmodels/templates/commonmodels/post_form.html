@@ -1,0 +1,94 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block main %}
+<style>
+    form textarea{
+        font-family: 'Garamond', serif;
+        font-size: 20px;
+    }
+    #adddetailsform textarea{
+        height: 300px; width: 95%;
+    }
+</style>
+ <form method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+
+            {% for message in form.errors %}
+      <p class="text-danger">{{message}}</p>
+      {% endfor %}
+        <br>
+     <p><textarea style="height: 50px;width: 95%" type="text" name = 'post_heading' maxlength="100" placeholder="Post heading/Question/title" required  ></textarea></p>
+
+<br>
+            {% if tags %}
+            <p><b>Kindly select a tag.</b></p>
+            <div class="tagform" style="display: flex; flex-flow: row wrap">
+                {% for tag in tags %}
+                <p><label for="id_tag_1"><input type="checkbox" name="tags" value="{{tag.pk}}" placeholder="Tags" id="id_tag_{{tag.pk}}">
+ {{tag.name}}</label></p>
+            {% endfor %}
+            </div>
+            {% endif %}
+
+
+
+     <br>
+            <p>Add Details</p>
+
+              <div id="adddetailsform">
+               <textarea style="height: 50px;width: 95%" type="text" name = 'detail_heading' maxlength="100" placeholder="Add detail heading.." required  ></textarea>
+                  <p><textarea  type="text"  placeholder="Add details.." maxlength="100000" name="text" ></textarea></p>
+             </div>
+             <p style="text-decoration: underline;color: #000066;"><a onclick="adddetailsform()"> Add more Details</a></p>
+            <br>
+           <p>Add Images</p>
+              <div id="addImagesForm">
+                  <p><input type="file" name="image" ></p>
+             </div>
+             <p style="text-decoration: underline;color: #000066;"><a onclick="addimagesform()"> Add more Images</a></p>
+            <br>
+            <p>Add Links</p>
+              <div id="addlinkform{{post.pk}}">
+                 <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
+             </div>
+             <p style="text-decoration: underline;color: #000066;"><a onclick="addnewforms('addlinkform')"> Add more links</a></p>
+
+            <div class="postformbtn">
+            <button name="homepostform" value="button" type="submit">Submit</button>
+            </div>
+
+        </form>
+
+<script>
+    function adddetailsform() {
+    var details_form = document.getElementById('adddetailsform');
+    var para = document.createElement("P");
+    var ine1 = document.createElement("Textarea");
+
+    var ine = document.createElement('Textarea');
+    ine1.type = 'text';
+    ine1.name = 'detail_heading';
+        ine1.style.height = '50px';
+    ine1.placeholder= 'Add detail heading.... ';
+        ine1.required = true;
+    ine.type = 'text';
+    ine.name = 'text';
+    ine.placeholder= 'Add details max of 2000 words';
+    ine.required = true;
+    para.appendChild(ine1);
+    para.appendChild(ine);
+    details_form.appendChild(para);
+}
+    function addimagesform() {
+    var details_form = document.getElementById('addImagesForm');
+    var para = document.createElement("P");
+    var ine = document.createElement('Input');
+    ine.type = 'file';
+    ine.name = 'image'  ;
+    para.appendChild(ine);
+    details_form.appendChild(para);
+}
+</script>
+
+
+{% endblock %}

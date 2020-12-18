@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from .models import Post,Comment, Tag, PostLink
 from archives.models import Book
 from accounts.models import User, ProfileDetail
@@ -30,17 +31,21 @@ def email(request):
     recipient_list = ['suryaveda@hotmail.com',]
     send_mail( subject, message, email_from, recipient_list )
     return redirect('home:home')
-def home_view(request):
-    print(request.user)
-    if request.user:
 
-        template_name = 'home/home.html'
-        posts = Post.objects.order_by('date').reverse()
-        tag_speciality = Tag.objects.filter(is_speciality=True)
-        context = {'posts': posts,  'tag_speciality': tag_speciality}
-        return render(request, template_name, context)
-    else:
-        return redirect('accounts:login')
+class HomeView(TemplateView):
+    template_name = 'home/home.html'
+    posts = Post.objects.order_by('-date').prefetch_related()
+    tag_speciality = Tag.objects.filter(is_speciality=True)
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['posts'] = list(HomeView.posts)[0:15]
+        context['tag_speciality'] = list(HomeView.tag_speciality)
+        return context
+
+def refresh_home_page(request):
+    HomeView.tag_speciality  = Tag.objects.filter(is_speciality=True)
+    HomeView.posts = Post.objects.order_by('-date').prefetch_related()
+    return redirect('home:home')
 
 
 class StaffError(TemplateView):
@@ -127,37 +132,53 @@ class SearchView(TemplateView):
 
 
 def delete_post_view(request,pk):
+    ex= redirect('home:home')
     if pk and request.user.is_authenticated:
+
         try:
             x = Post.objects.get(pk = pk)
             if x.user == request.user or request.user.is_admin:
                 x.delete()
+                ex = refresh_home_page(request)
+                print(ex.url)
+                print(ex.status_code)
+                return JsonResponse({'success': ex.url}, safe=False)
             else:
                 messages.error(request, 'not a valid user')
-            return redirect('home:home')
+                return JsonResponse({'success': ex.url}, safe=False)
+
+
         except:
             messages.error(request, 'post is not present in database')
-            return redirect('home:home')
+            return JsonResponse({'success': ex.url}, safe=False)
     else:
         messages.error(request, 'select valid post')
 
-        return redirect('home:home')
+        return JsonResponse({'success': ex.url}, safe=False)
+
+
 def delete_comment_view(request,pk):
+    ex= redirect('home:home')
     if pk and request.user.is_authenticated:
         try:
             x = Comment.objects.get(pk = pk)
             if x.user == request.user or request.user.is_admin:
                 x.delete()
+                ex = refresh_home_page(request)
+                print(ex.url)
+                return JsonResponse({'success': ex.url}, safe=False)
             else:
                 messages.error(request, 'not a valid user')
-            return redirect('home:home')
+                return JsonResponse({'success': ex.url}, safe=False)
         except:
             messages.error(request, 'post is not present in database')
-            return redirect('home:home')
+            return JsonResponse({'success': ex.url}, safe=False)
     else:
         messages.error(request, 'select valid post')
 
-        return redirect('home:home')
+        return JsonResponse({'success': ex.url}, safe=False)
+
+
 def delete_tagdetail_view(request,pk,detail_pk):
     if pk and request.user.is_authenticated and request.user.is_admin:
 
@@ -204,8 +225,10 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                 if kwargs['pk']:
                     print(kwargs['pk'])
                     self.save_comment(kwargs['pk'])
+                    return redirect('home:refresh')
             if self.request.POST.get('homepostform'):
                 self.save_homepost()
+                return redirect('home:refresh')
             if self.request.POST.get('addtagdetail'):
                 self.save_tagdetail(kwargs['pk'])
                 try:
@@ -305,7 +328,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                             linkobj = PostLink.objects.create(user=self.request.user, link=i[1], link_name=i[0])
                             a.link.add(linkobj)
                             a.save()
-                return redirect('home:home')
+
             else:
                 print('not authenticated')
                 return redirect('home:postForm')
@@ -359,4 +382,25 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
 
 
 class GetPosts(View):
-    pass
+
+    def get(self, request, *args, **kwargs):
+        print('get request')
+        if kwargs['pk']:
+            index = kwargs['pk']
+            try:
+                index = int(index)
+            except:
+                print('enter integer')
+                return redirect('home:home')
+            newposts = HomeView.posts[index:index + 15]
+            html = [ (((render(self.request, 'home/getposts.html',{'user': self.request.user, 'post': i})).content).decode('utf-8')).strip() for i in newposts]
+
+            response =JsonResponse(html, safe=False)
+            print(response.status_code)
+            print(html)
+
+            return response
+
+        else:
+            return redirect('home:home')
+

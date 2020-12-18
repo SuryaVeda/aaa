@@ -5,7 +5,6 @@
 
 
 <div class="home-container">
-    <p onclick="needmore()">More posts</p>
     {% if request.user.is_authenticated and request.user.is_staff %}
     {% if messages %}
     {% for message in messages %}
@@ -14,7 +13,8 @@
     {% endif %}
     <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
     {% endif %}
-    <div class="someclass">    {% if posts and request.user%}
+    <div class="someclass">
+        {% if posts and request.user%}
     {% for post in posts %}
 
        <div class="home-post">
@@ -82,10 +82,7 @@
             <div class="home-post-comment-single">
                 <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
 {% if request.user.is_staff and request.user == comment.user%}
-    <script>
-        var delpost{{comment.pk}} = '{% url "home:deletecomment" comment.pk %}'
-    </script>
-    <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{comment.pk}})">Delete Comment.</a></p>
+    <p style="text-decoration: underline; color: #000066" ><a onclick="deletecomment(event, {{comment.pk}})">Delete Comment.</a></p>
     {%endif %}
 
           {% if comment.img %}
@@ -150,7 +147,9 @@
 
 {% endfor  %}
     {% endif  %}
+
 </div>
+            <p style="align-self: center" class="bold-red" onclick="needmore()">More posts</p>
 
 
     </div>
@@ -164,11 +163,16 @@
     newhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
       var homecontainer = document.getElementsByClassName('home-container')[0];
-      console.log(this.responseText);
-      homepost = document.createElement('div');
-      homepost.innerHTML = this.responseText;
+      var u = JSON.parse(this.responseText);
+      console.log(u.length);
+      for (let i =0; i < u.length; i++) {
+          homepost = document.createElement('div');
+          homepost.innerHTML = u[i];
+          homepost.classList.add('home-post');
 
-      homecontainer.append(homepost);
+          homecontainer.append(homepost);
+      }
+
 for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
     console.log('yes');
 document.getElementsByClassName('comments')[i].style.height = '1px';

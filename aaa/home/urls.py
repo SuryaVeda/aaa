@@ -7,7 +7,8 @@ app_name = 'home'
 
 urlpatterns = [
 path('getnewposts/<int:pk>', views.GetPosts.as_view(), name = 'getposts'),
-path('', views.home_view, name = 'home'),
+path('', views.HomeView.as_view(), name = 'home'),
+path('refreshhome', views.refresh_home_page, name = 'refresh'),
 path('managewebsite', views.Manage.as_view(), name='manage'),
 path('errors', views.StaffError.as_view(), name = 'stafferror'),
 path('conferences', views.show_conferences, name = 'conf'),

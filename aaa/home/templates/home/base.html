@@ -26,8 +26,12 @@
 /*  Classes and tags for base.html   */
 
 
-
-
+.bold-red {
+    color: red;
+    font-weight: bolder;
+    font-size: 20px;
+    font-family: 'Overlock', cursive;
+}
 .top {
     display: flex;
     flex-flow: column wrap;
@@ -1067,40 +1071,52 @@ function removereview(x) {
     }
 }
 
-function deletepost(x) {
-    var message = confirm('Are you sure you want to delete the post');
-    if (message==true){
-        window.location.href = x;
-        console.log(true);
-    }
-    else{
-        console.log(false);
-    }
-}
 function deleteposte(e,pk) {
     e.preventDefault();
     var message = confirm('Are you sure you want to delete the post');
     if (message==true){
         var dhttp = new XMLHttpRequest();
+
         dhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 302) {
-         var x = JSON.parse(this.responseText);
-         console.log(x.success) ;
-         window.location.href = x.success;
+        if (this.readyState == 4 ) {
+            let x = JSON.parse(this.responseText);
+            console.log(x);
+            console.log(x.success);
+            window.location.href = x.success;
 
         }
-                                                };
-        console.log("");
-
+        };
         dhttp.open('POST', '/delete_post' + '/' + pk );
         dhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         dhttp.send("csrfmiddlewaretoken=" +document.getElementsByName('csrfmiddlewaretoken')[0].value +  "&deletepostbtn=Deletepost");
-
-        window.location.href = x;
-        console.log(true);
+        console.log('post request sent');
     }
     else{
-        console.log(false);
+    }
+}
+
+
+function deletecomment(e,pk) {
+    e.preventDefault();
+    var message = confirm('Are you sure you want to delete the comment');
+    if (message==true){
+        var dhttp = new XMLHttpRequest();
+
+        dhttp.onreadystatechange = function() {
+        if (this.readyState == 4 ) {
+            let x = JSON.parse(this.responseText);
+            console.log(x);
+            console.log(x.success);
+            window.location.href = x.success;
+
+        }
+        };
+        dhttp.open('POST', '/delete_comment/' + pk );
+        dhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        dhttp.send("csrfmiddlewaretoken=" +document.getElementsByName('csrfmiddlewaretoken')[0].value +  "&deletecommentbtn=DeleteComment");
+        console.log('post request sent');
+    }
+    else{
     }
 }
 function commentform(){
