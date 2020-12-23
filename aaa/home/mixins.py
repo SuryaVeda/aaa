@@ -4,7 +4,7 @@ import bleach
 from django.contrib import messages
 from .models import *
 from accounts.models import Profile,User,ProfileDetail, Work, Degree, MedicalCollege
-
+from home.models import PostLink
 
 
 class ValidateLinkMixin:
@@ -46,6 +46,12 @@ class ValidateLinkMixin:
             return False
 
         newdic['links'] = new_tuple
+        newdic['linkobj'] = []
+        for i in new_tuple:
+            try:
+                newdic['linkobj'].append(PostLink.objects.create(link_name=i[0], link= i[1] ))
+            except Exception as e:
+                pass
         print(newdic)
         return newdic
 
@@ -67,7 +73,7 @@ class ValidateTextMixin:
 class ValidateFileMixin:
 
     def clean_file(self, imagelist):
-        valid_extensions = ['jpeg', 'png', 'jpg', 'pdf', 'docx', 'pptx']
+        valid_extensions = ['jpeg', 'png', 'jpg', 'pdf', 'docx', 'pptx', 'JPG', 'JPEG', 'PNG']
         newdict={}
         if imagelist:
             for i in imagelist:
@@ -80,7 +86,8 @@ class ValidateFileMixin:
                     messages.error(self.request, 'enter valid file')
                     continue
                 else:
-                    if img.name.split('.')[1] in valid_extensions:
+                    if (img.name.split('.')[1]).lower() in valid_extensions:
+                        print((img.name.split('.')[1]).lower() )
                         print('yes file has valid extension')
                         if self.validate_image_size(img):
                             newdict[i] = img
@@ -88,7 +95,7 @@ class ValidateFileMixin:
                             messages.error(self.request, 'file size greater than 25mb')
                             continue
                     else:
-                        messages.error(self.request, 'enter valid file')
+                        messages.error(self.request, 'enter valid file with valid extension')
                         continue
             return newdict
         else:

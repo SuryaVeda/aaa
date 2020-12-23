@@ -52,7 +52,7 @@
 <div class="arch-main">
 
 
-    {% if request.user.is_authenticated and request.user.is_admin %}
+    {% if request.user and request.user %}
       <div class="create-book-form">
 
      <form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity(event)">
@@ -66,7 +66,7 @@
                 <p>Add image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image"></p>
 
 
-                <p>GET:  <input placeholder="Add link name"  type="text" maxlength="20" name = 'link_name' value="" > :  <input placeholder="Add link url.." type="url" name = 'link' value=""></p>
+                <!--p>GET:  <input placeholder="Add link name"  type="text" maxlength="20" name = 'link_name' value="" > :  <input placeholder="Add link url.." type="url" name = 'link' value=""></p-->
             </div>
             <div class="book-review-form">
                 <p> <input type="text" name ='book_name'  placeholder="Add book name..." maxlength="100" required></p>
@@ -227,13 +227,13 @@
 
         <!-- Add details Button of a Subject  -->
 
-        {% if request.user.is_authenticated and request.user.is_admin  %}
+        {% if request.user and request.user  %}
         <p><a style="text-decoration: underline; color: blue;" onclick="addsubjectintro()">Add more details </a></p>
         {% endif %}
 
         <!-- Add details Form and Edit details Form of a Subject  -->
 
-        {% if request.user.is_authenticated and request.user.is_admin  %}
+        {% if request.user and request.user  %}
         <form style="display: none;" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <p><input placeholder="Add heading.." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
@@ -257,13 +257,13 @@
 
 
     <!-- Add book and Edit book forms -->
-        {% if request.user.is_authenticated and request.user.is_admin %}
+        {% if request.user and request.user %}
          <p><a style="text-decoration: underline; color: blue;" onclick="addbookform()">Add a book </a> |  <a style="text-decoration: underline; color: blue;" onclick="editbookform()">Edit a book </a></p>
         {% endif %}
 
 
  <!-- Shows books in each subject -->
-{% if request.user.is_staff %}
+{% if request.user %}
     <div class="subject-detail books">
         <h2>Book Reviews</h2>
             <div class="subject-details-review">
@@ -371,12 +371,19 @@
 
 
 <div class="home-container">
-            {% if request.user.is_authenticated and request.user.is_staff %}
+    {% if request.user and request.user %}
+    {% if messages %}
+    {% for message in messages %}
+    <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
+    {% endfor %}
+    {% endif %}
+    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p> or <p> Add a question!</a>
 
-    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
-{% endif %}
-{% if posts %}
+    {% endif %}
+    <div class="someclass">
+        {% if posts and request.user%}
     {% for post in posts %}
+
        <div class="home-post">
         {% if post.tag %}
         <div class="tags">
@@ -390,11 +397,11 @@
             {% endfor %}
         </div>
             {% endif %}
-        {% if request.user.is_authenticated and request.user == post.user%}
-    <script>
-        var delpost{{post.pk}} = '{% url "home:deletepost" post.pk %}'
-    </script>
-    <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{post.pk}})">Delete post</a></p>
+        {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+    <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+        <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Post" style="text-decoration: underline; color: #000066" >
+    </form>
     {%endif %}
         <div class="home-post-heading">
             <h3>{{post.heading | linebreaks }}</h3>
@@ -442,10 +449,7 @@
             <div class="home-post-comment-single">
                 <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
 {% if request.user.is_staff and request.user == comment.user%}
-    <script>
-        var delpost{{comment.pk}} = '{% url "home:deletecomment" comment.pk %}'
-    </script>
-    <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{comment.pk}})">Delete Comment.</a></p>
+    <p style="text-decoration: underline; color: #000066" ><a onclick="deletecomment(event, {{comment.pk}})">Delete Comment.</a></p>
     {%endif %}
 
           {% if comment.img %}
@@ -508,7 +512,61 @@
         </div>
 
 
-    {% endfor  %}
+{% endfor  %}
     {% endif  %}
+
 </div>
+            <p style="align-self: center" class="bold-red" onclick="needmore(this)">More posts</p>
+
+
+    </div>
+
+
+<script>
+
+    function needmore(element) {
+        var x = document.getElementsByClassName('home-post');
+    console.log(x.length);
+    newhttp = new XMLHttpRequest();
+    newhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      var homecontainer = document.getElementsByClassName('home-container')[0];
+      var u = JSON.parse(this.responseText);
+      console.log(u.length);
+      moretag = document.createElement('p');
+      moretag.classList.add('bold-red');
+      moretag.style.alignSelf = 'center';
+      moretag.setAttribute("onclick", "needmore(this)");
+      moretag.innerHTML = 'More posts';
+
+      for (var i =0; i < u.length; i++) {
+        console.log(i);
+          homepost = document.createElement('div');
+          homepost.innerHTML = u[i];
+          homepost.classList.add('home-post');
+
+          homecontainer.append(homepost);
+          if (i == u.length-1) {
+            console.log('yes');
+            console.log(i);
+            homecontainer.appendChild(moretag);
+            break
+          }
+      }
+
+for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
+    console.log('yes');
+document.getElementsByClassName('comments')[i].style.height = '1px';
+      document.getElementsByClassName('more')[i].style.display = 'block';}
+  }
+};
+    newhttp.open('GET', "/getnewposts" + "/"+x.length);
+    newhttp.send();
+    element.style.display = 'none';
+    }
+
+
+</script>
+
+
 {% endblock %}

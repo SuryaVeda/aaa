@@ -3,15 +3,17 @@
 {% block main %}
 
 <div class="home-container">
-    {% if request.user.is_authenticated and request.user.is_staff %}
+    {% if request.user and request.user %}
     {% if messages %}
     {% for message in messages %}
     <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
     {% endfor %}
     {% endif %}
-    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
+    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p> or <p> Add a question!</a>
+
     {% endif %}
-    {% if posts and request.user%}
+    <div class="someclass">
+        {% if posts and request.user%}
     {% for post in posts %}
 
        <div class="home-post">
@@ -27,11 +29,11 @@
             {% endfor %}
         </div>
             {% endif %}
-        {% if request.user.is_authenticated and request.user == post.user%}
-    <script>
-        var delpost{{post.pk}} = '{% url "home:deletepost" post.pk %}'
-    </script>
-    <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{post.pk}})">Delete post</a></p>
+        {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+    <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+        <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Post" style="text-decoration: underline; color: #000066" >
+    </form>
     {%endif %}
         <div class="home-post-heading">
             <h3>{{post.heading | linebreaks }}</h3>
@@ -79,10 +81,7 @@
             <div class="home-post-comment-single">
                 <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
 {% if request.user.is_staff and request.user == comment.user%}
-    <script>
-        var delpost{{comment.pk}} = '{% url "home:deletecomment" comment.pk %}'
-    </script>
-    <p style="text-decoration: underline; color: #000066" ><a onclick="deletepost(delpost{{comment.pk}})">Delete Comment.</a></p>
+    <p style="text-decoration: underline; color: #000066" ><a onclick="deletecomment(event, {{comment.pk}})">Delete Comment.</a></p>
     {%endif %}
 
           {% if comment.img %}
@@ -145,15 +144,11 @@
         </div>
 
 
-
-
-
-
-
-
-
 {% endfor  %}
     {% endif  %}
+
+</div>
+            <p style="align-self: center" class="bold-red" onclick="needmore(this)">More posts</p>
 
 
     </div>

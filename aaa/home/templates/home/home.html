@@ -5,7 +5,7 @@
 
 
 <div class="home-container">
-    {% if request.user.is_authenticated and request.user.is_staff %}
+    {% if request.user and request.user %}
     {% if messages %}
     {% for message in messages %}
     <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>

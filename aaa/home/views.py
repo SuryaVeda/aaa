@@ -96,6 +96,7 @@ class SearchView(TemplateView):
     template_name = 'home/search.html'
 
     def get(self, request, *args, **kwargs):
+
         if request.user:
             return render(request, self.template_name, self.get_context_data())
         else:
@@ -205,7 +206,7 @@ def delete_tagdetail_view(request,pk,detail_pk):
         return redirect('home:home')
 
 def create_post_view(request):
-    if request.user.is_authenticated and request.user.is_staff:
+    if request.user and request.user:
         template_name = 'home/home_post.html'
         form = CreatePostForm()
 
@@ -219,9 +220,14 @@ def create_post_view(request):
 
 class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, TemplateView):
     template_name = 'home/home.html'
+    def get_user(self):
+        if self.request.user.is_staff:
+            return self.request.user
+        else:
+            return None
 
     def post(self, *args, **kwargs):
-        if self.request.user.is_staff and self.request.user.is_authenticated:
+        if self.request.user and self.request.user:
             print(self.request.POST)
             if self.request.POST.get('createcomment'):
                 if kwargs['pk']:
@@ -312,22 +318,17 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
         form = CreatePostForm()
         form = CreatePostForm(self.request.POST, self.request.FILES)
         if form.is_valid():
-            if self.request.user.is_staff or self.request.user.is_admin:
+            if self.request.user or self.request.user:
                 form.save(commit=False)
-                form.user = self.request.user
+                if self.request.user.is_staff:
+                    form.user = self.request.user
 
                 a = form.save(commit=True)
-                print (a)
-                print(a.user)
-                a.user = self.request.user
-                a.save()
-                print(a.user)
 
-                print(a.date)
                 if link_dict:
                     if link_dict['links']:
                         for i in link_dict['links']:
-                            linkobj = PostLink.objects.create(user=self.request.user, link=i[1], link_name=i[0])
+                            linkobj = PostLink.objects.create(user=self.get_user(), link=i[1], link_name=i[0])
                             a.link.add(linkobj)
                             a.save()
 
@@ -345,7 +346,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
         link_dict = self.clean_links()
         try:
             post = Post.objects.get(pk=pk)
-            x = Comment.objects.create(user=self.request.user)
+            x = Comment.objects.create(user=self.get_user())
             if not text_dict['text']:
                 messages.error(self.request, 'kindly enter comment text')
                 return False
@@ -374,7 +375,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
             if link_dict:
                 if link_dict['links']:
                     for i in link_dict['links']:
-                        linkobj = PostLink.objects.create(user=self.request.user, link=i[1], link_name=i[0])
+                        linkobj = PostLink.objects.create(user=self.get_user(), link=i[1], link_name=i[0])
                         x.link.add(linkobj)
             x.save()
             post.comments.add(x)
@@ -384,6 +385,11 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
 
 
 class GetPosts(View):
+    def get_user(self):
+        if self.request.user.is_staff:
+            return self.request.user
+        else:
+            return None
 
     def get(self, request, *args, **kwargs):
         print('get request')
@@ -395,7 +401,7 @@ class GetPosts(View):
                 print('enter integer')
                 return redirect('home:home')
             newposts = HomeView.posts[index:index + 15]
-            html = [ (((render(self.request, 'home/getposts.html',{'user': self.request.user, 'post': i})).content).decode('utf-8')).strip() for i in newposts]
+            html = [ (((render(self.request, 'home/getposts.html',{'user': self.get_user(), 'post': i})).content).decode('utf-8')).strip() for i in newposts]
 
             response =JsonResponse(html, safe=False)
             print(response.status_code)

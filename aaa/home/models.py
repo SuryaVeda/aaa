@@ -122,9 +122,24 @@ class Comment(models.Model):
             return list(a)
         else:
             return a
+    def get_user(self):
+        if self.user is None:
+            return 'Anonymous'
+        if self.user.is_admin:
+            return 'Admin'
+        elif self.user.is_staff:
+            return self.user.username
+        else:
+            return 'Anonymous'
 
     def posted_on(self):
-        return self.date.strftime('%d %b %Y %I %M %p')
+        try:
+            #x = '{0}  |  {1} '.format(self.user.username, self.date.strftime('%d %b %Y %I %M %p'))
+            x = '{0}  |  {1} '.format(self.get_user(), self.date.strftime('%d %b %Y %I %M %p'))
+
+            return x
+        except:
+            return 'Group Admin'
 
 
 class Post(models.Model):
@@ -187,13 +202,21 @@ class Post(models.Model):
             return list(a)
         else:
             return a
+    def get_user(self):
+        if self.user is None:
+            return 'Anonymous'
+        if self.user.is_admin:
+            return 'Admin'
+        elif self.user.is_staff:
+            return self.user.username
+        else:
+            return 'Anonymous'
 
     @property
     def posted_on(self):
-
         try:
             #x = '{0}  |  {1} '.format(self.user.username, self.date.strftime('%d %b %Y %I %M %p'))
-            x = '{0}  |  {1} '.format('Admin', self.date.strftime('%d %b %Y %I %M %p'))
+            x = '{0}  |  {1} '.format(self.get_user(), self.date.strftime('%d %b %Y %I %M %p'))
 
             return x
         except:
