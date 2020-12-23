@@ -88,7 +88,7 @@ def speciality_view(request, speciality_type):
 
             subjects = list(Tag.objects.filter(is_degree=True))
 
-            posts = Post.objects.filter(tag=tag).order_by('pk')
+            posts = Post.objects.filter(tag=tag).order_by('-pk')
             tag_speciality = Tag.objects.filter(is_speciality=True)
             context['tag'] = tag
             context['tag_speciality'] = tag_speciality
