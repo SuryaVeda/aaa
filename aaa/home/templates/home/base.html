@@ -874,9 +874,15 @@ window.onclick = function (event) {
 } else {
 
         var drop_down_list = document.getElementById('dropdownlist');
-            drop_down_list.style.display = 'none';
+        if (drop_down_list != null) {
+          drop_down_list.style.display = 'none';
+        }
         var drop_down_list1 = document.getElementById('dropdownlist1');
-            drop_down_list1.style.display = 'none';
+
+        if (drop_down_list1 != null) {
+          drop_down_list1.style.display = 'none';
+        }
+
     }
 };
 window.onload = function () {
