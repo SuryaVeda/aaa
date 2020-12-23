@@ -192,12 +192,9 @@ class Post(models.Model):
     def posted_on(self):
 
         try:
-            x = '{0}  |  {1} '.format(self.user.username, self.date.strftime('%d %b %Y %I %M %p'))
+            #x = '{0}  |  {1} '.format(self.user.username, self.date.strftime('%d %b %Y %I %M %p'))
+            x = '{0}  |  {1} '.format('Admin', self.date.strftime('%d %b %Y %I %M %p'))
+
             return x
         except:
             return 'Group Admin'
-
-
-
-
-
