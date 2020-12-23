@@ -208,8 +208,10 @@ def create_post_view(request):
     if request.user.is_authenticated and request.user.is_staff:
         template_name = 'home/home_post.html'
         form = CreatePostForm()
-        tag_speciality = Tag.objects.filter(is_degree=True)
-        context = {'form': form, 'tag_speciality': tag_speciality}
+
+        tags = Tag.objects.all()
+        tag_speciality = tags.filter(is_degree=True)
+        context = {'form': form, 'tag_speciality': tag_speciality, 'tags':tags}
         return render(request, template_name, context)
     else:
         return redirect('accounts:login')
@@ -403,4 +405,3 @@ class GetPosts(View):
 
         else:
             return redirect('home:home')
-
