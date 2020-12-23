@@ -211,7 +211,7 @@ def create_post_view(request):
         form = CreatePostForm()
 
         tags = Tag.objects.all()
-        tag_speciality = tags.filter(is_degree=True)
+        tag_speciality = tags.filter(is_speciality=True)
         context = {'form': form, 'tag_speciality': tag_speciality, 'tags':tags}
         return render(request, template_name, context)
     else:
