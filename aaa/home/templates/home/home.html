@@ -6,7 +6,7 @@
 
 <div class="home-container">
     {% if request.user and request.user %}
-    {% if messages %}
+    {% if messages.extratags == request.user.email %}
     {% for message in messages %}
     <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
     {% endfor %}

@@ -200,12 +200,11 @@
     </div>
     <div class="home-container">
         {% if request.user and request.user %}
-        {% if messages %}
+        {% if messages.extratags == request.user.email %}
         {% for message in messages %}
         <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
         {% endfor %}
         {% endif %}
-        <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p> or <p> Add a question!</a>
 
         {% endif %}
         <div class="someclass">
@@ -344,7 +343,6 @@
         {% endif  %}
 
     </div>
-                <p style="align-self: center" class="bold-red" onclick="needmore(this)">More posts</p>
 
 
         </div>
@@ -460,7 +458,11 @@ window.onload = function () {
     mcqblock[0].style.display = "flex";
     console.log(flashcardblock);
     flashcardblock[0].style.display = "flex";
-
+    for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
+        if (document.getElementsByClassName('comments')[i].clientHeight > 300 ) {
+      console.log(true);
+      document.getElementsByClassName('comments')[i].style.height = '1px';
+      document.getElementsByClassName('more')[i].style.display = 'block';}}
 };
 
 function deletequestion(e,pk) {
