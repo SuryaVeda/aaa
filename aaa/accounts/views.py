@@ -33,6 +33,8 @@ def login_view(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             try:
+                print(form.cleaned_data.get('email'))
+                print(form.cleaned_data.get('password'))
                 user = authenticate(request, email=form.cleaned_data.get('email'),
                                     password=form.cleaned_data.get('password'))
                 if user is not None:
