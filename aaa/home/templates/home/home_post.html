@@ -5,7 +5,7 @@
 <div class="fullcover">
 
     <div class="postform">
-<p>Kindly upload <a href="#">MCQ in their respective speciality page or question bank.</a></p>
+<p>Kindly upload <a href="{% url 'mcq:createq' 'mcq' %}">MCQ in this Page.</a></p>
 
         <form method="post" action="{% url 'home:postview' %}" enctype="multipart/form-data">
         {% csrf_token %}

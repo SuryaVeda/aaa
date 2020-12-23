@@ -43,6 +43,7 @@
 
            <div class="tagrow" style="display: flex; flex-flow: column wrap">
                {% for tag in tags %}
+               
                {% if tag.is_speciality %}
                 <p><label for="id_tag_1"><input type="checkbox" name="tag" value="{{tag.pk}}" placeholder="Tags" id="id_tag_{{tag.pk}}">
  {{tag.name}}</label></p>

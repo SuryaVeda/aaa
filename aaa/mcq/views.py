@@ -38,7 +38,7 @@ class McqView(TemplateView):
 
 def refresh_questions_view():
     McqView.questionbank = {i.pk:i.get_questions for i in Tag.objects.all().prefetch_related()}
-    return redirect('mcq:qa')
+    return redirect('/home/{0}'.format('NEET SS'))
 
 
 def delete_question_view(request,pk):
@@ -125,5 +125,3 @@ class CreateQuestion(CreateView):
         k = self.get_form_kwargs()
         context['type'] = k['type']
         return context
-
-

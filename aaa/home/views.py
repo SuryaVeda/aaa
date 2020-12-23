@@ -15,6 +15,7 @@ from django.conf import settings
 from  django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.views import View
+from mcq.models import QuestionBank
 
 # Create your views here.
 
@@ -68,19 +69,31 @@ def show_conferences(request):
     return render(request, 'home/conference.html', {'posts':posts,'tag_speciality': tag_speciality})
 
 def speciality_view(request, speciality_type):
+
     if request.user:
         template_name = 'home/speciality_tag.html'
-
+        context = {}
         try:
             tag = Tag.objects.get(name=speciality_type)
 
             if speciality_type=='NEET SS':
+                questionbank = QuestionBank.objects.all()
+                print(questionbank)
+                print(list(questionbank.filter(mcq=True)))
                 template_name = 'home/neet.html'
+                context['questionbank'] = list(questionbank.filter(mcq=True))
+                context['flashcards'] = list(questionbank.filter(flashcard=True))
+                context['cases'] = list(questionbank.filter(qa=True))
+
+
             subjects = list(Tag.objects.filter(is_degree=True))
 
             posts = Post.objects.filter(tag=tag).order_by('pk')
             tag_speciality = Tag.objects.filter(is_speciality=True)
-            context = {'tag': tag, 'tag_speciality': tag_speciality, 'posts': posts, 'subjects': subjects}
+            context['tag'] = tag
+            context['tag_speciality'] = tag_speciality
+            context['posts'] = posts
+            context['subjects'] = subjects
             return render(request, template_name, context)
         except:
             messages.error(request, 'unable to fetch the page.', extra_tags=request.user.email)
