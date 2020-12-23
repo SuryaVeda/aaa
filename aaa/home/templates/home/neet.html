@@ -126,28 +126,25 @@
         <h2 style="text-decoration: underline; font-weight: 600; color: #000066;">{{i.heading}}</h2>
             <script>
                 var action{{i.pk}} = "{% url 'home:edittagdetail' tag.pk i.pk %}";
-                var headingsubjectintro = '{{i.heading}}';
-                var detailsubjectintro =`{{i.details}}`;
-                console.log(action{{i.pk}});
             </script>
             {% if request.user.is_authenticated and request.user.is_admin  %}
             <script>var deleteurl{{i.pk}} = '{% url "home:deletetagdetail" tag.pk i.pk %}'</script>
-            <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro(action{{i.pk}}, headingsubjectintro, detailsubjectintro) ">Edit</a> | <a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{i.pk}})">Remove detail </a></p>
+            <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro(action{{i.pk}}, '{{ i.heading }}', '{{ i.details }}', '{{ i.pk }}') ">Edit</a> | <a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{i.pk}})">Remove detail </a></p>
             {% endif %}
         <p></p>
             {% if i.details %}
             <p>{{i.details|linebreaks }}</p>
             {% else %}
-        <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro(action{{i.pk}}, '{{i.heading}}', '{{i.details}}')">Edit </a>| <a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{i.pk}})">Remove detail </a></p>
+        <p><a style="text-decoration: underline; color: blue;" onclick="editsubjectintro(action{{i.pk}}, '{{i.heading}}', '{{i.details}}', '{{ i.pk }}')">Edit </a>| <a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{i.pk}})">Remove detail </a></p>
             {% endif %}
         </div>
         {% endfor %}
         {% endif %}
-        {% if request.user.is_authenticated and request.user.is_admin  %}
+        {% if request.user and request.user  %}
         <p><a style="text-decoration: underline; color: blue;" onclick="addsubjectintro()">Add more details </a></p>
         {% endif %}
  <style>
-                #subject-intro-edit textarea{
+                .subject-intro-edit textarea{
                     height: 300px; width: 80%;background-color: white;  font-size: 20px;  font-family: 'Overlock', cursive;
                 }
                 #subject-intro-add textarea{
@@ -157,7 +154,7 @@
                         width:40%;
                 }
 
-                #subject-intro-edit input{
+                .subject-intro-edit input{
                         width: 40%;
                 }
                 @media screen and (max-width: 800px) {
@@ -167,16 +164,16 @@
                     #subject-intro-add input{
                         width:100%;
                     }
-                    #subject-intro-edit textarea{
+                    .subject-intro-edit textarea{
                         width: 100%;
                     }
-                    #subject-intro-edit input{
+                    .subject-intro-edit input{
                         width: 100%;
                     }
                 }
             </style>
-        {% if request.user.is_authenticated and request.user.is_admin  %}
-        <form style="display: none;" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
+        {% if request.user and request.user  %}
+        <form style="display: none;" id = 'subject-intro-edit' class="subject-intro-edit" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <p><input placeholder="Add heading.." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
                 <p><textarea placeholder="Add details.."  required name="details" type="text" maxlength="5000" >{{i.details}} </textarea></p>

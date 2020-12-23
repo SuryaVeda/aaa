@@ -1131,10 +1131,13 @@ function commentform(){
        subdetails[i].style.display= 'block';}
 }
 
-function editsubjectintro(action, heading, details) {
+function editsubjectintro(action, heading, details,pk) {
        document.getElementsByClassName('showsubjectintro')[0].style.display= 'none';
+       console.log(pk);
     document.getElementById('subject-intro-edit').style.display = 'block';
     console.log(action);
+    console.log(heading);
+    console.log(details);
     document.getElementById('subject-intro-edit').action = action;
     document.getElementsByName('heading')[0].value = heading;
     document.getElementsByName('details')[0].value = details;
