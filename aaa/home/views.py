@@ -35,16 +35,19 @@ def email(request):
 class HomeView(TemplateView):
     template_name = 'home/home.html'
     posts = Post.objects.order_by('-date').prefetch_related()
+    postslist = list(posts)
     tag_speciality = Tag.objects.filter(is_speciality=True)
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['posts'] = list(HomeView.posts)[0:15]
+        context['posts'] = HomeView.postslist[0:15]
         context['tag_speciality'] = list(HomeView.tag_speciality)
         return context
 
 def refresh_home_page(request):
     HomeView.tag_speciality  = Tag.objects.filter(is_speciality=True)
-    HomeView.posts = Post.objects.order_by('-date').prefetch_related()
+    print(HomeView.posts)
+    HomeView.postslist.clear()
+    HomeView.postslist = list(Post.objects.order_by('-date').prefetch_related())
     return redirect('home:home')
 
 
@@ -67,10 +70,7 @@ def show_conferences(request):
 def speciality_view(request, speciality_type):
     if request.user:
         template_name = 'home/speciality_tag.html'
-        try:
-            tag = Tag.objects.get(name=speciality_type)
-        except ObjectDoesNotExist:
-            tag = Tag.objects.create(name=speciality_type)
+
         try:
             tag = Tag.objects.get(name=speciality_type)
 

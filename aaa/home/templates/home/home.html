@@ -11,7 +11,8 @@
     <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
     {% endfor %}
     {% endif %}
-    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p></a>
+    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p> or <p> Add a question!</a>
+
     {% endif %}
     <div class="someclass">
         {% if posts and request.user%}
@@ -157,7 +158,7 @@
 
 <script>
 
-    function needmore(this) {
+    function needmore(element) {
         var x = document.getElementsByClassName('home-post');
     console.log(x.length);
     newhttp = new XMLHttpRequest();
@@ -195,7 +196,7 @@ document.getElementsByClassName('comments')[i].style.height = '1px';
 };
     newhttp.open('GET', "/getnewposts" + "/"+x.length);
     newhttp.send();
-    this.style.display = none;
+    element.style.display = 'none';
     }
 
 
