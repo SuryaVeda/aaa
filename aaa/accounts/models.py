@@ -46,6 +46,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     email = models.EmailField(max_length =255, unique = True)
     username = models.CharField(max_length = 20)
+    reset = models.CharField(max_length=10000,blank=True,null=True)
     is_active = models.BooleanField(default = True)
     staff = models.BooleanField(default = False)
     admin = models.BooleanField(default = False)
@@ -288,13 +289,3 @@ class Profile(models.Model):
             return a
         except:
             return False
-
-
-
-
-
-
-
-
-
-

@@ -38,7 +38,7 @@
     </form>
 
    {# Assumes you setup the password_reset view in your URLconf #}
-    <p><a href="">Lost password?</a></p>
+    <p><a href="{% url 'accounts:password_reset_form' %}?emailform=EmailField">Lost password?</a></p>
 
     <p><b>Or</b></p>
     <p>Don't have an account? <a href="{% url 'accounts:staff' %}">Sign Up</a> </p>

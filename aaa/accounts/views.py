@@ -8,7 +8,7 @@ from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from urllib.parse import parse_qs
-import json, bleach
+import json, bleach, string, random
 from django.contrib import messages
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login
@@ -19,10 +19,15 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
+from django.conf import settings
+from django.core.mail import send_mail
 
 # Create your views here.
 
 ''''''
+
+
+
 
 def login_view(request):
 
@@ -33,10 +38,10 @@ def login_view(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             try:
-                print(form.cleaned_data.get('email'))
-                print(form.cleaned_data.get('password'))
-                user = authenticate(request, email=form.cleaned_data.get('email'),
-                                    password=form.cleaned_data.get('password'))
+                print(request.POST.get('email'))
+                print(request.POST.get('password'))
+                user = authenticate(request, email=request.POST.get('email'),
+                                    password=request.POST.get('password'))
                 if user is not None:
                     login(request, user)
                     return redirect('home:home')
@@ -68,6 +73,69 @@ def user_signout(request):
     return redirect('home:home')
 
 
+class PasswordReset(TemplateView):
+    template_name = 'accounts/password_reset.html'
+    def encrypt(self):
+        obj = settings.SECRET_KEY.ljust(16)[:16]
+        y= string.ascii_letters
+        for i in range(10):
+            obj += random.choice(y)
+        return obj
+
+
+    def get(self, request, *args, **kwargs):
+        if request.GET.get('emailform'):
+            return render(request, PasswordReset.template_name, self.get_context_data())
+        if request.GET.get('emailsent'):
+            return render(request, PasswordReset.template_name,{'email_sent':True})
+        if request.GET.get('passwordreset'):
+            code = request.GET.get('passwordreset')
+            print(code)
+            try:
+                x = User.objects.get(reset = request.GET.get('passwordreset'))
+                print(x.reset)
+
+                return render(request, PasswordReset.template_name, {'resetpassword':True, 'code':code})
+
+
+            except Exception as e:
+                return redirect('accounts:login')
+        return redirect('accounts:login')
+
+
+    def post(self, *args, **kwargs):
+        print(self.request.POST)
+        if self.request.POST.get('passform'):
+            code = self.request.POST.get('code')
+            user = User.objects.get(reset = code)
+            try:
+                user = User.objects.get(reset = code)
+                user.set_password(self.request.POST.get('password'))
+                user.reset = None
+                print(user.password)
+                user.save()
+                print(user.password)
+                return redirect('accounts:login')
+            except Exception as e:
+                print('error in saving')
+                messages.error(self.request,'Invalid reset link, create a new link', extra_tags = self.request.user.email )
+                return redirect('accounts:login')
+        if self.request.POST.get('emailformpost'):
+            try:
+                print(self.request.POST)
+                user = User.objects.get(email = self.request.POST.get('email'))
+                obj = self.encrypt()
+                user.reset = obj
+                print(user.reset)
+                user.save()
+                send_mail("Reset password for your AAA account", "Kindly press the below link or copy and paste it in browser \n \n http://127.0.0.1:8000/accounts/passreset?passwordreset={0}".format(obj), settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
+                print('email sent')
+                return redirect(reverse('accounts:password_reset_form') + '?emailsent=True')
+
+            except Exception as e:
+                messages.error(self.request, 'invalid email or email doesnot exist', extra_tags=self.request.user.email)
+
+        return redirect('accounts:login')
 
 
 class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
