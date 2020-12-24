@@ -128,7 +128,7 @@ class PasswordReset(TemplateView):
                 user.reset = obj
                 print(user.reset)
                 user.save()
-                send_mail("Reset password for your AAA account", "Kindly press the below link or copy and paste it in browser \n \n http://127.0.0.1:8000/accounts/passreset?passwordreset={0}".format(obj), settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
+                send_mail("Reset password for your AAA account", "Kindly press the below link or copy and paste it in browser \n \n {0}/accounts/passreset?passwordreset={1}".format(settings.DOMAIN_NAME, obj), settings.EMAIL_HOST_USER, [user.email], fail_silently=True)
                 print('email sent')
                 return redirect(reverse('accounts:password_reset_form') + '?emailsent=True')
 

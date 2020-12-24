@@ -52,10 +52,12 @@ DATABASES = {
 }
 
 if DEBUG:
+    DOMAIN_NAME = 'http://127.0.0.1:8000'
 
     ALLOWED_HOSTS = ['*']
 
 else:
+    DOMAIN_NAME = 'https://allaboutanaesthesia.co'
     x = os.getenv('allowedhosts')
     ALLOWED_HOSTS = x.split(',')
     FILE_UPLOAD_PERMISSIONS = 0o640
@@ -157,4 +159,3 @@ X_FRAME_OPTIONS = 'DENY'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
