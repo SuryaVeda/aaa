@@ -332,7 +332,8 @@ CREATE TABLE public.accounts_user (
     username character varying(20) NOT NULL,
     is_active boolean NOT NULL,
     staff boolean NOT NULL,
-    admin boolean NOT NULL
+    admin boolean NOT NULL,
+    reset character varying(10000)
 );
 
 
@@ -1541,6 +1542,11 @@ COPY public.accounts_degree (id, name_id, finalyear, college_id) FROM stdin;
 15	1	\N	15
 16	7	\N	17
 17	1	\N	18
+18	7	\N	19
+19	1	\N	19
+20	7	\N	21
+21	1	\N	22
+22	7	\N	23
 \.
 
 
@@ -1567,6 +1573,12 @@ COPY public.accounts_medicalcollege (id, name) FROM stdin;
 16	AIIMS Rishikesh 
 17	RD gardi medical college
 18	SGMH
+19	Kmc Mangalore
+20	Aiims Rishikesh
+21	VSS Medical College
+22	DDU Hospital
+23	siddartha medical college
+24	AIIMS Rishikeh
 \.
 
 
@@ -1578,9 +1590,12 @@ COPY public.accounts_profile (id, user_id, dob, name, nationality, phone, backgr
 2	3	\N	Vijay Adabala	\N	\N	\N	\N
 9	12	\N	drniyati	\N	\N		
 10	13	\N	Poojitha Reddy	\N	\N		
-1	2	\N	sk	Indian	\N	backgroundpic/2020/12/$D/IMG-20201009-WA0001.jpg	profilepic/2020/12/$D/IMG-20201108-WA0002.jpg
 11	14	\N	RSharma	\N	\N		
 12	15	\N	drravi86	\N	\N		
+1	2	\N	sk	Indian	\N	backgroundpic/2020/12/$D/IMG-20201009-WA0001_tRrpMka_lYdEd25.jpg	profilepic/2020/12/$D/IMG-20201108-WA0002_HksU75U_XY6MhHS.jpg
+13	16	\N	sherkhan_5195@yahoo.	\N	\N		
+14	17	\N	Nitish	\N	\N		
+15	18	\N	PR	\N	\N		
 \.
 
 
@@ -1601,6 +1616,12 @@ COPY public.accounts_profile_degree (id, profile_id, degree_id) FROM stdin;
 20	11	15
 21	12	16
 22	12	17
+23	13	18
+24	13	19
+25	14	20
+26	14	21
+27	15	22
+28	15	14
 \.
 
 
@@ -1645,6 +1666,24 @@ COPY public.accounts_profile_details (id, profile_id, profiledetail_id) FROM std
 64	12	73
 65	12	74
 66	12	75
+67	13	76
+68	13	77
+69	13	78
+70	13	79
+71	13	80
+72	13	81
+73	14	84
+74	14	85
+75	14	86
+76	14	87
+77	14	88
+78	14	89
+79	15	90
+80	15	91
+81	15	92
+82	15	93
+83	15	94
+84	15	95
 \.
 
 
@@ -1667,6 +1706,9 @@ COPY public.accounts_profile_work (id, profile_id, work_id) FROM stdin;
 9	10	9
 10	11	10
 11	12	11
+12	13	12
+13	14	13
+14	15	14
 \.
 
 
@@ -1675,7 +1717,6 @@ COPY public.accounts_profile_work (id, profile_id, work_id) FROM stdin;
 --
 
 COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
-4	About	 	
 5	personal statement		
 6	experience		
 7	education		
@@ -1744,6 +1785,27 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 73	recommendation		
 74	accomplishments		
 75	interests		
+76	personal statement		
+77	experience		
+78	education		
+79	recommendation		
+80	accomplishments		
+81	interests		
+83	NEET SS 2020	 we are trying to collect NEET SS 2020 Anaesthesia questions and post on this group for free. All can avail.	
+84	personal statement		
+85	experience		
+86	education		
+87	recommendation		
+88	accomplishments		
+89	interests		
+90	personal statement		
+91	experience		
+92	education		
+93	recommendation		
+94	accomplishments		
+95	interests		
+4	About	Cardiac Anesthesiology is a subspeciality of Anesthesiology.\n\ncourses that can be pursued : PDCC (1 year course), DM (3 years course). 2-3 years senior residency in a recognised center gives eligibility for FIACTA (fellowship in IACTA)\n\non pump, off pump, minimally invasive surgeries, pediatric cardiac, major vascular, ECMO, mechanical support for failing heart, cardiac transplantation, transesophageal echocardiography are various aspects of cardiac anesthesia	
+82	About	 For the anesthesiology residents, two sets of paper will be designed in NEET SS. One set of paper is for the individuals who have opted for critical care where 60% of questions are mainly designed from the critical care point of view. you can expect only 40% from the Anaesthesia point of you. The other set of paper is designed for the individuals who have opted for other super specialties other than critical care ( like cardiac, neuro, transplant, onco) where you will get most from Anaesthesia	
 \.
 
 
@@ -1751,13 +1813,16 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 -- Data for Name: accounts_user; Type: TABLE DATA; Schema: public; Owner: sk
 --
 
-COPY public.accounts_user (id, password, last_login, email, username, is_active, staff, admin) FROM stdin;
-3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2020-12-06 13:09:24.715997+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t
-12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2020-12-06 12:11:35.032613+00	drnitiarora@gmail.com	drniyati	t	t	t
-2	pbkdf2_sha256$216000$akbPDd7f4wGX$rQpVKfOlfm9MYJXULL6JT9oOj8sFUYzNoZx9Vd15p8k=	2020-12-07 03:10:06.88564+00	suryaveda@hotmail.com	sk	t	t	t
-13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t
-14	pbkdf2_sha256$216000$48gahPt14eWL$/QklznDQS9pzOOsos8UmOIqEBMCbDN5aV/tCsspLaHY=	\N	drsharma.ruhi@gmail.com	RSharma	t	t	t
-15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t
+COPY public.accounts_user (id, password, last_login, email, username, is_active, staff, admin, reset) FROM stdin;
+2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2020-12-24 13:58:48.142174+00	suryaveda@hotmail.com	sk	t	t	t	\N
+12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2020-12-06 12:11:35.032613+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
+13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t	\N
+14	pbkdf2_sha256$216000$48gahPt14eWL$/QklznDQS9pzOOsos8UmOIqEBMCbDN5aV/tCsspLaHY=	\N	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
+15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t	\N
+3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2020-12-18 06:19:33.014781+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
+16	pbkdf2_sha256$216000$0cgFkSw1M7h9$2rVbaqrjCLZmPfwQeaJ/p6sJN3HGciMMOnRYVa3dmfA=	\N	sherkhan_5195@yahoo.com	sherkhan_5195@yahoo.	t	t	t	\N
+17	pbkdf2_sha256$216000$u12nNcUnJ1w4$dM3zR8lja8MaR1ElQghLh91ma7aox6AlFTljIecXOmw=	2020-12-23 16:15:37.721521+00	nitishtha220@gmail.com	Nitish	t	t	t	\N
+18	pbkdf2_sha256$216000$Y269kX6KTayq$miEE07VMy9Q9MD0UemoB9KirVkdToMhSUxhxGIw+Tfs=	2020-12-23 16:54:59.679832+00	gpoojithareddy87@gmail.com	PR	t	t	t	\N
 \.
 
 
@@ -1777,6 +1842,9 @@ COPY public.accounts_work (id, "position", is_current, hospital_id) FROM stdin;
 9	Senior resident academic 	t	14
 10	Senior resident 	t	16
 11	Acad senior resident ( Dm pain)	t	3
+12	Senior Resident	t	20
+13	Senior Resident, Onco-Anaesthesia	t	3
+14	SR 	t	24
 \.
 
 
@@ -1788,6 +1856,8 @@ COPY public.archives_book (id, name, latest, "backgroundPic", subject_id, user_i
 4	Morgan and Mikhail's Clinical Anesthesiology	6th edition	bookimages/2020/12/$D/morgan_image_045zsYU_YxUZUwM.jpg	1	3
 5	Miller's Anesthesia	9th edition	bookimages/2020/12/$D/millers_image_0FSZLw2_KfwWCXZ.jpg	1	3
 6	Practical Management of Pain 	5th edition	bookimages/2020/12/$D/practical_management_of_pain_n6WDa0T_qb5T1wA.jpg	3	3
+7	KAPLANS CARDIAC ANESTHESIA FOR CARDIAC AND NONCARDIAC SURGERY	7th		5	18
+8	KAPLANS ESSENTIALS OF CARDIAC ANESTHESIA	2nd edition		5	18
 \.
 
 
@@ -1810,6 +1880,8 @@ COPY public.archives_review (id, date, details, book_id, user_id) FROM stdin;
 4	2020-12-05 17:33:16.679014+00	Its a basic text book for all the Anesthesiologists. All the topics are well explained.	4	3
 5	2020-12-05 17:59:43.238286+00	its vast and topics are explained in detailed way.. use it as a reference textbook	5	3
 6	2020-12-05 18:16:06.752517+00	each topic was explained in detail. use it as a reference text book	6	3
+7	2020-12-23 17:47:52.747631+00	standard reference book for cardiac anesthesia	7	18
+8	2020-12-23 17:51:35.571094+00	for quick review of Kaplans 7th ed	8	18
 \.
 
 
@@ -2104,6 +2176,19 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 122	home	0050_auto_20201212_1150	2020-12-12 11:01:45.590972+00
 123	home	0056_merge_20201212_1631	2020-12-12 11:01:45.594175+00
 124	mcq	0001_initial	2020-12-12 11:01:45.69445+00
+125	accounts	0022_user_reset	2020-12-24 13:52:26.693551+00
+126	archives	0015_auto_20201217_1822	2020-12-24 13:52:26.761745+00
+127	archives	0016_auto_20201224_0137	2020-12-24 13:52:26.828437+00
+128	archives	0017_auto_20201224_0138	2020-12-24 13:52:26.890399+00
+129	archives	0018_auto_20201224_0138	2020-12-24 13:52:26.957669+00
+130	archives	0019_auto_20201224_0142	2020-12-24 13:52:27.024964+00
+131	archives	0021_merge_20201224_1922	2020-12-24 13:52:27.028067+00
+132	home	0051_auto_20201217_1822	2020-12-24 13:52:27.114546+00
+133	home	0052_auto_20201224_0137	2020-12-24 13:52:27.198044+00
+134	home	0053_auto_20201224_0138	2020-12-24 13:52:27.285695+00
+135	home	0054_auto_20201224_0138	2020-12-24 13:52:27.369353+00
+136	home	0055_auto_20201224_0142	2020-12-24 13:52:27.454156+00
+137	home	0057_merge_20201224_1922	2020-12-24 13:52:27.457206+00
 \.
 
 
@@ -2112,15 +2197,15 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-8pswjy5ohsckdh6tw6i4pqqqi3t2q8zl	.eJxVjDsOwjAQBe_iGll24i8lfc5g7a4XHEC2FCcV4u4QKQW0b2beSyTY1pK2zkuaszgLLU6_GwI9uO4g36HemqRW12VGuSvyoF1OLfPzcrh_BwV6-dYjWh0pRlTZM47IQNF6O1AgRm3gms0QtBuN8mBVMJocKO-CNpaZAoj3B-tnN84:1kkw14:BGVYqR6eBgLrkIkze3lm_RbIOGguVATsV4_2uABoqZc	2020-12-17 21:19:54.514968+00
-sw26gs63of42qc4jw6wntpuugl20vrmr	.eJxVjMsOwiAURP-FtSHIq-DSfb-BXLgXqRpISrsy_ruSdKHLmXNmXizAvpWwd1rDguzCJDv9dhHSg-oAeId6azy1uq1L5EPhB-18bkjP6-H-HRTo5bsmdMIonbVxKGR0eRJ-hGS89Uk5rbSzGFFG69U5A2i0E5FHYU3OSbL3B9AKN8c:1klEFA:zmFpCi3e-Vla5Ha_x12O4Hn8135LtxS7C5UVCkzYXHo	2020-12-18 16:47:40.484189+00
-cbzk5q0ytlcc4vnwx5dslofr83vy7sgn	.eJxVjMEOwiAQBf-FsyHQZYF69N5vIMCCVA0kpT0Z_9026UGvM_Pemzm_rcVtPS1uJnZlwC6_LPj4TPUQ9PD13nhsdV3mwI-En7bzqVF63c7276D4Xva1RNRWaQgWIeJoMVK2gGRADcqitN5kOQqkAMl4YVQWsKNBZGEiacU-X62DNsU:1klYr0:9bFuk5Zp5jV-B9mW8W7-ayW3lD2JNzSOw2_Hx4yjJ1E	2020-12-19 14:48:06.132908+00
-2670q7tx082hs8hmbs1wvjpd6zjrzss0	.eJxVjEEKwjAQAP-Ss4RkY7bWo3ffEDbZrKlKA017Ev8ugSL0OjPMR20tL2FidYWTCrStJfyJAnVgkdIrz13wk-ZH1anO6zJF3RO926bvlfP7treHQaFW-hZSYjs4Q95yEnHgo0XxFrI1yBl5jHJGGqMfwLkkxJ5IEB3wRQyq7w-SwjwX:1klopo:qxhDGYOyJiOIFXWp6YSGrEPsGA9RLhSIqGZ_P9IbwuA	2020-12-20 07:51:56.020715+00
-nz5xxqi52mfv58ix86ypm89ze7kadjv0	.eJxVjDsOwjAQBe_iGln-EpuSnjNYu94NDiBbipMKcXcSKQW0b2beWyRYl5LWznOaSFyENuL0OyLkJ9ed0APqvcnc6jJPKHdFHrTLWyN-XQ_376BAL1sdghrOHAw6b6yKkPUAaInZZvSBLbhgvYcYKNPmRnCoLKHTaoyjIS8-X_uLOAY:1klst5:scAavIzzqG7BMl1nekMjV1vtAL7lmXvREZ9BuQQ073E	2020-12-20 12:11:35.03517+00
-adkcnvzxmsxv22yht9d86l2b7h458t7u	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1km3EA:1pPJ02y18m_hEbUaCp1IgR6KW3Qes1W3GV09UKV5tjM	2020-12-20 23:14:02.070735+00
-vnvavfs3qreazuzrneh0rq8h3ver4l98	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1km6uc:Fo3fhI_88ougJPDxqJGcL3PSBkoC7CWWeB266hOtsLE	2020-12-21 03:10:06.888216+00
-vtiqycuogsictiglp9tdggkla1ck4wq5	.eJxVjDsOwjAQBe_iGllak9i7lPScwdqPTQIokfKpIu4OkVJA-2bmbS7zunR5ncuUe3MXB2d3-h2F9VmGndiDh_vodRyWqRe_K_6gs7-NVl7Xw_076HjuvrUoak1YAYlCigYsZBRZrCFtW-DUIAEilmQRAUBIm1BLrIHJirr3BxAWOGU:1kmBmZ:OzLnOjdjtgU1JAumJ-g5o6J3K1V4BD1v4XqCpCBz4k8	2020-12-21 08:22:07.953281+00
-dy0zt22ocznqwstr68i12vp6h7gv4mn1	.eJxVjMsOwiAQAP-FsyHLUh716L3fQJaFStXQpLQn478bkh70OjOZtwh07CUcLW9hSeIqlBGXXxiJn7l2kx5U76vkte7bEmVP5GmbnNaUX7ez_RsUaqV_gdSICpENj84PkX1OEZKyAysC0kmzM8560HFG9lo5wBmydegBjRWfL-5NNvs:1kmXWW:li0Q8twLcz9BhQN2pXlOh9lJ2l_y5jM6LZQd1-TWvBc	2020-12-22 07:35:00.325473+00
+98a8pphh3jyhrxg7am67jifbdvu3w9p7	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1ko2zr:br56zT6UWWe6-rjNXS0P6c2h-T3GUSNtl49ujCanhCQ	2020-12-26 11:23:31.92622+00
+09db4gfmn4yh03td5dz2jrfywb6mfcno	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1koLzF:oXa_JOaQLoE5TsDBQMVQhOtYN5uMi2AFIiHdrIlxeYA	2020-12-27 07:40:09.193316+00
+ubo58cl5w552c1ovh5tf4mh15cdkumge	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1kpObX:NlKV4r26OokKCBZoo9yyzG4-89w8pT6yhvhlIUeApx4	2020-12-30 04:39:59.02369+00
+rshvauyf3ag2zozyr65lckvboq7br22o	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1kq96z:eAuWuPuSROdNgRZvYejtQa2wbEqO0aboGkrK1ailKec	2021-01-01 06:19:33.018262+00
+vh1jcjafou8t456oa1cyjzfwcife0nvx	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1ks35h:BpRgjIq0cgm86B3WN5vg99v2ztqKM8llRoXUAQpRncM	2021-01-06 12:18:05.596126+00
+czdt4juiwrjzm0v864nu4gpiho4jyau9	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1ks4Tu:ep_DARPl2E29t65wE-guQgyFtkGPl2VHMKqQ8qL9Oas	2021-01-06 13:47:10.00693+00
+em12blqlksyytt1jzmoyf1p8355taelr	.eJxVjMsOwiAQRf-FtSEwhJdL934DmYFRqgaS0q4a_12bdKHbe865m0i4LjWtg-c0FXEW2ovT70iYn9x2Uh7Y7l3m3pZ5Irkr8qBDXnvh1-Vw_w4qjvqtcwxcwHHEaE1WYO2NkL0lh2AUaU8qaKsseABgF7kEU6JT5FzM5Fm8PwLXN7E:1ks6nZ:OuqunXsiFPA2r0_lO_iNbNaK_YEm15Kg-vzwnANWyms	2021-01-06 16:15:37.724442+00
+6hr9nnwgnl43gw6gvpuvo6p88harh7ht	.eJxVjEsOwjAMBe-SNYrqNGkcluw5Q-TaDimgVupnhbg7VOoCtm9m3stk2taat0XnPIg5G0Bz-h174oeOO5E7jbfJ8jSu89DbXbEHXex1En1eDvfvoNJSvzVG9T1JShE8iYRUFEurAk1yEbvouHPcOORQwMfEGAMmpIah5aAK5v0BC6g3zg:1ks7Pf:gorDrdG_A52kbtgbtIfED78e-6gol9izgHRK98r3vbg	2021-01-06 16:54:59.682382+00
+hhs5u0k90nwkievp8zw3pnz21olfaqco	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1ksR8i:-5tIN87qQ_FqmPTsK__X7fMMZmt3CVucuC6u7V2U23k	2021-01-07 13:58:48.144592+00
 \.
 
 
@@ -2133,6 +2218,8 @@ COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdi
 3	2020-12-04 19:31:08.145292+00	Where is the conference?	3		\N	
 4	2020-12-04 19:32:49.661529+00	Calcutta.	2		\N	
 6	2020-12-04 19:36:50.577643+00	Jan 22- Jan 24.	2		\N	
+7	2020-12-23 13:45:01.199877+00	The dicrotic notch is a small and brief increase in arterial blood pressure that appears when the aortic valve closes. ... Most medical textbooks explain the origin of the dicrotic notch as caused by the aortic valve closure itself.	2		\N	
+8	2020-12-23 13:45:01.385813+00	The FLACC scale or Face, Legs, Activity, Cry, Consolability scale is a measurement used to assess pain for children between the ages of 2 months and 7 years or individuals that are unable to communicate their pain. Coughing is not a component of FLACC scale.	2		\N	
 \.
 
 
@@ -2160,7 +2247,11 @@ COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img) 
 10	2020-12-05 16:40:43.569854+00	INDIAN ASSOCIATION OF CARDIOVASCULAR THORACIC ANESTHESIOLOGISTS 24TH ANNUAL CONFERENCE 2021FEBRUARY 26, 2021 - FEBRUARY 28, 2021MADURAI , INDIA	\N	3		\N	
 11	2020-12-05 16:44:24.203572+00	This is to inform all the respected members of ISNACC that, due to the current COVID 19 pandemic situation, the ISNACC 2021 conference has been shifted to 2022 in Kolkata. Sorry for inconvenience!	\N	3		\N	
 12	2020-12-05 16:45:54.703597+00	16TH ASIAN AND OCEANIC SOCIETY OF REGIONAL ANAESTHESIA AND PAIN MANAGEMENT CONFERENCE & 11TH AORA NATIONAL CONFERENCE 2021APRIL 16, 2021 - APRIL 18, 2021MUMBAI , INDIA	\N	3		\N	
+14	2020-12-23 13:48:45.21743+00	1. Reason for dicrotic notch \r\na. Aortic valve closure \r\nb. Aortic valve opening\r\nc. Mitral valve closure \r\nd. Mitral valve opening	\N	2		\N	
 13	2020-12-05 18:08:57.361696+00	Pediatric pain can be assessed via FLACC scale, which includes all except:\r\nFacial expression\r\nLeg movement \r\nActivity \r\nCoughing	\N	3		\N	
+15	2020-12-23 14:42:14.393686+00	Criteria for weaning\r\na. Tidal volume of 5 ml/kg\r\nb. Vital capacity of 10 ml/ kg\r\nc. RSI > 105\r\nd. Pf ratio >300	\N	2		\N	
+16	2020-12-23 14:43:30.341516+00	Stoppage of therapeutic dalteparin before epidural insertion\r\na. 12 hrs before\r\nb. 24 hrs before\r\nc. 6 hrs before\r\nd. 68 hrs before	\N	2		\N	
+18	2020-12-24 17:13:27.57615+00	WBSSPCON 2021\r\nTheme- ULTRASOUND IN PAIN MEDICINE	It's a international conference by west Bengal society for the study of pain	\N		\N	Postimages/2020/12/$D/IMG-20201224-WA0033_XpnrVQg_yJapiEY.jpg
 \.
 
 
@@ -2169,6 +2260,8 @@ COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img) 
 --
 
 COPY public.home_post_comments (id, post_id, comment_id) FROM stdin;
+7	14	7
+8	13	8
 \.
 
 
@@ -2180,6 +2273,7 @@ COPY public.home_post_link (id, post_id, postlink_id) FROM stdin;
 5	10	6
 6	11	7
 7	12	8
+9	18	15
 \.
 
 
@@ -2197,6 +2291,18 @@ COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
 24	12	9
 25	13	8
 26	13	3
+27	14	8
+28	14	1
+29	14	10
+30	15	8
+31	15	1
+32	15	10
+33	15	6
+34	16	8
+35	16	1
+36	16	10
+39	18	9
+40	18	3
 \.
 
 
@@ -2216,6 +2322,10 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 9	http://gen.lib.rus.ec/book/index.php?md5=EC0E83E7DAB519A917963C3DFDC2A9C5		3
 10	https://cloudflare-ipfs.com/ipfs/bafykbzaceb47mokyxjermb6shxz334rexbvxtyxzfj3vgbwfoocg5me6tdgue?filename=Michael%20Gropper%2C%20Lars%20Eriksson%2C%20Lee%20Fleisher%2C%20Jeanine%20Wiener-Kronish%2C%20Neal%20Cohen%2C%20Kate%20Leslie%20-%20Miller%27s%20Anesthesia.%202_2-Elsevier%20%282020%29.pdf		3
 11	https://cloudflare-ipfs.com/ipfs/bafykbzacecqd6nmaletkzl4oui75hcjajajkbnsc4smq35bzuheqtlrc4qzvu?filename=%28PRACTICAL%20MANAGEMENT%20OF%20PAIN%20%28RAJ%29%29%20Honorio%20Benzon%20MD%2C%20James%20P.%20Rathmell%20MD%2C%20Christopher%20L.%20Wu%2C%20Dennis%20C.%20Turk%2C%20Charles%20E.%20Argoff%20MD%20-%20Raj%27s%20Practical%20Management%20of%20Pain-Mosby%20%282008%29.pdf		3
+12	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
+13	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
+14	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
+15	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
 \.
 
 
@@ -2245,6 +2355,8 @@ COPY public.home_tag_details (id, tag_id, profiledetail_id) FROM stdin;
 4	5	4
 5	3	17
 7	3	25
+10	10	82
+11	10	83
 \.
 
 
@@ -2270,6 +2382,7 @@ COPY public.mcq_qtag (id, name, subject, degree) FROM stdin;
 
 COPY public.mcq_questionbank (id, date, question, answer, mcq, flashcard, qa, user_id) FROM stdin;
 1	2020-12-12	Example Mcq Question\n\na) Example option 1\n\na) Example option 2\n\na) Example option 3\n\na) Example option 4	a) Example option 4	t	f	f	2
+2	2020-12-23	when is weaning possible from mechanical ventillation?	After spontaneous ventillation.	f	t	f	2
 \.
 
 
@@ -2287,6 +2400,7 @@ COPY public.mcq_questionbank_links (id, questionbank_id, postlink_id) FROM stdin
 
 COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 1	1	6
+2	2	6
 \.
 
 
@@ -2294,35 +2408,35 @@ COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 -- Name: accounts_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_degree_id_seq', 17, true);
+SELECT pg_catalog.setval('public.accounts_degree_id_seq', 22, true);
 
 
 --
 -- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 18, true);
+SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 24, true);
 
 
 --
 -- Name: accounts_profile_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 22, true);
+SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 28, true);
 
 
 --
 -- Name: accounts_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 66, true);
+SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 84, true);
 
 
 --
 -- Name: accounts_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_id_seq', 12, true);
+SELECT pg_catalog.setval('public.accounts_profile_id_seq', 15, true);
 
 
 --
@@ -2336,35 +2450,35 @@ SELECT pg_catalog.setval('public.accounts_profile_links_id_seq', 1, false);
 -- Name: accounts_profile_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 11, true);
+SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 14, true);
 
 
 --
 -- Name: accounts_profiledetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 75, true);
+SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 95, true);
 
 
 --
 -- Name: accounts_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_user_id_seq', 15, true);
+SELECT pg_catalog.setval('public.accounts_user_id_seq', 18, true);
 
 
 --
 -- Name: accounts_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_work_id_seq', 11, true);
+SELECT pg_catalog.setval('public.accounts_work_id_seq', 14, true);
 
 
 --
 -- Name: archives_book_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.archives_book_id_seq', 6, true);
+SELECT pg_catalog.setval('public.archives_book_id_seq', 8, true);
 
 
 --
@@ -2378,7 +2492,7 @@ SELECT pg_catalog.setval('public.archives_book_links_id_seq', 4, true);
 -- Name: archives_review_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.archives_review_id_seq', 6, true);
+SELECT pg_catalog.setval('public.archives_review_id_seq', 8, true);
 
 
 --
@@ -2420,14 +2534,14 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 21, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 124, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 137, true);
 
 
 --
 -- Name: home_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_comment_id_seq', 6, true);
+SELECT pg_catalog.setval('public.home_comment_id_seq', 8, true);
 
 
 --
@@ -2448,42 +2562,42 @@ SELECT pg_catalog.setval('public.home_imageadd_id_seq', 1, false);
 -- Name: home_post_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_comments_id_seq', 6, true);
+SELECT pg_catalog.setval('public.home_post_comments_id_seq', 8, true);
 
 
 --
 -- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_id_seq', 13, true);
+SELECT pg_catalog.setval('public.home_post_id_seq', 18, true);
 
 
 --
 -- Name: home_post_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_link_id_seq', 7, true);
+SELECT pg_catalog.setval('public.home_post_link_id_seq', 9, true);
 
 
 --
 -- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_tag_id_seq', 26, true);
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 40, true);
 
 
 --
 -- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_postlink_id_seq', 11, true);
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 15, true);
 
 
 --
 -- Name: home_tag_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_tag_details_id_seq', 9, true);
+SELECT pg_catalog.setval('public.home_tag_details_id_seq', 11, true);
 
 
 --
@@ -2511,7 +2625,7 @@ SELECT pg_catalog.setval('public.mcq_qtag_id_seq', 1, false);
 -- Name: mcq_questionbank_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 1, true);
+SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 2, true);
 
 
 --
@@ -2525,7 +2639,7 @@ SELECT pg_catalog.setval('public.mcq_questionbank_links_id_seq', 1, false);
 -- Name: mcq_questionbank_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 1, true);
+SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 2, true);
 
 
 --
