@@ -7,7 +7,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys,os
 from django.utils import timezone
 from accounts.models import User
-
+from django.conf import settings
 # Create your models here.
 print(os.getcwd())
 
@@ -145,7 +145,6 @@ class Comment(models.Model):
 class Post(models.Model):
     date = models.DateTimeField(auto_now_add=True,auto_now=False, null=True)
     user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, blank = True )
-
     heading = models.CharField(max_length=1000, null=False, blank=False)
     img = models.ImageField(blank=True, null=True, upload_to='Postimages/%Y/%m/$D/')
     link = models.ManyToManyField(PostLink, blank=True, null=True)
@@ -166,6 +165,11 @@ class Post(models.Model):
                 return 'no heading'
         except:
             return 'some problem in post object'
+    def get_absolute_url(self):
+        if settings.DEBUG:
+            return 'http://127.0.0.1:8000/posts/{}'.format(self.pk)
+        else:
+            return 'https://allaboutanaesthesia.co/posts/{}'.format(self.pk)
 
     def compressImage(self, image):
         im = Image.open(image)

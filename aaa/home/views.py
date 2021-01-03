@@ -16,7 +16,7 @@ from  django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.views import View
 from mcq.models import QuestionBank
-
+from notifications.models import Notification
 # Create your views here.
 
 class Manage(TemplateView):
@@ -337,7 +337,8 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                     form.user = self.request.user
 
                 a = form.save(commit=True)
-
+                a.user = self.request.user
+                a.save()
                 if link_dict:
                     if link_dict['links']:
                         for i in link_dict['links']:
@@ -392,7 +393,15 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                         x.link.add(linkobj)
             x.save()
             post.comments.add(x)
+            try:
+                notify = Notification.objects.get(user=post.user, post = post)
+                notify.message = 'A new comment is added to {0}.. by new user'.format(post.heading[:10])
+                notify.date = datetime.datetime.now()
+                notify.save()
+            except Exception as e:
+                notify = Notification.objects.create(date=datetime.datetime.now(),user = post.user, post = post, message = 'A new comment is added to {0}.. by new user'.format(post.heading[:10]))
             post.save()
+
         except:
             messages.error(self.request, 'error in saving')
 
@@ -424,3 +433,10 @@ class GetPosts(View):
 
         else:
             return redirect('home:home')
+
+class PostDetail(TemplateView):
+    template_name = 'home/postdetail.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post'] = Post.objects.get(pk=kwargs['pk'])
+        return context

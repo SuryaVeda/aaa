@@ -71,6 +71,8 @@ AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
 INSTALLED_APPS = [
+    'django_social_share',
+    'notifications',
     'mcq',
     'archives',
     'home',

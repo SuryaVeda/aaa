@@ -428,7 +428,8 @@ footer .neeche{
 .tags {
     display: flex;
     flex-flow: row wrap;
-
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .home-container{
@@ -1239,6 +1240,11 @@ function addsubjectintro() {
       <a class="nav-link nav-item" href="{% url 'home:conf' %}">Conferences</a>
       <a class="nav-link nav-item" href="{% url 'mcq:qa' %}" >QuestionBank</a>
     <a class="nav-item nav-link" href="{% url 'home:speciality' 'NEET SS' %}">NEET SS</a>
+    {% if request.user.is_staff %}
+    <a class="nav-item nav-link" href="{% url 'notifications:base' %}">Notifications</a>
+
+    {% endif %}
+
     <a class="nav-item nav-link" href="{% url 'home:search' %}">Search</a>
     {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
         <a class="nav-item nav-link" href="{% url 'home:manage' %}">Manage</a>

@@ -6,6 +6,7 @@ from .models import Tag
 app_name = 'home'
 
 urlpatterns = [
+path('posts/<int:pk>', views.PostDetail.as_view(), name = 'postdetail'),
 path('getnewposts/<int:pk>', views.GetPosts.as_view(), name = 'getposts'),
 path('', views.HomeView.as_view(), name = 'home'),
 path('refreshhome', views.refresh_home_page, name = 'refresh'),
@@ -23,4 +24,3 @@ path('postform', views.PostView.as_view(), name = 'postview'),
 path('create_post', views.create_post_view, name='postForm'),
 path('home/<str:speciality_type>', views.speciality_view, name = 'speciality')
 ]
-

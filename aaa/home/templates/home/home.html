@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+
 {% load static %}
 
 {% block main %}
@@ -19,7 +20,7 @@
     {% for post in posts %}
 
        <div class="home-post">
-        {% if post.tag %}
+
         <div class="tags">
             {% for tag in post.get_tags %}
             {% if tag.is_degree %}
@@ -29,8 +30,10 @@
 
             {% endif %}
             {% endfor %}
+            <a style="margin-left: auto; margin-right: 10px" href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=30px, width=30px alt=""> </a>
+<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=30px, width=30px alt=""></a>
         </div>
-            {% endif %}
+
         {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
     <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
     {% csrf_token %}

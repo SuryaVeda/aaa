@@ -31,6 +31,7 @@ urlpatterns = [
     path('archives/', include('archives.urls')),
     path('accounts/', include('accounts.urls')),
     path('mcq/', include('mcq.urls')),
+    path('notifications/', include('notifications.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += [
