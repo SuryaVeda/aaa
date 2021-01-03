@@ -36,11 +36,12 @@ def email(request):
 class HomeView(TemplateView):
     template_name = 'home/home.html'
     posts = Post.objects.order_by('-date').prefetch_related()
-    postslist = list(posts)
     tag_speciality = Tag.objects.filter(is_speciality=True)
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['posts'] = HomeView.postslist[0:15]
+        postslist = list(Post.objects.order_by('-date').prefetch_related())
+        context['posts'] = postslist[0:15]
+        print('length of posts is {0}'.format(len(postslist)))
         context['tag_speciality'] = list(HomeView.tag_speciality)
         return context
 
@@ -422,7 +423,8 @@ class GetPosts(View):
             except:
                 print('enter integer')
                 return redirect('home:home')
-            newposts = HomeView.posts[index:index + 15]
+            posts = Post.objects.order_by('-date').prefetch_related()
+            newposts = posts[index:index + 15]
             html = [ (((render(self.request, 'home/getposts.html',{'user': self.get_user(), 'post': i})).content).decode('utf-8')).strip() for i in newposts]
 
             response =JsonResponse(html, safe=False)
