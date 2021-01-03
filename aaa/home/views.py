@@ -77,7 +77,7 @@ def speciality_view(request, speciality_type):
         try:
             tag = Tag.objects.get(name=speciality_type)
 
-            if speciality_type=='NEET SS':
+            if speciality_type=='NEET-SS':
                 questionbank = QuestionBank.objects.all()
                 print(questionbank)
                 print(list(questionbank.filter(mcq=True)))
@@ -97,7 +97,7 @@ def speciality_view(request, speciality_type):
             context['subjects'] = subjects
             return render(request, template_name, context)
         except:
-            messages.error(request, 'unable to fetch the page.', extra_tags=request.user.email)
+            messages.error(request, 'unable to fetch the page.')
             return redirect('home:home')
 
     else:
