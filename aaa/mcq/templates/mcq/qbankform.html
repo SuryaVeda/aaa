@@ -43,7 +43,7 @@
 
            <div class="tagrow" style="display: flex; flex-flow: column wrap">
                {% for tag in tags %}
-               
+
                {% if tag.is_speciality %}
                 <p><label for="id_tag_1"><input type="checkbox" name="tag" value="{{tag.pk}}" placeholder="Tags" id="id_tag_{{tag.pk}}">
  {{tag.name}}</label></p>
@@ -69,10 +69,10 @@
                     min-height: 400px ;
                 }
             </style>
-                <textarea type="text" name = 'question' maxlength="10000" placeholder="Enter Mcq question along with options " required id="id_heading" ></textarea>
+                <textarea type="text" name = 'question' maxlength="100000" placeholder="Enter Mcq question along with options " required id="id_heading" ></textarea>
 
      <p>Add Image for Question (optional):  <input type="file" name=" qimage" ></p>
-            <textarea  type="text" name = 'answer' maxlength="500" placeholder="Type correct answer for above mcq" required id="id_answer" ></textarea>
+            <textarea  type="text" name = 'answer' maxlength="100000" placeholder="Type correct answer for above mcq" required id="id_answer" ></textarea>
      <p>Add Image for Answer (optional):  <input type="file" name=" aimage" ></p>
 {% endif %}
 
