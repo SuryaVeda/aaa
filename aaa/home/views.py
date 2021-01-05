@@ -80,8 +80,6 @@ def speciality_view(request, speciality_type):
 
             if speciality_type=='NEET-SS':
                 questionbank = QuestionBank.objects.all()
-                print(questionbank)
-                print(list(questionbank.filter(mcq=True)))
                 template_name = 'home/neet.html'
                 context['questionbank'] = list(questionbank.filter(mcq=True))
                 context['flashcards'] = list(questionbank.filter(flashcard=True))

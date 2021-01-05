@@ -153,18 +153,38 @@
         {% for post in questionbank %}
         {% if post.is_mcq %}
         <div class="mcqblock" >
-           <b style="align-self: flex-end; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
-    <form onsubmit="deletequestion(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
-    {% csrf_token %}
-        <input  type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
-    </form>
-    {%endif %}</b>
+          <div class="flex-column">
+              <div class="regulartags tags">
+                {% for tag in post.get_tags %}
+                {% if tag.is_degree %}
+                <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
+                {% else %}
+                <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+
+                {% endif %}
+                {% endfor %}
+
+                <b style="margin-left: auto; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+         <form onsubmit="deletequestion(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+         {% csrf_token %}
+             <input  type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
+         </form>
+         {%endif %}</b>
+              </div>
+              <div class="socialmediatags tags">
+
+                <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
+    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
+              </div>
+
+          </div>
+
             <p>{{post.question|linebreaks}}</p>
             <b style="display: none;color: red;" id = "mcq{{post.pk}}">{{post.answer|linebreaks }}</b>
 
 
             <p onclick="revealmcq(document.getElementById('mcq{{post.pk}}'))" style="align-self: center;color: rebeccapurple; font-weight: 600;">See Answer</p>
-<p style=" align-self: center; background-color: #000066; color: white; "><a onclick="previousquestion(document.getElementsByClassName('mcqblock'))">PREV</a>   |    <a onclick="nextquestion(document.getElementsByClassName('mcqblock'), 'mcq', 'mcqblock')">NEXT</a></p>
+  <p style=" align-self: center; background-color: #000066; color: white; "><a onclick="previousquestion(document.getElementsByClassName('mcqblock'))">PREV</a>   |    <a onclick="nextquestion(document.getElementsByClassName('mcqblock'), 'mcq', 'mcqblock')">NEXT</a></p>
         </div>
         {% endif %}
         {% endfor %}
@@ -181,6 +201,26 @@
         {% if post.is_flashcard %}
         <div style="" class="flashcardblock">
             <div class="flashcards">
+              <div style="align-self: flex-start;flex-grow: 1;width: 100%;" class="flex-column">
+                  <div class="regulartags tags">
+                    {% for tag in post.get_tags %}
+                    {% if tag.is_degree %}
+                    <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
+                    {% else %}
+                    <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+
+                    {% endif %}
+                    {% endfor %}
+
+
+                  </div>
+                  <div class="socialmediatags tags">
+
+                    <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
+        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
+                  </div>
+
+              </div>
                 <div style="display:flex; align-items:flex-end;flex-grow: 2;align-self: center;">
                     <b  id = flashcardq{{post.pk}}>{{post.question|linebreaks}}</b>
 
@@ -248,9 +288,14 @@ var elapsedtime;
 
 
 window.onload = function () {
-    mcqblock[0].style.display = "flex";
-    console.log(flashcardblock);
-    flashcardblock[0].style.display = "flex";
+    if (mcqblock.length > 0) {
+      mcqblock[0].style.display = "flex";
+    }
+    if (flashcardblock.length > 0) {
+      flashcardblock[0].style.display = "flex";
+    }
+
+
 
 };
 

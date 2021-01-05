@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, DetailView
 from django.views import View
 from .models import Qimage, QuestionBank
 from .forms import QuestionBankForm
@@ -19,13 +19,13 @@ class McqView(TemplateView):
         try:
             if kwargs['pk']:
                 pk = int(kwargs['pk'])
-
                 tag = Tag.objects.get(pk=int(pk))
                 context['tag'] = tag
-
-                context['questionbank'] = list(McqView.questionbank[pk].filter(mcq=True))[0:15]
-                context['flashcards'] = list(McqView.questionbank[pk].filter(flashcard=True))[0:15]
-                context['cases'] = list(McqView.questionbank[pk].filter(qa=True))[0:15]
+                questionbank = {i.pk:i.get_questions for i in Tag.objects.all().prefetch_related()}
+                print(list(questionbank[pk].filter(flashcard=True))[0:15])
+                context['questionbank'] = list(questionbank[pk].filter(mcq=True))[0:15]
+                context['flashcards'] = list(questionbank[pk].filter(flashcard=True))[0:15]
+                context['cases'] = list(questionbank[pk].filter(qa=True))[0:15]
 
         except:
             print('some error')
@@ -34,8 +34,38 @@ class McqView(TemplateView):
         context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
         return context
 
+class QuestionDetail(TemplateView):
+    template_name = 'mcq/basepage.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        try:
+            if kwargs['qpk']:
+                pk = int(kwargs['qpk'])
+                question = QuestionBank.objects.get(pk=pk)
+                tag = Tag.objects.get(pk=question.get_subjects[0].pk)
+                print(tag)
+                context['tag'] = tag
+                questionbank = {i.pk:i.get_questions for i in Tag.objects.all().prefetch_related()}
+                if question.mcq:
+                    context['questionbank'] = [question] + list(questionbank[pk].filter(mcq=True))[0:15]
+                else:
+                    context['questionbank'] = list(questionbank[pk].filter(mcq=True))[0:15]
+                if question.flashcard:
+                    context['flashcards'] = [question] + list(questionbank[pk].filter(flashcard=True))[0:15]
+                else:
+                    context['flashcards'] = list(questionbank[pk].filter(flashcard=True))[0:15]
 
+                if question.qa:
+                    context['cases'] = [question] + list(questionbank[pk].filter(qa=True))[0:15]
+                else:
+                    context['cases'] = list(questionbank[pk].filter(qa=True))[0:15]
+        except:
+            print('some error')
+            context['general'] = True
+
+        context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
+        return context
 def refresh_questions_view():
     McqView.questionbank = {i.pk:i.get_questions for i in Tag.objects.all().prefetch_related()}
     return redirect('/home/{0}'.format('NEET SS'))

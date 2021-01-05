@@ -1283,6 +1283,43 @@ ALTER SEQUENCE public.mcq_questionbank_tag_id_seq OWNED BY public.mcq_questionba
 
 
 --
+-- Name: notifications_notification; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.notifications_notification (
+    id integer NOT NULL,
+    message character varying(100),
+    post_id integer,
+    user_id integer,
+    date timestamp with time zone
+);
+
+
+ALTER TABLE public.notifications_notification OWNER TO sk;
+
+--
+-- Name: notifications_notification_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.notifications_notification_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notifications_notification_id_seq OWNER TO sk;
+
+--
+-- Name: notifications_notification_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.notifications_notification_id_seq OWNED BY public.notifications_notification.id;
+
+
+--
 -- Name: accounts_degree id; Type: DEFAULT; Schema: public; Owner: sk
 --
 
@@ -1521,6 +1558,13 @@ ALTER TABLE ONLY public.mcq_questionbank_tag ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: notifications_notification id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification ALTER COLUMN id SET DEFAULT nextval('public.notifications_notification_id_seq'::regclass);
+
+
+--
 -- Data for Name: accounts_degree; Type: TABLE DATA; Schema: public; Owner: sk
 --
 
@@ -1547,6 +1591,15 @@ COPY public.accounts_degree (id, name_id, finalyear, college_id) FROM stdin;
 20	7	\N	21
 21	1	\N	22
 22	7	\N	23
+23	7	\N	25
+24	1	\N	20
+25	7	\N	27
+26	7	\N	28
+27	1	\N	29
+28	7	\N	30
+29	7	\N	31
+30	7	\N	32
+31	1	\N	33
 \.
 
 
@@ -1579,6 +1632,16 @@ COPY public.accounts_medicalcollege (id, name) FROM stdin;
 22	DDU Hospital
 23	siddartha medical college
 24	AIIMS Rishikeh
+25	Mgims
+26	Aiims rishikesh
+27	Raja rajeshwari medical college and hospital, Bengaluru
+28	Govt vellore medical college
+29	AIIMS, Rishikesh
+30	Mysore medical college
+31	Prathima institute of medical sciences
+32	K.A.P. VISWANATHAN GOVERNMENT MEDICAL COLLEGE, TRICHY, TAMILNADU
+33	GOVT MEDICAL COLLEGE AND HOSPITAL, CHANDIGARH
+34	LAL BAHADUR SHASTRI HOSPITAL, NEW DELHI
 \.
 
 
@@ -1596,6 +1659,12 @@ COPY public.accounts_profile (id, user_id, dob, name, nationality, phone, backgr
 13	16	\N	sherkhan_5195@yahoo.	\N	\N		
 14	17	\N	Nitish	\N	\N		
 15	18	\N	PR	\N	\N		
+16	19	\N	TRIPTA	\N	\N		
+17	21	\N	Hithish M J	\N	\N		
+18	22	\N	Naveen. S	\N	\N		
+19	23	\N	beeralingwalikar	\N	\N		
+20	24	\N	PRABA3006	\N	\N		
+21	25	\N	Pallavi	\N	\N		
 \.
 
 
@@ -1622,6 +1691,18 @@ COPY public.accounts_profile_degree (id, profile_id, degree_id) FROM stdin;
 26	14	21
 27	15	22
 28	15	14
+29	16	23
+30	16	24
+31	17	25
+32	17	4
+33	18	26
+34	18	27
+35	19	28
+36	19	2
+37	20	29
+38	20	2
+39	21	30
+40	21	31
 \.
 
 
@@ -1684,6 +1765,42 @@ COPY public.accounts_profile_details (id, profile_id, profiledetail_id) FROM std
 82	15	93
 83	15	94
 84	15	95
+85	16	97
+86	16	98
+87	16	99
+88	16	100
+89	16	101
+90	16	102
+91	17	103
+92	17	104
+93	17	105
+94	17	106
+95	17	107
+96	17	108
+97	18	109
+98	18	110
+99	18	111
+100	18	112
+101	18	113
+102	18	114
+103	19	115
+104	19	116
+105	19	117
+106	19	118
+107	19	119
+108	19	120
+109	20	121
+110	20	122
+111	20	123
+112	20	124
+113	20	125
+114	20	126
+115	21	127
+116	21	128
+117	21	129
+118	21	130
+119	21	131
+120	21	132
 \.
 
 
@@ -1709,6 +1826,12 @@ COPY public.accounts_profile_work (id, profile_id, work_id) FROM stdin;
 12	13	12
 13	14	13
 14	15	14
+15	16	15
+16	17	16
+17	18	17
+18	19	18
+19	20	15
+20	21	19
 \.
 
 
@@ -1773,6 +1896,7 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 60	recommendation		
 61	accomplishments		
 62	interests		
+97	personal statement		
 64	personal statement		
 65	experience		
 66	education		
@@ -1806,6 +1930,42 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 95	interests		
 4	About	Cardiac Anesthesiology is a subspeciality of Anesthesiology.\n\ncourses that can be pursued : PDCC (1 year course), DM (3 years course). 2-3 years senior residency in a recognised center gives eligibility for FIACTA (fellowship in IACTA)\n\non pump, off pump, minimally invasive surgeries, pediatric cardiac, major vascular, ECMO, mechanical support for failing heart, cardiac transplantation, transesophageal echocardiography are various aspects of cardiac anesthesia	
 82	About	 For the anesthesiology residents, two sets of paper will be designed in NEET SS. One set of paper is for the individuals who have opted for critical care where 60% of questions are mainly designed from the critical care point of view. you can expect only 40% from the Anaesthesia point of you. The other set of paper is designed for the individuals who have opted for other super specialties other than critical care ( like cardiac, neuro, transplant, onco) where you will get most from Anaesthesia	
+98	experience		
+99	education		
+100	recommendation		
+101	accomplishments		
+102	interests		
+103	personal statement		
+104	experience		
+105	education		
+106	recommendation		
+107	accomplishments		
+108	interests		
+109	personal statement		
+110	experience		
+111	education		
+112	recommendation		
+113	accomplishments		
+114	interests		
+115	personal statement		
+116	experience		
+117	education		
+118	recommendation		
+119	accomplishments		
+120	interests		
+121	personal statement		
+122	experience		
+123	education		
+124	recommendation		
+125	accomplishments		
+126	interests		
+127	personal statement		
+128	experience		
+129	education		
+130	recommendation		
+131	accomplishments		
+132	interests		
+96	About	 The practice of general anesthesia has been a dynamic process ever since it&#x27;s origin, on the fateful day of 16 Oct 1846 when WTG Morton demonstrated publicly ether anesthesia and changed the surgical fields forever.\n\nToday an anesthesiologist is not only an important part of OT team but takes a lead role in various fields like critical care team leader, BLS &amp;amp; ACLS team leader and trainer, covid management team, acute &amp;amp; chronic pain management and has come forward as a perioperative physician. With responsibilities of perioperative optimization of the patient, intraoperative conduct of anesthesia using a large armament of regional &amp;amp; general anesthesia and providing post operative pain relief, the anesthesiologist plays a pivotal role in patient care.\n\nThe demand for good general anesthesiologist is never ending, so more and and more PG aspirants take on the course of MD (3yrs) or DA (2yrs) each year either as a primary choice or as a path to further subspecialties like critical care, cardiac anesthesia, neuro-anesthesia or pain medicine.\n\nAs the exponential growth in various modalities of anesthesia come up every year, the future for general anesthesia looks promising. New innovations and technological advancements make the practice of general anesthesia a dynamic learning journey and more 	
 \.
 
 
@@ -1814,15 +1974,21 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 --
 
 COPY public.accounts_user (id, password, last_login, email, username, is_active, staff, admin, reset) FROM stdin;
-2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2020-12-24 13:58:48.142174+00	suryaveda@hotmail.com	sk	t	t	t	\N
+2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2020-12-25 11:03:34.826642+00	suryaveda@hotmail.com	sk	t	t	t	\N
 12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2020-12-06 12:11:35.032613+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
+19	pbkdf2_sha256$216000$uOMpWUZSU4wk$J9+D8vEzmN3srMkKPkBZ7K02x3DcNDQ0N8+CrodtSaM=	\N	tripta.mgims@gmail.com	TRIPTA	t	f	f	\N
+3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-02 13:59:54.058696+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
 13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t	\N
-14	pbkdf2_sha256$216000$48gahPt14eWL$/QklznDQS9pzOOsos8UmOIqEBMCbDN5aV/tCsspLaHY=	\N	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
 15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t	\N
-3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2020-12-18 06:19:33.014781+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
+14	pbkdf2_sha256$216000$T7dPeTz7oKit$s4UwZx3Mhn5/pn9amqGCrfJ2kBctzLOQM0DBP3XDQRk=	2021-01-02 14:20:08.156581+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
+22	pbkdf2_sha256$216000$54dKlWTY7t28$v/dvYGBvnLWjeHjhCR9NPJepgMJw5D6S0Rb6tBznmhw=	2021-01-02 14:21:25.890388+00	naveenselvaraj1993@gmail.com	Naveen. S	t	f	f	\N
 16	pbkdf2_sha256$216000$0cgFkSw1M7h9$2rVbaqrjCLZmPfwQeaJ/p6sJN3HGciMMOnRYVa3dmfA=	\N	sherkhan_5195@yahoo.com	sherkhan_5195@yahoo.	t	t	t	\N
 17	pbkdf2_sha256$216000$u12nNcUnJ1w4$dM3zR8lja8MaR1ElQghLh91ma7aox6AlFTljIecXOmw=	2020-12-23 16:15:37.721521+00	nitishtha220@gmail.com	Nitish	t	t	t	\N
+25	pbkdf2_sha256$216000$Emf4YIIIvwAX$07AhM2JZUKCKr5B0i8Km2PLyMweL7oiJi7pa4Mvs7sQ=	\N	drpallavisingh2015@gmail.com	Pallavi	t	f	f	\N
 18	pbkdf2_sha256$216000$Y269kX6KTayq$miEE07VMy9Q9MD0UemoB9KirVkdToMhSUxhxGIw+Tfs=	2020-12-23 16:54:59.679832+00	gpoojithareddy87@gmail.com	PR	t	t	t	\N
+24	pbkdf2_sha256$216000$tr3tPO4Wb1wV$6eUgL95eVAMFQ/Rh7TArfY1h55n5KKFc7y76NTCqfmE=	\N	prabakaranlee@gmail.com	PRABA3006	t	t	f	\N
+21	pbkdf2_sha256$216000$De9SlRr1cVbt$W4RoG50H4hnQahxCg/+OPoe/M/J3faiw1Mds5MEC7M4=	2021-01-02 14:14:43.925174+00	hithimachenahalli@gmail.com	Hithish M J	t	t	f	\N
+23	pbkdf2_sha256$216000$ntvPoEpk8Jne$V9m+7WerQDypRXSadVo9bufWnu0dptIK+jvdYFoFllM=	2021-01-02 14:27:13.41801+00	beeralingnw@gmail.com	beeralingwalikar	t	t	f	\N
 \.
 
 
@@ -1845,6 +2011,11 @@ COPY public.accounts_work (id, "position", is_current, hospital_id) FROM stdin;
 12	Senior Resident	t	20
 13	Senior Resident, Onco-Anaesthesia	t	3
 14	SR 	t	24
+15	JR	t	26
+16	Junior Resident	t	3
+17	Junior resident	t	29
+18	JUNIOR RESIDENT	t	1
+19	SENIOR RESIDENT	t	34
 \.
 
 
@@ -1990,6 +2161,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 82	Can change qimage	21	change_qimage
 83	Can delete qimage	21	delete_qimage
 84	Can view qimage	21	view_qimage
+85	Can add notification	22	add_notification
+86	Can change notification	22	change_notification
+87	Can delete notification	22	delete_notification
+88	Can view notification	22	view_notification
 \.
 
 
@@ -2044,6 +2219,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 19	mcq	qtag
 20	mcq	questionbank
 21	mcq	qimage
+22	notifications	notification
 \.
 
 
@@ -2189,6 +2365,24 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 135	home	0054_auto_20201224_0138	2020-12-24 13:52:27.369353+00
 136	home	0055_auto_20201224_0142	2020-12-24 13:52:27.454156+00
 137	home	0057_merge_20201224_1922	2020-12-24 13:52:27.457206+00
+138	archives	0020_auto_20210103_2010	2021-01-03 18:02:56.789634+00
+139	archives	0021_auto_20210103_2010	2021-01-03 18:02:56.861801+00
+140	archives	0022_auto_20210103_2014	2021-01-03 18:02:56.925659+00
+141	archives	0023_auto_20210103_2021	2021-01-03 18:02:56.99688+00
+142	archives	0024_auto_20210103_2133	2021-01-03 18:02:57.077419+00
+143	archives	0025_auto_20210103_2150	2021-01-03 18:02:57.152839+00
+144	archives	0026_auto_20210103_2154	2021-01-03 18:02:57.220455+00
+145	archives	0027_merge_20210103_2332	2021-01-03 18:02:57.223638+00
+146	home	0056_auto_20210103_2010	2021-01-03 18:02:57.312966+00
+147	home	0057_auto_20210103_2010	2021-01-03 18:02:57.401935+00
+148	home	0058_auto_20210103_2014	2021-01-03 18:02:57.489752+00
+149	home	0059_auto_20210103_2021	2021-01-03 18:02:57.57569+00
+150	home	0060_auto_20210103_2133	2021-01-03 18:02:57.665971+00
+151	home	0061_auto_20210103_2150	2021-01-03 18:02:57.861641+00
+152	home	0062_auto_20210103_2154	2021-01-03 18:02:57.949736+00
+153	home	0063_merge_20210103_2332	2021-01-03 18:02:57.953135+00
+154	notifications	0001_initial	2021-01-03 18:02:58.056825+00
+155	notifications	0002_notification_date	2021-01-03 18:02:58.150469+00
 \.
 
 
@@ -2206,6 +2400,13 @@ czdt4juiwrjzm0v864nu4gpiho4jyau9	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0o
 em12blqlksyytt1jzmoyf1p8355taelr	.eJxVjMsOwiAQRf-FtSEwhJdL934DmYFRqgaS0q4a_12bdKHbe865m0i4LjWtg-c0FXEW2ovT70iYn9x2Uh7Y7l3m3pZ5Irkr8qBDXnvh1-Vw_w4qjvqtcwxcwHHEaE1WYO2NkL0lh2AUaU8qaKsseABgF7kEU6JT5FzM5Fm8PwLXN7E:1ks6nZ:OuqunXsiFPA2r0_lO_iNbNaK_YEm15Kg-vzwnANWyms	2021-01-06 16:15:37.724442+00
 6hr9nnwgnl43gw6gvpuvo6p88harh7ht	.eJxVjEsOwjAMBe-SNYrqNGkcluw5Q-TaDimgVupnhbg7VOoCtm9m3stk2taat0XnPIg5G0Bz-h174oeOO5E7jbfJ8jSu89DbXbEHXex1En1eDvfvoNJSvzVG9T1JShE8iYRUFEurAk1yEbvouHPcOORQwMfEGAMmpIah5aAK5v0BC6g3zg:1ks7Pf:gorDrdG_A52kbtgbtIfED78e-6gol9izgHRK98r3vbg	2021-01-06 16:54:59.682382+00
 hhs5u0k90nwkievp8zw3pnz21olfaqco	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1ksR8i:-5tIN87qQ_FqmPTsK__X7fMMZmt3CVucuC6u7V2U23k	2021-01-07 13:58:48.144592+00
+9umuszk4cnpgiuj8jup9qtblvsqqwzva	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1ksksg:emGYgRpRo-ScpI3k0wq9qQJVUpYeFYNBDKQOi-GH8PI	2021-01-08 11:03:34.829159+00
+kizy4cvd2arn6mkroimwonblyb0l1m0y	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1kvhRi:oyGUPCNFTDtalGpcg5aA1uV7if4vFp2g5Pq4N5XzjNs	2021-01-16 13:59:54.061642+00
+wfhpaoe3snibe40vhjhe9cxfpx9phqjj	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kvhfS:poyb_vnYjWhs6ZCAkAtdGvtoD2KJOtA-1exA-X9QcOE	2021-01-16 14:14:06.746577+00
+b5hokho1bh4u0hbqus7qmhbmsas58k58	.eJxVjDsOwyAQBe9CHSGz5psyvc-AYBeCkwgkY1dR7h5bcpG0b2bem_mwrcVvPS1-JnZlINjld4wBn6kehB6h3hvHVtdljvxQ-Ek7nxql1-10_w5K6GWvx0wDCkoSwYGJFkAaHCCCJRB6tBqtky7mjGgUJkMGMqqkEUNUe8M-Xwn4OJ4:1kvhg3:rydpl8NjaQLJBK35Mld0PxieMbzaKL0H1V8lUZ0n3rE	2021-01-16 14:14:43.929429+00
+icaxq9l6tczphbd0dytlkmnfm3opjbq0	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kvhlI:hgaWHoSM1OPHSECBVw9W4N9GzdokV5v8RvRA2A6Igys	2021-01-16 14:20:08.161834+00
+z8d2h1yqi5dmaaoz0klztoqbb6tsawmw	.eJxVjEEOwiAQRe_C2pCBKRRcuu8ZyDCgVA0kpV0Z765NutDtf-_9lwi0rSVsPS9hTuIstBan3zESP3LdSbpTvTXJra7LHOWuyIN2ObWUn5fD_Tso1Mu3jjCSAu8GJGOVQ_T2ajODR0QwSIPygzKKKUfgqI1xrHlkYoMKHbB4fwDShzb2:1kvhmX:wH91BEB2Ee3_m7KEvVQnZ2GqVfB8WJ6Lj6DhZiyG5HY	2021-01-16 14:21:25.893232+00
+au6ynqoocyf0tiw1ek9e8e35xljkhks2	.eJxVjDsOwjAQBe_iGlnrrON4KelzBsufNQ4gR4qTCnF3EikFtG9m3ls4v63FbY0XNyVxFR2Ky-8YfHxyPUh6-HqfZZzrukxBHoo8aZPjnPh1O92_g-Jb2evIaNUAkFCZAMyBvc4GgUwiQsIOKETN2qLSfR-9ycBGZbtnQwQk8fkC-rE3fA:1kvhs9:WjuDuvfM134LIFSsIhX4bePRbp-HD_KaYqY3Nl-X0zE	2021-01-16 14:27:13.4207+00
 \.
 
 
@@ -2252,6 +2453,7 @@ COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img) 
 15	2020-12-23 14:42:14.393686+00	Criteria for weaning\r\na. Tidal volume of 5 ml/kg\r\nb. Vital capacity of 10 ml/ kg\r\nc. RSI > 105\r\nd. Pf ratio >300	\N	2		\N	
 16	2020-12-23 14:43:30.341516+00	Stoppage of therapeutic dalteparin before epidural insertion\r\na. 12 hrs before\r\nb. 24 hrs before\r\nc. 6 hrs before\r\nd. 68 hrs before	\N	2		\N	
 18	2020-12-24 17:13:27.57615+00	WBSSPCON 2021\r\nTheme- ULTRASOUND IN PAIN MEDICINE	It's a international conference by west Bengal society for the study of pain	\N		\N	Postimages/2020/12/$D/IMG-20201224-WA0033_XpnrVQg_yJapiEY.jpg
+20	2021-01-04 06:50:40.059921+00	Below is the link for registration/joining the Conference - https://www.omnicuris.com/oclive/6987	\N	\N		\N	
 \.
 
 
@@ -2303,6 +2505,8 @@ COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
 36	16	10
 39	18	9
 40	18	3
+42	20	9
+43	20	1
 \.
 
 
@@ -2326,6 +2530,7 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 13	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
 14	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
 15	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
+16	https://www.omnicuris.com/oclive/6987	link address	\N
 \.
 
 
@@ -2334,16 +2539,16 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 --
 
 COPY public.home_tag (id, name, is_speciality, is_degree) FROM stdin;
-6	CRITICAL CARE	t	t
-1	GENERAL ANAESTHESIA	t	t
 8	Mcq	f	f
 9	Conferences	f	f
-5	CARDIO ANAESTHESIA	t	t
 7	MBBS	f	t
-4	NEURO ANAESTHESIA	t	t
-3	PAIN MEDICINE	t	t
-2	ONCO ANAESTHESIA	t	t
-10	NEET SS	f	f
+10	NEET-SS	f	f
+6	CRITICAL-CARE	t	t
+5	CARDIO-ANAESTHESIA	t	t
+4	NEURO-ANAESTHESIA	t	t
+3	PAIN-MEDICINE	t	t
+2	ONCO-ANAESTHESIA	t	t
+1	GENERAL-ANAESTHESIA	t	t
 \.
 
 
@@ -2357,6 +2562,7 @@ COPY public.home_tag_details (id, tag_id, profiledetail_id) FROM stdin;
 7	3	25
 10	10	82
 11	10	83
+12	1	96
 \.
 
 
@@ -2381,8 +2587,8 @@ COPY public.mcq_qtag (id, name, subject, degree) FROM stdin;
 --
 
 COPY public.mcq_questionbank (id, date, question, answer, mcq, flashcard, qa, user_id) FROM stdin;
-1	2020-12-12	Example Mcq Question\n\na) Example option 1\n\na) Example option 2\n\na) Example option 3\n\na) Example option 4	a) Example option 4	t	f	f	2
 2	2020-12-23	when is weaning possible from mechanical ventillation?	After spontaneous ventillation.	f	t	f	2
+3	2021-01-02	Normal cerebral autoregulatory limit \na. 70 to 150 mm hg of MAP\nb. 40 to 140 mm hg of MAP\nc. 60 to 160 mm hg of MAP\nd. 80 to 180 mm hg of MAP\n	In healthy adults, the limits are between 50 and 150 mm Hg cerebral perfusion pressure (CPP) or 60 and 160 mm Hg mean arterial pressure (MAP), where CPP = MAP – intracranial pressure (ICP). 	t	f	f	3
 \.
 
 
@@ -2399,8 +2605,17 @@ COPY public.mcq_questionbank_links (id, questionbank_id, postlink_id) FROM stdin
 --
 
 COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
-1	1	6
 2	2	6
+3	3	4
+4	3	1
+\.
+
+
+--
+-- Data for Name: notifications_notification; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.notifications_notification (id, message, post_id, user_id, date) FROM stdin;
 \.
 
 
@@ -2408,35 +2623,35 @@ COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 -- Name: accounts_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_degree_id_seq', 22, true);
+SELECT pg_catalog.setval('public.accounts_degree_id_seq', 31, true);
 
 
 --
 -- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 24, true);
+SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 34, true);
 
 
 --
 -- Name: accounts_profile_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 28, true);
+SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 40, true);
 
 
 --
 -- Name: accounts_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 84, true);
+SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 120, true);
 
 
 --
 -- Name: accounts_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_id_seq', 15, true);
+SELECT pg_catalog.setval('public.accounts_profile_id_seq', 21, true);
 
 
 --
@@ -2450,28 +2665,28 @@ SELECT pg_catalog.setval('public.accounts_profile_links_id_seq', 1, false);
 -- Name: accounts_profile_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 14, true);
+SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 20, true);
 
 
 --
 -- Name: accounts_profiledetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 95, true);
+SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 132, true);
 
 
 --
 -- Name: accounts_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_user_id_seq', 18, true);
+SELECT pg_catalog.setval('public.accounts_user_id_seq', 25, true);
 
 
 --
 -- Name: accounts_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_work_id_seq', 14, true);
+SELECT pg_catalog.setval('public.accounts_work_id_seq', 19, true);
 
 
 --
@@ -2513,7 +2728,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 84, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 88, true);
 
 
 --
@@ -2527,14 +2742,14 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 20, true);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 21, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 22, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 137, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 155, true);
 
 
 --
@@ -2569,7 +2784,7 @@ SELECT pg_catalog.setval('public.home_post_comments_id_seq', 8, true);
 -- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_id_seq', 18, true);
+SELECT pg_catalog.setval('public.home_post_id_seq', 21, true);
 
 
 --
@@ -2583,21 +2798,21 @@ SELECT pg_catalog.setval('public.home_post_link_id_seq', 9, true);
 -- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_tag_id_seq', 40, true);
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 45, true);
 
 
 --
 -- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_postlink_id_seq', 15, true);
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 16, true);
 
 
 --
 -- Name: home_tag_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_tag_details_id_seq', 11, true);
+SELECT pg_catalog.setval('public.home_tag_details_id_seq', 12, true);
 
 
 --
@@ -2625,7 +2840,7 @@ SELECT pg_catalog.setval('public.mcq_qtag_id_seq', 1, false);
 -- Name: mcq_questionbank_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 2, true);
+SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 3, true);
 
 
 --
@@ -2639,7 +2854,14 @@ SELECT pg_catalog.setval('public.mcq_questionbank_links_id_seq', 1, false);
 -- Name: mcq_questionbank_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 2, true);
+SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 4, true);
+
+
+--
+-- Name: notifications_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.notifications_notification_id_seq', 1, false);
 
 
 --
@@ -3067,6 +3289,14 @@ ALTER TABLE ONLY public.mcq_questionbank_tag
 
 
 --
+-- Name: notifications_notification notifications_notification_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification
+    ADD CONSTRAINT notifications_notification_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: accounts_degree_college_id_c59b83b3; Type: INDEX; Schema: public; Owner: sk
 --
 
@@ -3386,6 +3616,20 @@ CREATE INDEX mcq_questionbank_tag_tag_id_6eecb6d9 ON public.mcq_questionbank_tag
 --
 
 CREATE INDEX mcq_questionbank_user_id_b7672e56 ON public.mcq_questionbank USING btree (user_id);
+
+
+--
+-- Name: notifications_notification_post_id_d84e1970; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX notifications_notification_post_id_d84e1970 ON public.notifications_notification USING btree (post_id);
+
+
+--
+-- Name: notifications_notification_user_id_b5e8c0ff; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX notifications_notification_user_id_b5e8c0ff ON public.notifications_notification USING btree (user_id);
 
 
 --
@@ -3730,6 +3974,22 @@ ALTER TABLE ONLY public.mcq_questionbank_tag
 
 ALTER TABLE ONLY public.mcq_questionbank
     ADD CONSTRAINT mcq_questionbank_user_id_b7672e56_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: notifications_notification notifications_notification_post_id_d84e1970_fk_home_post_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification
+    ADD CONSTRAINT notifications_notification_post_id_d84e1970_fk_home_post_id FOREIGN KEY (post_id) REFERENCES public.home_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: notifications_notification notifications_notification_user_id_b5e8c0ff_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification
+    ADD CONSTRAINT notifications_notification_user_id_b5e8c0ff_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

@@ -4,6 +4,7 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
+from django.conf import settings
 # from home.models import Tag
 # Create your models here.
 
@@ -48,11 +49,23 @@ class QuestionBank(models.Model):
     mcq = models.BooleanField(default=False)
     flashcard = models.BooleanField(default=False)
     qa = models.BooleanField(default=False)
+
     def __str__(self):
         try:
             return self.question
         except:
             return str(self.pk)
+    def get_absolute_url(self):
+        if settings.DEBUG:
+            return 'http://127.0.0.1:8000/mcq/question/{}'.format(self.pk)
+        else:
+            return 'https://allaboutanaesthesia.co/mcq/question/{}'.format(self.pk)
+    @property
+    def get_subjects(self):
+        try:
+            return list(self.tag.filter(is_speciality=True))
+        except:
+            return 'some problem in saving tag'
     @property
     def get_tags(self):
         try:
