@@ -198,6 +198,8 @@ class Profile(models.Model):
     def compressImage(self, image):
         im = Image.open(image)
         output = BytesIO()
+        if im.mode != 'RGB':
+            im = im.convert('RGB')
         im = im.resize((900, 600))
         im.save(output, format='JPEG', quality=60)
         output.seek(0)

@@ -957,6 +957,14 @@ window.onload = function () {
       console.log(true);
       document.getElementsByClassName('comments')[i].style.height = '1px';
       document.getElementsByClassName('more')[i].style.display = 'block';}}
+
+      if (mcqblock.length > 0) {
+        mcqblock[0].style.display = "flex";
+      }
+      if (flashcardblock.length > 0) {
+        flashcardblock[0].style.display = "flex";
+      }
+
 };
 
 function expand(a, b) {

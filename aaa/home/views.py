@@ -39,6 +39,11 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
+        questionbank = QuestionBank.objects.all()
+        template_name = 'home/neet.html'
+        context['questionbank'] = list(questionbank.filter(mcq=True))
+        context['flashcards'] = list(questionbank.filter(flashcard=True))
+        context['cases'] = list(questionbank.filter(qa=True))
         postslist = list(Post.objects.order_by('-date').prefetch_related())
         context['posts'] = postslist[0:15]
         print('length of posts is {0}'.format(len(postslist)))

@@ -18,7 +18,55 @@
     <div class="someclass">
         {% if posts and request.user%}
     {% for post in posts %}
+    <div class="mcqcover">
 
+
+
+        <div  class="mcqbox">
+
+            {% for mcq in questionbank %}
+            {% if mcq.is_mcq %}
+            <div class="mcqblock" >
+              <div class="flex-column">
+                  <div class="regulartags tags">
+                    {% for tag in mcq.get_tags %}
+                    {% if tag.is_degree %}
+                    <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
+                    {% else %}
+                    <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+
+                    {% endif %}
+                    {% endfor %}
+
+                    <b style="margin-left: auto; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == mcq.user or request.user.is_admin%}
+             <form onsubmit="deletequestion(event, {{mcq.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+             {% csrf_token %}
+                 <input  type="submit" name = 'deletepostbtn{{mcq.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
+             </form>
+             {%endif %}</b>
+                  </div>
+                  <div class="socialmediatags tags">
+
+                    <a href="whatsapp://send?text={{ mcq.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
+        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ mcq.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
+                  </div>
+
+              </div>
+
+                <p>{{mcq.question|linebreaks}}</p>
+                <b style="display: none;color: red;" id = "mcq{{mcq.pk}}">{{post.answer|linebreaks }}</b>
+
+
+                <p onclick="revealmcq(document.getElementById('mcq{{mcq.pk}}'))" style="align-self: center;color: rebeccapurple; font-weight: 600;">See Answer</p>
+      <p style=" align-self: center; background-color: #000066; color: white; "><a onclick="previousquestion(document.getElementsByClassName('mcqblock'))">PREV</a>   |    <a onclick="nextquestion(document.getElementsByClassName('mcqblock'), 'mcq', 'mcqblock')">NEXT</a></p>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+
+
+    </div>
        <div class="home-post">
 
         <div class="flex-column">
@@ -208,6 +256,249 @@ document.getElementsByClassName('comments')[i].style.height = '1px';
     element.style.display = 'none';
     }
 
+    var mcqbox = document.getElementsByClassName('mcqbox')[0];
+    var mcqblock = document.getElementsByClassName('mcqblock');
+    var startx;
+    var starty;
+    var endx;
+    var endy;
+
+    var xdist;
+    var ydist;
+    var starttime;
+    var endtime;
+    var elapsedtime;
+
+
+
+
+
+    function deletequestion(e,pk) {
+        e.preventDefault();
+        var message = confirm('Are you sure you want to delete the post');
+        if (message==true){
+            var dhttp = new XMLHttpRequest();
+            dhttp.onreadystatechange = function() {
+            if (this.readyState == 4 ) {
+
+             var x = JSON.parse(this.responseText);
+             console.log(x.success) ;
+             window.location.href = x.success;
+
+            }
+                                                    };
+            console.log("");
+
+            dhttp.open('POST', '/mcq/deletequestions' + '/' + pk );
+            dhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            dhttp.send("csrfmiddlewaretoken=" +document.getElementsByName('csrfmiddlewaretoken')[0].value +  "&deletepostbtn=Deletepost");
+
+            console.log(true);
+        }
+        else{
+            console.log(false);
+        }
+    }
+    function revealmcq( element) {
+    element.style.display = 'block';
+    }
+    function showflashcard(x,q, a) {
+        q.style.display = 'none';
+        a.style.display='block';
+        x.style.display = 'none';
+
+    }
+
+    function needmore(x,type, classname) {
+
+        newhttp = new XMLHttpRequest();
+
+        newhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          console.log('text recieved');
+          jsontext = JSON.parse(this.responseText);
+          console.log(jsontext.length);
+          console.log(mcqblock.length);
+          var box = document.getElementsByClassName(x[0].parentNode.className);
+          console.log(box);
+          for (var i=0; i<jsontext.length; i++) {
+              console.log(jsontext[i]);
+              var mcq = document.createElement('div');
+
+              mcq.innerHTML = jsontext[i];
+              mcq.classList.add(classname);
+
+              box[0].append(mcq);
+          }
+          console.log(x.length);
+
+
+
+      }
+    };
+        newhttp.open('GET', "/mcq/getnewquestions" + "/"+x.length +'?type=' + type + '&tag=' +'{{tag.pk}}');
+        newhttp.send();
+        }
+
+       mcqbox.addEventListener('touchstart', function (e) {
+           console.log(e);
+           var touchobj = e.changedTouches[0];
+           startx = touchobj.pageX;
+           starty = touchobj.pageY;
+           starttime = new Date().getTime();
+           testing.innerHTML = x +" , " + y;
+
+
+       }, false);
+
+       mcqbox.addEventListener('touchend', function (e) {
+           console.log(e);
+           var touchobj = e.changedTouches[0];
+           endx = touchobj.pageX;
+           endy = touchobj.pageY;
+
+           endtime = new Date().getTime();
+           elapsedtime = (endtime - starttime)/1000;
+           xdist = endx-startx;
+           ydist = endy-starty;
+           if (elapsedtime <= 2) {
+               if (Math.abs(xdist) >= 30 && Math.abs(ydist) <=100 ){
+                  if (xdist > 0){
+                      for (var i = 0; i <mcqblock.length; i++) {
+                          if (window.getComputedStyle(mcqblock[i]).display == 'flex'){
+
+                              if (i-1 >= 0) {
+                                  mcqblock[i-1].style.display = 'flex';
+                                  mcqblock[i].style.display = 'none';
+                                  break;
+                              } else {
+                                  console.log('NOOOoooooo');
+                                  testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards right" + "Reached END" ;
+                              }
+
+                          }
+                      }
+
+
+                  } else {
+                      for (var i = 0; i <mcqblock.length; i++) {
+                          if (window.getComputedStyle(mcqblock[i]).display == 'flex'){
+
+                              if (i < mcqblock.length-1) {
+                                  mcqblock[i+1].style.display = 'flex';
+                                  mcqblock[i].style.display = 'none';
+                                  break;
+                              } else {
+                                  needmore(document.getElementsByClassName('mcqblock'), 'mcq', 'mcqblock');
+                                  testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards left" + "Reached END" ;
+
+                              }
+
+                          }
+                      }
+                  }
+
+               }
+           }
+
+
+
+       }, false);
+
+
+
+       flashcardbox.addEventListener('touchstart', function (e) {
+           console.log(e);
+           var touchobj = e.changedTouches[0];
+           startx = touchobj.pageX;
+           starty = touchobj.pageY;
+           starttime = new Date().getTime();
+           testing.innerHTML = x +" , " + y;
+
+
+       }, false);
+
+
+     flashcardbox.addEventListener('touchend', function (e) {
+           console.log(e);
+           var touchobj = e.changedTouches[0];
+           endx = touchobj.pageX;
+           endy = touchobj.pageY;
+
+           endtime = new Date().getTime();
+           elapsedtime = (endtime - starttime)/1000;
+           xdist = endx-startx;
+           ydist = endy-starty;
+           if (elapsedtime <= 2) {
+               if (Math.abs(xdist) >= 30 && Math.abs(ydist) <=100 ){
+                  if (xdist > 0){
+                      for (var i = 0; i <flashcardblock.length; i++) {
+                          if (window.getComputedStyle(flashcardblock[i]).display == 'flex'){
+
+                              if (i-1 >= 0) {
+                                  flashcardblock[i-1].style.display = 'flex';
+                                  flashcardblock[i].style.display = 'none';
+                                  break;
+                              } else {
+                                  console.log('NOOOoooooo');
+                                  testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards right" + "Reached END" ;
+                              }
+
+                          }
+                      }
+
+
+                  } else {
+                      for (var i = 0; i <flashcardblock.length; i++) {
+                          if (window.getComputedStyle(flashcardblock[i]).display == 'flex'){
+
+                              if (i < flashcardblock.length-1) {
+                                  flashcardblock[i+1].style.display = 'flex';
+                                  flashcardblock[i].style.display = 'none';
+                                  break;
+                              } else {
+                                  needmore(document.getElementsByClassName('flashcardblock'), 'flashcard', 'flashcardblock');
+                                  testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards left" + "Reached END" ;
+
+                              }
+
+                          }
+                      }
+                  }
+
+               }
+           }
+
+
+
+       }, false);
+
+        function nextquestion(block, type, classname) {
+            console.log(block);
+            for (var i = 0; i <block.length; i++) {
+                          if (window.getComputedStyle(block[i]).display == 'flex'){
+
+                              if (i < block.length-1) {
+                                  block[i+1].style.display = 'flex';
+                                  block[i].style.display = 'none';
+                                  break;
+                              } else {
+                                  needmore(block, type, classname);
+                                  testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards left" + "Reached END" ;}}}
+        }
+        function previousquestion(block) {
+            console.log(block);
+            for (var i = 0; i <block.length; i++) {
+                          if (window.getComputedStyle(block[i]).display == 'flex'){
+
+                              if (i-1 >= 0) {
+                                  block[i-1].style.display = 'flex';
+                                  block[i].style.display = 'none';
+                                  break;
+                              } else {
+                                  console.log('NOOOoooooo');
+                                  testing.innerHTML = xdist +" , " + ydist + " , " + " swipe towards right" + "Reached END" ;}}}
+        }
 
 </script>
 
