@@ -12,6 +12,7 @@
     border-radius: 4px;
     width: 95% ;
     font-size: 20px;
+    mar
   }
   #id_details {
     font-family: 'Overlock', cursive;
@@ -28,6 +29,7 @@
     width: 95% ;
     font-size: 20px;
     margin-bottom: 20px;
+    margin-top: 20px;
   }
   #newdetail textarea {
     font-family: 'Overlock', cursive;
@@ -41,13 +43,15 @@
 </style>
 <form class="flex-column"  method="post">
 {% csrf_token %}
-{{ form.as_p }}
+
+
+<div id = "newdetail">
+  <p>{{ form.heading }}</p>
+  <textarea name="details" placeholder="add details"></textarea>
+</div>
 {% if request.user and request.user  %}
 <p><a style="text-decoration: underline; color: blue;" onclick="adddetailsform()">Add more details </a></p>
 {% endif %}
-<div id = "newdetail">
-
-</div>
 <button class="button-style" type="submit" name="button">Submit</button>
 </form>
 {% endblock %}
