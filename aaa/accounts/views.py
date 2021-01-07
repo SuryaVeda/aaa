@@ -44,7 +44,7 @@ def login_view(request):
                                     password=request.POST.get('password'))
                 if user is not None:
                     login(request, user)
-                    return redirect('home:home')
+                    return redirect('archives:lectures')
                 else:
                     messages.error(request, "Credentials are either wrong or not registered.")
                     print('see try statemetn')
@@ -206,16 +206,24 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
             except:
                 messages.error(self.request, 'Enter username, email, password correctly.')
                 return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
+            print('reached 1')
+            degreelist = self.save_degree_form()
+            if not degreelist:
+                return render(self.request, 'accounts/commonsignup.html',
+                              {'email': email, 'username': username})
+            user['degree'] = degreelist
+            print(user)
             try:
                 degreelist = self.save_degree_form()
                 if not degreelist:
                     return render(self.request, 'accounts/commonsignup.html',
                                   {'email': email, 'username': username})
                 user['degree'] = degreelist
+                print(user)
             except:
                 messages.error(self.request, 'unable to save qualifications')
                 return render(self.request, 'accounts/commonsignup.html', {'email': email, 'username': username})
-
+            print('reached 2')
             try:
                 workobj = self.save_work_form()
                 if workobj:
@@ -225,6 +233,7 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
 
             except:
                 user['work'] = ''
+            print('reached 3')
             if user['email'] and user['password'] and user['username']:
                 usr = User.objects.create_staff(user['email'], user['username'],
                                                 user['password'])
@@ -239,6 +248,7 @@ class SignupView(WorkFormMixin,DegreeFormMixin,ValidateTextMixin,TemplateView):
                     profile.work.add(user['work'])
 
                 profile.save()
+                print('reached 4')
                 return redirect('accounts:login')
             else:
                 messages.error(self.request, 'Invalid user details')

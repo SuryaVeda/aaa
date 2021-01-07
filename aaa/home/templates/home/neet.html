@@ -483,6 +483,9 @@
         {% endfor %}
     </div>
 
+    <div class="testing">
+
+    </div>
 </div>
 <script>
 var mcqbox = document.getElementsByClassName('mcqbox')[0];
@@ -504,16 +507,7 @@ var elapsedtime;
 
 
 
-window.onload = function () {
-    mcqblock[0].style.display = "flex";
-    console.log(flashcardblock);
-    flashcardblock[0].style.display = "flex";
-    for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
-        if (document.getElementsByClassName('comments')[i].clientHeight > 300 ) {
-      console.log(true);
-      document.getElementsByClassName('comments')[i].style.height = '1px';
-      document.getElementsByClassName('more')[i].style.display = 'block';}}
-};
+
 
 function deletequestion(e,pk) {
     e.preventDefault();

@@ -1,0 +1,13 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block main %}
+<form class=""  method="post">
+{% csrf_token %}
+<p>{{ form.link_name }}: {{ form.link }}</p>
+  <div id="addlinkform">
+ </div>
+ <p style="text-decoration: underline;color: #000066;"><a onclick="addnewforms('addlinkform')"> Add more links</a></p>
+
+<button type="submit" name="button">Submit</button>
+</form>
+{% endblock %}

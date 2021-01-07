@@ -23,6 +23,3 @@ class CreatePostForm(ModelForm):
         self.fields['pdf_name'].widget.attrs['placeholder'] = 'name of pdf'
         self.fields['content'].widget = forms.Textarea(attrs={'rows': 4, 'cols': 15})
         self.fields['content'].widget.attrs['placeholder'] = 'Content of post/mcq/answer'
-
-
-

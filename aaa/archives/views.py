@@ -1,15 +1,116 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from .models import *
-from accounts.models import User, Profile
+from home.decorators import staff_required
+from accounts.models import User, Profile, ProfileDetail
 from home.models import  Tag, PostLink
 from .forms import *
-import bleach, datetime
+import bleach, datetime,pytz
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
+from .models import LecturePost
+from accounts.models import ProfileDetail
 # Create your views here.
+
+
+class LecturePage(TemplateView):
+    template_name = 'home/lectures.html'
+
+    @method_decorator(staff_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        utc = pytz.UTC
+        tz = pytz.timezone('Asia/Kolkata')
+        today = datetime.datetime.now(tz)
+        x = []
+        y = []
+        for i in LecturePost.objects.all().order_by('-pk'):
+            if utc.localize(i.lecture_start_date) > today:
+                x.append(i)
+            else:
+                y.append(i)
+        context['lectures'] = x
+        context['pastlectures'] = y
+        print(context)
+        return context
+
+class LecturePostCreateView(CreateView):
+    model = LecturePost
+    form_class = LecturePostForm
+    success_url = '/'
+    template_name = 'home/lectureform.html'
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(request=self.request)
+        return kwargs
+    def get_success_url(self):
+        return reverse('archives:lectures')
+class ProfileDetailUpdateView(UpdateView):
+    model = ProfileDetail
+    form_class = ProfileDetailForm
+    success_url = '/'
+    template_name = 'home/profiledetailsform.html'
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(request=self.request)
+        kwargs.update(self.kwargs)
+        kwargs.update(obj = LecturePost.objects.get(pk=kwargs['opk']))
+        return kwargs
+    def get_success_url(self):
+        return reverse('archives:lectures')
+class ProfileDetailCreateView(CreateView):
+    model = ProfileDetail
+    form_class = ProfileDetailForm
+    success_url = '/'
+    template_name = 'home/profiledetailsform.html'
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(request=self.request)
+        kwargs.update(self.kwargs)
+        kwargs.update(obj = LecturePost.objects.get(pk=kwargs['opk']))
+        return kwargs
+    def get_success_url(self):
+        return reverse('archives:lectures')
+
+class LecturePostUpdateView(UpdateView):
+    model = LecturePost
+    form_class = LecturePostForm
+    success_url = '/'
+    template_name = 'home/lectureform.html'
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(request=self.request)
+        kwargs.update(self.kwargs)
+        return kwargs
+    def get_success_url(self):
+        return reverse('archives:lectures')
+
+
+
+
+class PostLinkUpdateView(UpdateView):
+    model = PostLink
+    template_name = 'home/linkform.html'
+    form_class = PostLinkForm
+    success_url = '/'
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(request=self.request)
+        kwargs.update(self.kwargs)
+        kwargs.update(obj = LecturePost.objects.get(pk=kwargs['opk']))
+        return kwargs
+    def get_success_url(self):
+        return reverse('archives:lectures')
+class PostLinkDeleteView(DeleteView):
+    model = PostLink
+    template_name = None
 
 class ArchivePage(TemplateView):
     template_name = 'home/archie.html'
@@ -291,6 +392,17 @@ def delete_book_view(request, pk):
     else:
         return ('home:stafferror')
 
+def delete_post_detail(request, pk):
+    if pk and request.user.is_authenticated and request.user.is_admin:
+        try:
+            x = ProfileDetail.objects.get(pk=pk)
+            x.delete()
+            return redirect('archives:lectures')
+        except:
+            messages.error(request, 'Book doesnot exist')
+            return redirect('home:home')
+    else:
+        return ('home:stafferror')
 def delete_review_view(request, pk):
     if pk and request.user.is_authenticated and request.user.is_admin:
         try:

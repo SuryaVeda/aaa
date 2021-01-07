@@ -6,7 +6,14 @@
 <head>
   <title>All about anesthesia</title>
   <meta name=viewport content="width=device-width, initial-scale=1">
-    <style>
+
+
+
+
+
+
+
+<style media="screen">
 
 
 @font-face {
@@ -25,7 +32,9 @@
 
 /*  Classes and tags for base.html   */
 
-
+#datepicker {
+  background-color: white;
+}
 .bold-red {
     color: red;
     font-weight: bolder;
@@ -358,6 +367,12 @@ footer .neeche{
     font-size: 20px;
 }
 #id_link{
+    border-radius: 4px;
+    width: 95% ;
+    height:40px;
+    font-size: 15px;
+}
+#id_link_name{
     border-radius: 4px;
     width: 95% ;
     height:40px;
@@ -958,11 +973,16 @@ window.onload = function () {
       document.getElementsByClassName('comments')[i].style.height = '1px';
       document.getElementsByClassName('more')[i].style.display = 'block';}}
 
-      if (mcqblock.length > 0) {
-        mcqblock[0].style.display = "flex";
+      try {
+        if (mcqblock.length > 0) {
+          mcqblock[0].style.display = "flex";
+        }
+        if (flashcardblock.length > 0) {
+          flashcardblock[0].style.display = "flex";
+        }
       }
-      if (flashcardblock.length > 0) {
-        flashcardblock[0].style.display = "flex";
+      catch(err) {
+        console.log(err.message)
       }
 
 };
@@ -1056,6 +1076,17 @@ function addnewlinkforms(x) {
     para.appendChild(paratext);
     para.appendChild(ine2);
     link_form.appendChild(para);
+}
+function adddetailsform() {
+  var newdetail = document.getElementById('newdetail');
+  var heading = document.createElement("input");
+  heading.name = 'heading';
+  heading.placeholder = 'Heading of Detail';
+  var details = document.createElement("textarea");
+  details.name = 'details';
+  details.placeholder = 'Enter Details';
+  newdetail.appendChild(heading);
+  newdetail.appendChild(details);
 }
 function personalform() {
 for(var i = 0; i < demodDetails.length; i++){
@@ -1262,6 +1293,7 @@ function addsubjectintro() {
     </div>
 
       <a class="nav-link nav-item" href="{% url 'home:conf' %}">Conferences</a>
+      <a class="nav-link nav-item" href="{% url 'archives:lectures' %}">Lectures</a>
       <a class="nav-link nav-item" href="{% url 'mcq:qa' %}" >QuestionBank</a>
     <a class="nav-item nav-link" href="{% url 'home:speciality' 'NEET-SS' %}">NEET-SS</a>
     {% if request.user.is_staff %}
@@ -1312,6 +1344,10 @@ function addsubjectintro() {
     <p>All about Anaesthesia</p>
 </div>
 
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+       rel = "stylesheet">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 </footer>

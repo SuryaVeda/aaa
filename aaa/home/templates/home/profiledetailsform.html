@@ -1,0 +1,53 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block main %}
+<style media="screen">
+  #newdetail{
+    display: flex;
+    flex-flow: column wrap;
+  }
+  #id_heading {
+    height: 40px;
+    font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 95% ;
+    font-size: 20px;
+  }
+  #id_details {
+    font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 95% ;
+    font-size: 20px;
+    height: 300px;
+    width: 100%;
+  }
+  #newdetail input{
+    height: 40px;
+    font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 95% ;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  #newdetail textarea {
+    font-family: 'Overlock', cursive;
+    border-radius: 4px;
+    width: 95% ;
+    font-size: 20px;
+    height: 300px;
+    width: 100%;
+  }
+
+</style>
+<form class="flex-column"  method="post">
+{% csrf_token %}
+{{ form.as_p }}
+{% if request.user and request.user  %}
+<p><a style="text-decoration: underline; color: blue;" onclick="adddetailsform()">Add more details </a></p>
+{% endif %}
+<div id = "newdetail">
+
+</div>
+<button class="button-style" type="submit" name="button">Submit</button>
+</form>
+{% endblock %}

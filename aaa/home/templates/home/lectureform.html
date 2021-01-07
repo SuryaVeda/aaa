@@ -1,0 +1,103 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block main %}
+
+<link rel="stylesheet" type="text/css"
+    href="{% static 'admin/css/forms.css' %} "/>
+
+<link rel="stylesheet" type="text/css"
+    href="{% static 'admin/css/widgets.css' %}"/>
+
+    <script type="text/javascript"
+        src="/admin/jsi18n/"></script>
+    <script type="text/javascript"
+        src="{% static 'admin/js/core.js' %}"></script>
+    <script type="text/javascript"
+        src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+    <script type="text/javascript"
+        src="{% static 'admin/js/jquery.js' %}"></script>
+    <script type="text/javascript"
+        src="{% static 'admin/js/jquery.init.js' %}"></script>
+    <script type="text/javascript"
+        src="{% static 'admin/js/actions.js' %}"></script>
+    <script type="text/javascript"
+        src="{% static 'admin/js/calendar.js' %}"></script>
+    <script type="text/javascript"
+        src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+
+
+
+
+
+<style media="screen">
+  #id_heading {
+    height: 50px;
+
+  }
+  .timeinput input{
+    width: auto;
+    height: 20px;
+    font-size: 15px;
+    border: 0.5px solid grey;
+  }
+  .tagform{
+    height: 200px;
+  }
+</style>
+
+<div class="fullcover">
+
+    <div class="postform">
+
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+            {% for message in form.errors %}
+      <p class="text-danger">{{message}}</p>
+      {% endfor %}
+        <br>
+
+            {% if form.tag %}
+            <p><b>Kindly select a tag.</b></p>
+            <div class="tagform" style="display: flex; flex-flow: column wrap">
+
+
+           <div class="tagrow" style="display: flex; flex-flow: column wrap">
+               {% for tag in form.tag %}
+               <p>{{ tag }}</p>
+
+            {% endfor %}
+           </div>
+
+            </div>
+     {% endif %}
+     <br>
+<b>{{ form.heading }}</b>
+
+    <br>
+    <br>
+    <div class="timeinput">
+      <br>
+      <b>When does lecture start? : {{ form.lecture_start_date }} <br> <br> at what time? <input required type="number" name="starthour" placeholder="Time in hours, use 24hr format" value="">:<input required type="number" name="startmin" placeholder="Time in minutes"  value=""> <br> <br> and ends at? <input required type="number" name="endhour" placeholder="Time in hours, use 24hr format" value="">:<input required type="number" name="endmin" placeholder="Time in minutes"  value=""> </b>
+
+    </div>
+
+            <p>Add image(optional): {{form.img}}</p>
+            <p>Add pdf(optional)- {{form.pdf_name}} {{form.pdf}}</p>
+            <p>Add Links</p>
+              <div id="addlinkform{{post.pk}}">
+                 <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
+             </div>
+             <p style="text-decoration: underline;color: #000066;"><a onclick="addnewforms('addlinkform')"> Add more links</a></p>
+
+            <div class="postformbtn">
+            <button name="homepostform" value="button" type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+{% endblock %}
