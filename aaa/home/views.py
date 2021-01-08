@@ -47,7 +47,7 @@ class HomeView(TemplateView):
         context['flashcards'] = list(questionbank.filter(flashcard=True))
         context['cases'] = list(questionbank.filter(qa=True))
         postslist = list(Post.objects.filter(lecture=False).order_by('-date').prefetch_related())
-        lectures = LecturePost.objects.all()
+        lectures = LecturePost.objects.order_by('-pk')
         context['posts'] = postslist[0:15]
         context['lectures'] = lectures
         print('length of posts is {0}'.format(len(postslist)))
