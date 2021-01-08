@@ -14,6 +14,9 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from .models import LecturePost
 from accounts.models import ProfileDetail
+from django.core.mail import send_mail
+from django.conf import settings
+
 # Create your views here.
 
 
@@ -418,3 +421,16 @@ def delete_review_view(request, pk):
             return redirect('home:home')
     else:
         return ('home:stafferror')
+
+def send_mail_view(request, pk):
+    post = LecturePost.objects.get(pk=pk)
+    messagelist = []
+    if post.get_links:
+        for i in post.get_links():
+            messagelist.append(i.link_name)
+            messagelist.append(i.link)
+            messagelist.append('\n')
+    message = " ".join(messagelist)
+    send_mail("Below are the links related to lecture.", "Kindly press the below link or copy and paste it in browser to join the lecture \n \n {0}".format(message), settings.EMAIL_HOST_USER, [request.user.email], fail_silently=True)
+    messages.success(request,'Email sent successfully', extra_tags=request.user.email)
+    return redirect('archives:lectures')

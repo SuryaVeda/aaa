@@ -157,6 +157,7 @@ class Post(models.Model):
     content=models.CharField(max_length=1000,blank=True, null=True)
     comments = models.ManyToManyField(Comment, blank=True, null=True)
     tag = models.ManyToManyField(Tag)
+    lecture = models.BooleanField(default=False, null = True, blank = True)
     def __str__(self):
         try:
             if self.heading:

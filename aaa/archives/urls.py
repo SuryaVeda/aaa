@@ -7,6 +7,7 @@ app_name = 'archives'
 urlpatterns = [
     path('', views.ArchivePage.as_view(), name = 'home_archives'),
     path('lectures', views.LecturePage.as_view(), name = 'lectures'),
+    path('send-mail/<int:pk>', views.send_mail_view, name = 'sendmail'),
     path('deletepost-detail/<int:pk>', views.delete_post_detail, name = 'deletepostdetail'),
     path('edit-lecture-detail/<int:pk>/<int:opk>', views.ProfileDetailUpdateView.as_view(), name = 'editdetails'),
     path('edit-lecture-detail/<int:opk>', views.ProfileDetailCreateView.as_view(), name = 'adddetail'),

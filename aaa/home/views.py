@@ -17,6 +17,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views import View
 from mcq.models import QuestionBank
 from notifications.models import Notification
+from archives.models import LecturePost
 # Create your views here.
 
 class Manage(TemplateView):
@@ -45,8 +46,10 @@ class HomeView(TemplateView):
         context['questionbank'] = list(questionbank.filter(mcq=True))
         context['flashcards'] = list(questionbank.filter(flashcard=True))
         context['cases'] = list(questionbank.filter(qa=True))
-        postslist = list(Post.objects.order_by('-date').prefetch_related())
+        postslist = list(Post.objects.filter(lecture=False).order_by('-date').prefetch_related())
+        lectures = LecturePost.objects.all()
         context['posts'] = postslist[0:15]
+        context['lectures'] = lectures
         print('length of posts is {0}'.format(len(postslist)))
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context['tag_speciality'] = list(tag_speciality)

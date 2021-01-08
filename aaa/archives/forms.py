@@ -94,10 +94,11 @@ class LecturePostForm(CreatePostForm, ValidateLinkMixin):
 
         except Exception as e:
             return redirect('home:home')
+        saveobj.lecture = True
         if commit:
             saveobj.save()
         print(saveobj.lecture_start_date)
-        print(saveobj.lecture_end_date)
+        print(saveobj.lecture)
         linkdict = self.clean_links()
         if linkdict:
             if linkdict['linkobj']:
