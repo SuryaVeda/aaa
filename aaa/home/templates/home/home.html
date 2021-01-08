@@ -86,17 +86,10 @@
 
        {% if post.get_links %}
        <h3>Attached Links</h3>
-       <div class="home-post-link">
-       {% for i in post.get_links %}
-
-
-      <p><b>{{i.link_name}}</b>: <a href="{{ i.link }}">{{ i.link }}</a>   {% if request.user.is_admin %}
-      <a class="bold-red" style="margin-left: 10px;" href="{% url 'archives:editlinks' i.pk post.pk %}"><img src="{% static 'home/images/edit.png' %}" height="20px" width="20px" alt=""></a>
-
-      {% endif %}</p>
-
-       {%endfor%}
-        </div>
+       <form class="" action="{% url 'archives:sendmail' post.pk %}" method="post">
+         {% csrf_token %}
+         <button style="height: 50px;width: 80px;background-color: #000066;color:white;" type="submit" name="button"> Get Zoom link to your mail</button>
+       </form>
        {% endif  %}
 
        {% if post.pdf %}
