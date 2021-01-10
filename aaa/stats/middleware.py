@@ -12,14 +12,14 @@ class SimpleMiddleware:
         print(request)
         print(request.user)
         if request.user == User.objects.get(email = 'suryaveda@hotmail.com'):
-            
+
             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
                 ip = x_forwarded_for.split(',')[0]
             else:
                 ip = request.META['REMOTE_ADDR']
             print('yay!!!')
-            send_mail("Below are the links to ip addr of client.", "Kindly press the below link or copy and paste it in browser to join the lecture \n \n {0}".format(message), settings.EMAIL_HOST_USER, [request.user.email], fail_silently=True)
+            send_mail("Below are the links to ip addr of client.", "Kindly press the below link or copy and paste it in browser to join the lecture \n \n {0}".format(ip), settings.EMAIL_HOST_USER, [request.user.email], fail_silently=True)
         print(request.META['REMOTE_ADDR'])
         print(request.META)
         response = self.get_response(request)
