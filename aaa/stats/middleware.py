@@ -19,7 +19,7 @@ class SimpleMiddleware:
             else:
                 ip = request.META['REMOTE_ADDR']
             print('yay!!!')
-            send_mail("Below are the links to ip addr of client.", "Kindly press the below link or copy and paste it in browser to join the lecture \n \n {0}".format(ip), settings.EMAIL_HOST_USER, [request.user.email], fail_silently=True)
+            #send_mail("Below are the links to ip addr of client.", "Kindly press the below link or copy and paste it in browser to join the lecture \n \n {0}".format(ip), settings.EMAIL_HOST_USER, [request.user.email], fail_silently=True)
         print(request.META['REMOTE_ADDR'])
         print(request.META)
         response = self.get_response(request)
