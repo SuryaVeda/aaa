@@ -71,6 +71,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
 INSTALLED_APPS = [
+    'stats',
     'notifications',
     'mcq',
     'archives',
@@ -92,6 +93,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'stats.middleware.SimpleMiddleware',
 ]
 
 ROOT_URLCONF = 'aaa.urls'

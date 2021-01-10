@@ -471,6 +471,90 @@ ALTER SEQUENCE public.archives_book_links_id_seq OWNED BY public.archives_book_l
 
 
 --
+-- Name: archives_fileadd; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.archives_fileadd (
+    id integer NOT NULL,
+    file_name character varying(20),
+    file character varying(100),
+    is_image boolean NOT NULL
+);
+
+
+ALTER TABLE public.archives_fileadd OWNER TO sk;
+
+--
+-- Name: archives_fileadd_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.archives_fileadd_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.archives_fileadd_id_seq OWNER TO sk;
+
+--
+-- Name: archives_fileadd_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.archives_fileadd_id_seq OWNED BY public.archives_fileadd.id;
+
+
+--
+-- Name: archives_lecturepost; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.archives_lecturepost (
+    post_ptr_id integer NOT NULL,
+    lecture_start_date timestamp with time zone,
+    lecture_end_date timestamp with time zone
+);
+
+
+ALTER TABLE public.archives_lecturepost OWNER TO sk;
+
+--
+-- Name: archives_lecturepost_post_details; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.archives_lecturepost_post_details (
+    id integer NOT NULL,
+    lecturepost_id integer NOT NULL,
+    profiledetail_id integer NOT NULL
+);
+
+
+ALTER TABLE public.archives_lecturepost_post_details OWNER TO sk;
+
+--
+-- Name: archives_lecturepost_post_details_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.archives_lecturepost_post_details_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.archives_lecturepost_post_details_id_seq OWNER TO sk;
+
+--
+-- Name: archives_lecturepost_post_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.archives_lecturepost_post_details_id_seq OWNED BY public.archives_lecturepost_post_details.id;
+
+
+--
 -- Name: archives_review; Type: TABLE; Schema: public; Owner: sk
 --
 
@@ -859,7 +943,8 @@ CREATE TABLE public.home_post (
     user_id integer,
     pdf character varying(100),
     pdf_name character varying(50),
-    img character varying(100)
+    img character varying(100),
+    lecture boolean
 );
 
 
@@ -1401,6 +1486,20 @@ ALTER TABLE ONLY public.archives_book ALTER COLUMN id SET DEFAULT nextval('publi
 --
 
 ALTER TABLE ONLY public.archives_book_links ALTER COLUMN id SET DEFAULT nextval('public.archives_book_links_id_seq'::regclass);
+
+
+--
+-- Name: archives_fileadd id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_fileadd ALTER COLUMN id SET DEFAULT nextval('public.archives_fileadd_id_seq'::regclass);
+
+
+--
+-- Name: archives_lecturepost_post_details id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_lecturepost_post_details ALTER COLUMN id SET DEFAULT nextval('public.archives_lecturepost_post_details_id_seq'::regclass);
 
 
 --
@@ -1966,6 +2065,7 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 131	accomplishments		
 132	interests		
 96	About	 The practice of general anesthesia has been a dynamic process ever since it&#x27;s origin, on the fateful day of 16 Oct 1846 when WTG Morton demonstrated publicly ether anesthesia and changed the surgical fields forever.\n\nToday an anesthesiologist is not only an important part of OT team but takes a lead role in various fields like critical care team leader, BLS &amp;amp; ACLS team leader and trainer, covid management team, acute &amp;amp; chronic pain management and has come forward as a perioperative physician. With responsibilities of perioperative optimization of the patient, intraoperative conduct of anesthesia using a large armament of regional &amp;amp; general anesthesia and providing post operative pain relief, the anesthesiologist plays a pivotal role in patient care.\n\nThe demand for good general anesthesiologist is never ending, so more and and more PG aspirants take on the course of MD (3yrs) or DA (2yrs) each year either as a primary choice or as a path to further subspecialties like critical care, cardiac anesthesia, neuro-anesthesia or pain medicine.\n\nAs the exponential growth in various modalities of anesthesia come up every year, the future for general anesthesia looks promising. New innovations and technological advancements make the practice of general anesthesia a dynamic learning journey and more 	
+134	About 	 As a sub-speciality, onco-anaesthesiology provides the anaesthesiologist with an opportunity to positively influence the surgical outcome. The aim is to help reduce length of hospital stay, imbibe multimodal interdisciplinary analgesia, integrate supportive care, potentially minimise cancer recurrence and improve oncological outcomes. \nWHO predicts the annual new cancer diagnosis is set to rise to 22 million by 2030. With these trends, need of onco-anaesthesiology as a sub speciality is the need of hour. \nSince most of cancer patients have multiple co morbidities, these cases will test your skill and knowledge on a daily basis. \n\n	
 \.
 
 
@@ -1974,21 +2074,21 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 --
 
 COPY public.accounts_user (id, password, last_login, email, username, is_active, staff, admin, reset) FROM stdin;
-2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2020-12-25 11:03:34.826642+00	suryaveda@hotmail.com	sk	t	t	t	\N
+24	pbkdf2_sha256$216000$tr3tPO4Wb1wV$6eUgL95eVAMFQ/Rh7TArfY1h55n5KKFc7y76NTCqfmE=	\N	prabakaranlee@gmail.com	PRABA3006	t	t	t	\N
+21	pbkdf2_sha256$216000$De9SlRr1cVbt$W4RoG50H4hnQahxCg/+OPoe/M/J3faiw1Mds5MEC7M4=	2021-01-02 14:14:43.925174+00	hithimachenahalli@gmail.com	Hithish M J	t	t	t	\N
 12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2020-12-06 12:11:35.032613+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
-19	pbkdf2_sha256$216000$uOMpWUZSU4wk$J9+D8vEzmN3srMkKPkBZ7K02x3DcNDQ0N8+CrodtSaM=	\N	tripta.mgims@gmail.com	TRIPTA	t	f	f	\N
-3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-02 13:59:54.058696+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
+25	pbkdf2_sha256$216000$Emf4YIIIvwAX$07AhM2JZUKCKr5B0i8Km2PLyMweL7oiJi7pa4Mvs7sQ=	\N	drpallavisingh2015@gmail.com	Pallavi	t	t	t	\N
+19	pbkdf2_sha256$216000$uOMpWUZSU4wk$J9+D8vEzmN3srMkKPkBZ7K02x3DcNDQ0N8+CrodtSaM=	\N	tripta.mgims@gmail.com	TRIPTA	t	t	t	\N
+22	pbkdf2_sha256$216000$54dKlWTY7t28$v/dvYGBvnLWjeHjhCR9NPJepgMJw5D6S0Rb6tBznmhw=	2021-01-02 14:21:25.890388+00	naveenselvaraj1993@gmail.com	Naveen. S	t	t	t	\N
 13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t	\N
+23	pbkdf2_sha256$216000$ntvPoEpk8Jne$V9m+7WerQDypRXSadVo9bufWnu0dptIK+jvdYFoFllM=	2021-01-02 14:27:13.41801+00	beeralingnw@gmail.com	beeralingwalikar	t	t	t	\N
+14	pbkdf2_sha256$216000$T7dPeTz7oKit$s4UwZx3Mhn5/pn9amqGCrfJ2kBctzLOQM0DBP3XDQRk=	2021-01-06 08:40:30.9549+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
+3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-08 06:22:57.736168+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
+2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2021-01-08 16:42:14.122725+00	suryaveda@hotmail.com	sk	t	t	t	\N
 15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t	\N
-14	pbkdf2_sha256$216000$T7dPeTz7oKit$s4UwZx3Mhn5/pn9amqGCrfJ2kBctzLOQM0DBP3XDQRk=	2021-01-02 14:20:08.156581+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
-22	pbkdf2_sha256$216000$54dKlWTY7t28$v/dvYGBvnLWjeHjhCR9NPJepgMJw5D6S0Rb6tBznmhw=	2021-01-02 14:21:25.890388+00	naveenselvaraj1993@gmail.com	Naveen. S	t	f	f	\N
 16	pbkdf2_sha256$216000$0cgFkSw1M7h9$2rVbaqrjCLZmPfwQeaJ/p6sJN3HGciMMOnRYVa3dmfA=	\N	sherkhan_5195@yahoo.com	sherkhan_5195@yahoo.	t	t	t	\N
 17	pbkdf2_sha256$216000$u12nNcUnJ1w4$dM3zR8lja8MaR1ElQghLh91ma7aox6AlFTljIecXOmw=	2020-12-23 16:15:37.721521+00	nitishtha220@gmail.com	Nitish	t	t	t	\N
-25	pbkdf2_sha256$216000$Emf4YIIIvwAX$07AhM2JZUKCKr5B0i8Km2PLyMweL7oiJi7pa4Mvs7sQ=	\N	drpallavisingh2015@gmail.com	Pallavi	t	f	f	\N
 18	pbkdf2_sha256$216000$Y269kX6KTayq$miEE07VMy9Q9MD0UemoB9KirVkdToMhSUxhxGIw+Tfs=	2020-12-23 16:54:59.679832+00	gpoojithareddy87@gmail.com	PR	t	t	t	\N
-24	pbkdf2_sha256$216000$tr3tPO4Wb1wV$6eUgL95eVAMFQ/Rh7TArfY1h55n5KKFc7y76NTCqfmE=	\N	prabakaranlee@gmail.com	PRABA3006	t	t	f	\N
-21	pbkdf2_sha256$216000$De9SlRr1cVbt$W4RoG50H4hnQahxCg/+OPoe/M/J3faiw1Mds5MEC7M4=	2021-01-02 14:14:43.925174+00	hithimachenahalli@gmail.com	Hithish M J	t	t	f	\N
-23	pbkdf2_sha256$216000$ntvPoEpk8Jne$V9m+7WerQDypRXSadVo9bufWnu0dptIK+jvdYFoFllM=	2021-01-02 14:27:13.41801+00	beeralingnw@gmail.com	beeralingwalikar	t	t	f	\N
 \.
 
 
@@ -2040,6 +2140,31 @@ COPY public.archives_book_links (id, book_id, postlink_id) FROM stdin;
 2	4	9
 3	5	10
 4	6	11
+\.
+
+
+--
+-- Data for Name: archives_fileadd; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.archives_fileadd (id, file_name, file, is_image) FROM stdin;
+\.
+
+
+--
+-- Data for Name: archives_lecturepost; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.archives_lecturepost (post_ptr_id, lecture_start_date, lecture_end_date) FROM stdin;
+28	2021-01-09 11:30:00+00	2021-01-09 12:30:00+00
+\.
+
+
+--
+-- Data for Name: archives_lecturepost_post_details; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.archives_lecturepost_post_details (id, lecturepost_id, profiledetail_id) FROM stdin;
 \.
 
 
@@ -2165,6 +2290,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 86	Can change notification	22	change_notification
 87	Can delete notification	22	delete_notification
 88	Can view notification	22	view_notification
+89	Can add file add	23	add_fileadd
+90	Can change file add	23	change_fileadd
+91	Can delete file add	23	delete_fileadd
+92	Can view file add	23	view_fileadd
+93	Can add lecture post	24	add_lecturepost
+94	Can change lecture post	24	change_lecturepost
+95	Can delete lecture post	24	delete_lecturepost
+96	Can view lecture post	24	view_lecturepost
 \.
 
 
@@ -2220,6 +2353,8 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 20	mcq	questionbank
 21	mcq	qimage
 22	notifications	notification
+23	archives	fileadd
+24	archives	lecturepost
 \.
 
 
@@ -2383,6 +2518,18 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 153	home	0063_merge_20210103_2332	2021-01-03 18:02:57.953135+00
 154	notifications	0001_initial	2021-01-03 18:02:58.056825+00
 155	notifications	0002_notification_date	2021-01-03 18:02:58.150469+00
+156	home	0063_auto_20210107_1445	2021-01-07 23:17:49.833643+00
+157	archives	0027_auto_20210107_1445	2021-01-07 23:17:50.015316+00
+158	archives	0028_auto_20210107_2000	2021-01-07 23:17:50.197713+00
+159	archives	0029_merge_20210108_0447	2021-01-07 23:17:50.200632+00
+160	home	0064_auto_20210107_2000	2021-01-07 23:17:50.285701+00
+161	home	0065_merge_20210108_0447	2021-01-07 23:17:50.288768+00
+162	archives	0029_auto_20210108_1323	2021-01-08 08:41:05.233862+00
+163	archives	0030_auto_20210108_1323	2021-01-08 08:41:05.302519+00
+164	archives	0031_merge_20210108_1411	2021-01-08 08:41:05.305708+00
+165	home	0065_auto_20210108_1323	2021-01-08 08:41:05.483002+00
+166	home	0066_auto_20210108_1323	2021-01-08 08:41:05.646627+00
+167	home	0067_merge_20210108_1410	2021-01-08 08:41:05.649583+00
 \.
 
 
@@ -2407,6 +2554,10 @@ b5hokho1bh4u0hbqus7qmhbmsas58k58	.eJxVjDsOwyAQBe9CHSGz5psyvc-AYBeCkwgkY1dR7h5bcp
 icaxq9l6tczphbd0dytlkmnfm3opjbq0	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kvhlI:hgaWHoSM1OPHSECBVw9W4N9GzdokV5v8RvRA2A6Igys	2021-01-16 14:20:08.161834+00
 z8d2h1yqi5dmaaoz0klztoqbb6tsawmw	.eJxVjEEOwiAQRe_C2pCBKRRcuu8ZyDCgVA0kpV0Z765NutDtf-_9lwi0rSVsPS9hTuIstBan3zESP3LdSbpTvTXJra7LHOWuyIN2ObWUn5fD_Tso1Mu3jjCSAu8GJGOVQ_T2ajODR0QwSIPygzKKKUfgqI1xrHlkYoMKHbB4fwDShzb2:1kvhmX:wH91BEB2Ee3_m7KEvVQnZ2GqVfB8WJ6Lj6DhZiyG5HY	2021-01-16 14:21:25.893232+00
 au6ynqoocyf0tiw1ek9e8e35xljkhks2	.eJxVjDsOwjAQBe_iGlnrrON4KelzBsufNQ4gR4qTCnF3EikFtG9m3ls4v63FbY0XNyVxFR2Ky-8YfHxyPUh6-HqfZZzrukxBHoo8aZPjnPh1O92_g-Jb2evIaNUAkFCZAMyBvc4GgUwiQsIOKETN2qLSfR-9ycBGZbtnQwQk8fkC-rE3fA:1kvhs9:WjuDuvfM134LIFSsIhX4bePRbp-HD_KaYqY3Nl-X0zE	2021-01-16 14:27:13.4207+00
+b2u14616mmqyaauplkzdbm2vf72wj903	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kx4Mo:5kLZqpRGdWN4LMoebmiACEs04WDL-HDSYJ1KG1wnQKY	2021-01-20 08:40:30.958039+00
+9dvjfrgzrpmc7sk3q482sfjt7th2wnzb	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1kxeW9:3_t9W8t1UOYcUhgoXU27w5yfaydtvfo1z2J0mJ4731s	2021-01-21 23:16:33.63364+00
+6yo9clfltmebb3fp21wdf7mfo41tw0g1	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1kxlAn:cxZwG7SCS8HpNI4kX7OK1jcKp4ZNoS2dvhV8vB-hQN4	2021-01-22 06:22:57.739204+00
+7crdlao5rhrhaiy97q7u0ovixngyc2zl	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1kxuq6:Z3a43_uUYXXXMtPJNCIJ-qT9PD7MXkWDz5h2XxKMYoI	2021-01-22 16:42:14.125456+00
 \.
 
 
@@ -2421,6 +2572,8 @@ COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdi
 6	2020-12-04 19:36:50.577643+00	Jan 22- Jan 24.	2		\N	
 7	2020-12-23 13:45:01.199877+00	The dicrotic notch is a small and brief increase in arterial blood pressure that appears when the aortic valve closes. ... Most medical textbooks explain the origin of the dicrotic notch as caused by the aortic valve closure itself.	2		\N	
 8	2020-12-23 13:45:01.385813+00	The FLACC scale or Face, Legs, Activity, Cry, Consolability scale is a measurement used to assess pain for children between the ages of 2 months and 7 years or individuals that are unable to communicate their pain. Coughing is not a component of FLACC scale.	2		\N	
+9	2021-01-05 09:07:19.1997+00	24 hrs	\N		\N	
+10	2021-01-05 14:10:32.158426+00	Link	3		\N	
 \.
 
 
@@ -2429,6 +2582,7 @@ COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdi
 --
 
 COPY public.home_comment_link (id, comment_id, postlink_id) FROM stdin;
+1	10	20
 \.
 
 
@@ -2444,16 +2598,17 @@ COPY public.home_imageadd (id, img, user_id, name) FROM stdin;
 -- Data for Name: home_post; Type: TABLE DATA; Schema: public; Owner: sk
 --
 
-COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img) FROM stdin;
-10	2020-12-05 16:40:43.569854+00	INDIAN ASSOCIATION OF CARDIOVASCULAR THORACIC ANESTHESIOLOGISTS 24TH ANNUAL CONFERENCE 2021FEBRUARY 26, 2021 - FEBRUARY 28, 2021MADURAI , INDIA	\N	3		\N	
-11	2020-12-05 16:44:24.203572+00	This is to inform all the respected members of ISNACC that, due to the current COVID 19 pandemic situation, the ISNACC 2021 conference has been shifted to 2022 in Kolkata. Sorry for inconvenience!	\N	3		\N	
-12	2020-12-05 16:45:54.703597+00	16TH ASIAN AND OCEANIC SOCIETY OF REGIONAL ANAESTHESIA AND PAIN MANAGEMENT CONFERENCE & 11TH AORA NATIONAL CONFERENCE 2021APRIL 16, 2021 - APRIL 18, 2021MUMBAI , INDIA	\N	3		\N	
-14	2020-12-23 13:48:45.21743+00	1. Reason for dicrotic notch \r\na. Aortic valve closure \r\nb. Aortic valve opening\r\nc. Mitral valve closure \r\nd. Mitral valve opening	\N	2		\N	
-13	2020-12-05 18:08:57.361696+00	Pediatric pain can be assessed via FLACC scale, which includes all except:\r\nFacial expression\r\nLeg movement \r\nActivity \r\nCoughing	\N	3		\N	
-15	2020-12-23 14:42:14.393686+00	Criteria for weaning\r\na. Tidal volume of 5 ml/kg\r\nb. Vital capacity of 10 ml/ kg\r\nc. RSI > 105\r\nd. Pf ratio >300	\N	2		\N	
-16	2020-12-23 14:43:30.341516+00	Stoppage of therapeutic dalteparin before epidural insertion\r\na. 12 hrs before\r\nb. 24 hrs before\r\nc. 6 hrs before\r\nd. 68 hrs before	\N	2		\N	
-18	2020-12-24 17:13:27.57615+00	WBSSPCON 2021\r\nTheme- ULTRASOUND IN PAIN MEDICINE	It's a international conference by west Bengal society for the study of pain	\N		\N	Postimages/2020/12/$D/IMG-20201224-WA0033_XpnrVQg_yJapiEY.jpg
-20	2021-01-04 06:50:40.059921+00	Below is the link for registration/joining the Conference - https://www.omnicuris.com/oclive/6987	\N	\N		\N	
+COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img, lecture) FROM stdin;
+10	2020-12-05 16:40:43.569854+00	INDIAN ASSOCIATION OF CARDIOVASCULAR THORACIC ANESTHESIOLOGISTS 24TH ANNUAL CONFERENCE 2021FEBRUARY 26, 2021 - FEBRUARY 28, 2021MADURAI , INDIA	\N	3		\N		f
+11	2020-12-05 16:44:24.203572+00	This is to inform all the respected members of ISNACC that, due to the current COVID 19 pandemic situation, the ISNACC 2021 conference has been shifted to 2022 in Kolkata. Sorry for inconvenience!	\N	3		\N		f
+12	2020-12-05 16:45:54.703597+00	16TH ASIAN AND OCEANIC SOCIETY OF REGIONAL ANAESTHESIA AND PAIN MANAGEMENT CONFERENCE & 11TH AORA NATIONAL CONFERENCE 2021APRIL 16, 2021 - APRIL 18, 2021MUMBAI , INDIA	\N	3		\N		f
+14	2020-12-23 13:48:45.21743+00	1. Reason for dicrotic notch \r\na. Aortic valve closure \r\nb. Aortic valve opening\r\nc. Mitral valve closure \r\nd. Mitral valve opening	\N	2		\N		f
+13	2020-12-05 18:08:57.361696+00	Pediatric pain can be assessed via FLACC scale, which includes all except:\r\nFacial expression\r\nLeg movement \r\nActivity \r\nCoughing	\N	3		\N		f
+15	2020-12-23 14:42:14.393686+00	Criteria for weaning\r\na. Tidal volume of 5 ml/kg\r\nb. Vital capacity of 10 ml/ kg\r\nc. RSI > 105\r\nd. Pf ratio >300	\N	2		\N		f
+18	2020-12-24 17:13:27.57615+00	WBSSPCON 2021\r\nTheme- ULTRASOUND IN PAIN MEDICINE	It's a international conference by west Bengal society for the study of pain	\N		\N	Postimages/2020/12/$D/IMG-20201224-WA0033_XpnrVQg_yJapiEY.jpg	f
+16	2020-12-23 14:43:30.341516+00	Stoppage of therapeutic dalteparin before epidural insertion\r\na. 12 hrs before\r\nb. 24 hrs before\r\nc. 6 hrs before\r\nd. 68 hrs before	\N	2		\N		f
+24	2021-01-06 03:56:32.779781+00	Dear Colleagues,\r\nWelcome to COVIPOCUS2021 – World congress on Point of care Ultrasound in COVID-19 pandemic.\r\n\r\nWith COVID striking the world, the science of acute care has changed forever. The success of acute care lies in High Quality Patient Care which is dependent on Physicians and Nurses having Up-to-Date Knowledge and Skills. Knowledge is generated from Innovative Research and Clinical Experience. Education helps in the organised dissipation of that knowledge. It is with the above Premise that the World Academic Council of Emergency Medicine (WACEM), International Network for Critical ultrasound(INCUS) and WHO Collaborating centre for Emergency and Trauma is organizing WACEM Global e- congress COVIPOCUS2021 on POCUS IN COVID-19 PANDEMIC. This is a unique platform where Global POCUS leaders will be sharing their cutting edge Research, Operations and System building processes.	\N	3		\N		f
+28	2021-01-08 06:19:19.147745+00	Anaesthesia NEET SS Q&A Session	\N	3		\N		t
 \.
 
 
@@ -2464,6 +2619,7 @@ COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img) 
 COPY public.home_post_comments (id, post_id, comment_id) FROM stdin;
 7	14	7
 8	13	8
+9	16	9
 \.
 
 
@@ -2476,6 +2632,7 @@ COPY public.home_post_link (id, post_id, postlink_id) FROM stdin;
 6	11	7
 7	12	8
 9	18	15
+10	24	22
 \.
 
 
@@ -2505,8 +2662,9 @@ COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
 36	16	10
 39	18	9
 40	18	3
-42	20	9
-43	20	1
+50	24	1
+51	24	6
+55	28	1
 \.
 
 
@@ -2531,6 +2689,14 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 14	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
 15	https://www.payumoney.com/webfronts/#/index/WBSSPCON2021	Link for registratio	\N
 16	https://www.omnicuris.com/oclive/6987	link address	\N
+17	https://covipocusworld.com/	link address	\N
+18	https://covipocusworld.com/	link address	\N
+19	https://covipocusworld.com/	link address	\N
+20	https://covipocusworld.com/	link address	3
+21	https://covipocusworld.com/	link address	\N
+22	https://covipocusworld.com/	link address	3
+25	https://allaboutanaesthesia.co/archives/create-lecture	zoom link	\N
+26	https://allaboutanaesthesia.co/archives/create-lecture	link address	\N
 \.
 
 
@@ -2547,8 +2713,8 @@ COPY public.home_tag (id, name, is_speciality, is_degree) FROM stdin;
 5	CARDIO-ANAESTHESIA	t	t
 4	NEURO-ANAESTHESIA	t	t
 3	PAIN-MEDICINE	t	t
-2	ONCO-ANAESTHESIA	t	t
 1	GENERAL-ANAESTHESIA	t	t
+2	ONCO-ANAESTHESIA	t	t
 \.
 
 
@@ -2563,6 +2729,7 @@ COPY public.home_tag_details (id, tag_id, profiledetail_id) FROM stdin;
 10	10	82
 11	10	83
 12	1	96
+13	2	134
 \.
 
 
@@ -2589,6 +2756,10 @@ COPY public.mcq_qtag (id, name, subject, degree) FROM stdin;
 COPY public.mcq_questionbank (id, date, question, answer, mcq, flashcard, qa, user_id) FROM stdin;
 2	2020-12-23	when is weaning possible from mechanical ventillation?	After spontaneous ventillation.	f	t	f	2
 3	2021-01-02	Normal cerebral autoregulatory limit \na. 70 to 150 mm hg of MAP\nb. 40 to 140 mm hg of MAP\nc. 60 to 160 mm hg of MAP\nd. 80 to 180 mm hg of MAP\n	In healthy adults, the limits are between 50 and 150 mm Hg cerebral perfusion pressure (CPP) or 60 and 160 mm Hg mean arterial pressure (MAP), where CPP = MAP – intracranial pressure (ICP). 	t	f	f	3
+4	2021-01-06	Definition of chronic pain according to IASP is pain persisting beyond:\na. 3 weeks\nb. 6 weeks\nc. 9 weeks\nd. 12 weeks\n	12 weeks	t	f	f	3
+5	2021-01-06	Definition of allodynia\na. An abnormal sensation, whether spontaneous or evoked\nb. An increased response to a stimulus which is normally painful \nc. Pain due to a stimulus which does not normally activate the nociceptive system\nd. Unpleasant sensation, whether spontaneous or evoked\n	c	t	f	f	3
+6	2021-01-06	Gate control theory was given by \na. Melzack and Wall\nb. Mc Gill\nc. Phulchand Prithvi Raj \nd. Bonica\n	a	f	t	f	3
+7	2021-01-07	Change of cbf with 1 mm hg change of paco2\na. 0.5 to 1 ml /100g/min\nb. 1 to 2  ml /100g/min\nc. 2 to 3  ml /100g/min\nd. 3 to 4  ml /100g/min\n	b	t	f	f	3
 \.
 
 
@@ -2608,6 +2779,11 @@ COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 2	2	6
 3	3	4
 4	3	1
+5	4	3
+6	5	3
+7	6	3
+8	7	4
+9	7	1
 \.
 
 
@@ -2616,6 +2792,8 @@ COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 --
 
 COPY public.notifications_notification (id, message, post_id, user_id, date) FROM stdin;
+1	A new comment is added to Stoppage o.. by new user	16	2	2021-01-05 11:44:52.087447+00
+2	A new comment is added to Dear Colle.. by new user	\N	\N	2021-01-06 03:48:29.251751+00
 \.
 
 
@@ -2672,7 +2850,7 @@ SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 20, true);
 -- Name: accounts_profiledetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 132, true);
+SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 134, true);
 
 
 --
@@ -2704,6 +2882,20 @@ SELECT pg_catalog.setval('public.archives_book_links_id_seq', 4, true);
 
 
 --
+-- Name: archives_fileadd_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.archives_fileadd_id_seq', 1, false);
+
+
+--
+-- Name: archives_lecturepost_post_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.archives_lecturepost_post_details_id_seq', 1, true);
+
+
+--
 -- Name: archives_review_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
@@ -2728,7 +2920,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 88, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 96, true);
 
 
 --
@@ -2742,28 +2934,28 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 20, true);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 22, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 24, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 155, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 167, true);
 
 
 --
 -- Name: home_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_comment_id_seq', 8, true);
+SELECT pg_catalog.setval('public.home_comment_id_seq', 10, true);
 
 
 --
 -- Name: home_comment_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_comment_link_id_seq', 1, false);
+SELECT pg_catalog.setval('public.home_comment_link_id_seq', 1, true);
 
 
 --
@@ -2777,42 +2969,42 @@ SELECT pg_catalog.setval('public.home_imageadd_id_seq', 1, false);
 -- Name: home_post_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_comments_id_seq', 8, true);
+SELECT pg_catalog.setval('public.home_post_comments_id_seq', 10, true);
 
 
 --
 -- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_id_seq', 21, true);
+SELECT pg_catalog.setval('public.home_post_id_seq', 28, true);
 
 
 --
 -- Name: home_post_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_link_id_seq', 9, true);
+SELECT pg_catalog.setval('public.home_post_link_id_seq', 14, true);
 
 
 --
 -- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_tag_id_seq', 45, true);
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 55, true);
 
 
 --
 -- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_postlink_id_seq', 16, true);
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 26, true);
 
 
 --
 -- Name: home_tag_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_tag_details_id_seq', 12, true);
+SELECT pg_catalog.setval('public.home_tag_details_id_seq', 13, true);
 
 
 --
@@ -2840,7 +3032,7 @@ SELECT pg_catalog.setval('public.mcq_qtag_id_seq', 1, false);
 -- Name: mcq_questionbank_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 3, true);
+SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 7, true);
 
 
 --
@@ -2854,14 +3046,14 @@ SELECT pg_catalog.setval('public.mcq_questionbank_links_id_seq', 1, false);
 -- Name: mcq_questionbank_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 4, true);
+SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 9, true);
 
 
 --
 -- Name: notifications_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.notifications_notification_id_seq', 1, false);
+SELECT pg_catalog.setval('public.notifications_notification_id_seq', 2, true);
 
 
 --
@@ -3014,6 +3206,38 @@ ALTER TABLE ONLY public.archives_book_links
 
 ALTER TABLE ONLY public.archives_book
     ADD CONSTRAINT archives_book_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: archives_fileadd archives_fileadd_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_fileadd
+    ADD CONSTRAINT archives_fileadd_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: archives_lecturepost archives_lecturepost_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_lecturepost
+    ADD CONSTRAINT archives_lecturepost_pkey PRIMARY KEY (post_ptr_id);
+
+
+--
+-- Name: archives_lecturepost_post_details archives_lecturepost_pos_lecturepost_id_profilede_25f793b7_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_lecturepost_post_details
+    ADD CONSTRAINT archives_lecturepost_pos_lecturepost_id_profilede_25f793b7_uniq UNIQUE (lecturepost_id, profiledetail_id);
+
+
+--
+-- Name: archives_lecturepost_post_details archives_lecturepost_post_details_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_lecturepost_post_details
+    ADD CONSTRAINT archives_lecturepost_post_details_pkey PRIMARY KEY (id);
 
 
 --
@@ -3409,6 +3633,20 @@ CREATE INDEX archives_book_user_id_7303c0ae ON public.archives_book USING btree 
 
 
 --
+-- Name: archives_lecturepost_post_details_lecturepost_id_99ec4a20; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX archives_lecturepost_post_details_lecturepost_id_99ec4a20 ON public.archives_lecturepost_post_details USING btree (lecturepost_id);
+
+
+--
+-- Name: archives_lecturepost_post_details_profiledetail_id_164e4f34; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX archives_lecturepost_post_details_profiledetail_id_164e4f34 ON public.archives_lecturepost_post_details USING btree (profiledetail_id);
+
+
+--
 -- Name: archives_review_book_id_10782510; Type: INDEX; Schema: public; Owner: sk
 --
 
@@ -3758,6 +3996,30 @@ ALTER TABLE ONLY public.archives_book
 
 ALTER TABLE ONLY public.archives_book
     ADD CONSTRAINT archives_book_user_id_7303c0ae_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_lecturepost_post_details archives_lecturepost_lecturepost_id_99ec4a20_fk_archives_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_lecturepost_post_details
+    ADD CONSTRAINT archives_lecturepost_lecturepost_id_99ec4a20_fk_archives_ FOREIGN KEY (lecturepost_id) REFERENCES public.archives_lecturepost(post_ptr_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_lecturepost archives_lecturepost_post_ptr_id_51fe5d68_fk_home_post_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_lecturepost
+    ADD CONSTRAINT archives_lecturepost_post_ptr_id_51fe5d68_fk_home_post_id FOREIGN KEY (post_ptr_id) REFERENCES public.home_post(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: archives_lecturepost_post_details archives_lecturepost_profiledetail_id_164e4f34_fk_accounts_; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.archives_lecturepost_post_details
+    ADD CONSTRAINT archives_lecturepost_profiledetail_id_164e4f34_fk_accounts_ FOREIGN KEY (profiledetail_id) REFERENCES public.accounts_profiledetail(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
