@@ -36,9 +36,9 @@ try:
     if x == '1':
         DEBUG = True
     else:
-        DEBUG = True
+        DEBUG = False
 except:
-    DEBUG=True
+    DEBUG=False
 SECRET_KEY = os.getenv('secretkey')
 DATABASES = {
     'default': {
