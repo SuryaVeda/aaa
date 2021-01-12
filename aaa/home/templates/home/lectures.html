@@ -8,6 +8,9 @@
   border-top: 4px inset dimgrey;
   justify-content: center;
 }
+.socialmediatags{
+  border: 5px solid black;
+}
 </style>
 <div class="home-container">
 <div class="upcoming flex-column">
@@ -41,6 +44,7 @@
         <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
  {% if request.user.is_admin and request.user == post.user  or request.user.email == 'suryaveda@hotmail.com' %}
+ <a href="#">edit</a>
  <a class="bold-red" href="{% url 'archives:updatelecture' post.pk %}"><img src="{% static 'home/images/edit.png' %}" height="20px" width="20px" alt=""></a>
 
  {% endif %}
