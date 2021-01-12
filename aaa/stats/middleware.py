@@ -31,6 +31,7 @@ class SimpleMiddleware:
             #send_mail("Below are the links to ip addr of client.", "Kindly press the below link or copy and paste it in browser to join the lecture \n \n {0}".format(ip), settings.EMAIL_HOST_USER, [request.user.email], fail_silently=True)
 
         response = self.get_response(request)
+        
         if response.status_code == 200:
             x = RequestObj.objects.create()
             if user:
@@ -42,6 +43,8 @@ class SimpleMiddleware:
             x.location = ip
             x.page = page
             x.save()
+
+
 
 
         # Code to be executed for each request/response after
