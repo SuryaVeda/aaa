@@ -44,7 +44,7 @@ def login_view(request):
                                     password=request.POST.get('password'))
                 if user is not None:
                     login(request, user)
-                    return redirect('archives:lectures')
+                    return redirect('home:home')
                 else:
                     messages.error(request, "Credentials are either wrong or not registered.")
                     print('see try statemetn')

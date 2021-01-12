@@ -90,10 +90,9 @@
  {% endif %}
 
 
-<p>{{ post.get_links }}</p>
  {% if post.get_links %}
  <h3>Attached Links</h3>
- <p>testing</p>
+
  <form class="" action="{% url 'archives:sendmail' post.pk %}" method="post">
    {% csrf_token %}
    <button style="height: 50px;width: 80px;background-color: #000066;color:white;" type="submit" name="button"> Get Zoom link to your mail</button>
