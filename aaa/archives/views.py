@@ -421,7 +421,7 @@ def delete_review_view(request, pk):
             return redirect('home:home')
     else:
         return ('home:stafferror')
-
+@staff_required
 def send_mail_view(request, pk):
     post = LecturePost.objects.get(pk=pk)
     messagelist = []
