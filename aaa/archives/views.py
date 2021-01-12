@@ -21,7 +21,7 @@ from django.conf import settings
 
 
 class LecturePage(TemplateView):
-    template_name = 'home/lec.html'
+    template_name = 'home/newlec.html'
 
     @method_decorator(staff_required)
     def dispatch(self, *args, **kwargs):
