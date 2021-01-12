@@ -1,5 +1,5 @@
 from django.db import models
-import datetime, sys
+import datetime, sys, pytz
 from datetime import date, timedelta
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.conf import settings
@@ -7,6 +7,16 @@ from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
+class CountUsers(models.Manager):
+    def most_active_users(self):
+        tz = pytz.timezone('Asia/Kolkata')
+        x = [[i.requestobj_set.filter(date = datetime.datetime.now(tz)).count(), i.email] for i in  super().get_queryset()]
+        y = [i[0] for i in x]
+        if y:
+            index = y.index(max(y))
+            return x[index]
+        else:
+            return None
 class UserManager(BaseUserManager):
     def create_user(self, email,username, password = None):
         if not email:
@@ -53,6 +63,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     objects = UserManager()
+    custom_objs=CountUsers()
     def __str__(self):
         try:
             return self.email
@@ -81,6 +92,7 @@ class User(AbstractBaseUser):
     @property
     def get_email(self):
         return self.email
+
 
     @property
     def save_profile(self):

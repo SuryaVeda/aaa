@@ -105,7 +105,7 @@
        {% for comment in post.get_comments %}
            <div class="home-post-comment-single">
                <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
-      {% if request.user.is_staff and request.user == comment.user%}
+      {% if request.user.is_staff and request.user == comment.user or request.user.is_admin %}
       <p style="text-decoration: underline; color: #000066" ><a onclick="deletecomment(event, {{comment.pk}})">Delete Comment.</a></p>
       {%endif %}
 

@@ -5,11 +5,23 @@
 <h1>Statistics</h1>
 
 <h2>Today</h2>
-<p>Total requests today: </p>
-<p>Most requested page today:</p>
-<p>Locations of various requests: </p>
-<p>Most active user:</p>
+<p>Total requests today: {{ request_count }}</p>
+{% if page %}
+<p>Most requested page today: {{ page.1 }} is requested {{ page.0 }} times today.</p>
+{% else %}
+<p>Most requested page today:  No page requests today.</p>
+{% endif %}
+<p>Most active user: Most active user today is {{ active_user.1 }} made {{ active_user.0 }} requests today</p>
 
+{% if location %}
+{% for i in location %}
+{% if i.0 %}
+<p>{{ i.1 }} : {{ i.0 }}</p>
+{% else %}
+<p>{{ i.1 }} : Location Unknown, unable to trace ip address</p>
+{% endif %}
+{% endfor %}
+{% endif %}
 </div>
 
 
