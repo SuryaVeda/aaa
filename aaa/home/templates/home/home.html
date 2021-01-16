@@ -23,32 +23,41 @@
         <div class="blue-block flex-column">
           <a class="center"  href="{% url 'home:postForm'  %}" >Add POST | QUESTION </a>
 
-        </div>        {% for post in lectures %}
+        </div>
+                {% for post in lectures %}
         <div class="home-post lecture">
-          <h2 style="color: #800000; margin-bottom: 0"> {{ post.get_lecture_range }}</h2>
-          <p style="color: #000066"><b>{{post.posted_on}} </b></p>
-          <div class="regulartags tags">
-            {% for tag in post.get_tags %}
-            {% if tag.is_degree %}
-            <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
-            {% else %}
-            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
 
-            {% endif %}
-            {% endfor %}
-          </div>
-          <div class="home-post-heading">
-              <h3>{{post.heading | linebreaks }}</h3>
+          <div class="flex-column">
+            <div class="flex-row" style="justify-content: space-between">
+              <h2 style="color: #800000; margin-bottom: 0"> {{ post.get_lecture_range }}</h2>
               <div class="socialmediatags tags">
+                <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
 
-                <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
          <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
-         {% if request.user.is_admin and request.user == post.user %}
-         <a class="bold-red" href="{% url 'archives:updatelecture' post.pk %}"><img src="{% static 'home/images/edit.png' %}" height="20px" width="20px" alt=""></a>
+         <a href="{{ post.get_absolute_url }}"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
 
-         {% endif %}
 
               </div>
+            </div>
+
+
+              <div class="regulartags tags">
+                {% for tag in post.get_tags %}
+                {% if tag.is_degree %}
+                <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
+                {% else %}
+                <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+
+                {% endif %}
+                {% endfor %}
+              </div>
+
+
+          </div>
+          <p style="color: #000066"><b>{{post.posted_on}} </b></p>
+
+          <div class="home-post-heading">
+              <h3>{{post.heading | linebreaks }}</h3>
 
               {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
              <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
@@ -240,7 +249,18 @@
          <div class="home-post">
 
           <div class="flex-column">
-            <p style="color: #000066"><b>{{post.posted_on}}</b></p>
+            <div class="flex-row" style="justify-content: space-between">
+              <p style="color: #000066"><b>{{post.posted_on}}</b> </p>
+              <div class="socialmediatags tags">
+
+                <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
+         <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
+         <a href="{{ post.get_absolute_url }}"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
+
+
+              </div>
+            </div>
+
 
               <div class="regulartags tags">
                 {% for tag in post.get_tags %}

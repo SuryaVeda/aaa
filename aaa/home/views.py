@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Post,Comment, Tag, PostLink
-from archives.models import Book
+from archives.models import Book, LecturePost
 from django.utils.decorators import method_decorator
 from accounts.models import User, ProfileDetail
 from home.mixins import ValidateLinkMixin, ValidateTextMixin, ValidateFileMixin
@@ -42,16 +42,16 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        questionbank = QuestionBank.objects.all()
+        #questionbank = QuestionBank.objects.all()
         template_name = 'home/neet.html'
-        context['questionbank'] = list(questionbank.filter(mcq=True))
-        context['flashcards'] = list(questionbank.filter(flashcard=True))
-        context['cases'] = list(questionbank.filter(qa=True))
+        #context['questionbank'] = list(questionbank.filter(mcq=True))
+        #context['flashcards'] = list(questionbank.filter(flashcard=True))
+        #context['cases'] = list(questionbank.filter(qa=True))
         postslist = list(Post.objects.filter(lecture=False).order_by('-date').prefetch_related())
+        print(len(postslist))
         lectures = LecturePost.objects.all().order_by('-pk')
         context['posts'] = postslist[0:15]
         context['lectures'] = lectures
-        print('length of posts is {0}'.format(len(postslist)))
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context['tag_speciality'] = list(tag_speciality)
         return context
@@ -98,7 +98,7 @@ def speciality_view(request, speciality_type):
 
             subjects = list(Tag.objects.filter(is_degree=True))
 
-            posts = Post.objects.filter(tag=tag).order_by('-pk')
+            posts = Post.objects.filter(tag=tag, lecture=False).order_by('-pk')
             tag_speciality = Tag.objects.filter(is_speciality=True)
             context['tag'] = tag
             context['tag_speciality'] = tag_speciality
@@ -130,7 +130,7 @@ class SearchView(TemplateView):
             messages.error(self.request, 'Enter something in search!')
             return False
         query = bleach.clean(searchInput, strip=True)
-        posts = Post.objects.filter(heading__icontains = query)
+        posts = Post.objects.filter(heading__icontains = query, lecture=False)
         return list(posts)
 
     def get_books(self):
@@ -141,10 +141,19 @@ class SearchView(TemplateView):
         query = bleach.clean(searchInput, strip=True)
         books = Book.objects.filter(name__icontains=query)
         return list(books)
+    def get_lectures(self):
+        searchInput = self.request.GET.get('searchinput')
+        if not searchInput:
+            messages.error(self.request, 'Enter something in search!')
+            return False
+        query = bleach.clean(searchInput, strip=True)
+        books = LecturePost.objects.filter(heading__icontains=query)
+        return list(books)
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
         context['posts'] = self.get_posts()
+        context['lectures'] = self.get_lectures()
         if self.request.user.is_staff:
             context['books'] = self.get_books()
         else:
