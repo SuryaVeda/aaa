@@ -42,6 +42,16 @@
     font-family: 'Overlock', cursive;
 
 }
+.blue-block{
+    margin-top: 50px;
+    justify-content: center;
+    background-color: #000066;
+    min-height: 80px;
+    color:white;
+}
+.blue-block a {
+  color: white;
+}
 .bold-green {
     color: green;
     font-weight: bolder;
@@ -51,6 +61,9 @@
 }
 .center{
   align-self: center;
+}
+.end-end{
+  justify-content: space-between;
 }
 .input-style{
     font-family: 'Overlock', cursive;
@@ -65,6 +78,13 @@
 .flex-row{
   display: flex;
   flex-flow: row wrap;
+  width: 100%;
+  height: auto;
+}
+.style-btn {
+  margin: 1px solid grey;
+  height: 30px;
+  width: 50px;
 }
 .flex-column{
   display: flex;
@@ -474,16 +494,28 @@ justify-content: flex-start;
     height: auto;
 
 }
+.sidebar{
+
+  width: 25%;
+  background-color: #C8C8C8	;
+
+  height: 100%;
+  border-top: 1px inset white;
+  border-radius: 8px;
+  margin-top: 20px;
+
+}
 .home-post{
     display: flex;
     flex-flow: column wrap;
-    width: 100%;
-
+    width: 60%;
+    align-self: center;
+    background-color: white;
     height: auto;
-    border-top: 1px solid black;
-    border-right: 5px outset darkgray;
-    border-bottom: 5px outset #000066;
-    margin-top: 10px;
+    border-top: 1px inset white;
+    border-radius: 8px;
+    margin-top: 20px;
+
 
 }
 .someclass{
@@ -525,6 +557,7 @@ justify-content: flex-start;
 .home-post-img img{
     align-self: center;
 }
+
 .degree a {
     margin:5px;text-decoration:none;color: white;
 }
@@ -535,8 +568,9 @@ justify-content: flex-start;
     height: auto;
     overflow: hidden;
     width: 100%;
+    border-top: 1px solid grey;
+    background-color: #E8E8E8;
 }
-
 .home-post-comment-single{
     border-bottom: 5px outset grey;
 
@@ -552,7 +586,7 @@ justify-content: flex-start;
     flex-flow: column wrap;
 }
 .comment-create-form textarea{
-    width: 60%;
+    width: 80%;
     height: 200px;
     font-size: 18px;
     font-family: 'Overlock', cursive;
@@ -974,11 +1008,7 @@ window.onclick = function (event) {
     }
 };
 window.onload = function () {
-    for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
-        if (document.getElementsByClassName('comments')[i].clientHeight > 300 ) {
-      console.log(true);
-      document.getElementsByClassName('comments')[i].style.height = '1px';
-      document.getElementsByClassName('more')[i].style.display = 'block';}}
+
 
       try {
         if (mcqblock.length > 0) {
@@ -992,8 +1022,12 @@ window.onload = function () {
         console.log(err.message)
       }
 
-};
 
+};
+function showcommentsdh(commenttab) {
+comment = document.getElementById(commenttab);
+comment.style.display = 'block';
+}
 function expand(a, b) {
     a.style.display = 'none';
     var el = document.getElementById(b);
@@ -1283,6 +1317,7 @@ function addsubjectintro() {
   <!-- Links -->
     <div style=" margin: 0" class="stacks" onclick="openmenu()">
         <img src="{% static 'home/images/stacks.png' %}" height="40px" width="40px">
+        <a style="background-color: #000066; color: white; align-self: center">Have a great day!</a>
     </div>
     {% if request.user %}
       <a class="nav-link nav-item" href="{% url 'home:home' %}">Home</a>

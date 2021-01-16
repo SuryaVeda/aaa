@@ -198,6 +198,13 @@ class Post(models.Model):
             return list(a)
         else:
             return a
+    @property
+    def get_comments_length(self):
+        x = list(self.comments.all())
+        if x:
+            return '{0} comments present, click to view.'.format(len(x))
+        else:
+            return 'No comments added, click to add comments'
     def get_tags(self):
         a = self.tag.all()
         if len(a) < 2:

@@ -4,21 +4,30 @@
 
 <div class="home-container">
     {% if request.user and request.user %}
-    {% if messages %}
+    {% if messages.extratags == request.user.email %}
     {% for message in messages %}
     <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
     {% endfor %}
     {% endif %}
-    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p> or <p> Add a question!</a>
+
 
     {% endif %}
     <div class="someclass">
+      <div class="blue-block flex-column">
+        <h2 style="margin-bottom: 0" class="center">Conferences</h2>
+        <br>
+        <a class="center"  href="{% url 'home:postForm'  %}" >Add Conference </a>
+
+      </div>
+
         {% if posts and request.user%}
     {% for post in posts %}
 
     <div class="home-post">
 
      <div class="flex-column">
+       <p style="color: #000066"><b>{{post.posted_on}}</b></p>
+
          <div class="regulartags tags">
            {% for tag in post.get_tags %}
            {% if tag.is_degree %}
@@ -29,11 +38,7 @@
            {% endif %}
            {% endfor %}
          </div>
-         <div class="socialmediatags tags">
 
-           <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=30px, width=30px alt=""> </a>
-<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=30px, width=30px alt=""></a>
-         </div>
 
      </div>
 
@@ -45,7 +50,6 @@
  {%endif %}
      <div class="home-post-heading">
          <h3>{{post.heading | linebreaks }}</h3>
-         <p style="color: #000066"><b>{{post.posted_on}}</b></p>
 
 
      </div>
@@ -81,16 +85,31 @@
          <a href="{{post.pdf}}"><p>{{post.pdf_name}}: {{post.pdf}}</p></a>
      </div>
      {% endif  %}
+     <nav onclick="showcommentsdh('comments{{ post.pk  }}')" style="display: flex; justify-content: flex-start; height: auto;">
+       {% if request.user.is_staff %}
+       <a >{{ post.get_comments_length }}</a>
+       {% else %}
+       <a href="{% url 'accounts:login' %}">Login to see/post comments</a>
+       {% endif %}
+
+     </nav>
+     {% if request.user.is_staff %}
      <div id="comments{{post.pk}}" class="comments ">
-         <h2 style="text-decoration: underline">Comments</h2>
+       <script type="text/javascript">
+         var dhcomments{{post.pk}} = document.getElementById('comments{{ post.pk }}')
+         dhcomments{{post.pk}}.style.display = 'none';
+       </script>
      {% if post.get_comments %}
      <div class="home-post-comments">
      {% for comment in post.get_comments %}
          <div class="home-post-comment-single">
-             <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
-{% if request.user.is_staff and request.user == comment.user%}
- <p style="text-decoration: underline; color: #000066" ><a onclick="deletecomment(event, {{comment.pk}})">Delete Comment.</a></p>
- {%endif %}
+             <div class="flex-row end-end">
+               <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}  </b>   </p>
+               {% if request.user.is_staff and request.user == comment.user%}
+               <p><a style="margin-right: 3px" onclick="deletecomment(event, {{comment.pk}})"><img src="{% static 'home/images/delete.png' %}" height="20px" width="20px" alt=""></a></p>
+                   {%endif %}
+             </div>
+
 
        {% if comment.img %}
 
@@ -129,25 +148,21 @@
      {% endfor %}
      </div>
      {% endif  %}
+     {% if request.user.is_staff %}
      <div class="comment-create-form">
       <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
              {% csrf_token %}
-         <p>Add image: <input type="file" name="image" ></p>
-<br>
          <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
- <br>
-         <p><input name="pdf_name" type="text" placeholder="Add pdf name" maxlength="20" value="">: <input type="file" name="pdf"></p>
-          <div id="addlinkform{{post.pk}}">
-              <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
-          </div>
-          <p style="text-decoration: underline;color: #000066;"><a onclick="addnewlinkforms('addlinkform{{post.pk}}')"> Add more links</a></p>
+
          <button name="createcomment" type="submit" value="createcomment">Submit</button>
          </form>
 
          </div>
+     {% endif %}
 
      </div>
-                <p onclick="expand(this, 'comments{{post.pk}}')" style="color: red; text-decoration: underline;" class="more">See Comments</p>
+     {% endif %}
+
 
      </div>
 
@@ -159,4 +174,5 @@
 
 
     </div>
+
 {% endblock %}

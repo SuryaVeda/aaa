@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Post,Comment, Tag, PostLink
 from archives.models import Book
+from django.utils.decorators import method_decorator
 from accounts.models import User, ProfileDetail
 from home.mixins import ValidateLinkMixin, ValidateTextMixin, ValidateFileMixin
 from .forms import CreatePostForm
-from .decorators import staff_required
+from .decorators import staff_required, admin_required
 from django.utils import timezone
 from django.contrib import messages
 from django.views.generic import TemplateView
@@ -19,12 +20,12 @@ from mcq.models import QuestionBank
 from notifications.models import Notification
 from archives.models import LecturePost
 # Create your views here.
-
 class Manage(TemplateView):
     template_name = 'home/manage.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data( **kwargs)
-        context['users'] = User.objects.all()
+        if self.request.user.is_staff:
+            context['users'] = User.objects.all()
         return context
 def email(request):
     subject = 'You visited conference page'
@@ -226,7 +227,7 @@ def delete_tagdetail_view(request,pk,detail_pk):
         messages.error(request, 'select valid post')
 
         return redirect('home:home')
-
+@staff_required
 def create_post_view(request):
     if request.user and request.user:
         template_name = 'home/home_post.html'
@@ -247,7 +248,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
             return self.request.user
         else:
             return None
-
+    @method_decorator(staff_required)
     def post(self, *args, **kwargs):
         if self.request.user and self.request.user:
             print(self.request.POST)
@@ -280,7 +281,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
             return redirect('home:home')
         else:
             return redirect('accounts:login')
-
+    @method_decorator(staff_required)
     def save_tagdetail(self, pk):
         print(self.request.POST)
         text_dict = self.clean_text(['heading', 'details'])
@@ -303,10 +304,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
             print('prob in saving')
             pass
 
-
-
-
-
+    @method_decorator(staff_required)
     def edit_tagdetail(self, pk, detail_pk):
         print(self.request.POST)
         print(detail_pk)
@@ -334,6 +332,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                            'Error in saving')
             return False
 
+    @method_decorator(staff_required)
     def save_homepost(self):
         link_dict = self.clean_links()
         template_name = 'home/home_post.html'
