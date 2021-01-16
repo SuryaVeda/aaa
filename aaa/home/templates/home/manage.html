@@ -43,6 +43,16 @@
             <div class="userpersonal" style="flex-grow:1;display: flex; flex-flow: column wrap;justify-content: flex-start; align-items: flex-start;">
                 <p>Name: {{user.username }}</p>
             <p>Email: {{user.email }}</p>
+            {% for deg in user.profile.get_degrees %}
+            <p>{{ deg.name }} at {{ deg.college }} </p>
+            {% endfor %}
+            {% for work in user.profile.get_work %}
+            {% if work.is_current %}
+            <p>Currently working as {{ work.position  }} at {{ work.hospital.name }} </p>
+            {% else %}
+            <p>Worked as {{ work.position  }} at {{ work.hospital.name }} </p>
+            {% endif %}
+            {% endfor %}
             </div>
 
         </div>
