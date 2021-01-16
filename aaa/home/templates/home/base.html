@@ -28,6 +28,12 @@
   src:
           url("{% static 'home/fonts/Overlock/overlock.ttf' %}") format("truetype");
       }
+@font-face {
+  font-family: "Source Serif Pro";
+
+    src:
+        url("{% static 'home/fonts/source_serif/SourceSerifPro-Regular.ttf' %}") format("truetype");
+         }
 
 
 /*  Classes and tags for base.html   */
@@ -48,7 +54,7 @@
     background-color: #000066;
     min-height: 80px;
     color:white;
-    
+
 }
 .blue-block a {
   color: white;
@@ -242,6 +248,9 @@ footer .neeche{
 }
 
 
+#empty {
+font-family: 'Source Serif Pro', serif;
+}
 /*  Classes and tags for login.html and signup.html  */
 
 .extradetails{
@@ -1368,7 +1377,7 @@ function addsubjectintro() {
     <a class="nav-item nav-link" href="{% url 'accounts:login' %}">Join</a>
 {% endif %}
 </nav>
-<div class="empty"></div>
+<div id="empty">
 {% if messages %}
 {% for message in messages %}
 {% if message.extra_tags == request.user.email %}
@@ -1381,6 +1390,7 @@ function addsubjectintro() {
 
 {% block js%}
 {% endblock %}
+</div>
 </body>
 <footer>
     <div class="neeche">
