@@ -28,6 +28,7 @@
         color: white;
     }
 </style>
+
 <div class="manage">
 <div class="users">
         <h1>Manage Users</h1>
@@ -113,7 +114,7 @@
 
 
 
-                <form method="post"  action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                <form onsubmit="return deleteuseres(event.preventDefault(), {{ user.pk }})" method="post"   enctype="application/x-www-form-urlencoded">
                     {% csrf_token %}
 
 
@@ -134,4 +135,30 @@
 {% endfor %}
 </div>
 </div>
+<script type="text/javascript">
+  function deleteuseres(e,pk) {
+
+      var message = confirm('Are you sure you want to delete the User');
+      if (message==true){
+          var dhttp = new XMLHttpRequest();
+
+          dhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ) {
+              let x = JSON.parse(this.responseText);
+              console.log(x);
+              console.log(x.success);
+              window.location.href = x.success;
+
+          }
+          };
+          dhttp.open('POST', 'accounts/changeuserprivileges/' + pk );
+          dhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          dhttp.send("csrfmiddlewaretoken=" +document.getElementsByName('csrfmiddlewaretoken')[0].value +  "&deleteuser=Deletepost");
+          console.log('post request sent');
+      }
+      else{
+
+      }
+  }
+</script>
 {% endblock %}
