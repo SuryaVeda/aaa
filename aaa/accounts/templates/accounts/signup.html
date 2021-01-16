@@ -7,11 +7,7 @@
     <div class="login">
     <h1 style="font-size: 25px;">All About Anaesthesia</h1>
     <h2 style="font-size: 25px;margin-bottom: 35px; color: #000066">Sign up</h2>
-   {% if messages %}
-    {% for message in messages %}
-      <p style="color: blue; font-weight: 400; font-size: 34px;">{{message}}</p>
-      {%endfor %}
-  {% endif %}
+
     <form style=" display: flex; flex-flow: column wrap; justify-content: center; align-items: center"  method="get" action="{% url 'accounts:staff' %}" enctype="application/x-www-form-urlencoded">
       {% csrf_token %}
       <p>{{form.username}}</p>
