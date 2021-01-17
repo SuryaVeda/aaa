@@ -34,7 +34,7 @@
                 <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
 
          <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
-         <a onclick="navigator.clipboard.writeText('{{ post.get_absolute_url }}'); alert('link copied!!')"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
+         <a onclick="navigator.clipboard.writeText('{{ post.get_absolute_url }}'); alert('link: {{ post.get_absolute_url }}')"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
 
 
               </div>
@@ -255,7 +255,7 @@
 
                 <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
          <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
-         <a  onclick="navigator.clipboard.writeText('{{ post.get_absolute_url }}'); alert('link copied!! {{ post.get_absolute_url }} ')"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
+         <a  onclick="navigator.clipboard.writeText('{{ post.get_absolute_url }}'); alert('link: {{ post.get_absolute_url }} ')"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
 
 
               </div>
