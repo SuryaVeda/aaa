@@ -18,5 +18,7 @@ class StatPage(TemplateView):
         context['active_user'] = User.custom_objs.most_active_users()
         users = [list(i.requestobj_set.filter(date = datetime.datetime.now(pytz.timezone('Asia/Kolkata'))))[0] for i in User.objects.all() if i.requestobj_set.filter(date = datetime.datetime.now(pytz.timezone('Asia/Kolkata')))]
         print(users)
-        context['location'] = [[i.get_ip_details(), i.user.email] for i in users if i]
+        context['location'] = [[type(i.get_ip_details()), i.user.email] for i in users if i]
+        exp = [[type(i.get_ip_details()), i.user.email] for i in users if i]
+        print(exp)
         return context
