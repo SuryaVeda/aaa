@@ -40,10 +40,7 @@ class RequestObj(models.Model):
             response = requests.get(url).json()
             print(response)
             if response['status'] == 'success':
-                try:
-                    response = json.loads(response)
-                except Exception as e:
-                    pass
+
                 return response
             else:
                 return None

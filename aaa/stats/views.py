@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .models import RequestObj, PageObj
 from accounts.models import User
-import pytz,datetime
+import pytz,datetime,json
 # Create your views here.
 
 class StatPage(TemplateView):
@@ -19,6 +19,4 @@ class StatPage(TemplateView):
         users = [list(i.requestobj_set.filter(date = datetime.datetime.now(pytz.timezone('Asia/Kolkata'))))[0] for i in User.objects.all() if i.requestobj_set.filter(date = datetime.datetime.now(pytz.timezone('Asia/Kolkata')))]
         print(users)
         context['location'] = [[type(i.get_ip_details()), i.user.email] for i in users if i]
-        exp = [[type(i.get_ip_details()), i.user.email] for i in users if i]
-        print(exp)
         return context
