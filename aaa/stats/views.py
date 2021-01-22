@@ -11,7 +11,10 @@ class StatPage(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['request_count'] = RequestObj.objects.count_requests()
+
         context['page'] = PageObj.objects.most_requested_page()
+        context['pages'] = PageObj.objects.order_by('-count')
+        print(PageObj.objects.all().count())
         context['active_user'] = User.custom_objs.most_active_users()
         users = [list(i.requestobj_set.filter(date = datetime.datetime.now(pytz.timezone('Asia/Kolkata'))))[0] for i in User.objects.all() if i.requestobj_set.filter(date = datetime.datetime.now(pytz.timezone('Asia/Kolkata')))]
         print(users)

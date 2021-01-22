@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 class CountPages(models.Manager):
     def most_requested_page(self):
         tz = pytz.timezone('Asia/Kolkata')
-        x = [[i.requestobj_set.filter(date = datetime.datetime.now(tz)).count(), i.url] for i in  super().get_queryset()]
+        x = [[i.requestobj_set.filter(date = (datetime.datetime.now(tz)).date()).count(), i.url] for i in  super().get_queryset()]
         y = [i[0] for i in x]
         if y:
             index = y.index(max(y))
@@ -17,17 +17,18 @@ class CountPages(models.Manager):
 
 class PageObj(models.Model):
     url = models.URLField(blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True)
     objects = CountPages()
 
 class CountRequests(models.Manager):
     def count_requests(self):
         tz = pytz.timezone('Asia/Kolkata')
-        return super().get_queryset().filter(date = datetime.datetime.now(tz)).count()
+        return super().get_queryset().filter(date = (datetime.datetime.now(tz)).date()).count()
 
 
 class RequestObj(models.Model):
 
-    date = models.DateField(default=datetime.datetime.now(pytz.timezone('Asia/Kolkata')))
+    date = models.DateField(default=(datetime.datetime.now(pytz.timezone('Asia/Kolkata'))).date())
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     location = models.CharField(blank=True, max_length=10000)
     page = models.ForeignKey(PageObj, on_delete=models.SET_NULL, null=True, blank=True)

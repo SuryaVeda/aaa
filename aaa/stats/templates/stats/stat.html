@@ -25,6 +25,14 @@
 <br>
 
 {% endif %}
+
+{% if pages %}
+<ol>
+  {% for i in pages %}
+<li> <a href="{{ i.url }}">{{ i.url }}</a> is requested {{ i.count }} times</li>
+  {% endfor %}
+</ol>
+{% endif %}
 </div>
 
 
