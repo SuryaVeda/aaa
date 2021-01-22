@@ -15,10 +15,8 @@
 
 {% if location %}
 {% for i in location %}
-<p>{{ i.1 }} : {{ i.0 }}</p>
-
-{% if i.0 %}
-<p>{{ i.1 }} : {{ i.0 }}</p>
+{% if i %}
+<p>{{ active_user }} location is {{ i.0 }}</p>
 {% else %}
 <p>{{ i.1 }} : Location Unknown, unable to trace ip address</p>
 {% endif %}
