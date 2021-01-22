@@ -305,10 +305,9 @@
 
 
           {% if post.get_links %}
-          <b>Attached links</b>
           {% for i in post.get_links %}
           <div class="home-post-link">
-              <a href="{{i.link}}"><p>{{i.link_name}}</p></a>
+              <a href="{{i.link}}"><p>{{i.link_name}}: {{ i.link }}</p></a>
           </div>
           {%endfor%}
           {% endif  %}
