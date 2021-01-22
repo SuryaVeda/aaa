@@ -10,7 +10,7 @@ from .decorators import staff_required, admin_required
 from django.utils import timezone
 from django.contrib import messages
 from django.views.generic import TemplateView
-import bleach, datetime
+import bleach, datetime,pytz
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from  django.core.mail import send_mail
@@ -49,9 +49,11 @@ class HomeView(TemplateView):
         #context['cases'] = list(questionbank.filter(qa=True))
         postslist = list(Post.objects.filter(lecture=False).order_by('-date').prefetch_related())
         print(len(postslist))
-        lectures = LecturePost.objects.all().order_by('-pk')
+        utc = pytz.UTC
+        tz = pytz.timezone('Asia/Kolkata')
+        today = datetime.datetime.now(tz)
+        context['lectures'] = [i for i in LecturePost.objects.all().order_by('-pk') if utc.localize(i.lecture_start_date) > today]
         context['posts'] = postslist[0:15]
-        context['lectures'] = lectures
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context['tag_speciality'] = list(tag_speciality)
         return context
