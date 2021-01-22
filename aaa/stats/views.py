@@ -16,5 +16,5 @@ class StatPage(TemplateView):
         context['pages'] = PageObj.objects.order_by('-count')
         print(PageObj.objects.all().count())
         context['active_user'] = User.custom_objs.most_active_users()
-        context['location'] = [RequestObj.objects.filter(user = context['active_user']).order_by('-date')[0].get_ip_details()]
+        context['location'] = []
         return context
