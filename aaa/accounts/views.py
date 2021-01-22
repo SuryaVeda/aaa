@@ -300,8 +300,11 @@ class ChangeUser(View):
                 except:
                     messages.error(self.request, 'User doesnot exist', extra_tags='{0}'.format(self.request.user.email))
                     return redirect('home:manage')
-            x = redirect('home:manage')
-            return JsonResponse({'success':x.url}, safe=False)
+                x = redirect('home:manage')
+                return JsonResponse({'success':x.url}, safe=False)
+            return redirect('home:manage')
+
+
         else:
             return redirect('home:home')
 

@@ -66,7 +66,7 @@
                 <div style="display: flex; flex-flow: row wrap;">
                     {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
 
-                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                <form  method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
                     {% csrf_token %}
                     <p><button name="demotestaff" value="demoting staff">Demote to staff.</button></p>
                 </form>
@@ -80,13 +80,13 @@
                 <div style="display: flex; flex-flow: row wrap;">
                     {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
 
-                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                <form  method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
                        {% csrf_token %}
 
                     <p><button name = 'promoteadmin' value="promote to admin">Promote to Admin.</button></p>
                 </form>
 
-                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                <form onsubmit="return deleteuseres(event.preventDefault(), {{ user.pk }})" method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
                                        {% csrf_token %}
 
                     <p><button type="submit"  name="deleteuser" value="delete user">Delete user.</button></p>
@@ -101,12 +101,12 @@
                <div style="display: flex; flex-flow: row wrap;">
                    {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
 
-                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                <form  method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
                                         {% csrf_token %}
 
                     <p><button name = 'promoteadmin' value="promote to admin">Promote to Admin.</button></p>
                 </form>
-                <form method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
+                <form  method="post" action="{% url 'accounts:changeuser' user.pk %}" enctype="application/x-www-form-urlencoded">
                     {% csrf_token %}
 
                     <p><button name = 'promotestaff' value="promote to staff">Promote to Staff.</button></p>
