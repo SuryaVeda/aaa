@@ -1,6 +1,14 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block main %}
+<style media="screen">
+  .userstats {
+    width: 100%;
+  }
+  .pagestats{
+    width: 100%;
+  }
+</style>
 <div class="flex-column">
 <h1>Statistics</h1>
 
@@ -26,13 +34,22 @@
 
 {% endif %}
 
+<div class="pagestats">
+<h3>Page Statistics</h3>
 {% if pages %}
 <ol>
   {% for i in pages %}
 <li> <a href="{{ i.url }}">{{ i.url }}</a> is requested {{ i.count }} times</li>
   {% endfor %}
 </ol>
+
 {% endif %}
+</div>
+<div class="userstats">
+<h3>User Statistics</h3>
+<p>Most active user: Most active user today is {{ active_user.1 }} made {{ active_user.0 }} requests today</p>
+
+</div>
 </div>
 
 
