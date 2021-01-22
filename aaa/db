@@ -1405,6 +1405,77 @@ ALTER SEQUENCE public.notifications_notification_id_seq OWNED BY public.notifica
 
 
 --
+-- Name: stats_pageobj; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.stats_pageobj (
+    id integer NOT NULL,
+    url character varying(200)
+);
+
+
+ALTER TABLE public.stats_pageobj OWNER TO sk;
+
+--
+-- Name: stats_pageobj_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.stats_pageobj_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.stats_pageobj_id_seq OWNER TO sk;
+
+--
+-- Name: stats_pageobj_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.stats_pageobj_id_seq OWNED BY public.stats_pageobj.id;
+
+
+--
+-- Name: stats_requestobj; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.stats_requestobj (
+    id integer NOT NULL,
+    location character varying(10000) NOT NULL,
+    user_id integer,
+    date date NOT NULL,
+    page_id integer
+);
+
+
+ALTER TABLE public.stats_requestobj OWNER TO sk;
+
+--
+-- Name: stats_requestobj_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.stats_requestobj_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.stats_requestobj_id_seq OWNER TO sk;
+
+--
+-- Name: stats_requestobj_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.stats_requestobj_id_seq OWNED BY public.stats_requestobj.id;
+
+
+--
 -- Name: accounts_degree id; Type: DEFAULT; Schema: public; Owner: sk
 --
 
@@ -1664,6 +1735,20 @@ ALTER TABLE ONLY public.notifications_notification ALTER COLUMN id SET DEFAULT n
 
 
 --
+-- Name: stats_pageobj id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.stats_pageobj ALTER COLUMN id SET DEFAULT nextval('public.stats_pageobj_id_seq'::regclass);
+
+
+--
+-- Name: stats_requestobj id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.stats_requestobj ALTER COLUMN id SET DEFAULT nextval('public.stats_requestobj_id_seq'::regclass);
+
+
+--
 -- Data for Name: accounts_degree; Type: TABLE DATA; Schema: public; Owner: sk
 --
 
@@ -1699,6 +1784,14 @@ COPY public.accounts_degree (id, name_id, finalyear, college_id) FROM stdin;
 29	7	\N	31
 30	7	\N	32
 31	1	\N	33
+32	7	\N	35
+33	1	\N	35
+34	7	\N	36
+35	1	\N	37
+36	7	\N	14
+37	1	\N	14
+38	7	\N	39
+39	7	\N	9
 \.
 
 
@@ -1741,6 +1834,11 @@ COPY public.accounts_medicalcollege (id, name) FROM stdin;
 32	K.A.P. VISWANATHAN GOVERNMENT MEDICAL COLLEGE, TRICHY, TAMILNADU
 33	GOVT MEDICAL COLLEGE AND HOSPITAL, CHANDIGARH
 34	LAL BAHADUR SHASTRI HOSPITAL, NEW DELHI
+35	sk
+36	I don't have mbbs
+37	I don't have clg
+38	Kkk
+39	Aiima
 \.
 
 
@@ -1764,6 +1862,11 @@ COPY public.accounts_profile (id, user_id, dob, name, nationality, phone, backgr
 19	23	\N	beeralingwalikar	\N	\N		
 20	24	\N	PRABA3006	\N	\N		
 21	25	\N	Pallavi	\N	\N		
+22	\N	\N	Example	\N	\N		
+23	27	\N	Saikoushik	\N	\N		
+24	28	\N	Jharana 	\N	\N		
+25	\N	\N	ఛషఛఠఛక	\N	\N		
+26	\N	\N	Hi	\N	\N		
 \.
 
 
@@ -1802,6 +1905,16 @@ COPY public.accounts_profile_degree (id, profile_id, degree_id) FROM stdin;
 38	20	2
 39	21	30
 40	21	31
+41	22	32
+42	22	33
+43	23	34
+44	23	35
+45	24	36
+46	24	37
+47	25	38
+48	25	9
+49	26	39
+50	26	9
 \.
 
 
@@ -1900,6 +2013,36 @@ COPY public.accounts_profile_details (id, profile_id, profiledetail_id) FROM std
 118	21	130
 119	21	131
 120	21	132
+121	22	135
+122	22	136
+123	22	137
+124	22	138
+125	22	139
+126	22	140
+127	23	141
+128	23	142
+129	23	143
+130	23	144
+131	23	145
+132	23	146
+133	24	147
+134	24	148
+135	24	149
+136	24	150
+137	24	151
+138	24	152
+139	25	153
+140	25	154
+141	25	155
+142	25	156
+143	25	157
+144	25	158
+145	26	159
+146	26	160
+147	26	161
+148	26	162
+149	26	163
+150	26	164
 \.
 
 
@@ -1931,6 +2074,11 @@ COPY public.accounts_profile_work (id, profile_id, work_id) FROM stdin;
 18	19	18
 19	20	15
 20	21	19
+21	22	20
+22	23	21
+23	24	22
+24	25	23
+25	26	23
 \.
 
 
@@ -2066,6 +2214,36 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 132	interests		
 96	About	 The practice of general anesthesia has been a dynamic process ever since it&#x27;s origin, on the fateful day of 16 Oct 1846 when WTG Morton demonstrated publicly ether anesthesia and changed the surgical fields forever.\n\nToday an anesthesiologist is not only an important part of OT team but takes a lead role in various fields like critical care team leader, BLS &amp;amp; ACLS team leader and trainer, covid management team, acute &amp;amp; chronic pain management and has come forward as a perioperative physician. With responsibilities of perioperative optimization of the patient, intraoperative conduct of anesthesia using a large armament of regional &amp;amp; general anesthesia and providing post operative pain relief, the anesthesiologist plays a pivotal role in patient care.\n\nThe demand for good general anesthesiologist is never ending, so more and and more PG aspirants take on the course of MD (3yrs) or DA (2yrs) each year either as a primary choice or as a path to further subspecialties like critical care, cardiac anesthesia, neuro-anesthesia or pain medicine.\n\nAs the exponential growth in various modalities of anesthesia come up every year, the future for general anesthesia looks promising. New innovations and technological advancements make the practice of general anesthesia a dynamic learning journey and more 	
 134	About 	 As a sub-speciality, onco-anaesthesiology provides the anaesthesiologist with an opportunity to positively influence the surgical outcome. The aim is to help reduce length of hospital stay, imbibe multimodal interdisciplinary analgesia, integrate supportive care, potentially minimise cancer recurrence and improve oncological outcomes. \nWHO predicts the annual new cancer diagnosis is set to rise to 22 million by 2030. With these trends, need of onco-anaesthesiology as a sub speciality is the need of hour. \nSince most of cancer patients have multiple co morbidities, these cases will test your skill and knowledge on a daily basis. \n\n	
+135	personal statement		
+136	experience		
+137	education		
+138	recommendation		
+139	accomplishments		
+140	interests		
+141	personal statement		
+142	experience		
+143	education		
+144	recommendation		
+145	accomplishments		
+146	interests		
+147	personal statement		
+148	experience		
+149	education		
+150	recommendation		
+151	accomplishments		
+152	interests		
+153	personal statement		
+154	experience		
+155	education		
+156	recommendation		
+157	accomplishments		
+158	interests		
+159	personal statement		
+160	experience		
+161	education		
+162	recommendation		
+163	accomplishments		
+164	interests		
 \.
 
 
@@ -2076,19 +2254,21 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 COPY public.accounts_user (id, password, last_login, email, username, is_active, staff, admin, reset) FROM stdin;
 24	pbkdf2_sha256$216000$tr3tPO4Wb1wV$6eUgL95eVAMFQ/Rh7TArfY1h55n5KKFc7y76NTCqfmE=	\N	prabakaranlee@gmail.com	PRABA3006	t	t	t	\N
 21	pbkdf2_sha256$216000$De9SlRr1cVbt$W4RoG50H4hnQahxCg/+OPoe/M/J3faiw1Mds5MEC7M4=	2021-01-02 14:14:43.925174+00	hithimachenahalli@gmail.com	Hithish M J	t	t	t	\N
-12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2020-12-06 12:11:35.032613+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
 25	pbkdf2_sha256$216000$Emf4YIIIvwAX$07AhM2JZUKCKr5B0i8Km2PLyMweL7oiJi7pa4Mvs7sQ=	\N	drpallavisingh2015@gmail.com	Pallavi	t	t	t	\N
 19	pbkdf2_sha256$216000$uOMpWUZSU4wk$J9+D8vEzmN3srMkKPkBZ7K02x3DcNDQ0N8+CrodtSaM=	\N	tripta.mgims@gmail.com	TRIPTA	t	t	t	\N
 22	pbkdf2_sha256$216000$54dKlWTY7t28$v/dvYGBvnLWjeHjhCR9NPJepgMJw5D6S0Rb6tBznmhw=	2021-01-02 14:21:25.890388+00	naveenselvaraj1993@gmail.com	Naveen. S	t	t	t	\N
 13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t	\N
 23	pbkdf2_sha256$216000$ntvPoEpk8Jne$V9m+7WerQDypRXSadVo9bufWnu0dptIK+jvdYFoFllM=	2021-01-02 14:27:13.41801+00	beeralingnw@gmail.com	beeralingwalikar	t	t	t	\N
 14	pbkdf2_sha256$216000$T7dPeTz7oKit$s4UwZx3Mhn5/pn9amqGCrfJ2kBctzLOQM0DBP3XDQRk=	2021-01-06 08:40:30.9549+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
-3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-08 06:22:57.736168+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
-2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2021-01-08 16:42:14.122725+00	suryaveda@hotmail.com	sk	t	t	t	\N
 15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t	\N
+28	pbkdf2_sha256$216000$H8yzk2nhcxaj$Qwr4aNv3EBKUTbscNQEMzp2m44416F8/oDklZQhk67M=	2021-01-16 10:35:48.559405+00	cooljharana@gmail.com	Jharana 	t	t	f	\N
+2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2021-01-16 20:31:50.630463+00	suryaveda@hotmail.com	sk	t	t	t	\N
 16	pbkdf2_sha256$216000$0cgFkSw1M7h9$2rVbaqrjCLZmPfwQeaJ/p6sJN3HGciMMOnRYVa3dmfA=	\N	sherkhan_5195@yahoo.com	sherkhan_5195@yahoo.	t	t	t	\N
 17	pbkdf2_sha256$216000$u12nNcUnJ1w4$dM3zR8lja8MaR1ElQghLh91ma7aox6AlFTljIecXOmw=	2020-12-23 16:15:37.721521+00	nitishtha220@gmail.com	Nitish	t	t	t	\N
+3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-20 10:52:37.555345+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
 18	pbkdf2_sha256$216000$Y269kX6KTayq$miEE07VMy9Q9MD0UemoB9KirVkdToMhSUxhxGIw+Tfs=	2020-12-23 16:54:59.679832+00	gpoojithareddy87@gmail.com	PR	t	t	t	\N
+12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2021-01-20 16:58:07.478413+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
+27	pbkdf2_sha256$216000$edJBAyu6ggzp$6JGBBF79m5W/GZnA2GAeMJJnrhhFVawSgXJdGQInGI0=	2021-01-15 12:38:48.529431+00	evnskoushik@gmail.com	Saikoushik	t	f	f	\N
 \.
 
 
@@ -2116,6 +2296,10 @@ COPY public.accounts_work (id, "position", is_current, hospital_id) FROM stdin;
 17	Junior resident	t	29
 18	JUNIOR RESIDENT	t	1
 19	SENIOR RESIDENT	t	34
+20	sk	t	35
+21	Software engineer	t	38
+22	JR	t	14
+23	Sr	t	9
 \.
 
 
@@ -2156,7 +2340,7 @@ COPY public.archives_fileadd (id, file_name, file, is_image) FROM stdin;
 --
 
 COPY public.archives_lecturepost (post_ptr_id, lecture_start_date, lecture_end_date) FROM stdin;
-28	2021-01-09 11:30:00+00	2021-01-09 12:30:00+00
+40	2021-01-16 11:30:00+00	2021-01-16 12:30:00+00
 \.
 
 
@@ -2298,6 +2482,14 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 94	Can change lecture post	24	change_lecturepost
 95	Can delete lecture post	24	delete_lecturepost
 96	Can view lecture post	24	view_lecturepost
+97	Can add request obj	25	add_requestobj
+98	Can change request obj	25	change_requestobj
+99	Can delete request obj	25	delete_requestobj
+100	Can view request obj	25	view_requestobj
+101	Can add page obj	26	add_pageobj
+102	Can change page obj	26	change_pageobj
+103	Can delete page obj	26	delete_pageobj
+104	Can view page obj	26	view_pageobj
 \.
 
 
@@ -2355,6 +2547,8 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 22	notifications	notification
 23	archives	fileadd
 24	archives	lecturepost
+25	stats	requestobj
+26	stats	pageobj
 \.
 
 
@@ -2530,6 +2724,22 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 165	home	0065_auto_20210108_1323	2021-01-08 08:41:05.483002+00
 166	home	0066_auto_20210108_1323	2021-01-08 08:41:05.646627+00
 167	home	0067_merge_20210108_1410	2021-01-08 08:41:05.649583+00
+168	archives	0031_auto_20210110_1659	2021-01-10 11:55:11.921849+00
+169	archives	0032_merge_20210110_1725	2021-01-10 11:55:11.926951+00
+170	home	0067_auto_20210110_1659	2021-01-10 11:55:12.020129+00
+171	home	0068_merge_20210110_1725	2021-01-10 11:55:12.023286+00
+172	stats	0001_initial	2021-01-10 11:55:12.133578+00
+173	archives	0032_auto_20210112_1952	2021-01-12 16:31:30.159999+00
+174	archives	0033_auto_20210112_2051	2021-01-12 16:31:30.238658+00
+175	archives	0034_auto_20210112_2103	2021-01-12 16:31:30.341838+00
+176	archives	0035_merge_20210112_2201	2021-01-12 16:31:30.345565+00
+177	home	0068_auto_20210112_1952	2021-01-12 16:31:30.448852+00
+178	home	0069_auto_20210112_2051	2021-01-12 16:31:30.549847+00
+179	home	0070_auto_20210112_2103	2021-01-12 16:31:30.644555+00
+180	home	0071_merge_20210112_2201	2021-01-12 16:31:30.648881+00
+181	stats	0002_auto_20210112_1952	2021-01-12 16:31:31.038072+00
+182	stats	0003_auto_20210112_2051	2021-01-12 16:31:31.232572+00
+183	stats	0004_auto_20210112_2103	2021-01-12 16:31:31.308771+00
 \.
 
 
@@ -2538,16 +2748,15 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-98a8pphh3jyhrxg7am67jifbdvu3w9p7	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1ko2zr:br56zT6UWWe6-rjNXS0P6c2h-T3GUSNtl49ujCanhCQ	2020-12-26 11:23:31.92622+00
-09db4gfmn4yh03td5dz2jrfywb6mfcno	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1koLzF:oXa_JOaQLoE5TsDBQMVQhOtYN5uMi2AFIiHdrIlxeYA	2020-12-27 07:40:09.193316+00
-ubo58cl5w552c1ovh5tf4mh15cdkumge	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1kpObX:NlKV4r26OokKCBZoo9yyzG4-89w8pT6yhvhlIUeApx4	2020-12-30 04:39:59.02369+00
-rshvauyf3ag2zozyr65lckvboq7br22o	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1kq96z:eAuWuPuSROdNgRZvYejtQa2wbEqO0aboGkrK1ailKec	2021-01-01 06:19:33.018262+00
-vh1jcjafou8t456oa1cyjzfwcife0nvx	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1ks35h:BpRgjIq0cgm86B3WN5vg99v2ztqKM8llRoXUAQpRncM	2021-01-06 12:18:05.596126+00
-czdt4juiwrjzm0v864nu4gpiho4jyau9	.eJxVjEEOwiAQAP_C2RBYZGs9eu8byMKyUjU0Ke3J-HdD0oNeZybzVoH2rYS95TXMrK4K1OmXRUrPXLvgB9X7otNSt3WOuif6sE1PC-fX7Wj_BoVa6VtIie3gDHnLScSBjxbFW8jWIGfkMcoZaYx-AOeSEHsiQXTAFzGoPl_vnDhQ:1ks4Tu:ep_DARPl2E29t65wE-guQgyFtkGPl2VHMKqQ8qL9Oas	2021-01-06 13:47:10.00693+00
-em12blqlksyytt1jzmoyf1p8355taelr	.eJxVjMsOwiAQRf-FtSEwhJdL934DmYFRqgaS0q4a_12bdKHbe865m0i4LjWtg-c0FXEW2ovT70iYn9x2Uh7Y7l3m3pZ5Irkr8qBDXnvh1-Vw_w4qjvqtcwxcwHHEaE1WYO2NkL0lh2AUaU8qaKsseABgF7kEU6JT5FzM5Fm8PwLXN7E:1ks6nZ:OuqunXsiFPA2r0_lO_iNbNaK_YEm15Kg-vzwnANWyms	2021-01-06 16:15:37.724442+00
-6hr9nnwgnl43gw6gvpuvo6p88harh7ht	.eJxVjEsOwjAMBe-SNYrqNGkcluw5Q-TaDimgVupnhbg7VOoCtm9m3stk2taat0XnPIg5G0Bz-h174oeOO5E7jbfJ8jSu89DbXbEHXex1En1eDvfvoNJSvzVG9T1JShE8iYRUFEurAk1yEbvouHPcOORQwMfEGAMmpIah5aAK5v0BC6g3zg:1ks7Pf:gorDrdG_A52kbtgbtIfED78e-6gol9izgHRK98r3vbg	2021-01-06 16:54:59.682382+00
-hhs5u0k90nwkievp8zw3pnz21olfaqco	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1ksR8i:-5tIN87qQ_FqmPTsK__X7fMMZmt3CVucuC6u7V2U23k	2021-01-07 13:58:48.144592+00
-9umuszk4cnpgiuj8jup9qtblvsqqwzva	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1ksksg:emGYgRpRo-ScpI3k0wq9qQJVUpYeFYNBDKQOi-GH8PI	2021-01-08 11:03:34.829159+00
+o69mqrw8cruxsj8tw7h06pftd5d0oeef	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1kzNu7:fOwySLk3I7e67sbDIEUYXWT4AokZ-cqSHsr3Naa6IzM	2021-01-26 17:56:27.899324+00
+1nfcvf8imw7ecl53uctbgtxhwku6vfd5	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1kzNzl:Md_1E570OvtYzu7eZ6bkeuhPK-RGWfo5eao1BEpEro0	2021-01-26 18:02:17.285635+00
+fdnxmdbmi1e8ijwo119mn7oxiwhn9j12	.eJxVjM0OwiAQhN-FsyF2y_Lj0bvPQHaBStVAUtqT8d2lSQ-azOmbb-YtPG1r9ltLi5-juAgw4vQLmcIzlb2JDyr3KkMt6zKz3BV5tE3eakyv6-H-HWRqua8DJ3bgUgQDBqlnxIATupHZKVKMhgajreqQEUayCPZs3DAlzUpH8fkCEeE37Q:1l0ONM:dauyNmLLRyOIo6BS7pjlnaGUepYGukEXlRFN207cY9E	2021-01-29 12:38:48.536451+00
+il6my69me3pztyppdn8sv7pw91kmou6v	.eJxVjEEOwiAQRe_C2hCGYpm6dN8zNDMMSNVAUtqV8e7apAvd_vfef6mJtjVPW4vLNIu6KIvq9DsyhUcsO5E7lVvVoZZ1mVnvij5o02OV-Lwe7t9Bppa_NQp76MAOSBCcCey5t5AEOjpbAcRgnPFDRJfE25B6EHSGHUVABgvq_QH49TeU:1l0ivs:oLw43EU9lUhbCp_9MINpDABIw99A4ttI-q-4vweCQGc	2021-01-30 10:35:48.562179+00
+r7ta63532uzv910n0kzx6p0knz3282bw	.eJxVjDsOgzAQRO_iOrLwbxdSpucMaNdeYpLISBiqKHcPSBRJOfPezFsNtK152Kosw5TUVblGXX5LpviUcpD0oHKfdZzLukysD0WftOp-TvK6ne7fQaaa9zUSBC9oDZvIHTfWAzEmABsxOsCuMa0JQAGQLXi3J4cyBhlZWnZefb7oATdG:1l0nW6:wNbiirVWinjNynoBIFmWk_Kt__pybGNsj17JZXViG3s	2021-01-30 15:29:30.345304+00
+2ej5ogpmkugtvrnpy6mq73e99sh2fpep	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l0sEg:wtTqUdJHmSQYiS-kI5wuQyXQ4_ewFwEGGcXlulIot_A	2021-01-30 20:31:50.6332+00
+p68ybxu4zxn7vhjrhqmx50sczsw1pvi6	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1l2AsV:LBhaKvW_w11LIU57sxG45lF4OONLmOLZ3a6QHDwek0s	2021-02-03 10:38:19.65156+00
+fe5kukk2549elfw795grfjuqvdfbtsnn	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1l2B6L:lypbYu2oXOzsf0WHKp7fwToNeTozfn8yA7PWv7PL1A4	2021-02-03 10:52:37.565921+00
+vo8gjnuh9gbn5tj9eqig4zchm802zerg	.eJxVjDsOwjAQBe_iGln-EpuSnjNYu94NDiBbipMKcXcSKQW0b2beWyRYl5LWznOaSFyENuL0OyLkJ9ed0APqvcnc6jJPKHdFHrTLWyN-XQ_376BAL1sdghrOHAw6b6yKkPUAaInZZvSBLbhgvYcYKNPmRnCoLKHTaoyjIS8-X_uLOAY:1l2Go3:ga_wslBAps16FKrEPkYz_BiGfSaUYL8sHNA5eIgIEFg	2021-02-03 16:58:07.483199+00
 kizy4cvd2arn6mkroimwonblyb0l1m0y	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1kvhRi:oyGUPCNFTDtalGpcg5aA1uV7if4vFp2g5Pq4N5XzjNs	2021-01-16 13:59:54.061642+00
 wfhpaoe3snibe40vhjhe9cxfpx9phqjj	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kvhfS:poyb_vnYjWhs6ZCAkAtdGvtoD2KJOtA-1exA-X9QcOE	2021-01-16 14:14:06.746577+00
 b5hokho1bh4u0hbqus7qmhbmsas58k58	.eJxVjDsOwyAQBe9CHSGz5psyvc-AYBeCkwgkY1dR7h5bcpG0b2bem_mwrcVvPS1-JnZlINjld4wBn6kehB6h3hvHVtdljvxQ-Ek7nxql1-10_w5K6GWvx0wDCkoSwYGJFkAaHCCCJRB6tBqtky7mjGgUJkMGMqqkEUNUe8M-Xwn4OJ4:1kvhg3:rydpl8NjaQLJBK35Mld0PxieMbzaKL0H1V8lUZ0n3rE	2021-01-16 14:14:43.929429+00
@@ -2555,9 +2764,8 @@ icaxq9l6tczphbd0dytlkmnfm3opjbq0	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apA
 z8d2h1yqi5dmaaoz0klztoqbb6tsawmw	.eJxVjEEOwiAQRe_C2pCBKRRcuu8ZyDCgVA0kpV0Z765NutDtf-_9lwi0rSVsPS9hTuIstBan3zESP3LdSbpTvTXJra7LHOWuyIN2ObWUn5fD_Tso1Mu3jjCSAu8GJGOVQ_T2ajODR0QwSIPygzKKKUfgqI1xrHlkYoMKHbB4fwDShzb2:1kvhmX:wH91BEB2Ee3_m7KEvVQnZ2GqVfB8WJ6Lj6DhZiyG5HY	2021-01-16 14:21:25.893232+00
 au6ynqoocyf0tiw1ek9e8e35xljkhks2	.eJxVjDsOwjAQBe_iGlnrrON4KelzBsufNQ4gR4qTCnF3EikFtG9m3ls4v63FbY0XNyVxFR2Ky-8YfHxyPUh6-HqfZZzrukxBHoo8aZPjnPh1O92_g-Jb2evIaNUAkFCZAMyBvc4GgUwiQsIOKETN2qLSfR-9ycBGZbtnQwQk8fkC-rE3fA:1kvhs9:WjuDuvfM134LIFSsIhX4bePRbp-HD_KaYqY3Nl-X0zE	2021-01-16 14:27:13.4207+00
 b2u14616mmqyaauplkzdbm2vf72wj903	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kx4Mo:5kLZqpRGdWN4LMoebmiACEs04WDL-HDSYJ1KG1wnQKY	2021-01-20 08:40:30.958039+00
-9dvjfrgzrpmc7sk3q482sfjt7th2wnzb	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1kxeW9:3_t9W8t1UOYcUhgoXU27w5yfaydtvfo1z2J0mJ4731s	2021-01-21 23:16:33.63364+00
 6yo9clfltmebb3fp21wdf7mfo41tw0g1	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1kxlAn:cxZwG7SCS8HpNI4kX7OK1jcKp4ZNoS2dvhV8vB-hQN4	2021-01-22 06:22:57.739204+00
-7crdlao5rhrhaiy97q7u0ovixngyc2zl	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1kxuq6:Z3a43_uUYXXXMtPJNCIJ-qT9PD7MXkWDz5h2XxKMYoI	2021-01-22 16:42:14.125456+00
+52dw1e69ycu1s11euxc69bz3ilynzb1e	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1kzMo6:0AtGbKAV3b3znYbgOFAe2VmCKxwFUrlm-wtoHV2mZAM	2021-01-26 16:46:10.810753+00
 \.
 
 
@@ -2574,6 +2782,7 @@ COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdi
 8	2020-12-23 13:45:01.385813+00	The FLACC scale or Face, Legs, Activity, Cry, Consolability scale is a measurement used to assess pain for children between the ages of 2 months and 7 years or individuals that are unable to communicate their pain. Coughing is not a component of FLACC scale.	2		\N	
 9	2021-01-05 09:07:19.1997+00	24 hrs	\N		\N	
 10	2021-01-05 14:10:32.158426+00	Link	3		\N	
+11	2021-01-10 15:54:35.006201+00	Hello!  allaboutanaesthesia.co \n \nDid you know that it is possible to send business proposal entirely lawfully? \nWe presentation a new method of sending business proposal through contact forms. Such forms are located on many sites. \nWhen such business offers are sent, no personal data is used, and messages are sent to forms specifically designed to receive messages and appeals. \nalso, messages sent through contact Forms do not get into spam because such messages are considered important. \nWe offer you to test our service for free. We will send up to 50,000 messages for you. \nThe cost of sending one million messages is 49 USD. \n \nThis message is created automatically. Please use the contact details below to contact us. \n \nContact us. \nTelegram - @FeedbackMessages \nSkype  live:contactform_18 \nWhatsApp - +375259112693	\N		\N	
 \.
 
 
@@ -2583,6 +2792,7 @@ COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdi
 
 COPY public.home_comment_link (id, comment_id, postlink_id) FROM stdin;
 1	10	20
+2	11	28
 \.
 
 
@@ -2608,7 +2818,10 @@ COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img, 
 18	2020-12-24 17:13:27.57615+00	WBSSPCON 2021\r\nTheme- ULTRASOUND IN PAIN MEDICINE	It's a international conference by west Bengal society for the study of pain	\N		\N	Postimages/2020/12/$D/IMG-20201224-WA0033_XpnrVQg_yJapiEY.jpg	f
 16	2020-12-23 14:43:30.341516+00	Stoppage of therapeutic dalteparin before epidural insertion\r\na. 12 hrs before\r\nb. 24 hrs before\r\nc. 6 hrs before\r\nd. 68 hrs before	\N	2		\N		f
 24	2021-01-06 03:56:32.779781+00	Dear Colleagues,\r\nWelcome to COVIPOCUS2021 – World congress on Point of care Ultrasound in COVID-19 pandemic.\r\n\r\nWith COVID striking the world, the science of acute care has changed forever. The success of acute care lies in High Quality Patient Care which is dependent on Physicians and Nurses having Up-to-Date Knowledge and Skills. Knowledge is generated from Innovative Research and Clinical Experience. Education helps in the organised dissipation of that knowledge. It is with the above Premise that the World Academic Council of Emergency Medicine (WACEM), International Network for Critical ultrasound(INCUS) and WHO Collaborating centre for Emergency and Trauma is organizing WACEM Global e- congress COVIPOCUS2021 on POCUS IN COVID-19 PANDEMIC. This is a unique platform where Global POCUS leaders will be sharing their cutting edge Research, Operations and System building processes.	\N	3		\N		f
-28	2021-01-08 06:19:19.147745+00	Anaesthesia NEET SS Q&A Session	\N	3		\N		t
+29	2021-01-12 10:05:32.644918+00	Criticare 2021	\N	3		\N		f
+30	2021-01-12 10:27:23.650297+00	Management of Postamputation Limb pain	\N	3		\N		f
+31	2021-01-12 11:01:02.017451+00	Indian Society For The Study Of Pain 36th Annual National Conference 2021\r\n05 Feb 2021 - 07 Feb 2021 • Bhubaneswar, India	\N	3		\N		f
+40	2021-01-14 06:23:47.117352+00	Anaesthesia NEET SS Q&A Session	\N	3		\N		t
 \.
 
 
@@ -2633,6 +2846,10 @@ COPY public.home_post_link (id, post_id, postlink_id) FROM stdin;
 7	12	8
 9	18	15
 10	24	22
+15	29	30
+16	30	32
+17	31	34
+23	40	42
 \.
 
 
@@ -2664,7 +2881,14 @@ COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
 40	18	3
 50	24	1
 51	24	6
-55	28	1
+56	29	9
+57	29	6
+58	30	1
+59	30	3
+60	31	9
+61	31	3
+62	31	1
+73	40	1
 \.
 
 
@@ -2697,6 +2921,22 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 22	https://covipocusworld.com/	link address	3
 25	https://allaboutanaesthesia.co/archives/create-lecture	zoom link	\N
 26	https://allaboutanaesthesia.co/archives/create-lecture	link address	\N
+27	https://www.no-site.com	https://www.no-site.com	\N
+28	https://www.no-site.com	https://www.no-site.com	\N
+29	http://criticare.isccm.org/criticare2021/	link address	\N
+30	http://criticare.isccm.org/criticare2021/	link address	3
+31	https://resources.wfsahq.org/wp-content/uploads/atow-438-00.pdf	link address	\N
+32	https://resources.wfsahq.org/wp-content/uploads/atow-438-00.pdf	link address	3
+33	http://www.isspcon2021.com/	link address	\N
+34	http://www.isspcon2021.com/	link address	3
+35	https://us04web.zoom.us/j/77989353168?pwd=RjBydDZicWZ3VFQ0d2lLZFBGelhwZz09	Zoom link	\N
+36	https://us04web.zoom.us/j/4960707223?pwd=SUZQV211V2hCN21ydUl2R29pcVFvdz09	link address	\N
+37	https://us04web.zoom.us/j/4960707223?pwd=SUZQV211V2hCN21ydUl2R29pcVFvdz09	link address	3
+38	https://us04web.zoom.us/j/4960707223?pwd=SUZQV211V2hCN21ydUl2R29pcVFvdz09	Zoom 	\N
+39	https://meet.google.com/izu-umom-qgo	Google meet	\N
+40	https://meet.google.com/izu-umom-qgo	Google meet	2
+41	https://meet.google.com/izu-umom-qgo	Google meet	\N
+42	https://meet.google.com/izu-umom-qgo	NEET SS	\N
 \.
 
 
@@ -2794,6 +3034,75 @@ COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 COPY public.notifications_notification (id, message, post_id, user_id, date) FROM stdin;
 1	A new comment is added to Stoppage o.. by new user	16	2	2021-01-05 11:44:52.087447+00
 2	A new comment is added to Dear Colle.. by new user	\N	\N	2021-01-06 03:48:29.251751+00
+3	A new comment is added to Anaesthesi.. by new user	\N	3	2021-01-11 23:17:02.475477+00
+\.
+
+
+--
+-- Data for Name: stats_pageobj; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.stats_pageobj (id, url) FROM stdin;
+1	https://allaboutanaesthesia.co/
+2	https://allaboutanaesthesia.co/stats/
+3	https://allaboutanaesthesia.co/archives/lectures
+4	https://allaboutanaesthesia.co/accounts/profile
+5	https://allaboutanaesthesia.co/conferences
+6	https://allaboutanaesthesia.co/accounts/signup/staff_signup
+7	https://allaboutanaesthesia.co/accounts/signin
+8	https://allaboutanaesthesia.co/archives/create-lecture
+9	https://allaboutanaesthesia.co/admin/jsi18n/
+10	https://allaboutanaesthesia.co/archives/edit-lecture/32
+11	https://allaboutanaesthesia.co/delete_post/32
+12	https://allaboutanaesthesia.co/delete_post/28
+13	https://allaboutanaesthesia.co/archives/exfactor
+14	http://127.0.0.1:8000/archives/lectures
+15	http://127.0.0.1:8000/
+16	https://allaboutanaesthesia.co/managewebsite
+17	https://allaboutanaesthesia.co/delete_post/33
+18	https://allaboutanaesthesia.co/mcq/
+19	https://allaboutanaesthesia.co/home/NEET-SS
+20	https://allaboutanaesthesia.co/home/Mcq
+21	https://allaboutanaesthesia.co/posts/29
+22	https://allaboutanaesthesia.co/posts/31
+23	https://allaboutanaesthesia.co/archives/edit-lecture-detail/34
+24	https://allaboutanaesthesia.co/archives/edit-lecture/34
+25	https://allaboutanaesthesia.co/delete_post/34
+26	https://allaboutanaesthesia.co/create_post
+27	https://allaboutanaesthesia.co/delete_post/35
+28	https://allaboutanaesthesia.co/home/Conferences
+29	https://allaboutanaesthesia.co/home/CRITICAL-CARE
+30	https://allaboutanaesthesia.co/archives/edit-lecture/36
+31	https://allaboutanaesthesia.co/delete_post/37
+32	https://allaboutanaesthesia.co/delete_post/38
+33	https://allaboutanaesthesia.co/delete_post/36
+34	https://allaboutanaesthesia.co/delete_post/39
+35	https://allaboutanaesthesia.co/mcq/getnewquestions/4
+36	https://allaboutanaesthesia.co/getnewposts/13
+37	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA
+38	https://allaboutanaesthesia.co/searchPage
+39	https://allaboutanaesthesia.co/mcq/getnewquestions/2
+40	https://allaboutanaesthesia.co/home/PAIN-MEDICINE
+41	https://allaboutanaesthesia.co/mcq/3
+42	https://allaboutanaesthesia.co/accounts/reset-your-password
+43	https://allaboutanaesthesia.co/accounts/passreset
+44	https://allaboutanaesthesia.co/notifications/
+45	https://allaboutanaesthesia.co/posts/10
+46	https://allaboutanaesthesia.co/mcq/1
+47	https://allaboutanaesthesia.co/posts/14
+48	https://allaboutanaesthesia.co/posts/15
+49	https://allaboutanaesthesia.co/posts/16
+50	https://allaboutanaesthesia.co/posts/30
+51	https://allaboutanaesthesia.co/posts/11
+52	https://allaboutanaesthesia.co/posts/13
+\.
+
+
+--
+-- Data for Name: stats_requestobj; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 \.
 
 
@@ -2801,35 +3110,35 @@ COPY public.notifications_notification (id, message, post_id, user_id, date) FRO
 -- Name: accounts_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_degree_id_seq', 31, true);
+SELECT pg_catalog.setval('public.accounts_degree_id_seq', 39, true);
 
 
 --
 -- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 34, true);
+SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 39, true);
 
 
 --
 -- Name: accounts_profile_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 40, true);
+SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 50, true);
 
 
 --
 -- Name: accounts_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 120, true);
+SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 150, true);
 
 
 --
 -- Name: accounts_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_id_seq', 21, true);
+SELECT pg_catalog.setval('public.accounts_profile_id_seq', 26, true);
 
 
 --
@@ -2843,28 +3152,28 @@ SELECT pg_catalog.setval('public.accounts_profile_links_id_seq', 1, false);
 -- Name: accounts_profile_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 20, true);
+SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 25, true);
 
 
 --
 -- Name: accounts_profiledetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 134, true);
+SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 164, true);
 
 
 --
 -- Name: accounts_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_user_id_seq', 25, true);
+SELECT pg_catalog.setval('public.accounts_user_id_seq', 30, true);
 
 
 --
 -- Name: accounts_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_work_id_seq', 19, true);
+SELECT pg_catalog.setval('public.accounts_work_id_seq', 23, true);
 
 
 --
@@ -2920,7 +3229,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 96, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 104, true);
 
 
 --
@@ -2934,28 +3243,28 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 20, true);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 24, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 26, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 167, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 183, true);
 
 
 --
 -- Name: home_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_comment_id_seq', 10, true);
+SELECT pg_catalog.setval('public.home_comment_id_seq', 11, true);
 
 
 --
 -- Name: home_comment_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_comment_link_id_seq', 1, true);
+SELECT pg_catalog.setval('public.home_comment_link_id_seq', 2, true);
 
 
 --
@@ -2969,35 +3278,35 @@ SELECT pg_catalog.setval('public.home_imageadd_id_seq', 1, false);
 -- Name: home_post_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_comments_id_seq', 10, true);
+SELECT pg_catalog.setval('public.home_post_comments_id_seq', 11, true);
 
 
 --
 -- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_id_seq', 28, true);
+SELECT pg_catalog.setval('public.home_post_id_seq', 40, true);
 
 
 --
 -- Name: home_post_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_link_id_seq', 14, true);
+SELECT pg_catalog.setval('public.home_post_link_id_seq', 23, true);
 
 
 --
 -- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_tag_id_seq', 55, true);
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 73, true);
 
 
 --
 -- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_postlink_id_seq', 26, true);
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 42, true);
 
 
 --
@@ -3053,7 +3362,21 @@ SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 9, true);
 -- Name: notifications_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.notifications_notification_id_seq', 2, true);
+SELECT pg_catalog.setval('public.notifications_notification_id_seq', 3, true);
+
+
+--
+-- Name: stats_pageobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 52, true);
+
+
+--
+-- Name: stats_requestobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 451, true);
 
 
 --
@@ -3521,6 +3844,22 @@ ALTER TABLE ONLY public.notifications_notification
 
 
 --
+-- Name: stats_pageobj stats_pageobj_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.stats_pageobj
+    ADD CONSTRAINT stats_pageobj_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: stats_requestobj stats_requestobj_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.stats_requestobj
+    ADD CONSTRAINT stats_requestobj_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: accounts_degree_college_id_c59b83b3; Type: INDEX; Schema: public; Owner: sk
 --
 
@@ -3868,6 +4207,20 @@ CREATE INDEX notifications_notification_post_id_d84e1970 ON public.notifications
 --
 
 CREATE INDEX notifications_notification_user_id_b5e8c0ff ON public.notifications_notification USING btree (user_id);
+
+
+--
+-- Name: stats_requestobj_page_id_968d3b70; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX stats_requestobj_page_id_968d3b70 ON public.stats_requestobj USING btree (page_id);
+
+
+--
+-- Name: stats_requestobj_user_id_83be08ee; Type: INDEX; Schema: public; Owner: sk
+--
+
+CREATE INDEX stats_requestobj_user_id_83be08ee ON public.stats_requestobj USING btree (user_id);
 
 
 --
@@ -4252,6 +4605,22 @@ ALTER TABLE ONLY public.notifications_notification
 
 ALTER TABLE ONLY public.notifications_notification
     ADD CONSTRAINT notifications_notification_user_id_b5e8c0ff_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: stats_requestobj stats_requestobj_page_id_968d3b70_fk_stats_pageobj_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.stats_requestobj
+    ADD CONSTRAINT stats_requestobj_page_id_968d3b70_fk_stats_pageobj_id FOREIGN KEY (page_id) REFERENCES public.stats_pageobj(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: stats_requestobj stats_requestobj_user_id_83be08ee_fk_accounts_user_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.stats_requestobj
+    ADD CONSTRAINT stats_requestobj_user_id_83be08ee_fk_accounts_user_id FOREIGN KEY (user_id) REFERENCES public.accounts_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
