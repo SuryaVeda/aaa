@@ -3,7 +3,7 @@ from accounts.models import User
 from .models import RequestObj, PageObj
 from django.conf import settings
 from urllib.parse import urljoin
-
+import datetime,pytz
 class SimpleMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -33,7 +33,10 @@ class SimpleMiddleware:
         response = self.get_response(request)
 
         if response.status_code == 200:
-            x = RequestObj.objects.create()
+            tz = pytz.timezone('Asia/Kolkata')
+            date = datetime.datetime.now(tz).date()
+            print(date)
+            x = RequestObj.objects.create(date = datetime.datetime.now(tz).date())
             if user:
                 x.user = user
             try:

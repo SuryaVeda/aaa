@@ -28,7 +28,7 @@ class CountRequests(models.Manager):
 
 class RequestObj(models.Model):
 
-    date = models.DateField(default=(datetime.datetime.now(pytz.timezone('Asia/Kolkata'))).date())
+    date = models.DateField(default= datetime.datetime.now(pytz.timezone('Asia/Kolkata')).date())
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     location = models.CharField(blank=True, max_length=10000)
     page = models.ForeignKey(PageObj, on_delete=models.SET_NULL, null=True, blank=True)
