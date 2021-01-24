@@ -26,7 +26,18 @@
     <div class="home-post">
 
      <div class="flex-column">
-       <p style="color: #000066"><b>{{post.posted_on}}</b></p>
+       <div class="flex-row" style="justify-content: space-between">
+         <p style="color: #000066"><b>{{post.posted_on}}</b> </p>
+         <div class="socialmediatags tags">
+
+           <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
+    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
+    <a  onclick="navigator.clipboard.writeText('{{ post.get_absolute_url }}'); alert('link: {{ post.get_absolute_url }} ')"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
+
+
+         </div>
+       </div>
+
 
          <div class="regulartags tags">
            {% for tag in post.get_tags %}
@@ -71,10 +82,9 @@
 
 
      {% if post.get_links %}
-     <b>Attached links</b>
      {% for i in post.get_links %}
      <div class="home-post-link">
-         <a href="{{i.link}}"><p>{{i.link_name}}</p></a>
+         <a href="{{i.link}}"><p>{{i.link_name}}: {{ i.link }}</p></a>
      </div>
      {%endfor%}
      {% endif  %}
