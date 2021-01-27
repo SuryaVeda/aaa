@@ -32,8 +32,10 @@
 <div class="manage">
 <div class="users">
         <h1>Manage Users</h1>
+        <h2>Total number of registered users is {{ users_length }}</h2>
 {% for user in users %}
     <div class="user">
+
         <div class="userdetails">
             {% if user.profile.get_profilepic%}
             <img src="/media/{{user.profile.get_profilepic}}" height="200px" width="200px" style="margin-right: 20px">
