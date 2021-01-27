@@ -629,6 +629,19 @@
             break
           }
       }
+      try {
+        let comments = document.getElementsByClassName('comments');
+        if (comments.length > 0) {
+          for (i = 0; i < document.getElementsByClassName('comments').length; i++ ) {
+            document.getElementsByClassName('comments')[i].style.display = 'none';
+          }
+        }
+        console.log(comments);
+
+      }
+      catch(err) {
+        console.log(err.message)
+      }
 
 for (var i = 0; i < document.getElementsByClassName('comments').length; i++) {
     console.log('yes');

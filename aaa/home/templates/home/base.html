@@ -1035,7 +1035,7 @@ window.onclick = function (event) {
 window.onload = function () {
 
   try {
-    var comments = document.getElementsByClassName('comments');
+    let comments = document.getElementsByClassName('comments');
     if (comments.length > 0) {
       for (i = 0; i < document.getElementsByClassName('comments').length; i++ ) {
         document.getElementsByClassName('comments')[i].style.display = 'none';
