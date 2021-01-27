@@ -78,7 +78,7 @@ class StaffError(TemplateView):
 
 def show_conferences(request):
     a= Tag.objects.get(name = 'Conferences')
-    posts = a.post_set.all().order_by('pk')
+    posts = a.post_set.all().order_by('-pk')
     tag_speciality = Tag.objects.filter(is_speciality=True)
     return render(request, 'home/conference.html', {'posts':posts,'tag_speciality': tag_speciality})
 
