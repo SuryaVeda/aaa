@@ -34,14 +34,25 @@ class LecturePage(TemplateView):
         today = datetime.datetime.now(tz)
         x = []
         y = []
-        for i in LecturePost.objects.all().order_by('-pk'):
+        for i in LecturePost.objects.filter(lecture=True).order_by('-pk'):
             if utc.localize(i.lecture_start_date) > today:
                 x.append(i)
             else:
                 y.append(i)
         context['lectures'] = x
         context['pastlectures'] = y
+        tag_speciality = Tag.objects.filter(is_speciality=True)
+        context['tag_speciality'] = list(tag_speciality)
         print(context)
+        return context
+
+class ConferencePage(TemplateView):
+    template_name = 'home/conference.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag = Tag.objects.get(name='Conferences')
+        context['oldposts'] = Post.objects.filter(tag=tag, conference=False)
+        context['posts'] = LecturePost.objects.filter(tag=tag).order_by('lecture_start_date')
         return context
 
 class LecturePostCreateView(CreateView):
@@ -49,11 +60,29 @@ class LecturePostCreateView(CreateView):
     form_class = LecturePostForm
     success_url = '/'
     template_name = 'home/lectureform.html'
+    def get(self, request, *args, **kwargs):
+        if request.GET.get('createconference'):
+            self.template_name = 'home/conferenceForm.html'
+        else:
+            self.kwargs['conference'] = None
+        print(self.kwargs)
+        print(self.template_name)
+        return super().get(request, *args, **kwargs)
+    def post(self, *args, **kwargs):
+        if self.request.POST.get('conferencebtn'):
+            self.kwargs['conference'] = True
+        else:
+            self.kwargs['conference'] = False
+        return super().post(self.request, *args, **kwargs)
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update(request=self.request)
+        kwargs.update(self.kwargs)
         return kwargs
     def get_success_url(self):
+        print(self.kwargs)
+        if self.kwargs['conference']:
+            return reverse('home:conf')
         return reverse('archives:lectures')
 class ProfileDetailUpdateView(UpdateView):
     model = ProfileDetail

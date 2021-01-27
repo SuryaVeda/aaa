@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .models import Notification
+from home.models import Tag
 from archives.models import LecturePost
 # Create your views here.
 class ShowNotification(TemplateView):
@@ -18,6 +19,8 @@ class ShowNotification(TemplateView):
 
         context['posts'] = posts
         context['lectures'] = lectures
+        tag_speciality = Tag.objects.filter(is_speciality=True)
+        context['tag_speciality'] = list(tag_speciality)
         print(posts)
         print(lectures)
         return context

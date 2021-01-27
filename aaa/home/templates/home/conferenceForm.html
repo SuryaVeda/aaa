@@ -83,9 +83,7 @@
     <br>
     <div class="timeinput">
       <br>
-      <b>When does lecture start? : {{ form.lecture_start_date }} <br> <br> at what time? <input required type="number" name="starthour" placeholder="Time in hours, use 24hr format" value="">:<input required type="number" name="startmin" placeholder="Time in minutes"  value=""> <br> <br> and ends at? <input required type="number" name="endhour" placeholder="Time in hours, use 24hr format" value="">:<input required type="number" name="endmin" placeholder="Time in minutes"  value="">
-      </b>
-
+      <b>When does Conference start? : {{ form.lecture_start_date }} <br> <br> When does conference end? : {{ form.lecture_end_date }} </b>
     </div>
 
             <p>Add image(optional): {{form.img}}</p>
@@ -97,7 +95,7 @@
              <p style="text-decoration: underline;color: #000066;"><a onclick="addnewforms('addlinkform')"> Add more links</a></p>
 
             <div class="postformbtn">
-            <button name="homepostform" value="button" type="submit">Submit</button>
+            <button name="conferencebtn" value="button" type="submit">Submit</button>
             </div>
 
         </form>

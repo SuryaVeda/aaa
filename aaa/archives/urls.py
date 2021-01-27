@@ -16,6 +16,7 @@ urlpatterns = [
     path('delete-link/<int:pk>', views.PostLinkDeleteView.as_view(), name = 'deletelink'),
     path('edit-links/<int:pk>/<int:opk>', views.PostLinkUpdateView.as_view(), name = 'editlinks'),
     path('create-lecture', views.LecturePostCreateView.as_view(), name = 'createlecture'),
+    path('create-conference', views.LecturePostCreateView.as_view(),kwargs={'conference':True}, name = 'createconference'),
     path('details', views.ArchDetail.as_view(), name = 'archdetail'),
     path('testing', views.Test.as_view(), name='test'),
     path('del/<int:pk>', views.delete_book_view, name='deletebook'),

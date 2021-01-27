@@ -27,6 +27,8 @@ class Manage(TemplateView):
         if self.request.user.is_staff:
             context['users'] = User.objects.order_by('-pk')
             context['users_length'] = len(context['users'])
+            tag_speciality = Tag.objects.filter(is_speciality=True)
+            context['tag_speciality'] = list(tag_speciality)
 
         return context
 def email(request):
@@ -39,7 +41,7 @@ def email(request):
 
 class HomeView(TemplateView):
     template_name = 'home/home.html'
-    posts = Post.objects.order_by('-date').prefetch_related()
+    posts = []
     postslist = []
 
     def get_context_data(self, **kwargs):
@@ -49,12 +51,13 @@ class HomeView(TemplateView):
         #context['questionbank'] = list(questionbank.filter(mcq=True))
         #context['flashcards'] = list(questionbank.filter(flashcard=True))
         #context['cases'] = list(questionbank.filter(qa=True))
-        postslist = list(Post.objects.filter(lecture=False).order_by('-date').prefetch_related())
+        postslist = list(Post.objects.filter(lecture=False, conference=False).order_by('-date').prefetch_related())
         print(len(postslist))
         utc = pytz.UTC
         tz = pytz.timezone('Asia/Kolkata')
         today = datetime.datetime.now(tz)
-        context['lectures'] = [i for i in LecturePost.objects.all().order_by('-pk') if utc.localize(i.lecture_start_date) > today]
+        context['lectures'] = [i for i in LecturePost.objects.filter(lecture=True).order_by('-pk') if utc.localize(i.lecture_start_date) > today]
+        context['conferences'] = [i for i in LecturePost.objects.filter(lecture=False).order_by('lecture_start_date') if utc.localize(i.lecture_start_date) > today]
         context['posts'] = postslist[0:15]
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context['tag_speciality'] = list(tag_speciality)

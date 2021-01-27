@@ -50,7 +50,12 @@ class LecturePost(Post):
     @property
     def get_lecture_range(self):
         if self.lecture_start_date and self.lecture_end_date:
-            return '{0} - {1}'.format(self.lecture_start_date.strftime('%d %b %Y %I:%M %p'), self.lecture_end_date.strftime('%I:%M %p'))
+            if self.lecture:
+                return '{0} - {1}'.format(self.lecture_start_date.strftime('%d %b %Y %I:%M %p'), self.lecture_end_date.strftime('%I:%M %p'))
+            else:
+                return '{0} - {1}'.format(self.lecture_start_date.strftime('%d %b %Y %I:%M %p'), self.lecture_end_date.strftime('%d %b %Y %I:%M %p'))
+
+
         else:
             return 'yet to enter start and end time of lecture.'
 

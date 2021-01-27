@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from home.models import Tag
 from django.views.generic import TemplateView
 from .models import RequestObj, PageObj
 from accounts.models import User
@@ -16,5 +16,7 @@ class StatPage(TemplateView):
         context['pages'] = PageObj.objects.order_by('-count')
         print(PageObj.objects.all().count())
         context['active_user'] = User.custom_objs.most_active_users()
+        tag_speciality = Tag.objects.filter(is_speciality=True)
+        context['tag_speciality'] = list(tag_speciality)
         context['location'] = []
         return context
