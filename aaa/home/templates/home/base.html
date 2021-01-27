@@ -1034,7 +1034,19 @@ window.onclick = function (event) {
 };
 window.onload = function () {
 
+  try {
+    var comments = document.getElementsByClassName('comments');
+    if (comments.length > 0) {
+      for (i = 0; i < document.getElementsByClassName('comments').length; i++ ) {
+        document.getElementsByClassName('comments')[i].style.display = 'none';
+      }
+    }
+    console.log(comments);
 
+  }
+  catch(err) {
+    console.log(err.message)
+  }
       try {
         if (mcqblock.length > 0) {
           mcqblock[0].style.display = "flex";
@@ -1042,6 +1054,7 @@ window.onload = function () {
         if (flashcardblock.length > 0) {
           flashcardblock[0].style.display = "flex";
         }
+
       }
       catch(err) {
         console.log(err.message)

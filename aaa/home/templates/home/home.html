@@ -512,10 +512,7 @@
           </nav>
           {% if request.user.is_staff %}
           <div id="comments{{post.pk}}" class="comments ">
-            <script type="text/javascript">
-              var dhcomments{{post.pk}} = document.getElementById('comments{{ post.pk }}')
-              dhcomments{{post.pk}}.style.display = 'none';
-            </script>
+
           {% if post.get_comments %}
           <div class="home-post-comments">
           {% for comment in post.get_comments %}
@@ -622,6 +619,7 @@
           homepost = document.createElement('div');
           homepost.innerHTML = u[i];
           homepost.classList.add('home-post');
+
 
           homecontainer.append(homepost);
           if (i == u.length-1) {

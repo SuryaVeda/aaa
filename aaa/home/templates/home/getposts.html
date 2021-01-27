@@ -92,8 +92,7 @@
   {% if request.user.is_staff %}
   <div id="comments{{post.pk}}" class="comments ">
     <script type="text/javascript">
-      var dhcomments{{post.pk}} = document.getElementById('comments{{ post.pk }}')
-      dhcomments{{post.pk}}.style.display = 'none';
+
     </script>
   {% if post.get_comments %}
   <div class="home-post-comments">
