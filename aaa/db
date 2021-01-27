@@ -944,7 +944,8 @@ CREATE TABLE public.home_post (
     pdf character varying(100),
     pdf_name character varying(50),
     img character varying(100),
-    lecture boolean
+    lecture boolean,
+    conference boolean
 );
 
 
@@ -1410,7 +1411,8 @@ ALTER SEQUENCE public.notifications_notification_id_seq OWNED BY public.notifica
 
 CREATE TABLE public.stats_pageobj (
     id integer NOT NULL,
-    url character varying(200)
+    url character varying(200),
+    count integer
 );
 
 
@@ -1792,6 +1794,22 @@ COPY public.accounts_degree (id, name_id, finalyear, college_id) FROM stdin;
 37	1	\N	14
 38	7	\N	39
 39	7	\N	9
+40	7	\N	40
+41	1	\N	41
+42	7	\N	42
+43	1	\N	42
+44	7	\N	43
+45	1	\N	44
+46	7	\N	45
+47	1	\N	46
+48	7	\N	48
+49	1	\N	49
+50	7	\N	50
+51	1	\N	51
+52	7	\N	53
+53	1	\N	54
+54	7	\N	56
+55	1	\N	57
 \.
 
 
@@ -1839,6 +1857,25 @@ COPY public.accounts_medicalcollege (id, name) FROM stdin;
 37	I don't have clg
 38	Kkk
 39	Aiima
+40	I P Pavlov medical university
+41	IMS &amp; SUM HOSPITAL 
+42	Sri Devraj urs medical College
+43	IMs and sum hospital 
+44	Ims and sum hospital 
+45	shimoga institute of medical science 
+46	S.B.K.S.medical college
+47	Dhiraj hospital
+48	KGMU LUCKNOW
+49	S N MEDICAL COLLEGE AGRA
+50	MGIMS
+51	IMS BHU
+52	SSH
+53	Narayana medical College
+54	Kasturba medical College
+55	Gitams hospital in vizag
+56	Gmc patiala
+57	Pgimer chandigarh
+58	Mmimsr mullana
 \.
 
 
@@ -1848,13 +1885,18 @@ COPY public.accounts_medicalcollege (id, name) FROM stdin;
 
 COPY public.accounts_profile (id, user_id, dob, name, nationality, phone, backgroundpic, profilepic) FROM stdin;
 2	3	\N	Vijay Adabala	\N	\N	\N	\N
+30	34	\N	ganesh	\N	\N		
 9	12	\N	drniyati	\N	\N		
 10	13	\N	Poojitha Reddy	\N	\N		
+31	35	\N	drsharad05 	\N	\N		
+32	36	\N	Anupg	\N	\N		
 11	14	\N	RSharma	\N	\N		
 12	15	\N	drravi86	\N	\N		
+33	37	\N	Sai Lakshmi	\N	\N		
 1	2	\N	sk	Indian	\N	backgroundpic/2020/12/$D/IMG-20201009-WA0001_tRrpMka_lYdEd25.jpg	profilepic/2020/12/$D/IMG-20201108-WA0002_HksU75U_XY6MhHS.jpg
 13	16	\N	sherkhan_5195@yahoo.	\N	\N		
 14	17	\N	Nitish	\N	\N		
+34	38	\N	drvarunsingla	\N	\N		
 15	18	\N	PR	\N	\N		
 16	19	\N	TRIPTA	\N	\N		
 17	21	\N	Hithish M J	\N	\N		
@@ -1867,6 +1909,9 @@ COPY public.accounts_profile (id, user_id, dob, name, nationality, phone, backgr
 24	28	\N	Jharana 	\N	\N		
 25	\N	\N	ఛషఛఠఛక	\N	\N		
 26	\N	\N	Hi	\N	\N		
+27	31	\N	drramya	\N	\N		
+28	32	\N	Sinchana	\N	\N		
+29	33	\N	Dr neha	\N	\N		
 \.
 
 
@@ -1915,6 +1960,22 @@ COPY public.accounts_profile_degree (id, profile_id, degree_id) FROM stdin;
 48	25	9
 49	26	39
 50	26	9
+51	27	40
+52	27	41
+53	28	42
+54	28	43
+55	29	44
+56	29	45
+57	30	46
+58	30	47
+59	31	48
+60	31	49
+61	32	50
+62	32	51
+63	33	52
+64	33	53
+65	34	54
+66	34	55
 \.
 
 
@@ -2043,6 +2104,54 @@ COPY public.accounts_profile_details (id, profile_id, profiledetail_id) FROM std
 148	26	162
 149	26	163
 150	26	164
+151	27	165
+152	27	166
+153	27	167
+154	27	168
+155	27	169
+156	27	170
+157	28	171
+158	28	172
+159	28	173
+160	28	174
+161	28	175
+162	28	176
+163	29	177
+164	29	178
+165	29	179
+166	29	180
+167	29	181
+168	29	182
+169	30	183
+170	30	184
+171	30	185
+172	30	186
+173	30	187
+174	30	188
+175	31	189
+176	31	190
+177	31	191
+178	31	192
+179	31	193
+180	31	194
+181	32	195
+182	32	196
+183	32	197
+184	32	198
+185	32	199
+186	32	200
+187	33	202
+188	33	203
+189	33	204
+190	33	205
+191	33	206
+192	33	207
+193	34	208
+194	34	209
+195	34	210
+196	34	211
+197	34	212
+198	34	213
 \.
 
 
@@ -2079,6 +2188,14 @@ COPY public.accounts_profile_work (id, profile_id, work_id) FROM stdin;
 23	24	22
 24	25	23
 25	26	23
+26	27	24
+27	28	25
+28	29	26
+29	30	27
+30	31	28
+31	32	29
+32	33	30
+33	34	31
 \.
 
 
@@ -2244,6 +2361,55 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 162	recommendation		
 163	accomplishments		
 164	interests		
+165	personal statement		
+166	experience		
+167	education		
+168	recommendation		
+169	accomplishments		
+170	interests		
+171	personal statement		
+172	experience		
+173	education		
+174	recommendation		
+175	accomplishments		
+176	interests		
+177	personal statement		
+178	experience		
+179	education		
+180	recommendation		
+181	accomplishments		
+182	interests		
+183	personal statement		
+184	experience		
+185	education		
+186	recommendation		
+187	accomplishments		
+188	interests		
+189	personal statement		
+190	experience		
+191	education		
+192	recommendation		
+193	accomplishments		
+194	interests		
+195	personal statement		
+196	experience		
+197	education		
+198	recommendation		
+199	accomplishments		
+200	interests		
+201	https://zoom.us/j/9810134924 Password :dpmc12	Announcing a series of talks on Back Pain commemorating 2021 Global Year About Back Pain.  Speakers from across the globe to deliver keynote addresses on important aspects of Back Pain.\nProf Nebojsa Nick Knezevic from Chicago will initiate the lecture series from 30th Jan 2021\nAll are invited to attend and actively participate in the proceedings.	
+202	personal statement		
+203	experience		
+204	education		
+205	recommendation		
+206	accomplishments		
+207	interests		
+208	personal statement		
+209	experience		
+210	education		
+211	recommendation		
+212	accomplishments		
+213	interests		
 \.
 
 
@@ -2252,23 +2418,31 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 --
 
 COPY public.accounts_user (id, password, last_login, email, username, is_active, staff, admin, reset) FROM stdin;
-24	pbkdf2_sha256$216000$tr3tPO4Wb1wV$6eUgL95eVAMFQ/Rh7TArfY1h55n5KKFc7y76NTCqfmE=	\N	prabakaranlee@gmail.com	PRABA3006	t	t	t	\N
+22	pbkdf2_sha256$216000$54dKlWTY7t28$v/dvYGBvnLWjeHjhCR9NPJepgMJw5D6S0Rb6tBznmhw=	2021-01-26 17:40:54.171877+00	naveenselvaraj1993@gmail.com	Naveen. S	t	t	t	\N
+35	pbkdf2_sha256$216000$GxAIee6lqNEf$DVWxn/YrVf7EpQsy79DQzeZj9LCqV1PBd+cpcdhUI+k=	2021-01-27 04:42:02.991278+00	drskg2005@gmail.com.com	drsharad05 	t	t	f	\N
 21	pbkdf2_sha256$216000$De9SlRr1cVbt$W4RoG50H4hnQahxCg/+OPoe/M/J3faiw1Mds5MEC7M4=	2021-01-02 14:14:43.925174+00	hithimachenahalli@gmail.com	Hithish M J	t	t	t	\N
 25	pbkdf2_sha256$216000$Emf4YIIIvwAX$07AhM2JZUKCKr5B0i8Km2PLyMweL7oiJi7pa4Mvs7sQ=	\N	drpallavisingh2015@gmail.com	Pallavi	t	t	t	\N
 19	pbkdf2_sha256$216000$uOMpWUZSU4wk$J9+D8vEzmN3srMkKPkBZ7K02x3DcNDQ0N8+CrodtSaM=	\N	tripta.mgims@gmail.com	TRIPTA	t	t	t	\N
-22	pbkdf2_sha256$216000$54dKlWTY7t28$v/dvYGBvnLWjeHjhCR9NPJepgMJw5D6S0Rb6tBznmhw=	2021-01-02 14:21:25.890388+00	naveenselvaraj1993@gmail.com	Naveen. S	t	t	t	\N
 13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t	\N
 23	pbkdf2_sha256$216000$ntvPoEpk8Jne$V9m+7WerQDypRXSadVo9bufWnu0dptIK+jvdYFoFllM=	2021-01-02 14:27:13.41801+00	beeralingnw@gmail.com	beeralingwalikar	t	t	t	\N
 14	pbkdf2_sha256$216000$T7dPeTz7oKit$s4UwZx3Mhn5/pn9amqGCrfJ2kBctzLOQM0DBP3XDQRk=	2021-01-06 08:40:30.9549+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
+36	pbkdf2_sha256$216000$Sj1RoymG4KGx$m1IYpkT9ah9k8SvrrEduLYdP89CVGVw+nmMB/aVSdh0=	\N	anup.gohatre@gmail.com	Anupg	t	f	f	\N
 15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t	\N
-28	pbkdf2_sha256$216000$H8yzk2nhcxaj$Qwr4aNv3EBKUTbscNQEMzp2m44416F8/oDklZQhk67M=	2021-01-16 10:35:48.559405+00	cooljharana@gmail.com	Jharana 	t	t	f	\N
-2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2021-01-16 20:31:50.630463+00	suryaveda@hotmail.com	sk	t	t	t	\N
+31	pbkdf2_sha256$216000$TKBBAqGrsupN$dmpimthMYOmYExQg95caZgdmSKbCTtoSgmn9lmfwCnc=	2021-01-26 18:50:25.354432+00	ramya_chicks@yahoo.com	drramya	t	t	t	\N
+28	pbkdf2_sha256$216000$H8yzk2nhcxaj$Qwr4aNv3EBKUTbscNQEMzp2m44416F8/oDklZQhk67M=	2021-01-16 10:35:48.559405+00	cooljharana@gmail.com	Jharana 	t	t	t	\N
+32	pbkdf2_sha256$216000$9eKWyLlDWZ7L$xLsmVmidXWIYF34HThdRV+oAjTvDc72SHoKiweFOr+4=	2021-01-26 19:04:03.226046+00	sinchana993@gmail.com	Sinchana	t	t	t	\N
 16	pbkdf2_sha256$216000$0cgFkSw1M7h9$2rVbaqrjCLZmPfwQeaJ/p6sJN3HGciMMOnRYVa3dmfA=	\N	sherkhan_5195@yahoo.com	sherkhan_5195@yahoo.	t	t	t	\N
+37	pbkdf2_sha256$216000$uKzzs9ZZLc8C$rlZpEb6lzw6I979VImmHzzkPgTp1k/AwXsDDanPKhlw=	2021-01-27 15:43:06.994584+00	sailakshminmc@gmail.com	Sai Lakshmi	t	f	f	\N
 17	pbkdf2_sha256$216000$u12nNcUnJ1w4$dM3zR8lja8MaR1ElQghLh91ma7aox6AlFTljIecXOmw=	2020-12-23 16:15:37.721521+00	nitishtha220@gmail.com	Nitish	t	t	t	\N
-3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-20 10:52:37.555345+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
 18	pbkdf2_sha256$216000$Y269kX6KTayq$miEE07VMy9Q9MD0UemoB9KirVkdToMhSUxhxGIw+Tfs=	2020-12-23 16:54:59.679832+00	gpoojithareddy87@gmail.com	PR	t	t	t	\N
-12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2021-01-20 16:58:07.478413+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
-27	pbkdf2_sha256$216000$edJBAyu6ggzp$6JGBBF79m5W/GZnA2GAeMJJnrhhFVawSgXJdGQInGI0=	2021-01-15 12:38:48.529431+00	evnskoushik@gmail.com	Saikoushik	t	f	f	\N
+38	pbkdf2_sha256$216000$OmmBkZGBq7di$qoi7BTpvscSX53rbKB6fL3jwY2WzkuO9GNgcyFGrnGc=	2021-01-27 18:04:22.12327+00	varunpatialaking@gmail.com	drvarunsingla	t	f	f	\N
+27	pbkdf2_sha256$216000$edJBAyu6ggzp$6JGBBF79m5W/GZnA2GAeMJJnrhhFVawSgXJdGQInGI0=	2021-01-15 12:38:48.529431+00	evnskoushik@gmail.com	Saikoushik	t	t	f	\N
+2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2021-01-27 19:08:52.551366+00	suryaveda@hotmail.com	sk	t	t	t	\N
+12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2021-01-27 04:56:23.238906+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
+3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-27 04:57:43.139913+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
+24	pbkdf2_sha256$216000$q5q3fliRCqbW$dfoBZFn3FWMOBmwA/0oFjkwpaPyaY1ug84eQJebwEN0=	2021-01-26 17:36:36.162744+00	prabakaranlee@gmail.com	PRABA3006	t	t	t	\N
+33	pbkdf2_sha256$216000$f7aZZUL0h5Ey$WVbH6XebkHnOIYiBCmqoDcuqc8HT2qAdL3sH9jCHKT8=	2021-01-27 03:23:21.295545+00	neharikab06@gmail.com	Dr neha	t	t	t	\N
+34	pbkdf2_sha256$216000$KEqs0MVtCRo5$zlQCdWfqA0G/0HPSr7Wkgu0m70MjTi+bolsp9fawbsU=	2021-01-27 03:47:55.725156+00	ganeshnaik888@gmail.com	ganesh	t	t	f	\N
 \.
 
 
@@ -2300,6 +2474,14 @@ COPY public.accounts_work (id, "position", is_current, hospital_id) FROM stdin;
 21	Software engineer	t	38
 22	JR	t	14
 23	Sr	t	9
+24	Postgraduate 	t	41
+25	Postgraduate	t	42
+26	Resident 	t	44
+27	second year resident	t	47
+28	SR	t	48
+29	JR3	t	52
+30	Anesthesia resident	t	55
+31	Assistant professor	t	58
 \.
 
 
@@ -2341,6 +2523,7 @@ COPY public.archives_fileadd (id, file_name, file, is_image) FROM stdin;
 
 COPY public.archives_lecturepost (post_ptr_id, lecture_start_date, lecture_end_date) FROM stdin;
 40	2021-01-16 11:30:00+00	2021-01-16 12:30:00+00
+49	2021-01-30 14:30:00+00	2021-01-30 15:30:00+00
 \.
 
 
@@ -2349,6 +2532,7 @@ COPY public.archives_lecturepost (post_ptr_id, lecture_start_date, lecture_end_d
 --
 
 COPY public.archives_lecturepost_post_details (id, lecturepost_id, profiledetail_id) FROM stdin;
+2	49	201
 \.
 
 
@@ -2740,6 +2924,16 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 181	stats	0002_auto_20210112_1952	2021-01-12 16:31:31.038072+00
 182	stats	0003_auto_20210112_2051	2021-01-12 16:31:31.232572+00
 183	stats	0004_auto_20210112_2103	2021-01-12 16:31:31.308771+00
+184	archives	0035_auto_20210123_0158	2021-01-22 20:45:48.56182+00
+185	archives	0036_merge_20210123_0215	2021-01-22 20:45:48.566235+00
+186	home	0071_auto_20210123_0158	2021-01-22 20:45:48.661655+00
+187	home	0072_merge_20210123_0215	2021-01-22 20:45:48.665052+00
+188	stats	0005_auto_20210123_0158	2021-01-22 20:45:48.746005+00
+189	archives	0036_auto_20210128_0148	2021-01-27 20:58:12.791992+00
+190	archives	0037_merge_20210128_0228	2021-01-27 20:58:12.79635+00
+191	home	0072_auto_20210128_0148	2021-01-27 20:58:12.980425+00
+192	home	0073_merge_20210128_0228	2021-01-27 20:58:12.98428+00
+193	stats	0006_auto_20210128_0148	2021-01-27 20:58:13.049403+00
 \.
 
 
@@ -2753,19 +2947,35 @@ o69mqrw8cruxsj8tw7h06pftd5d0oeef	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekC
 fdnxmdbmi1e8ijwo119mn7oxiwhn9j12	.eJxVjM0OwiAQhN-FsyF2y_Lj0bvPQHaBStVAUtqT8d2lSQ-azOmbb-YtPG1r9ltLi5-juAgw4vQLmcIzlb2JDyr3KkMt6zKz3BV5tE3eakyv6-H-HWRqua8DJ3bgUgQDBqlnxIATupHZKVKMhgajreqQEUayCPZs3DAlzUpH8fkCEeE37Q:1l0ONM:dauyNmLLRyOIo6BS7pjlnaGUepYGukEXlRFN207cY9E	2021-01-29 12:38:48.536451+00
 il6my69me3pztyppdn8sv7pw91kmou6v	.eJxVjEEOwiAQRe_C2hCGYpm6dN8zNDMMSNVAUtqV8e7apAvd_vfef6mJtjVPW4vLNIu6KIvq9DsyhUcsO5E7lVvVoZZ1mVnvij5o02OV-Lwe7t9Bppa_NQp76MAOSBCcCey5t5AEOjpbAcRgnPFDRJfE25B6EHSGHUVABgvq_QH49TeU:1l0ivs:oLw43EU9lUhbCp_9MINpDABIw99A4ttI-q-4vweCQGc	2021-01-30 10:35:48.562179+00
 r7ta63532uzv910n0kzx6p0knz3282bw	.eJxVjDsOgzAQRO_iOrLwbxdSpucMaNdeYpLISBiqKHcPSBRJOfPezFsNtK152Kosw5TUVblGXX5LpviUcpD0oHKfdZzLukysD0WftOp-TvK6ne7fQaaa9zUSBC9oDZvIHTfWAzEmABsxOsCuMa0JQAGQLXi3J4cyBhlZWnZefb7oATdG:1l0nW6:wNbiirVWinjNynoBIFmWk_Kt__pybGNsj17JZXViG3s	2021-01-30 15:29:30.345304+00
-2ej5ogpmkugtvrnpy6mq73e99sh2fpep	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l0sEg:wtTqUdJHmSQYiS-kI5wuQyXQ4_ewFwEGGcXlulIot_A	2021-01-30 20:31:50.6332+00
 p68ybxu4zxn7vhjrhqmx50sczsw1pvi6	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1l2AsV:LBhaKvW_w11LIU57sxG45lF4OONLmOLZ3a6QHDwek0s	2021-02-03 10:38:19.65156+00
 fe5kukk2549elfw795grfjuqvdfbtsnn	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1l2B6L:lypbYu2oXOzsf0WHKp7fwToNeTozfn8yA7PWv7PL1A4	2021-02-03 10:52:37.565921+00
 vo8gjnuh9gbn5tj9eqig4zchm802zerg	.eJxVjDsOwjAQBe_iGln-EpuSnjNYu94NDiBbipMKcXcSKQW0b2beWyRYl5LWznOaSFyENuL0OyLkJ9ed0APqvcnc6jJPKHdFHrTLWyN-XQ_376BAL1sdghrOHAw6b6yKkPUAaInZZvSBLbhgvYcYKNPmRnCoLKHTaoyjIS8-X_uLOAY:1l2Go3:ga_wslBAps16FKrEPkYz_BiGfSaUYL8sHNA5eIgIEFg	2021-02-03 16:58:07.483199+00
+ld2uhp1zfe3hlyl9e4p6erpcl88rykmk	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l2ymj:oW8rQO5vF_VRd3-dm7E_MR0k0SwweibV71g561fnhmA	2021-02-05 15:55:41.880393+00
+ax521l3ydmi0zr2sialojuu6jkbak6v5	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l3RtG:2VmLbT_q-okiqIPrKZSz_Uk8QpjxW6yg_xM-w2tG8QA	2021-02-06 23:00:22.142846+00
+lrt0ci97amr3hq6zaiuz7l8ddsqd4jbd	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l3Uz4:SD_ablDCs2MRFTJacMA3jBwsYfNd8GrbXrdYFljYyXA	2021-02-07 02:18:34.650983+00
+5npvr94cfljrwm6b7n79kftv4yolnggn	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l46OK:wc71x1vfyyTqgUuZsrX5nnIvic5onQTT7A_PlThqDi0	2021-02-08 18:15:08.726376+00
+cl538amu6gzcl9pgqotj54pudy18y1ig	.eJxVjMsOwiAQRf-FtSFMywB16d5vIDM8pGogKe3K-O_apAvd3nPOfQlP21r81tPi5yjOYtDi9DsyhUeqO4l3qrcmQ6vrMrPcFXnQLq8tpuflcP8OCvXyrUNOoJUBQAsJMQbN2rAhHhUyRrA4gbI5qilrZ3NgSMM0ujAQITszivcH_ag3zg:1l4SGa:Sz8VE8JiNBYG2QYyfGp6t6iAljl3LRsV6c1GGkzJFsA	2021-02-09 17:36:36.16537+00
+qr9vh21le1vu8e437rsfl9tjzz7pxvun	.eJxVjEEOwiAQRe_C2pCBKRRcuu8ZyDCgVA0kpV0Z765NutDtf-_9lwi0rSVsPS9hTuIstBan3zESP3LdSbpTvTXJra7LHOWuyIN2ObWUn5fD_Tso1Mu3jjCSAu8GJGOVQ_T2ajODR0QwSIPygzKKKUfgqI1xrHlkYoMKHbB4fwDShzb2:1l4SKk:ZHL4WLvil0-j7D3ln0GSzhGzgMiMlncGFrs3h1t2nhQ	2021-02-09 17:40:54.175278+00
 kizy4cvd2arn6mkroimwonblyb0l1m0y	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1kvhRi:oyGUPCNFTDtalGpcg5aA1uV7if4vFp2g5Pq4N5XzjNs	2021-01-16 13:59:54.061642+00
 wfhpaoe3snibe40vhjhe9cxfpx9phqjj	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kvhfS:poyb_vnYjWhs6ZCAkAtdGvtoD2KJOtA-1exA-X9QcOE	2021-01-16 14:14:06.746577+00
+gl9fvq79o4uz0zyyguk9dbeyygjp9au5	.eJxVjMsOwiAQRf-FtSEwDAVcuvcbyPCSqoGktCvjv2uTLnR7zzn3xTxta_XbyIufEzszJdnpdwwUH7ntJN2p3TqPva3LHPiu8IMOfu0pPy-H-3dQadRvXQRqIyWaiAJASSTKASdVgACFRetAkyu2TE6DNTErSGRdMBoCxKDY-wPUHzcR:1l4TQ1:5mKbN1pDFpPitGgsJHB8Uwyo2RENG0t_o4olSb2J4yY	2021-02-09 18:50:25.35869+00
 b5hokho1bh4u0hbqus7qmhbmsas58k58	.eJxVjDsOwyAQBe9CHSGz5psyvc-AYBeCkwgkY1dR7h5bcpG0b2bem_mwrcVvPS1-JnZlINjld4wBn6kehB6h3hvHVtdljvxQ-Ek7nxql1-10_w5K6GWvx0wDCkoSwYGJFkAaHCCCJRB6tBqtky7mjGgUJkMGMqqkEUNUe8M-Xwn4OJ4:1kvhg3:rydpl8NjaQLJBK35Mld0PxieMbzaKL0H1V8lUZ0n3rE	2021-01-16 14:14:43.929429+00
 icaxq9l6tczphbd0dytlkmnfm3opjbq0	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kvhlI:hgaWHoSM1OPHSECBVw9W4N9GzdokV5v8RvRA2A6Igys	2021-01-16 14:20:08.161834+00
+1rhie643r97q2oazstunt35g4jcemrag	.eJxVjDsOwjAQBe_iGln-7dqhpOcMltfe4ABypDipEHeHSCmgfTPzXiKmba1x67zEqYizsEacfkdK-cFtJ-We2m2WeW7rMpHcFXnQLq9z4eflcP8Oaur1WwMTD5ATjqTUECCAYqSix2wtaaPROSJXDHsbAAoiGu2dJxXIazYo3h8JYzd1:1l4TdD:q8ZmXckYO0A8HFpjJ3vlbmidq-GSdUjFOYlF5-nKTDs	2021-02-09 19:04:03.228875+00
 z8d2h1yqi5dmaaoz0klztoqbb6tsawmw	.eJxVjEEOwiAQRe_C2pCBKRRcuu8ZyDCgVA0kpV0Z765NutDtf-_9lwi0rSVsPS9hTuIstBan3zESP3LdSbpTvTXJra7LHOWuyIN2ObWUn5fD_Tso1Mu3jjCSAu8GJGOVQ_T2ajODR0QwSIPygzKKKUfgqI1xrHlkYoMKHbB4fwDShzb2:1kvhmX:wH91BEB2Ee3_m7KEvVQnZ2GqVfB8WJ6Lj6DhZiyG5HY	2021-01-16 14:21:25.893232+00
 au6ynqoocyf0tiw1ek9e8e35xljkhks2	.eJxVjDsOwjAQBe_iGlnrrON4KelzBsufNQ4gR4qTCnF3EikFtG9m3ls4v63FbY0XNyVxFR2Ky-8YfHxyPUh6-HqfZZzrukxBHoo8aZPjnPh1O92_g-Jb2evIaNUAkFCZAMyBvc4GgUwiQsIOKETN2qLSfR-9ycBGZbtnQwQk8fkC-rE3fA:1kvhs9:WjuDuvfM134LIFSsIhX4bePRbp-HD_KaYqY3Nl-X0zE	2021-01-16 14:27:13.4207+00
 b2u14616mmqyaauplkzdbm2vf72wj903	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1kx4Mo:5kLZqpRGdWN4LMoebmiACEs04WDL-HDSYJ1KG1wnQKY	2021-01-20 08:40:30.958039+00
 6yo9clfltmebb3fp21wdf7mfo41tw0g1	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1kxlAn:cxZwG7SCS8HpNI4kX7OK1jcKp4ZNoS2dvhV8vB-hQN4	2021-01-22 06:22:57.739204+00
 52dw1e69ycu1s11euxc69bz3ilynzb1e	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1kzMo6:0AtGbKAV3b3znYbgOFAe2VmCKxwFUrlm-wtoHV2mZAM	2021-01-26 16:46:10.810753+00
+1v1djmnuqa8mua3xw5a580n3bhqkcfgb	.eJxVjsEOwiAQRP-FsyELtAU8eu83kIVdpGpoUtqT8d9tkx70Ou_NZN4i4LaWsDVewkTiKowRl98wYnpyPQg9sN5nmea6LlOUhyJP2uQ4E79up_s3ULCVvZ0tAyBm0loz-wFMb7GzWlmlsvc5x44hDZidjqSc9Y4RgIxB1zu1v_p8AQ7LN9M:1l4bQP:CAGKstchL_zLWOIyW5wqQiYe2fE2906ntf3aHUd_o9M	2021-02-10 03:23:21.298514+00
+wn3dejbny1yvg8ho9lz8kk2py7f2tdt4	.eJxVjDsOwjAQBe_iGllrvP5R0ucMlrNe4wBypDipEHeHSCmgfTPzXiKmba1x67zEKYuL0ChOv-OY6MFtJ_me2m2WNLd1mUa5K_KgXQ5z5uf1cP8Oaur1WxcM7CEU5wpaD2RCUFYXYOuCJzwTWaeBMNmSPBhndEBlmNAUVgBGvD_qTDcK:1l4boB:wvFcRWEJGPux4ubnHngmz4lei8B9WwDudaDQUASoq5o	2021-02-10 03:47:55.729224+00
+ijis0lrj1we51lhfaborcgakw468cb0l	.eJxVjMEOwiAQRP-FsyEgslCP3vsNhIVdqRpISnsy_rtt0oPeJvPezFuEuC4lrJ3mMGVxFcaK02-JMT2p7iQ_Yr03mVpd5gnlrsiDdjm2TK_b4f4dlNjLtvaWHHoCS2BAgzPs9cDJx4EVArgtg0c8c9Y2IqiLAZVYeQbHbB2IzxcFNDgI:1l4ceY:OMuVewBuDA3l4bZbwVWlAZW9rhkHL_zSY3dowOgyNJ0	2021-02-10 04:42:02.994314+00
+7j9suvnj8u77uc3f3gi0r6767kzgomkm	.eJxVjDsOwjAQBe_iGln-EpuSnjNYu94NDiBbipMKcXcSKQW0b2beWyRYl5LWznOaSFyENuL0OyLkJ9ed0APqvcnc6jJPKHdFHrTLWyN-XQ_376BAL1sdghrOHAw6b6yKkPUAaInZZvSBLbhgvYcYKNPmRnCoLKHTaoyjIS8-X_uLOAY:1l4csR:acg28PL5fQ8acs-6SG4AhNkys2WH1C4Bt6ycSdArCyQ	2021-02-10 04:56:23.241313+00
+e6q0e4akpjhonropxbrlfa9ph7fnwnqw	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1l4ctj:YOm2zc4vzO5y3gufJLKJ1KW1Tf4BrwnSl2gi13ihYVI	2021-02-10 04:57:43.142787+00
+3knicc9irwznycyxl992e6b47uojhbv2	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l4d12:Rcn8XiNqX3cvgYlxtQ7F2mRA-TUyLBN6m9fxPifwwdA	2021-02-10 05:05:16.674905+00
+e05qjfwi7trus6wiyhv2b1b5b80tlfye	.eJxVjDsOwjAQBe_iGlnr-LMsJX3OYPmLA8iW4qRC3B0spYD2zcx7Mev2rdi9p9UukV2YRHb6Hb0Lj1QHiXdXb42HVrd18Xwo_KCdzy2m5_Vw_w6K62XUeM6YQvbaECk0EyiU0gEJrwiUIADSRmkRACeBKXrjCDErIcl_Xfb-ANx0Nm4:1l4myI:_VhCXDMLblUqB1Bn48WbZJMaAVDw_qmJbCJWO9y1lkg	2021-02-10 15:43:06.997964+00
+g0toldoe19p75m3qv03zc21n6em2cnl3	.eJxVjMEOwiAQRP-FsyFCWQoevfsNhGUXqRpISnsy_rtt0oMeZ96beYsQ16WEtfMcJhIXMThx-i0xpifXndAj1nuTqdVlnlDuijxol7dG_Loe7t9Bib1sa8t69JizNcmZqBgIMxiFGp3iTEzkfXTsLWICk_x5dGoLegB2BgjE5wsy4Di9:1l4pB0:IiMUJzEbumCa-LCP_rgRU1EHet_rm-Wc_REUw6ObdW4	2021-02-10 18:04:22.129158+00
+qkz8nja6gun9jr08djdkjf3f1oid0yew	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l4qBQ:JAtWEv_xHxkLd290iYuzguVuG-aB1ltl6m88F16V-bw	2021-02-10 19:08:52.556426+00
 \.
 
 
@@ -2783,6 +2993,7 @@ COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdi
 9	2021-01-05 09:07:19.1997+00	24 hrs	\N		\N	
 10	2021-01-05 14:10:32.158426+00	Link	3		\N	
 11	2021-01-10 15:54:35.006201+00	Hello!  allaboutanaesthesia.co \n \nDid you know that it is possible to send business proposal entirely lawfully? \nWe presentation a new method of sending business proposal through contact forms. Such forms are located on many sites. \nWhen such business offers are sent, no personal data is used, and messages are sent to forms specifically designed to receive messages and appeals. \nalso, messages sent through contact Forms do not get into spam because such messages are considered important. \nWe offer you to test our service for free. We will send up to 50,000 messages for you. \nThe cost of sending one million messages is 49 USD. \n \nThis message is created automatically. Please use the contact details below to contact us. \n \nContact us. \nTelegram - @FeedbackMessages \nSkype  live:contactform_18 \nWhatsApp - +375259112693	\N		\N	
+12	2021-01-22 16:41:27.286783+00	link\nhttps://amzn.in/b1PLVfT	3		\N	
 \.
 
 
@@ -2808,20 +3019,26 @@ COPY public.home_imageadd (id, img, user_id, name) FROM stdin;
 -- Data for Name: home_post; Type: TABLE DATA; Schema: public; Owner: sk
 --
 
-COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img, lecture) FROM stdin;
-10	2020-12-05 16:40:43.569854+00	INDIAN ASSOCIATION OF CARDIOVASCULAR THORACIC ANESTHESIOLOGISTS 24TH ANNUAL CONFERENCE 2021FEBRUARY 26, 2021 - FEBRUARY 28, 2021MADURAI , INDIA	\N	3		\N		f
-11	2020-12-05 16:44:24.203572+00	This is to inform all the respected members of ISNACC that, due to the current COVID 19 pandemic situation, the ISNACC 2021 conference has been shifted to 2022 in Kolkata. Sorry for inconvenience!	\N	3		\N		f
-12	2020-12-05 16:45:54.703597+00	16TH ASIAN AND OCEANIC SOCIETY OF REGIONAL ANAESTHESIA AND PAIN MANAGEMENT CONFERENCE & 11TH AORA NATIONAL CONFERENCE 2021APRIL 16, 2021 - APRIL 18, 2021MUMBAI , INDIA	\N	3		\N		f
-14	2020-12-23 13:48:45.21743+00	1. Reason for dicrotic notch \r\na. Aortic valve closure \r\nb. Aortic valve opening\r\nc. Mitral valve closure \r\nd. Mitral valve opening	\N	2		\N		f
-13	2020-12-05 18:08:57.361696+00	Pediatric pain can be assessed via FLACC scale, which includes all except:\r\nFacial expression\r\nLeg movement \r\nActivity \r\nCoughing	\N	3		\N		f
-15	2020-12-23 14:42:14.393686+00	Criteria for weaning\r\na. Tidal volume of 5 ml/kg\r\nb. Vital capacity of 10 ml/ kg\r\nc. RSI > 105\r\nd. Pf ratio >300	\N	2		\N		f
-18	2020-12-24 17:13:27.57615+00	WBSSPCON 2021\r\nTheme- ULTRASOUND IN PAIN MEDICINE	It's a international conference by west Bengal society for the study of pain	\N		\N	Postimages/2020/12/$D/IMG-20201224-WA0033_XpnrVQg_yJapiEY.jpg	f
-16	2020-12-23 14:43:30.341516+00	Stoppage of therapeutic dalteparin before epidural insertion\r\na. 12 hrs before\r\nb. 24 hrs before\r\nc. 6 hrs before\r\nd. 68 hrs before	\N	2		\N		f
-24	2021-01-06 03:56:32.779781+00	Dear Colleagues,\r\nWelcome to COVIPOCUS2021 – World congress on Point of care Ultrasound in COVID-19 pandemic.\r\n\r\nWith COVID striking the world, the science of acute care has changed forever. The success of acute care lies in High Quality Patient Care which is dependent on Physicians and Nurses having Up-to-Date Knowledge and Skills. Knowledge is generated from Innovative Research and Clinical Experience. Education helps in the organised dissipation of that knowledge. It is with the above Premise that the World Academic Council of Emergency Medicine (WACEM), International Network for Critical ultrasound(INCUS) and WHO Collaborating centre for Emergency and Trauma is organizing WACEM Global e- congress COVIPOCUS2021 on POCUS IN COVID-19 PANDEMIC. This is a unique platform where Global POCUS leaders will be sharing their cutting edge Research, Operations and System building processes.	\N	3		\N		f
-29	2021-01-12 10:05:32.644918+00	Criticare 2021	\N	3		\N		f
-30	2021-01-12 10:27:23.650297+00	Management of Postamputation Limb pain	\N	3		\N		f
-31	2021-01-12 11:01:02.017451+00	Indian Society For The Study Of Pain 36th Annual National Conference 2021\r\n05 Feb 2021 - 07 Feb 2021 • Bhubaneswar, India	\N	3		\N		f
-40	2021-01-14 06:23:47.117352+00	Anaesthesia NEET SS Q&A Session	\N	3		\N		t
+COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img, lecture, conference) FROM stdin;
+10	2020-12-05 16:40:43.569854+00	INDIAN ASSOCIATION OF CARDIOVASCULAR THORACIC ANESTHESIOLOGISTS 24TH ANNUAL CONFERENCE 2021FEBRUARY 26, 2021 - FEBRUARY 28, 2021MADURAI , INDIA	\N	3		\N		f	f
+11	2020-12-05 16:44:24.203572+00	This is to inform all the respected members of ISNACC that, due to the current COVID 19 pandemic situation, the ISNACC 2021 conference has been shifted to 2022 in Kolkata. Sorry for inconvenience!	\N	3		\N		f	f
+12	2020-12-05 16:45:54.703597+00	16TH ASIAN AND OCEANIC SOCIETY OF REGIONAL ANAESTHESIA AND PAIN MANAGEMENT CONFERENCE & 11TH AORA NATIONAL CONFERENCE 2021APRIL 16, 2021 - APRIL 18, 2021MUMBAI , INDIA	\N	3		\N		f	f
+14	2020-12-23 13:48:45.21743+00	1. Reason for dicrotic notch \r\na. Aortic valve closure \r\nb. Aortic valve opening\r\nc. Mitral valve closure \r\nd. Mitral valve opening	\N	2		\N		f	f
+13	2020-12-05 18:08:57.361696+00	Pediatric pain can be assessed via FLACC scale, which includes all except:\r\nFacial expression\r\nLeg movement \r\nActivity \r\nCoughing	\N	3		\N		f	f
+15	2020-12-23 14:42:14.393686+00	Criteria for weaning\r\na. Tidal volume of 5 ml/kg\r\nb. Vital capacity of 10 ml/ kg\r\nc. RSI > 105\r\nd. Pf ratio >300	\N	2		\N		f	f
+18	2020-12-24 17:13:27.57615+00	WBSSPCON 2021\r\nTheme- ULTRASOUND IN PAIN MEDICINE	It's a international conference by west Bengal society for the study of pain	\N		\N	Postimages/2020/12/$D/IMG-20201224-WA0033_XpnrVQg_yJapiEY.jpg	f	f
+16	2020-12-23 14:43:30.341516+00	Stoppage of therapeutic dalteparin before epidural insertion\r\na. 12 hrs before\r\nb. 24 hrs before\r\nc. 6 hrs before\r\nd. 68 hrs before	\N	2		\N		f	f
+24	2021-01-06 03:56:32.779781+00	Dear Colleagues,\r\nWelcome to COVIPOCUS2021 – World congress on Point of care Ultrasound in COVID-19 pandemic.\r\n\r\nWith COVID striking the world, the science of acute care has changed forever. The success of acute care lies in High Quality Patient Care which is dependent on Physicians and Nurses having Up-to-Date Knowledge and Skills. Knowledge is generated from Innovative Research and Clinical Experience. Education helps in the organised dissipation of that knowledge. It is with the above Premise that the World Academic Council of Emergency Medicine (WACEM), International Network for Critical ultrasound(INCUS) and WHO Collaborating centre for Emergency and Trauma is organizing WACEM Global e- congress COVIPOCUS2021 on POCUS IN COVID-19 PANDEMIC. This is a unique platform where Global POCUS leaders will be sharing their cutting edge Research, Operations and System building processes.	\N	3		\N		f	f
+43	2021-01-22 18:35:45.241146+00	Pain Medicine Bullets\r\n(Concise review of Pain Medicine in 100 basic Q & A)	This book is the collection of 100 frequently asked MCQs in the subject of Pain Medicine entrance examinations. These questions cover all the important topics of pain medicine and the interventions performed in the form of images. This basic information provided through these 100 questions and answers will give an overall view about the subject. The language used in this book is simple and can be easily understood by the readers.	2		\N		f	f
+29	2021-01-12 10:05:32.644918+00	Criticare 2021	\N	3		\N		f	f
+30	2021-01-12 10:27:23.650297+00	Management of Postamputation Limb pain	\N	3		\N		f	f
+31	2021-01-12 11:01:02.017451+00	Indian Society For The Study Of Pain 36th Annual National Conference 2021\r\n05 Feb 2021 - 07 Feb 2021 • Bhubaneswar, India	\N	3		\N		f	f
+40	2021-01-14 06:23:47.117352+00	Anaesthesia NEET SS Q&A Session	\N	3		\N		t	f
+45	2021-01-27 05:01:13.139722+00	Weekly Sessions on Update in Perioperative Care of Cancer Patients.\r\nDepartment of Onco-Anaesthesia and Palliative Medicine,\r\nDr BRAIRCH, All India Institute of Medical Sciences, New Delhi, India\r\nIntroduction: Dr Sushma Bhatnagar\r\n\r\nTopic: Role of Ultrasound in Critically Care Set up\r\nFaculty: Dr. Kapil Dev Soni\r\nAdditional Professor Critical Care, AIIMS, New Delhi\r\n\r\n29th January 2021, Friday\r\n6.30 AM to 7.30 AM (IST)\r\n\r\nJoin using Zoom Meeting\r\nLink shall be shared soon…\r\n\r\nFollow this link to join the WhatsApp group\r\n for GLOBAL ACADEMICS ON UPDATE IN PERIOPERATIVE CARE OF CANCER PATIENTS:\r\nhttps://chat.whatsapp.com/LMJgquHrqEZILDiPEBchuG\r\nLink shall be shared here	\N	3		\N		f	f
+44	2021-01-27 03:33:02.793476+00	RSACP Academic Webinar Series 2021\r\n\r\n27 January, Wednesday\r\n6-8:30PM \r\n\r\nTopics: Airway Management in Obstetrics, Airway Problems in PACU, Anaesthesia for TKR & Community Chronic Pain Management. \r\n\r\nLink\r\nhttps://us02web.zoom.us/j/8673955000 \r\nMeeting ID: 8673955000 Password: RSACP	\N	3		\N		f	f
+47	2021-01-27 08:00:29.522089+00	ALL ABOUT PAIN POST -1\r\nBest way to start the learning of a subject is by knowing its meaning.	“An unpleasant sensory and emotional experience associated with, or resembling that associated with, actual or potential tissue damage,”\r\n and\r\nis expanded upon by the addition of six key Notes and the etymology of the word pain for further valuable context.\r\n\r\n~Pain is always a personal experience that is influenced to varying degrees by biological, psychological, and social factors.\r\n~Pain and nociception are different phenomena. Pain cannot be inferred solely from activity in sensory neurons.\r\n~Through their life experiences, individuals learn the concept of pain.\r\n~A person’s report of an experience as pain should be respected.\r\n~Although pain usually serves an adaptive role, it may have adverse effects on function and social and psychological well-being.\r\n~Verbal description is only one of several behaviors to express pain; inability to communicate does not negate the possibility that a human or a nonhuman animal experiences pain.	12		\N	Postimages/2021/01/$D/pain_cm0t0gH_O125OR1.jpg	f	f
+49	2021-01-27 08:16:20.292096+00	ROLE OF CORTICOSTEROID IN TREATMENT OF LOWERBACK PAIN	\N	12		\N	Postimages/2021/01/$D/141201070_2757135964616183_1382591075290002633_n_8DOw4jn.jpg	t	f
+50	2021-01-27 17:49:18.680031+00	Dear Doctor,\r\nWe are pleased to invite you to the Webinar on “Clinical concept of vascular access through IO” organised by M/s Teleflex,under the banner of ISA Delhi branch, on Thursday, 28 th January, 2021, 6 pm to 7 pm\r\n (IST- India Time)\r\n\r\nSpeaker:  Dr. Vivek Vijayendra, India Head of Clinical and Medical Affairs, Teleflex Medical.\r\n\r\n\r\nPlatform: Virtually @Teams webinar. \r\nTo Join, click on https://teams.microsoft.com/l/meetup-join/19%3ameeting_M2M4MjBhMDQtMWQ4Ny00ZmE4LWI5MzktZWQ3YTEyZDU4NjY3%40thread.v2/0?context=%7b%22Tid%22%3a%22f4c9877d-3607-4fe9-98d3-93c3d2a0c80d%22%2c%22Oid%22%3a%22b85ec603-65fe-4052-b6d2-1c88b84afa5c%22%7d	\N	3		\N		f	f
 \.
 
 
@@ -2850,6 +3067,10 @@ COPY public.home_post_link (id, post_id, postlink_id) FROM stdin;
 16	30	32
 17	31	34
 23	40	42
+24	43	44
+25	44	46
+26	45	48
+27	47	50
 \.
 
 
@@ -2889,6 +3110,18 @@ COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
 61	31	3
 62	31	1
 73	40	1
+76	43	3
+77	44	9
+78	44	3
+79	44	1
+80	45	9
+81	45	2
+82	45	6
+83	45	1
+85	47	1
+87	49	3
+88	50	9
+89	50	1
 \.
 
 
@@ -2937,6 +3170,14 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 40	https://meet.google.com/izu-umom-qgo	Google meet	2
 41	https://meet.google.com/izu-umom-qgo	Google meet	\N
 42	https://meet.google.com/izu-umom-qgo	NEET SS	\N
+43	https://amzn.in/b1PLVfT	Kindle book link	\N
+44	https://amzn.in/b1PLVfT	Kindle book link	2
+45	https://us02web.zoom.us/j/8673955000	RSACP	\N
+46	https://us02web.zoom.us/j/8673955000	RSACP	3
+47	https://chat.whatsapp.com/LMJgquHrqEZILDiPEBchuG	WhatsApp group	\N
+48	https://chat.whatsapp.com/LMJgquHrqEZILDiPEBchuG	WhatsApp group	3
+49	https://www.iasp-pain.org/PublicationsNews/NewsDetail.aspx?ItemNumber=10475#:~:text=Jul%2016%2C%202020&text=The%20definition%20is%3A%20%E2%80%9CAn%20unpleasant,pain%20for%20further%20valuable%20contex	link address	\N
+50	https://www.iasp-pain.org/PublicationsNews/NewsDetail.aspx?ItemNumber=10475#:~:text=Jul%2016%2C%202020&text=The%20definition%20is%3A%20%E2%80%9CAn%20unpleasant,pain%20for%20further%20valuable%20contex	link address	12
 \.
 
 
@@ -3035,6 +3276,7 @@ COPY public.notifications_notification (id, message, post_id, user_id, date) FRO
 1	A new comment is added to Stoppage o.. by new user	16	2	2021-01-05 11:44:52.087447+00
 2	A new comment is added to Dear Colle.. by new user	\N	\N	2021-01-06 03:48:29.251751+00
 3	A new comment is added to Anaesthesi.. by new user	\N	3	2021-01-11 23:17:02.475477+00
+4	A new comment is added to Pain Medic.. by new user	\N	3	2021-01-22 16:56:39.697052+00
 \.
 
 
@@ -3042,59 +3284,44 @@ COPY public.notifications_notification (id, message, post_id, user_id, date) FRO
 -- Data for Name: stats_pageobj; Type: TABLE DATA; Schema: public; Owner: sk
 --
 
-COPY public.stats_pageobj (id, url) FROM stdin;
-1	https://allaboutanaesthesia.co/
-2	https://allaboutanaesthesia.co/stats/
-3	https://allaboutanaesthesia.co/archives/lectures
-4	https://allaboutanaesthesia.co/accounts/profile
-5	https://allaboutanaesthesia.co/conferences
-6	https://allaboutanaesthesia.co/accounts/signup/staff_signup
-7	https://allaboutanaesthesia.co/accounts/signin
-8	https://allaboutanaesthesia.co/archives/create-lecture
-9	https://allaboutanaesthesia.co/admin/jsi18n/
-10	https://allaboutanaesthesia.co/archives/edit-lecture/32
-11	https://allaboutanaesthesia.co/delete_post/32
-12	https://allaboutanaesthesia.co/delete_post/28
-13	https://allaboutanaesthesia.co/archives/exfactor
-14	http://127.0.0.1:8000/archives/lectures
-15	http://127.0.0.1:8000/
-16	https://allaboutanaesthesia.co/managewebsite
-17	https://allaboutanaesthesia.co/delete_post/33
-18	https://allaboutanaesthesia.co/mcq/
-19	https://allaboutanaesthesia.co/home/NEET-SS
-20	https://allaboutanaesthesia.co/home/Mcq
-21	https://allaboutanaesthesia.co/posts/29
-22	https://allaboutanaesthesia.co/posts/31
-23	https://allaboutanaesthesia.co/archives/edit-lecture-detail/34
-24	https://allaboutanaesthesia.co/archives/edit-lecture/34
-25	https://allaboutanaesthesia.co/delete_post/34
-26	https://allaboutanaesthesia.co/create_post
-27	https://allaboutanaesthesia.co/delete_post/35
-28	https://allaboutanaesthesia.co/home/Conferences
-29	https://allaboutanaesthesia.co/home/CRITICAL-CARE
-30	https://allaboutanaesthesia.co/archives/edit-lecture/36
-31	https://allaboutanaesthesia.co/delete_post/37
-32	https://allaboutanaesthesia.co/delete_post/38
-33	https://allaboutanaesthesia.co/delete_post/36
-34	https://allaboutanaesthesia.co/delete_post/39
-35	https://allaboutanaesthesia.co/mcq/getnewquestions/4
-36	https://allaboutanaesthesia.co/getnewposts/13
-37	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA
-38	https://allaboutanaesthesia.co/searchPage
-39	https://allaboutanaesthesia.co/mcq/getnewquestions/2
-40	https://allaboutanaesthesia.co/home/PAIN-MEDICINE
-41	https://allaboutanaesthesia.co/mcq/3
-42	https://allaboutanaesthesia.co/accounts/reset-your-password
-43	https://allaboutanaesthesia.co/accounts/passreset
-44	https://allaboutanaesthesia.co/notifications/
-45	https://allaboutanaesthesia.co/posts/10
-46	https://allaboutanaesthesia.co/mcq/1
-47	https://allaboutanaesthesia.co/posts/14
-48	https://allaboutanaesthesia.co/posts/15
-49	https://allaboutanaesthesia.co/posts/16
-50	https://allaboutanaesthesia.co/posts/30
-51	https://allaboutanaesthesia.co/posts/11
-52	https://allaboutanaesthesia.co/posts/13
+COPY public.stats_pageobj (id, url, count) FROM stdin;
+80	https://allaboutanaesthesia.co/posts/16	1
+78	https://allaboutanaesthesia.co/mcq/6	8
+72	https://allaboutanaesthesia.co/mcq/getnewquestions/1	17
+88	https://allaboutanaesthesia.co/mcq/5	1
+59	https://allaboutanaesthesia.co/accounts/changeuserprivileges/27	1
+77	https://allaboutanaesthesia.co/posts/30	2
+71	https://allaboutanaesthesia.co/mcq/3	2
+55	https://allaboutanaesthesia.co/notifications/	5
+81	https://allaboutanaesthesia.co/posts/15	1
+70	https://allaboutanaesthesia.co/mcq/	8
+67	https://allaboutanaesthesia.co/posts/31	3
+62	https://allaboutanaesthesia.co/posts/24	1
+83	https://allaboutanaesthesia.co/accounts/reset-your-password	2
+75	https://allaboutanaesthesia.co/posts/13	2
+84	https://allaboutanaesthesia.co/accounts/passreset	2
+76	https://allaboutanaesthesia.co/posts/14	2
+74	https://allaboutanaesthesia.co/posts/10	1
+69	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA	18
+82	https://allaboutanaesthesia.co/home/PAIN-MEDICINE	1
+65	https://allaboutanaesthesia.co/home/NEET-SS	7
+60	https://allaboutanaesthesia.co/posts/11	2
+54	https://allaboutanaesthesia.co/archives/lectures	32
+61	https://allaboutanaesthesia.co/home/CRITICAL-CARE	18
+66	https://allaboutanaesthesia.co/accounts/signup/staff_signup	27
+73	https://allaboutanaesthesia.co/mcq/getnewquestions/2	13
+68	https://allaboutanaesthesia.co/home/Conferences	17
+63	https://allaboutanaesthesia.co/conferences	27
+79	https://allaboutanaesthesia.co/posts/29	79
+57	https://allaboutanaesthesia.co/stats/	72
+56	https://allaboutanaesthesia.co/managewebsite	22
+53	https://allaboutanaesthesia.co/	103
+64	https://allaboutanaesthesia.co/accounts/signin	39
+89	https://allaboutanaesthesia.co/posts/45	12
+86	https://allaboutanaesthesia.co/create_post	3
+85	https://allaboutanaesthesia.co/mcq/1	3
+87	https://allaboutanaesthesia.co/posts/44	30
+58	https://allaboutanaesthesia.co/searchPage	8
 \.
 
 
@@ -3103,6 +3330,523 @@ COPY public.stats_pageobj (id, url) FROM stdin;
 --
 
 COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
+531	223.227.66.40	2	2021-01-24	57
+588	49.36.162.24	2	2021-01-25	54
+532	223.227.66.40	2	2021-01-24	57
+533	223.227.66.40	2	2021-01-24	56
+589	49.36.162.24	\N	2021-01-25	53
+534	223.227.66.40	2	2021-01-24	57
+535	223.227.66.40	2	2021-01-24	53
+590	49.36.162.24	\N	2021-01-25	61
+536	66.249.73.59	\N	2021-01-24	67
+537	66.249.73.55	\N	2021-01-24	67
+591	49.36.162.24	\N	2021-01-25	78
+538	223.236.85.30	\N	2021-01-24	53
+539	223.227.66.40	\N	2021-01-24	53
+592	49.36.162.24	\N	2021-01-25	72
+540	223.227.66.40	\N	2021-01-24	63
+541	223.227.66.40	\N	2021-01-24	68
+593	49.36.162.24	\N	2021-01-25	72
+542	223.227.66.40	\N	2021-01-24	68
+543	223.227.66.40	\N	2021-01-24	68
+594	49.36.162.24	\N	2021-01-25	72
+544	223.227.66.40	\N	2021-01-24	69
+545	223.227.66.40	\N	2021-01-24	66
+595	49.36.162.24	\N	2021-01-25	72
+546	223.227.66.40	\N	2021-01-24	70
+547	223.227.66.40	\N	2021-01-24	71
+596	49.36.162.24	\N	2021-01-25	65
+548	223.227.66.40	\N	2021-01-24	72
+549	223.227.66.40	\N	2021-01-24	72
+597	49.36.162.24	\N	2021-01-25	73
+550	223.227.66.40	\N	2021-01-24	72
+551	223.227.66.40	\N	2021-01-24	73
+598	49.36.162.24	\N	2021-01-25	73
+552	223.227.66.40	\N	2021-01-24	73
+553	223.227.66.40	\N	2021-01-24	73
+599	49.36.162.24	\N	2021-01-25	73
+554	223.227.66.40	\N	2021-01-24	71
+555	223.227.66.40	\N	2021-01-24	72
+600	49.36.162.24	\N	2021-01-25	78
+556	223.227.66.40	\N	2021-01-24	73
+557	223.227.66.40	\N	2021-01-24	73
+601	66.249.79.71	\N	2021-01-25	79
+558	223.227.66.40	\N	2021-01-24	73
+559	223.227.66.40	\N	2021-01-24	53
+602	66.249.79.71	\N	2021-01-25	80
+560	223.227.66.40	\N	2021-01-24	53
+561	223.227.66.40	\N	2021-01-24	53
+527	223.227.66.40	2	2021-01-23	57
+603	66.249.79.67	\N	2021-01-25	53
+562	223.227.66.40	\N	2021-01-24	64
+528	223.227.66.40	2	2021-01-23	53
+563	223.227.66.40	2	2021-01-24	54
+604	49.36.174.120	\N	2021-01-25	78
+564	223.227.66.40	2	2021-01-24	57
+529	223.227.66.40	2	2021-01-23	57
+565	223.227.66.40	2	2021-01-24	57
+605	49.36.174.120	\N	2021-01-25	53
+530	223.227.66.40	2	2021-01-23	57
+566	223.227.66.40	2	2021-01-24	57
+567	223.227.66.40	2	2021-01-24	63
+606	49.36.174.120	\N	2021-01-25	64
+568	223.227.66.40	2	2021-01-24	57
+569	223.227.66.40	2	2021-01-24	57
+607	49.36.174.120	\N	2021-01-25	64
+570	223.227.66.40	2	2021-01-24	57
+571	223.227.66.40	2	2021-01-24	57
+608	49.36.174.120	2	2021-01-25	54
+572	223.227.66.40	2	2021-01-24	53
+573	223.181.29.123	\N	2021-01-24	53
+609	49.36.174.120	2	2021-01-25	53
+574	223.181.29.195	\N	2021-01-24	53
+575	66.249.72.131	\N	2021-01-24	74
+610	49.36.174.120	2	2021-01-25	53
+576	66.249.72.128	\N	2021-01-24	75
+577	66.249.72.131	\N	2021-01-24	76
+611	49.36.174.120	2	2021-01-25	54
+578	66.249.72.135	\N	2021-01-24	58
+579	66.249.72.128	\N	2021-01-24	66
+612	49.36.174.120	2	2021-01-25	70
+580	66.249.72.131	\N	2021-01-24	61
+581	103.55.72.32	\N	2021-01-24	53
+613	49.36.174.120	2	2021-01-25	53
+582	66.249.79.71	\N	2021-01-25	53
+583	66.249.79.67	\N	2021-01-25	77
+614	49.36.174.120	2	2021-01-25	57
+584	49.36.162.24	\N	2021-01-25	53
+585	49.36.162.24	\N	2021-01-25	64
+615	49.36.174.120	2	2021-01-25	77
+586	49.36.162.24	2	2021-01-25	54
+587	49.36.162.24	2	2021-01-25	57
+616	49.36.174.120	2	2021-01-25	69
+617	49.36.174.120	2	2021-01-25	53
+618	49.36.174.120	\N	2021-01-25	53
+619	66.249.79.71	\N	2021-01-25	66
+620	66.249.79.64	\N	2021-01-25	61
+621	66.249.79.71	\N	2021-01-25	81
+622	27.63.178.39	\N	2021-01-25	53
+623	27.63.178.39	\N	2021-01-25	64
+624	27.63.178.39	2	2021-01-25	54
+625	27.63.178.39	2	2021-01-25	53
+626	27.63.178.39	2	2021-01-25	57
+627	66.249.79.64	\N	2021-01-25	68
+628	66.249.79.71	\N	2021-01-26	53
+629	52.12.163.174	\N	2021-01-26	53
+630	84.17.51.32	\N	2021-01-26	53
+631	66.249.64.131	\N	2021-01-26	75
+632	223.227.66.36	2	2021-01-26	53
+633	223.227.66.36	2	2021-01-26	57
+634	66.249.64.131	\N	2021-01-26	78
+635	66.249.64.131	\N	2021-01-26	66
+636	66.249.64.131	\N	2021-01-26	53
+637	49.36.162.24	2	2021-01-26	57
+638	49.36.162.24	2	2021-01-26	76
+639	49.36.161.234	3	2021-01-26	53
+640	49.36.161.234	3	2021-01-26	57
+641	49.36.161.234	3	2021-01-26	53
+642	49.36.161.234	3	2021-01-26	55
+643	49.36.161.234	3	2021-01-26	53
+644	49.36.161.234	3	2021-01-26	63
+645	49.36.161.234	3	2021-01-26	82
+646	49.36.161.234	3	2021-01-26	63
+647	49.36.161.234	3	2021-01-26	53
+648	49.36.161.234	3	2021-01-26	63
+649	49.36.161.234	3	2021-01-26	53
+650	49.36.161.234	3	2021-01-26	63
+651	49.36.161.234	\N	2021-01-26	79
+652	49.36.161.234	3	2021-01-26	79
+653	117.209.244.164	\N	2021-01-26	79
+654	49.36.161.234	3	2021-01-26	57
+655	117.230.176.98	\N	2021-01-26	79
+656	117.230.176.98	\N	2021-01-26	68
+657	157.48.162.33	\N	2021-01-26	79
+663	49.36.161.234	3	2021-01-26	57
+658	117.246.186.11	\N	2021-01-26	79
+754	49.36.161.234	\N	2021-01-26	79
+659	49.36.161.234	3	2021-01-26	57
+664	157.47.66.235	\N	2021-01-26	79
+660	117.246.186.11	\N	2021-01-26	61
+661	117.246.186.11	\N	2021-01-26	61
+665	157.47.66.235	\N	2021-01-26	79
+662	117.246.186.11	\N	2021-01-26	61
+755	49.36.161.234	\N	2021-01-26	63
+666	157.47.66.235	\N	2021-01-26	64
+667	157.47.66.235	\N	2021-01-26	79
+756	49.36.161.234	\N	2021-01-26	53
+668	157.48.182.22	\N	2021-01-26	79
+669	49.36.164.173	\N	2021-01-26	79
+757	49.36.161.234	\N	2021-01-26	63
+670	157.48.182.22	\N	2021-01-26	79
+671	157.48.182.22	\N	2021-01-26	64
+758	49.36.164.173	22	2021-01-26	79
+672	157.48.182.22	\N	2021-01-26	79
+673	49.36.164.173	\N	2021-01-26	64
+759	49.36.164.173	22	2021-01-26	79
+674	157.47.66.235	\N	2021-01-26	79
+675	106.223.184.68	\N	2021-01-26	79
+760	27.56.206.44	\N	2021-01-26	79
+676	49.36.164.173	\N	2021-01-26	64
+677	157.47.66.235	\N	2021-01-26	65
+761	27.56.206.44	\N	2021-01-26	61
+678	106.223.184.68	\N	2021-01-26	79
+679	49.36.164.173	\N	2021-01-26	66
+762	27.56.206.44	\N	2021-01-26	78
+680	49.36.164.173	\N	2021-01-26	66
+681	49.36.164.173	\N	2021-01-26	66
+763	27.56.206.44	\N	2021-01-26	72
+682	49.36.164.173	\N	2021-01-26	66
+683	49.36.164.173	\N	2021-01-26	66
+764	49.36.161.234	3	2021-01-26	57
+684	49.36.164.173	\N	2021-01-26	64
+685	49.36.164.173	\N	2021-01-26	83
+765	157.34.120.57	\N	2021-01-26	79
+686	49.36.164.173	\N	2021-01-26	83
+687	49.36.164.173	\N	2021-01-26	84
+766	49.36.161.234	\N	2021-01-26	53
+688	42.106.161.10	\N	2021-01-26	84
+689	49.36.164.173	\N	2021-01-26	64
+767	49.36.161.234	3	2021-01-26	57
+690	49.36.164.173	24	2021-01-26	54
+691	49.36.164.173	24	2021-01-26	53
+768	42.111.162.131	\N	2021-01-26	79
+692	49.36.164.173	24	2021-01-26	79
+693	195.74.76.194	\N	2021-01-26	64
+769	110.224.165.35	\N	2021-01-27	79
+694	157.47.66.235	\N	2021-01-26	79
+695	157.47.66.235	\N	2021-01-26	64
+770	49.36.161.234	3	2021-01-27	57
+696	49.36.161.234	\N	2021-01-26	53
+697	195.74.76.194	\N	2021-01-26	64
+771	106.195.127.221	\N	2021-01-27	79
+698	49.36.164.173	\N	2021-01-26	79
+699	157.48.182.22	\N	2021-01-26	79
+772	106.195.127.221	\N	2021-01-27	53
+700	49.36.164.173	\N	2021-01-26	64
+701	49.36.164.173	22	2021-01-26	54
+773	106.195.127.221	\N	2021-01-27	79
+702	49.36.164.173	22	2021-01-26	54
+703	49.36.164.173	22	2021-01-26	54
+774	117.249.170.25	\N	2021-01-27	79
+704	49.36.164.173	22	2021-01-26	64
+705	106.215.185.228	\N	2021-01-26	79
+775	49.36.161.234	3	2021-01-27	53
+706	106.198.95.173	\N	2021-01-26	79
+707	106.223.184.68	\N	2021-01-26	79
+776	49.36.161.234	3	2021-01-27	57
+708	106.223.184.68	\N	2021-01-26	53
+709	49.36.161.234	3	2021-01-26	57
+777	157.34.101.197	\N	2021-01-27	79
+710	49.36.161.234	3	2021-01-26	57
+711	49.36.161.234	3	2021-01-26	57
+778	45.115.89.59	\N	2021-01-27	53
+712	106.206.24.104	\N	2021-01-26	79
+713	106.206.24.104	\N	2021-01-26	63
+779	45.115.89.59	\N	2021-01-27	64
+714	49.36.161.234	3	2021-01-26	57
+715	106.206.24.104	\N	2021-01-26	61
+780	45.115.89.59	\N	2021-01-27	66
+716	106.206.24.104	\N	2021-01-26	79
+717	49.36.161.234	3	2021-01-26	57
+781	49.36.161.234	\N	2021-01-27	53
+718	157.41.134.40	\N	2021-01-26	79
+719	49.36.161.234	\N	2021-01-26	79
+782	45.115.89.59	\N	2021-01-27	66
+720	49.36.161.234	3	2021-01-26	57
+721	49.36.161.234	3	2021-01-26	57
+783	45.115.89.59	\N	2021-01-27	64
+722	49.36.161.234	3	2021-01-26	57
+723	31.13.103.18	\N	2021-01-26	79
+784	45.115.89.59	\N	2021-01-27	64
+724	31.13.103.19	\N	2021-01-26	79
+725	31.13.103.23	\N	2021-01-26	79
+785	45.115.89.59	31	2021-01-27	54
+726	31.13.103.119	\N	2021-01-26	79
+727	31.13.103.7	\N	2021-01-26	53
+786	45.115.89.59	31	2021-01-27	63
+728	49.36.161.234	\N	2021-01-26	79
+729	31.13.115.2	\N	2021-01-26	79
+787	45.115.89.59	\N	2021-01-27	63
+730	49.36.161.234	3	2021-01-26	57
+731	122.175.131.6	\N	2021-01-26	79
+788	45.115.89.59	31	2021-01-27	54
+732	47.247.167.229	\N	2021-01-26	79
+733	27.56.206.44	\N	2021-01-26	79
+734	27.62.193.192	\N	2021-01-26	79
+735	122.168.104.200	\N	2021-01-26	79
+736	27.56.206.44	\N	2021-01-26	68
+737	27.62.193.192	\N	2021-01-26	79
+738	31.13.127.6	\N	2021-01-26	79
+739	31.13.127.26	\N	2021-01-26	79
+740	27.62.164.25	\N	2021-01-26	79
+741	27.62.164.25	\N	2021-01-26	70
+742	27.62.164.25	\N	2021-01-26	66
+743	27.62.164.25	\N	2021-01-26	70
+744	27.62.164.25	\N	2021-01-26	85
+745	27.62.164.25	\N	2021-01-26	53
+746	27.56.206.44	\N	2021-01-26	79
+747	49.15.131.241	\N	2021-01-26	79
+748	27.62.164.25	\N	2021-01-26	64
+749	49.15.131.241	\N	2021-01-26	66
+750	157.39.119.124	\N	2021-01-26	79
+751	157.39.119.124	\N	2021-01-26	64
+752	49.36.161.234	3	2021-01-26	57
+753	14.139.51.66	\N	2021-01-26	79
+872	223.237.152.60	\N	2021-01-27	87
+789	45.115.89.59	31	2021-01-27	54
+790	117.230.185.90	\N	2021-01-27	79
+873	157.32.146.206	\N	2021-01-27	66
+791	117.230.185.90	\N	2021-01-27	68
+792	117.230.185.90	\N	2021-01-27	65
+874	157.32.146.206	\N	2021-01-27	64
+793	117.230.185.90	\N	2021-01-27	73
+794	117.230.185.90	\N	2021-01-27	66
+875	157.32.146.206	\N	2021-01-27	64
+795	117.230.185.90	\N	2021-01-27	66
+796	117.230.185.90	\N	2021-01-27	64
+876	157.32.146.206	34	2021-01-27	54
+797	117.230.185.90	\N	2021-01-27	64
+798	117.230.185.90	32	2021-01-27	54
+877	106.215.157.198	\N	2021-01-27	87
+799	117.230.185.90	32	2021-01-27	54
+800	117.230.185.90	32	2021-01-27	54
+878	157.32.146.206	34	2021-01-27	54
+801	106.214.32.108	\N	2021-01-27	79
+802	66.249.64.135	\N	2021-01-27	67
+879	157.32.146.206	34	2021-01-27	54
+803	49.36.161.234	3	2021-01-27	53
+804	49.36.161.234	3	2021-01-27	57
+880	157.32.146.206	34	2021-01-27	54
+805	106.200.191.121	\N	2021-01-27	79
+806	106.200.191.121	\N	2021-01-27	79
+881	49.36.161.234	3	2021-01-27	53
+807	106.200.191.121	\N	2021-01-27	53
+808	47.31.130.155	\N	2021-01-27	79
+882	49.36.161.234	3	2021-01-27	57
+809	47.247.115.189	\N	2021-01-27	79
+810	47.247.115.189	\N	2021-01-27	64
+883	157.42.247.7	\N	2021-01-27	87
+811	103.112.27.3	\N	2021-01-27	79
+812	110.224.161.212	\N	2021-01-27	79
+884	103.106.30.102	\N	2021-01-27	87
+813	110.224.161.212	\N	2021-01-27	61
+814	110.224.161.185	\N	2021-01-27	78
+885	157.32.141.57	34	2021-01-27	87
+815	66.249.64.128	\N	2021-01-27	60
+816	157.34.70.251	\N	2021-01-27	79
+886	157.32.141.57	34	2021-01-27	70
+817	157.34.70.251	\N	2021-01-27	66
+818	157.34.70.251	\N	2021-01-27	70
+887	157.32.141.57	34	2021-01-27	85
+819	157.34.70.251	\N	2021-01-27	85
+820	157.34.70.251	\N	2021-01-27	73
+888	117.97.76.78	\N	2021-01-27	87
+821	157.34.70.251	\N	2021-01-27	73
+822	157.34.70.251	\N	2021-01-27	73
+889	157.45.161.23	\N	2021-01-27	87
+823	47.247.186.93	\N	2021-01-27	79
+824	106.223.214.56	\N	2021-01-27	79
+890	157.45.161.23	\N	2021-01-27	69
+825	27.56.222.233	\N	2021-01-27	79
+826	27.56.222.233	\N	2021-01-27	64
+891	14.139.54.114	\N	2021-01-27	87
+827	27.56.222.233	\N	2021-01-27	79
+828	103.110.171.154	\N	2021-01-27	79
+892	106.215.209.150	\N	2021-01-27	87
+829	49.36.161.234	3	2021-01-27	53
+830	49.36.161.234	3	2021-01-27	57
+893	106.215.146.150	\N	2021-01-27	70
+831	31.13.127.10	\N	2021-01-27	53
+832	31.13.103.118	\N	2021-01-27	53
+894	106.215.209.150	\N	2021-01-27	78
+833	49.36.161.234	3	2021-01-27	53
+834	49.36.161.234	3	2021-01-27	56
+895	106.215.146.150	\N	2021-01-27	72
+835	49.36.161.234	3	2021-01-27	56
+836	49.36.161.234	3	2021-01-27	56
+896	106.215.146.150	\N	2021-01-27	72
+837	49.36.161.234	3	2021-01-27	56
+838	49.36.161.245	\N	2021-01-27	79
+897	106.215.146.150	\N	2021-01-27	72
+839	49.36.161.245	\N	2021-01-27	61
+840	49.36.161.245	\N	2021-01-27	61
+898	106.215.146.150	\N	2021-01-27	72
+841	49.36.161.245	\N	2021-01-27	66
+842	49.36.161.245	\N	2021-01-27	66
+899	106.215.146.150	\N	2021-01-27	88
+843	49.36.161.245	\N	2021-01-27	78
+844	49.36.161.245	\N	2021-01-27	72
+900	106.215.146.150	\N	2021-01-27	66
+845	49.36.161.245	\N	2021-01-27	72
+846	49.36.161.245	\N	2021-01-27	72
+901	49.36.161.78	\N	2021-01-27	87
+847	49.36.161.245	\N	2021-01-27	72
+848	49.36.161.234	3	2021-01-27	53
+902	27.97.215.129	\N	2021-01-27	87
+849	49.36.161.234	3	2021-01-27	56
+850	223.176.105.152	\N	2021-01-27	79
+903	49.36.161.234	3	2021-01-27	53
+851	223.176.105.152	\N	2021-01-27	64
+852	223.176.105.152	\N	2021-01-27	64
+904	49.36.161.234	3	2021-01-27	57
+853	223.176.105.152	\N	2021-01-27	66
+854	223.176.105.152	\N	2021-01-27	66
+905	47.9.129.232	\N	2021-01-27	87
+855	223.176.105.152	\N	2021-01-27	64
+856	223.176.105.152	33	2021-01-27	54
+906	47.9.129.232	\N	2021-01-27	64
+857	49.36.161.234	3	2021-01-27	53
+858	49.36.161.234	3	2021-01-27	86
+907	47.9.129.232	\N	2021-01-27	87
+859	49.36.161.234	3	2021-01-27	53
+860	49.36.161.234	3	2021-01-27	63
+908	47.9.129.232	\N	2021-01-27	87
+861	49.36.161.234	3	2021-01-27	53
+862	49.36.161.234	\N	2021-01-27	87
+909	47.9.129.232	\N	2021-01-27	87
+863	106.215.139.69	\N	2021-01-27	87
+864	157.39.51.146	\N	2021-01-27	87
+910	47.9.129.232	\N	2021-01-27	64
+865	157.41.129.139	31	2021-01-27	87
+866	49.36.173.31	\N	2021-01-27	87
+911	47.9.129.232	\N	2021-01-27	66
+867	106.215.197.180	\N	2021-01-27	87
+868	106.215.247.168	\N	2021-01-27	87
+912	47.9.129.232	\N	2021-01-27	66
+869	157.32.146.206	\N	2021-01-27	87
+870	49.36.173.31	\N	2021-01-27	79
+913	47.9.129.232	\N	2021-01-27	64
+871	157.32.146.206	\N	2021-01-27	66
+914	47.9.129.232	35	2021-01-27	54
+915	47.9.129.232	35	2021-01-27	54
+916	47.9.129.232	35	2021-01-27	64
+917	47.9.129.232	35	2021-01-27	63
+918	117.209.253.227	\N	2021-01-27	79
+919	117.209.253.227	\N	2021-01-27	68
+920	117.209.253.227	\N	2021-01-27	68
+1016	14.139.54.114	\N	2021-01-27	53
+921	103.144.119.2	\N	2021-01-27	87
+922	117.209.253.227	\N	2021-01-27	79
+1017	14.139.54.114	\N	2021-01-27	61
+923	14.139.54.114	\N	2021-01-27	53
+924	14.139.54.114	\N	2021-01-27	87
+1018	14.139.54.114	\N	2021-01-27	61
+925	14.139.54.114	\N	2021-01-27	64
+926	14.139.54.114	12	2021-01-27	54
+1019	14.139.54.114	\N	2021-01-27	61
+927	14.139.54.114	12	2021-01-27	53
+928	14.139.54.114	12	2021-01-27	86
+1020	14.139.54.114	\N	2021-01-27	69
+929	14.139.54.114	\N	2021-01-27	66
+930	14.139.54.114	\N	2021-01-27	64
+1021	14.139.54.114	\N	2021-01-27	69
+931	14.139.54.114	3	2021-01-27	54
+932	14.139.54.114	3	2021-01-27	53
+1022	117.97.66.61	2	2021-01-27	69
+933	14.139.54.114	3	2021-01-27	57
+934	14.139.54.114	3	2021-01-27	56
+1023	117.97.66.61	2	2021-01-27	68
+935	14.139.54.114	3	2021-01-27	56
+936	14.139.54.114	3	2021-01-27	56
+1024	14.139.54.114	\N	2021-01-27	68
+937	14.139.54.114	3	2021-01-27	56
+938	14.139.54.114	3	2021-01-27	53
+1025	14.139.54.114	\N	2021-01-27	68
+939	14.139.54.114	3	2021-01-27	86
+940	14.139.54.114	3	2021-01-27	53
+1026	117.97.66.61	2	2021-01-27	53
+941	106.223.223.34	\N	2021-01-27	89
+942	106.223.223.34	\N	2021-01-27	89
+1027	117.97.66.61	2	2021-01-27	69
+943	14.139.54.114	3	2021-01-27	53
+944	49.36.162.24	\N	2021-01-27	53
+1028	117.97.66.61	2	2021-01-27	65
+945	49.36.162.24	\N	2021-01-27	64
+946	14.139.54.114	3	2021-01-27	63
+1029	117.97.66.61	2	2021-01-27	54
+947	106.215.220.1	\N	2021-01-27	87
+948	49.36.162.24	2	2021-01-27	54
+1030	117.97.66.61	2	2021-01-27	63
+949	49.36.162.24	2	2021-01-27	63
+950	14.139.54.114	3	2021-01-27	57
+1031	117.97.66.61	2	2021-01-27	68
+951	49.36.162.24	2	2021-01-27	57
+952	49.36.162.24	2	2021-01-27	87
+1032	117.97.66.61	2	2021-01-27	53
+953	49.36.162.24	2	2021-01-27	63
+954	49.36.162.24	2	2021-01-27	55
+1033	117.97.66.61	2	2021-01-27	68
+955	49.36.162.24	2	2021-01-27	63
+956	49.36.162.24	2	2021-01-27	61
+1034	117.97.66.61	2	2021-01-27	68
+957	49.36.162.24	2	2021-01-27	69
+958	14.139.54.114	3	2021-01-27	57
+1035	14.139.54.114	\N	2021-01-27	79
+959	14.139.54.114	3	2021-01-27	56
+960	14.139.54.114	3	2021-01-27	55
+1036	14.139.54.114	\N	2021-01-27	61
+961	14.139.54.114	3	2021-01-27	58
+962	14.139.54.114	3	2021-01-27	58
+1037	14.139.54.114	\N	2021-01-27	63
+963	14.139.54.114	3	2021-01-27	65
+964	14.139.54.114	3	2021-01-27	70
+1038	14.139.54.114	\N	2021-01-27	53
+965	14.139.54.114	3	2021-01-27	54
+966	14.139.54.114	3	2021-01-27	54
+1039	117.97.66.61	2	2021-01-27	68
+967	14.139.54.114	3	2021-01-27	63
+968	14.139.54.114	3	2021-01-27	63
+1040	117.97.66.61	2	2021-01-27	63
+969	14.139.54.114	3	2021-01-27	53
+970	14.139.54.114	3	2021-01-27	53
+1041	202.83.18.249	\N	2021-01-27	79
+971	66.249.64.135	\N	2021-01-27	53
+972	14.139.54.114	\N	2021-01-27	89
+1042	47.15.208.91	\N	2021-01-27	53
+973	14.139.54.114	3	2021-01-27	57
+974	14.139.54.114	3	2021-01-27	53
+1043	47.15.208.91	\N	2021-01-27	64
+975	14.139.54.114	3	2021-01-27	53
+976	14.139.54.114	3	2021-01-27	57
+977	31.13.103.111	\N	2021-01-27	89
+978	31.13.103.120	\N	2021-01-27	89
+979	106.223.136.112	\N	2021-01-27	89
+980	31.13.103.9	\N	2021-01-27	89
+981	31.13.103.9	\N	2021-01-27	89
+982	31.13.103.24	\N	2021-01-27	53
+983	31.13.115.15	\N	2021-01-27	89
+984	106.223.136.112	\N	2021-01-27	89
+985	14.139.54.114	3	2021-01-27	57
+986	14.139.54.114	3	2021-01-27	56
+987	183.83.143.118	\N	2021-01-27	89
+988	117.97.66.61	2	2021-01-27	69
+989	66.249.64.135	\N	2021-01-27	89
+990	66.249.64.135	\N	2021-01-27	87
+991	106.223.136.112	\N	2021-01-27	53
+992	157.34.107.89	\N	2021-01-27	53
+993	157.41.119.53	\N	2021-01-27	87
+994	27.56.206.44	\N	2021-01-27	87
+995	47.15.208.91	\N	2021-01-27	53
+996	117.97.66.61	2	2021-01-27	68
+997	117.97.66.61	2	2021-01-27	69
+998	117.97.66.61	2	2021-01-27	58
+999	117.97.66.61	2	2021-01-27	63
+1000	117.97.66.61	2	2021-01-27	69
+1001	117.97.66.61	2	2021-01-27	69
+1002	14.139.54.114	2	2021-01-27	53
+1003	14.139.54.114	2	2021-01-27	53
+1004	117.97.66.61	2	2021-01-27	63
+1005	14.139.54.114	2	2021-01-27	53
+1006	117.97.66.61	2	2021-01-27	63
+1007	117.97.66.61	2	2021-01-27	63
+1008	117.97.66.61	2	2021-01-27	69
+1009	14.139.54.114	2	2021-01-27	69
+1010	14.139.54.114	\N	2021-01-27	69
+1011	14.139.54.114	\N	2021-01-27	69
+1012	14.139.54.114	\N	2021-01-27	69
+1013	14.139.54.114	\N	2021-01-27	69
+1014	14.139.54.114	\N	2021-01-27	65
+1015	14.139.54.114	\N	2021-01-27	61
 \.
 
 
@@ -3110,35 +3854,35 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 -- Name: accounts_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_degree_id_seq', 39, true);
+SELECT pg_catalog.setval('public.accounts_degree_id_seq', 55, true);
 
 
 --
 -- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 39, true);
+SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 58, true);
 
 
 --
 -- Name: accounts_profile_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 50, true);
+SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 66, true);
 
 
 --
 -- Name: accounts_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 150, true);
+SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 198, true);
 
 
 --
 -- Name: accounts_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_id_seq', 26, true);
+SELECT pg_catalog.setval('public.accounts_profile_id_seq', 34, true);
 
 
 --
@@ -3152,28 +3896,28 @@ SELECT pg_catalog.setval('public.accounts_profile_links_id_seq', 1, false);
 -- Name: accounts_profile_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 25, true);
+SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 33, true);
 
 
 --
 -- Name: accounts_profiledetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 164, true);
+SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 213, true);
 
 
 --
 -- Name: accounts_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_user_id_seq', 30, true);
+SELECT pg_catalog.setval('public.accounts_user_id_seq', 38, true);
 
 
 --
 -- Name: accounts_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_work_id_seq', 23, true);
+SELECT pg_catalog.setval('public.accounts_work_id_seq', 31, true);
 
 
 --
@@ -3201,7 +3945,7 @@ SELECT pg_catalog.setval('public.archives_fileadd_id_seq', 1, false);
 -- Name: archives_lecturepost_post_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.archives_lecturepost_post_details_id_seq', 1, true);
+SELECT pg_catalog.setval('public.archives_lecturepost_post_details_id_seq', 2, true);
 
 
 --
@@ -3250,14 +3994,14 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 26, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 183, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 193, true);
 
 
 --
 -- Name: home_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_comment_id_seq', 11, true);
+SELECT pg_catalog.setval('public.home_comment_id_seq', 12, true);
 
 
 --
@@ -3278,35 +4022,35 @@ SELECT pg_catalog.setval('public.home_imageadd_id_seq', 1, false);
 -- Name: home_post_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_comments_id_seq', 11, true);
+SELECT pg_catalog.setval('public.home_post_comments_id_seq', 12, true);
 
 
 --
 -- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_id_seq', 40, true);
+SELECT pg_catalog.setval('public.home_post_id_seq', 52, true);
 
 
 --
 -- Name: home_post_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_link_id_seq', 23, true);
+SELECT pg_catalog.setval('public.home_post_link_id_seq', 27, true);
 
 
 --
 -- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_tag_id_seq', 73, true);
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 92, true);
 
 
 --
 -- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_postlink_id_seq', 42, true);
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 50, true);
 
 
 --
@@ -3362,21 +4106,21 @@ SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 9, true);
 -- Name: notifications_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.notifications_notification_id_seq', 3, true);
+SELECT pg_catalog.setval('public.notifications_notification_id_seq', 4, true);
 
 
 --
 -- Name: stats_pageobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 52, true);
+SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 89, true);
 
 
 --
 -- Name: stats_requestobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 451, true);
+SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 1043, true);
 
 
 --
