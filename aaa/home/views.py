@@ -46,11 +46,10 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        #questionbank = QuestionBank.objects.all()
+        questionbank = QuestionBank.objects.all()
         template_name = 'home/neet.html'
-        #context['questionbank'] = list(questionbank.filter(mcq=True))
-        #context['flashcards'] = list(questionbank.filter(flashcard=True))
-        #context['cases'] = list(questionbank.filter(qa=True))
+        context['questionbank'] = list(questionbank.filter(mcq=True))
+        context['flashcards'] = list(questionbank.filter(flashcard=True))
         postslist = []
         oldpostslist = list(Post.objects.filter(lecture=False, conference=False).order_by('-date').prefetch_related())
 
@@ -461,8 +460,15 @@ class GetPosts(View):
             except:
                 print('enter integer')
                 return redirect('home:home')
-            posts = Post.objects.order_by('-date').prefetch_related()
-            newposts = posts[index:index + 15]
+            postslist = []
+            oldpostslist = list(Post.objects.filter(lecture=False, conference=False).order_by('-date').prefetch_related())
+
+            for i in oldpostslist:
+                if i.tag.filter(name = 'Conferences'):
+                    continue
+                else:
+                    postslist.append(i)
+            newposts = postslist[index:index + 15]
             html = [ (((render(self.request, 'home/getposts.html',{'user': self.get_user(), 'post': i})).content).decode('utf-8')).strip() for i in newposts]
 
             response =JsonResponse(html, safe=False)
