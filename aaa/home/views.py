@@ -51,7 +51,14 @@ class HomeView(TemplateView):
         #context['questionbank'] = list(questionbank.filter(mcq=True))
         #context['flashcards'] = list(questionbank.filter(flashcard=True))
         #context['cases'] = list(questionbank.filter(qa=True))
-        postslist = list(Post.objects.filter(lecture=False, conference=False).order_by('-date').prefetch_related())
+        postslist = []
+        oldpostslist = list(Post.objects.filter(lecture=False, conference=False).order_by('-date').prefetch_related())
+
+        for i in oldpostslist:
+            if i.tag.filter(name = 'Conferences'):
+                continue
+            else:
+                postslist.append(i)
         print(len(postslist))
         utc = pytz.UTC
         tz = pytz.timezone('Asia/Kolkata')
@@ -59,6 +66,8 @@ class HomeView(TemplateView):
         context['lectures'] = [i for i in LecturePost.objects.filter(lecture=True).order_by('-pk') if utc.localize(i.lecture_start_date) > today]
         context['conferences'] = [i for i in LecturePost.objects.filter(lecture=False).order_by('lecture_start_date') if utc.localize(i.lecture_start_date) > today]
         context['posts'] = postslist[0:15]
+        tag = Tag.objects.get(name='Conferences')
+        context['oldposts'] = Post.objects.filter(tag=tag, conference=False).order_by('-pk')
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context['tag_speciality'] = list(tag_speciality)
         return context
