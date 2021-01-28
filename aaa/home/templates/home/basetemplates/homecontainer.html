@@ -19,15 +19,21 @@
           <a class="center"  href="{% url 'home:postForm'  %}" >Add POST | QUESTION </a>
 
         </div>
+        {% if lectures %}
         <h2 class="tagbreak">#Lectures</h2>
 
         {% for post in lectures %}
         {% include "home/basetemplates/lecturebase.html" %}
         {% endfor %}
+        {% endif %}
 
-        
-        {% include "home/basetemplates/qbcover.html" %}
 
+{% if questionbank or flashcards %}
+{% include "home/basetemplates/qbcover.html" %}
+
+{% endif %}
+
+        {% if conferences %}
         <h2 class="tagbreak">#Conferences</h2>
 
         {% for post in conferences %}
@@ -37,10 +43,13 @@
         {% include "home/basetemplates/conferencebase.html" %}
         {% endfor %}
 
+        {% endif %}
 
-        <h2 class="tagbreak">#Feed</h2>
+
 
         {% if posts and request.user%}
+        <h2 class="tagbreak">#Feed</h2>
+
         {% for post in posts %}
         {% include "home/basetemplates/homepost.html" %}
         {% endfor  %}

@@ -25,10 +25,10 @@
        {% else %}
        {% if tag.name == 'Conferences' %}
 
-       <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:conf' %}">{{tag.name}}</a>  </p>
+       <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:conf' %}">{{tag.name}} </a>  </p>
 
        {% else %}
-       <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+       <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}} </a>  </p>
 
        {% endif %}
        {% endif %}
