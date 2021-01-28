@@ -66,151 +66,25 @@
 <div class="arch-main">
 
 
-    {% if request.user and request.user %}
-      <div class="create-book-form">
-
-     <form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity(event)">
-        {% csrf_token %}
-        <div class="book-form">
-            <div class="book-cover-form">
-            <div class="book-poster">
-
-                <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
-
-                <p>Add image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image"></p>
 
 
-                <!--p>GET:  <input placeholder="Add link name"  type="text" maxlength="20" name = 'link_name' value="" > :  <input placeholder="Add link url.." type="url" name = 'link' value=""></p-->
-            </div>
-            <div class="book-review-form">
-                <p> <input type="text" name ='book_name'  placeholder="Add book name..." maxlength="100" required></p>
 
-            <p>Subject :<select name = 'subjecttag'  required> <option selected value="{{tag.name}}" label="{{tag.name}}" ></option></select> </p>
+{% if request.user.is_staff %}
+<div class="edit-book-form">
 
-                <p> <input type="text" name ='latest'  placeholder="Add latest edition" maxlength="20" required></p>
+  {% if tag.get_books %}
+    {% for book in tag.get_books %}
 
-            </div>
-                </div>
-            <div class="book-content-form">
-                <h4>Review</h4>
+  {% include "home/basetemplates/editbookform.html" %}
 
-               <textarea rows="15" cols="20" type="text" placeholder="Add Review" name = 'review' maxlength="2000" required></textarea>
-
-            </div>
-
-        </div>
-
-
-        <button  type="submit" name="addbookformbtn" value="bookbtn">Submit</button>
-    </form>
-
-        </div>
-      <div class="edit-book-form">
-
-        {% if tag.get_books %}
-          {% for book in tag.get_books %}
-
-        <form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity()">
-        {% csrf_token %}
-        <div class="book-form">
-            <div class="book-cover-form">
-            <div class="book-poster">
-                {% if book.backgroundPic %}
-                <img src="/media/{{book.backgroundPic}}" width="180px" height="180px">
-                 <p>Change image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image" ></p>
-                {% else %}
-                <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
-
-                <p>Add image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image"></p>
-                {% endif %}
-                {% if book.get_source_link %}
-                {% for i in book.get_source_link %}
-
-                <p>GET:  <input  type="text" maxlength="20" name = 'link_name' value="{{i.0}}" > :  <input type="url" name = 'link' value="{{i.1}}"></p>
-                {%endfor %}
-
-                {% else %}
-                <p>GET:  <input  type="text" maxlength="20" name = 'link_name' value="" > :  <input type="url" name = 'link' value=""></p>
-                {% endif %}
-            </div>
-            <div class="book-review-form">
-                {% if book.name %}
-               <p> <input type="text" name ='book_name' value="{{book.name}}" placeholder="Add book name" maxlength="100" required></p>
-                {% else %}
-                <p> <input type="text" name ='book_name'  placeholder="Add book name..." maxlength="100" required></p>
-                {% endif %}
-
-            <p>Subject :<select name = 'subjecttag'  required><option selected value="{{tag.name}}" label="{{tag.name}}" ></option></select> </p>
-                {% if book.latest %}
-
-                <p> <input type="text" name ='latest' value="{{book.latest}}" placeholder="Add latest edition" maxlength="20" required></p>
-                {% else %}
-                <p> <input type="text" name ='latest'  placeholder="Add latest edition" maxlength="20" required></p>
-
-                {% endif %}
-
-            </div>
-                </div>
-            <div class="book-content-form">
-                <h4>Reviews</h4>
-
-                   {% if book.get_reviews %}
-                     {%for rev in book.get_reviews %}
-                      {% if rev.details and rev.user == request.user %}
-                        <div class="book-review-content-form">
-                             <p style="color: #000066"><b>{{rev.post_details}}</b></p>
-
-                        <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required>{{rev.details}}</textarea>
-
-                        </div>
-
-                        {% else %}
-                <div class="book-review-content-form">
-                    <p style="color: #000066"><b>{{rev.post_details}}</b></p>
-                          <p>{{rev.details|linebreaks }}</p>
-                </div>
-
-
-                      {% endif %}
-
-                     {%endfor%}
-                {% has_review request.user book as ex %}
-                {% if not x %}
-                      <div class="book-review-content-form">
-                    <p>Add your review</p>
-                <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required></textarea>
-
-                </div>
-                {% endif %}
-                    {% else %}
-                  <p>Add your review</p>
-                <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required></textarea>
-
-
-                   {% endif %}
-                {% if book.has_review == False %}
-                <p>Add your review</p>
-                <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required>{{rev.details}}</textarea>
-                {% endif %}
-            </div>
-
-        </div>
-
-
-        <button type="submit" name="bookformbtn" value="{{book.pk}}">Submit</button>
-    </form>
-
-         {% endfor %}
-          {% endif %}
-        </div>
+   {% endfor %}
     {% endif %}
-
-
-
+  </div>
+{% endif %}
 
 <div class="subject-heading">
 
-    <h2 style="text-decoration: underline; ">{{tag.name}}</h2>
+    <h2 style="color: #000066;letter-spacing: 1px;align-self: center">{{tag.name}}</h2>
 
 <!-- Add details button and add, edit forms -->
     <div class="subject-intro">
@@ -243,293 +117,58 @@
         <!-- Add details Button of a Subject  -->
 
         {% if request.user and request.user  %}
-        <p><a style="text-decoration: underline; color: blue;" onclick="addsubjectintro()">Add more details </a></p>
+        <p style="align-self: center"><a style="text-decoration: underline; color: blue; align-self: center" onclick="addsubjectintro()">Add more details </a></p>
         {% endif %}
 
         <!-- Add details Form and Edit details Form of a Subject  -->
 
         {% if request.user and request.user  %}
-        <form style="display: none;" id = 'subject-intro-edit' method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <p><input placeholder="Add heading.." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value="{{i.heading}}"></p> <br>
-                <p><textarea   required name="details" type="text" maxlength="5000" >{{i.details}} </textarea></p>
-
-                <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="edittagdetail" type="submit" value="profdetails">Submit</button>
-            </form>
-        <form style="display: none;" action="{% url 'home:addtagdetail' tag.pk %}" method="post" id="subject-intro-add" enctype="application/x-www-form-urlencoded">
-             {% csrf_token %}
-
-              <p><input placeholder="Add heading..." style="border-radius: 4px;  height: 35px;  font-size: 14px;  font-family: 'Overlock', cursive;" required name="heading" type="text" maxlength="50" value=""></p> <br>
-                <p><textarea placeholder="Add details..." required name="details" type="text" maxlength="5000" > </textarea></p>
-
-                <button style="border-radius: 4px;  width:65px;  height:40px;  background-color: #000066; color: white;" name="addtagdetail" type="submit" value="profdetails">Submit</button>
-
-         </form>
+        {% include "home/basetemplates/add_subject_details.html" %}
         {% endif %}
 
 
     </div>
-    <div class="home-container">
-        {% if request.user and request.user %}
-        {% if messages %}
-        {% for message in messages %}
-        <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
-        {% endfor %}
-        {% endif %}
-
-        {% endif %}
-        <div class="someclass">
-          <div class="blue-block flex-column">
-            <a class="center"  href="{% url 'home:postForm'  %}" >Add POST | QUESTION </a>
-
-          </div>
-            {% if posts and request.user%}
-        {% for post in posts %}
-
-        <div class="home-post">
-
-         <div class="flex-column">
-           <div class="flex-row" style="justify-content: space-between">
-             <p style="color: #000066"><b>{{post.posted_on}}</b> </p>
-             <div class="socialmediatags tags">
-
-               <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
-        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
-        <a onclick="navigator.clipboard.writeText('{{ post.get_absolute_url }}'); alert('link: {{ post.get_absolute_url }}')"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
+    {% include "home/basetemplates/homecontainer.html" %}
 
 
-             </div>
-           </div>
-
-
-             <div class="regulartags tags">
-               {% for tag in post.get_tags %}
-               {% if tag.is_degree %}
-               <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
-               {% else %}
-               {% if tag.name == 'Conferences' %}
-
-               <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:conf' %}">{{tag.name}}</a>  </p>
-
-               {% else %}
-               <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
-
-               {% endif %}
-               {% endif %}
-               {% endfor %}
-             </div>
-
-
-         </div>
-
-         {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
-     <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
-     {% csrf_token %}
-         <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Post" style="text-decoration: underline; color: #000066" >
-     </form>
-     {%endif %}
-         <div class="home-post-heading">
-             <h3>{{post.heading | linebreaks }}</h3>
-
-
-         </div>
-
-
-         {% if post.img %}
-         <div class="home-post-img">
-             <img  src="/media/{{post.img}}" width="250px" height="250px">
-         </div>
-
-         {% endif  %}
-
-
-         {% if post.content %}
-         <div class="home-post-content">
-             <p>{{post.content|linebreaks }}</p>
-         </div>
-         {% endif  %}
-
-
-         {% if post.get_links %}
-         <b>Attached links</b>
-         {% for i in post.get_links %}
-         <div class="home-post-link">
-             <a href="{{i.link}}"><p>{{i.link_name}}</p></a>
-         </div>
-         {%endfor%}
-         {% endif  %}
-
-         {% if post.pdf %}
-         <b>Attached Pdfs</b>
-         <div class="home-post-pdf">
-             <a href="{{post.pdf}}"><p>{{post.pdf_name}}: {{post.pdf}}</p></a>
-         </div>
-         {% endif  %}
-         <nav onclick="showcommentsdh('comments{{ post.pk  }}')" style="display: flex; justify-content: flex-start; height: auto;">
-           {% if request.user.is_staff %}
-           <a >{{ post.get_comments_length }}</a>
-           {% else %}
-           <a href="{% url 'accounts:login' %}">Login to see/post comments</a>
-           {% endif %}
-
-         </nav>
-         {% if request.user.is_staff %}
-         <div id="comments{{post.pk}}" class="comments ">
-           <script type="text/javascript">
-             var dhcomments{{post.pk}} = document.getElementById('comments{{ post.pk }}')
-             dhcomments{{post.pk}}.style.display = 'none';
-           </script>
-         {% if post.get_comments %}
-         <div class="home-post-comments">
-         {% for comment in post.get_comments %}
-             <div class="home-post-comment-single">
-                 <div class="flex-row end-end">
-                   <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}  </b>   </p>
-                   {% if request.user.is_staff and request.user == comment.user%}
-                   <p><a style="margin-right: 3px" onclick="deletecomment(event, {{comment.pk}})"><img src="{% static 'home/images/delete.png' %}" height="20px" width="20px" alt=""></a></p>
-                       {%endif %}
-                 </div>
-
-
-           {% if comment.img %}
-
-         <div  class="home-post-img">
-             <img  src="/media/{{comment.img}}" width="250px" height="250px">
-         </div>
-
-         {% endif  %}
-
-
-
-         {% if comment.text %}
-         <div class="home-post-content">
-             <p>{{comment.text|linebreaks }}</p>
-         </div>
-         {% endif  %}
-
-
-
-
-         {% if comment.get_links %}
-                 <b>Attached links</b>
-         {% for i in comment.get_links %}
-         <div class="home-post-link">
-             <a href="{{i.link}}"><p>{{i.link_name}}: {{i.link}}</p></a>
-         </div>
-         {%endfor%}
-         {% endif  %}
-         {% if comment.pdf %}
-                 <b>Attached pdfs</b>
-         <div class="home-post-pdf">
-             <a href="{{comment.pdf}}"><p>{{comment.pdf_name}}: {{comment.pdf}}</p></a>
-         </div>
-         {% endif  %}
-                 </div>
-         {% endfor %}
-         </div>
-         {% endif  %}
-         {% if request.user.is_staff %}
-         <div class="comment-create-form">
-          <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
-                 {% csrf_token %}
-             <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
-
-             <button name="createcomment" type="submit" value="createcomment">Submit</button>
-             </form>
-
-             </div>
-         {% endif %}
-
-         </div>
-         {% endif %}
-
-
-         </div>
-
-
-    {% endfor  %}
-        {% endif  %}
+    <div class="blue-block flex-column" style="align-items:center;background-color: #8b4513; color:white;">
+      <h2>Books and Reviews</h2>
+      {% if request.user and request.user %}
+       <p><a style="text-decoration: underline; color: white;" onclick="addbookform()">Add a book </a> |  <a style="text-decoration: underline; color: white;" onclick="editbookform()">Edit a book </a></p>
+      {% endif %}
 
     </div>
+    {% if request.user and request.user %}
+      <div class="create-book-form">
 
+     {% include "home/basetemplates/createbookform.html" %}
 
         </div>
 
+    {% endif %}
     <!-- Add book and Edit book forms -->
-        {% if request.user and request.user %}
-         <p><a style="text-decoration: underline; color: blue;" onclick="addbookform()">Add a book </a> |  <a style="text-decoration: underline; color: blue;" onclick="editbookform()">Edit a book </a></p>
-        {% endif %}
+
 
 
  <!-- Shows books in each subject -->
 {% if request.user %}
     <div class="subject-detail books">
-        <h2>Book Reviews</h2>
-            <div class="subject-details-review">
+
 
         {% if tag.get_books %}
+        <div class="subject-details-review">
             {% for book in tag.get_books %}
 
 
-        <div class="book-form" style="margin: 40px 0;border-bottom: 5px solid black;">
-            <div class="book-cover-form">
-            <div class="book-poster">
-                {% if request.user.is_authenticated and request.user.is_admin and request.user == book.user %}
-            <script>var deleteurl{{book.pk}} = '{% url "archives:deletebook" book.pk %}'</script>
-            <p><a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{book.pk}})">Remove the book </a></p>
-            {% endif %}
-                {% if book.backgroundPic %}
-                <img src="/media/{{book.backgroundPic}}" width="180px" height="180px">
-                {% else %}
-                <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
-
-                {% endif %}
-                {% if book.get_source_link %}
-                {% for i in book.get_source_link %}
-
-                <p><a href="{{i.1}}" > GET</a></p>
-                {%endfor %}
-
-               {% endif %}
-            </div>
-            <div class="book-review-form">
-                {% if book.name %}
-               <p> Name: {{book.name}}</p>
-              {% endif %}
-
-                {% if book.latest %}
-               <p> Last Edition: {{book.latest}}</p>
-                {% endif %}
-
-            </div>
-                </div>
-            <div class="book-content-form">
-                <h4>Review</h4>
-
-                   {% if book.get_reviews %}
-                     {%for rev in book.get_reviews %}
-                      {% if rev.details%}
-
-                         <p style="color: #000066"><b>{{rev.post_details}}</b></p>
-                {% if request.user.is_authenticated and request.user.is_admin and request.user == rev.user %}
-            <script>var deleteurl{{rev.pk}} = '{% url "archives:deletereview" rev.pk %}';</script>
-            <p><a style="text-decoration: underline; color: #000066" onclick="removereview(deleteurl{{rev.pk}})">Remove the review </a></p>
-            {% endif %}
-
-                          <p>{{rev.details|linebreaks }}</p>
-                      {% endif %}
-
-                     {%endfor%}
-
-                   {% endif %}
-
-            </div>
-
-        </div>
+        {% include "home/basetemplates/books.html" %}
 
  {% endfor %}
-            {% endif %}
-    </div>
+</div>
+{% else %}
+<div class="subject-detail books">
+<h3>No books added, kindly add books.</h3>
+</div>
+{% endif %}
     </div>
 
 
@@ -550,14 +189,14 @@
         </div>
         </div>
 
+        <script>
+            function openquestionbank() {
+                 window.location.href = "{% url 'mcq:subjectquestions' tag.pk  %}"
+            }
 
+            </script>
     </div>
-    <script>
-        function openquestionbank() {
-             window.location.href = "{% url 'mcq:subjectquestions' tag.pk  %}"
-        }
 
-        </script>
 {% else %}
     <p style="font-weight: 700;color: red; font-size: 20px;"> You need to be authorized by Admin to view Book Reviews and Question banks </p>
     {% endif %}
@@ -566,170 +205,7 @@
 </div>
 {% else %}
 <h3>{{tag.name}}</h3>
-<div class="home-container">
-    {% if request.user and request.user %}
-    {% if messages %}
-    {% for message in messages %}
-    <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
-    {% endfor %}
-    {% endif %}
-    <a href="{% url 'home:postForm'  %}" ><p>Add a new post</p> or <p> Add a question!</a>
-
-    {% endif %}
-    <div class="someclass">
-        {% if posts and request.user%}
-    {% for post in posts %}
-
-    <div class="home-post">
-
-     <div class="flex-column">
-         <div class="regulartags tags">
-           {% for tag in post.get_tags %}
-           {% if tag.is_degree %}
-           <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
-           {% else %}
-           {% if tag.name == 'Conferences' %}
-
-           <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:conf' %}">{{tag.name}}</a>  </p>
-
-           {% else %}
-           <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
-
-           {% endif %}
-           {% endif %}
-           {% endfor %}
-         </div>
-         <div class="socialmediatags tags">
-
-           <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=30px, width=30px alt=""> </a>
-<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=30px, width=30px alt=""></a>
-
-         </div>
-
-     </div>
-
-     {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
- <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
- {% csrf_token %}
-     <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Post" style="text-decoration: underline; color: #000066" >
- </form>
- {%endif %}
-     <div class="home-post-heading">
-         <h3>{{post.heading | linebreaks }}</h3>
-         <p style="color: #000066"><b>{{post.posted_on}}</b></p>
-
-
-     </div>
-
-
-     {% if post.img %}
-     <div class="home-post-img">
-         <img  src="/media/{{post.img}}" width="250px" height="250px">
-     </div>
-
-     {% endif  %}
-
-
-     {% if post.content %}
-     <div class="home-post-content">
-         <p>{{post.content|linebreaks }}</p>
-     </div>
-     {% endif  %}
-
-
-     {% if post.get_links %}
-     <b>Attached links</b>
-     {% for i in post.get_links %}
-     <div class="home-post-link">
-         <a href="{{i.link}}"><p>{{i.link_name}}</p></a>
-     </div>
-     {%endfor%}
-     {% endif  %}
-
-     {% if post.pdf %}
-     <b>Attached Pdfs</b>
-     <div class="home-post-pdf">
-         <a href="{{post.pdf}}"><p>{{post.pdf_name}}: {{post.pdf}}</p></a>
-     </div>
-     {% endif  %}
-     <div id="comments{{post.pk}}" class="comments ">
-         <h2 style="text-decoration: underline">Comments</h2>
-     {% if post.get_comments %}
-     <div class="home-post-comments">
-     {% for comment in post.get_comments %}
-         <div class="home-post-comment-single">
-             <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}</b></p>
-{% if request.user.is_staff and request.user == comment.user%}
- <p style="text-decoration: underline; color: #000066" ><a onclick="deletecomment(event, {{comment.pk}})">Delete Comment.</a></p>
- {%endif %}
-
-       {% if comment.img %}
-
-     <div  class="home-post-img">
-         <img  src="/media/{{comment.img}}" width="250px" height="250px">
-     </div>
-
-     {% endif  %}
-
-
-
-     {% if comment.text %}
-     <div class="home-post-content">
-         <p>{{comment.text|linebreaks }}</p>
-     </div>
-     {% endif  %}
-
-
-
-
-     {% if comment.get_links %}
-             <b>Attached links</b>
-     {% for i in comment.get_links %}
-     <div class="home-post-link">
-         <a href="{{i.link}}"><p>{{i.link_name}}: {{i.link}}</p></a>
-     </div>
-     {%endfor%}
-     {% endif  %}
-     {% if comment.pdf %}
-             <b>Attached pdfs</b>
-     <div class="home-post-pdf">
-         <a href="{{comment.pdf}}"><p>{{comment.pdf_name}}: {{comment.pdf}}</p></a>
-     </div>
-     {% endif  %}
-             </div>
-     {% endfor %}
-     </div>
-     {% endif  %}
-     <div class="comment-create-form">
-      <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
-             {% csrf_token %}
-         <p>Add image: <input type="file" name="image" ></p>
-<br>
-         <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
- <br>
-         <p><input name="pdf_name" type="text" placeholder="Add pdf name" maxlength="20" value="">: <input type="file" name="pdf"></p>
-          <div id="addlinkform{{post.pk}}">
-              <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
-          </div>
-          <p style="text-decoration: underline;color: #000066;"><a onclick="addnewlinkforms('addlinkform{{post.pk}}')"> Add more links</a></p>
-         <button name="createcomment" type="submit" value="createcomment">Submit</button>
-         </form>
-
-         </div>
-
-     </div>
-                <p onclick="expand(this, 'comments{{post.pk}}')" style="color: red; text-decoration: underline;" class="more">See Comments</p>
-
-     </div>
-
-
-{% endfor  %}
-    {% endif  %}
-
-</div>
-
-
-    </div>
+{% include "home/basetemplates/homecontainer.html" %}
 {% endif %}
 
 

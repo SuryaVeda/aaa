@@ -1,0 +1,46 @@
+
+{% load static %}
+<div class="home-container">
+    {% if request.user.is_authenticated and request.user.is_staff %}
+    {% if messages.extratags == request.user.email %}
+    {% for message in messages %}
+    <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
+    {% endfor %}
+
+
+
+    {% endif %}
+
+
+    {% endif %}
+
+      <div class="someclass">
+        <div class="blue-block flex-column">
+          <a class="center"  href="{% url 'home:postForm'  %}" >Add POST | QUESTION </a>
+
+        </div>
+        {% for post in conferences %}
+        {% include "home/basetemplates/conferencebase.html" %}
+        {% endfor %}
+
+        {% for post in lectures %}
+        {% include "home/basetemplates/lecturebase.html" %}
+        {% endfor %}
+
+
+        {% if posts and request.user%}
+        {% for post in posts %}
+        {% include "home/basetemplates/homepost.html" %}
+        {% endfor  %}
+        {% endif  %}
+
+      <p style="align-self: center" class="bold-red" onclick="needmore(this)">More posts</p>
+
+
+<a class="more"></a>
+  </div>
+
+
+
+
+    </div>

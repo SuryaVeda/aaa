@@ -1,0 +1,58 @@
+{% load static %}
+{% load custom_tags %}
+
+<div class="book-form" style="margin: 40px 0;border-bottom: 5px solid black;">
+    <div class="book-cover-form">
+    <div class="book-poster">
+        {% if request.user.is_authenticated and request.user.is_admin and request.user == book.user %}
+    <script>var deleteurl{{book.pk}} = '{% url "archives:deletebook" book.pk %}'</script>
+    <p><a style="text-decoration: underline; color: #000066" onclick="removebook(deleteurl{{book.pk}})">Remove the book </a></p>
+    {% endif %}
+        {% if book.backgroundPic %}
+        <img src="/media/{{book.backgroundPic}}" width="180px" height="180px">
+        {% else %}
+        <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
+
+        {% endif %}
+        {% if book.get_source_link %}
+        {% for i in book.get_source_link %}
+
+        <p><a href="{{i.1}}" > GET</a></p>
+        {%endfor %}
+
+       {% endif %}
+    </div>
+    <div class="book-review-form">
+        {% if book.name %}
+       <p> Name: {{book.name}}</p>
+      {% endif %}
+
+        {% if book.latest %}
+       <p> Last Edition: {{book.latest}}</p>
+        {% endif %}
+
+    </div>
+        </div>
+    <div class="book-content-form">
+        <h4>Review</h4>
+
+           {% if book.get_reviews %}
+             {%for rev in book.get_reviews %}
+              {% if rev.details%}
+
+                 <p style="color: #000066"><b>{{rev.post_details}}</b></p>
+        {% if request.user.is_authenticated and request.user.is_admin and request.user == rev.user %}
+    <script>var deleteurl{{rev.pk}} = '{% url "archives:deletereview" rev.pk %}';</script>
+    <p><a style="text-decoration: underline; color: #000066" onclick="removereview(deleteurl{{rev.pk}})">Remove the review </a></p>
+    {% endif %}
+
+                  <p>{{rev.details|linebreaks }}</p>
+              {% endif %}
+
+             {%endfor%}
+
+           {% endif %}
+
+    </div>
+
+</div>

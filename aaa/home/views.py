@@ -160,11 +160,19 @@ class SearchView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
         context['posts'] = self.get_posts()
+
         context['lectures'] = self.get_lectures()
         if self.request.user.is_staff:
             context['books'] = self.get_books()
         else:
             context['books'] = False
+
+        if  context['posts'] and context['books'] and context['lectures']:
+            context['someresults'] = True
+        else:
+            context['someresults'] = False
+
+
 
         context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
         return context

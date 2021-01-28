@@ -1,0 +1,37 @@
+{% load static %}
+{% load custom_tags %}
+
+<form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity(event)">
+  {% csrf_token %}
+  <div class="book-form">
+      <div class="book-cover-form">
+      <div class="book-poster">
+
+          <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
+
+          <p>Add image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image"></p>
+
+
+          <!--p>GET:  <input placeholder="Add link name"  type="text" maxlength="20" name = 'link_name' value="" > :  <input placeholder="Add link url.." type="url" name = 'link' value=""></p-->
+      </div>
+      <div class="book-review-form">
+          <p> <input type="text" name ='book_name'  placeholder="Add book name..." maxlength="100" required></p>
+
+      <p>Subject :<select name = 'subjecttag'  required> <option selected value="{{tag.name}}" label="{{tag.name}}" ></option></select> </p>
+
+          <p> <input type="text" name ='latest'  placeholder="Add latest edition" maxlength="20" required></p>
+
+      </div>
+          </div>
+      <div class="book-content-form">
+          <h4>Review</h4>
+
+         <textarea rows="15" cols="20" type="text" placeholder="Add Review" name = 'review' maxlength="2000" required></textarea>
+
+      </div>
+      <button class="button-style"  type="submit" name="addbookformbtn" value="bookbtn">Submit</button>
+
+  </div>
+
+
+</form>

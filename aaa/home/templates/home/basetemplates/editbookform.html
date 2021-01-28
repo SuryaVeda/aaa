@@ -1,0 +1,94 @@
+{% load static %}
+{% load custom_tags %}
+
+
+
+  <form method="post" action="{% url 'archives:archdetail' %}" enctype="multipart/form-data" onsubmit="checkvalidity()">
+  {% csrf_token %}
+  <div class="book-form">
+      <div class="book-cover-form">
+      <div class="book-poster">
+          {% if book.backgroundPic %}
+          <img src="/media/{{book.backgroundPic}}" width="180px" height="180px">
+           <p>Change image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image" ></p>
+          {% else %}
+          <img src="{% static 'home/images/defaultbackgroundimage.jpg' %}" width="180px" height="180px">
+
+          <p>Add image:  <input  id="filefield" onchange="checkfilesize(this);" type="file" name="image"></p>
+          {% endif %}
+          {% if book.get_source_link %}
+          {% for i in book.get_source_link %}
+
+          <p>GET:  <input  type="text" maxlength="20" name = 'link_name' value="{{i.0}}" > :  <input type="url" name = 'link' value="{{i.1}}"></p>
+          {%endfor %}
+
+          {% else %}
+          <p>GET:  <input  type="text" maxlength="20" name = 'link_name' value="" > :  <input type="url" name = 'link' value=""></p>
+          {% endif %}
+      </div>
+      <div class="book-review-form">
+          {% if book.name %}
+         <p> <input type="text" name ='book_name' value="{{book.name}}" placeholder="Add book name" maxlength="100" required></p>
+          {% else %}
+          <p> <input type="text" name ='book_name'  placeholder="Add book name..." maxlength="100" required></p>
+          {% endif %}
+
+      <p>Subject :<select name = 'subjecttag'  required><option selected value="{{tag.name}}" label="{{tag.name}}" ></option></select> </p>
+          {% if book.latest %}
+
+          <p> <input type="text" name ='latest' value="{{book.latest}}" placeholder="Add latest edition" maxlength="20" required></p>
+          {% else %}
+          <p> <input type="text" name ='latest'  placeholder="Add latest edition" maxlength="20" required></p>
+
+          {% endif %}
+
+      </div>
+          </div>
+      <div class="book-content-form">
+          <h4>Reviews</h4>
+
+             {% if book.get_reviews %}
+               {%for rev in book.get_reviews %}
+                {% if rev.details and rev.user == request.user %}
+                  <div class="book-review-content-form">
+                       <p style="color: #000066"><b>{{rev.post_details}}</b></p>
+
+                  <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required>{{rev.details}}</textarea>
+
+                  </div>
+
+                  {% else %}
+          <div class="book-review-content-form">
+              <p style="color: #000066"><b>{{rev.post_details}}</b></p>
+                    <p>{{rev.details|linebreaks }}</p>
+          </div>
+
+
+                {% endif %}
+
+               {%endfor%}
+          {% has_review request.user book as ex %}
+          {% if not x %}
+                <div class="book-review-content-form">
+              <p>Add your review</p>
+          <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required></textarea>
+
+          </div>
+          {% endif %}
+              {% else %}
+            <p>Add your review</p>
+          <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required></textarea>
+
+
+             {% endif %}
+          {% if book.has_review == False %}
+          <p>Add your review</p>
+          <textarea cols="20" rows="15" type="text" placeholder="Add Review" name = 'review'  maxlength="2000" required>{{rev.details}}</textarea>
+          {% endif %}
+      </div>
+      <button class="button-style" type="submit" name="bookformbtn" value="{{book.pk}}">Submit</button>
+
+  </div>
+
+
+</form>

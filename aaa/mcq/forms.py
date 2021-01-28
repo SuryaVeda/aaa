@@ -94,4 +94,3 @@ class QuestionBankForm(ModelForm,ValidateLinkMixin, ValidateFileMixin):
     class Meta:
         model = QuestionBank
         exclude = ['user', 'date', 'flashcard', 'qa', 'mcq']
-

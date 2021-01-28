@@ -1,0 +1,35 @@
+{% load static %}
+<div class="mcqblock" >
+  <div class="flex-column">
+      <div class="regulartags tags">
+        {% for tag in post.get_tags %}
+        {% if tag.is_degree %}
+        <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
+        {% else %}
+        <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+
+        {% endif %}
+        {% endfor %}
+
+        <b style="margin-left: auto; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+ <form onsubmit="deletequestion(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+ {% csrf_token %}
+     <input  type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
+ </form>
+ {%endif %}</b>
+      </div>
+      <div class="socialmediatags tags">
+
+        <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
+<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
+      </div>
+
+  </div>
+
+    <p>{{post.question|linebreaks}}</p>
+    <b style="display: none;color: red;" id = "mcq{{post.pk}}">{{post.answer|linebreaks }}</b>
+
+
+    <p onclick="revealmcq(document.getElementById('mcq{{post.pk}}'))" style="align-self: center;color: rebeccapurple; font-weight: 600;">See Answer</p>
+<p style=" align-self: center; background-color: #000066; color: white; "><a onclick="previousquestion(document.getElementsByClassName('mcqblock'))">PREV</a>   |    <a onclick="nextquestion(document.getElementsByClassName('mcqblock'), 'mcq', 'mcqblock')">NEXT</a></p>
+</div>

@@ -1,0 +1,40 @@
+{% load static %}
+<div style="" class="flashcardblock">
+    <div class="flashcards">
+      <div style="align-self: flex-start;flex-grow: 1;width: 100%;" class="flex-column">
+          <div class="regulartags tags">
+            {% for tag in post.get_tags %}
+            {% if tag.is_degree %}
+            <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
+            {% else %}
+            <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
+
+            {% endif %}
+            {% endfor %}
+
+
+          </div>
+          <div class="socialmediatags tags">
+
+            <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
+<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
+          </div>
+
+      </div>
+        <div style="display:flex; align-items:flex-end;flex-grow: 2;align-self: center;">
+            <b  id = flashcardq{{post.pk}}>{{post.question|linebreaks}}</b>
+
+        </div>
+    <b style="display: none" id = flashcarda{{post.pk}}>{{post.answer|linebreaks}}</b>
+    <b onclick="showflashcard(this, document.getElementById('flashcardq{{post.pk}}'),document.getElementById('flashcarda{{post.pk}}'))" style=" align-self: center;color: rebeccapurple; font-weight: 600;">See Answer</b>
+      <div style="display: flex; flex-direction: column; justify-content: flex-end; flex-grow:1 ">
+          <p style=" align-self: center; border: 1px solid black; "><a onclick="previousquestion(document.getElementsByClassName('flashcardblock'))">PREV</a>   |    <a onclick="nextquestion(document.getElementsByClassName('flashcardblock'),'flashcard', 'flashcardblock')">NEXT</a></p>
+    <b style="align-self: center; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
+<form onsubmit="deletequestion(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
+{% csrf_token %}
+<input  type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
+</form>
+{%endif %}</b>
+      </div>
+    </div>
+</div>

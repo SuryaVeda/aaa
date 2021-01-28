@@ -51,8 +51,10 @@ class ConferencePage(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tag = Tag.objects.get(name='Conferences')
-        context['oldposts'] = Post.objects.filter(tag=tag, conference=False)
-        context['posts'] = LecturePost.objects.filter(tag=tag).order_by('lecture_start_date')
+        context['oldposts'] = Post.objects.filter(tag=tag, conference=False).order_by('-pk')
+        tag_speciality = Tag.objects.filter(is_speciality=True)
+        context['tag_speciality'] = list(tag_speciality)
+        context['posts'] = LecturePost.objects.filter(tag=tag, conference=True).order_by('lecture_start_date')
         return context
 
 class LecturePostCreateView(CreateView):
@@ -311,6 +313,7 @@ class BookFormMixin(CleanImageMixin,CleanLinkMixin,CleanTextMixin):
 
             a.save()
             x = Review.objects.create(user=self.request.user, book=a, date=timezone.make_aware(datetime.datetime.now(), timezone.get_default_timezone()), details=text_dict['review'])
+            return text_dict['subjecttag']
 
 
         else:
@@ -350,6 +353,7 @@ class BookFormMixin(CleanImageMixin,CleanLinkMixin,CleanTextMixin):
                 x.save()
             except:
                 x= Review.objects.create(user=self.request.user, book=a, date=timezone.make_aware(datetime.datetime.now(), timezone.get_default_timezone()), details=text_dict['review'])
+            return text_dict['subjecttag']
 
         else:
             messages.error(self.request, 'kindly fill form accurately')
@@ -388,10 +392,13 @@ class ArchDetail(BookFormMixin,TemplateView):
             print(self.request.POST)
             print(self.request.POST.get('image'))
             if self.request.POST.get('addbookformbtn'):
-                self.save_book_form()
+                subject = self.save_book_form()
+                return redirect('/home/{0}'.format(subject))
             if self.request.POST.get('bookformbtn'):
-                self.edit_book_form()
-            return redirect('archives:archdetail')
+                subject = self.edit_book_form()
+                return redirect('/home/{0}'.format(subject))
+            return redirect('home:home')
+
         else:
             return redirect('home:stafferror')
 
