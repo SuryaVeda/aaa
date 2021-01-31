@@ -9,7 +9,8 @@
 
 
 
-
+  <link rel="stylesheet" href="{% static 'home/js/dist/simplepicker.css' %}">
+  <script src="{% static 'home/js/dist/simplepicker.js' %}"></script>
 
 
 
@@ -1419,13 +1420,18 @@ function addsubjectintro() {
 <div id="empty">
 
 
-{% if messages %}
-{% for message in messages %}
-{% if message.extra_tags == request.user.email %}
-<p style="color: red;font-weight: 700; font-size: 20px">{{message}}</p>
-{% endif %}
-{% endfor %}
-{% endif %}
+  {% if messages %}
+
+  {% for message in  messages %}
+  {% if message.tags == request.user.email %}
+  <p class="bold-red"> {{ message }}</p>
+  {% else %}
+  <p>no messages</p>
+  {% endif %}
+  {% endfor %}
+
+  {% endif %}
+
 {% if request.user.is_authenticated and request.user.is_staff == False %}
 <h3 class="bold-red">You have visitor privileges and need to be approved by Admin to interact in the website.</h3>
 

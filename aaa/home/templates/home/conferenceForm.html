@@ -2,29 +2,6 @@
 {% load static %}
 {% block main %}
 
-<link rel="stylesheet" type="text/css"
-    href="{% static 'admin/css/forms.css' %} "/>
-
-<link rel="stylesheet" type="text/css"
-    href="{% static 'admin/css/widgets.css' %}"/>
-
-    <script type="text/javascript"
-        src="/admin/jsi18n/"></script>
-    <script type="text/javascript"
-        src="{% static 'admin/js/core.js' %}"></script>
-    <script type="text/javascript"
-        src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
-    <script type="text/javascript"
-        src="{% static 'admin/js/jquery.js' %}"></script>
-    <script type="text/javascript"
-        src="{% static 'admin/js/jquery.init.js' %}"></script>
-    <script type="text/javascript"
-        src="{% static 'admin/js/actions.js' %}"></script>
-    <script type="text/javascript"
-        src="{% static 'admin/js/calendar.js' %}"></script>
-    <script type="text/javascript"
-        src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
-
 
 
 
@@ -80,19 +57,25 @@
 <b>{{ form.heading }}</b>
 
     <br>
+    <p>Add Links</p>
+      <div id="addlinkform{{post.pk}}">
+         <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
+     </div>
+     <p style="text-decoration: underline;color: #000066;"><a onclick="addnewforms('addlinkform')"> Add more links</a></p>
+
     <br>
     <div class="timeinput">
       <br>
-      <b>When does Conference start? : {{ form.lecture_start_date }} <br> <br> When does conference end? : {{ form.lecture_end_date }} </b>
+      <div id="calender">
+      </div>
+      <div id="endcalender">
+      </div>
+      <b>When does Conference start? : <input type="text" name="lecture_start_date" value="" required> <a onclick="showcalender('start');"><img src="{% static 'home/images/calendar.png' %}" height="20px" width = "20px" alt=""></a> <br> <br> When does conference end? : <input type="text" name="lecture_end_date" value="" required> <a onclick="showcalender('end');"> <img src="{% static 'home/images/calendar.png' %}" height="20px" width = "20px" alt=""></a>
+      </b>
     </div>
 
             <p>Add image(optional): {{form.img}}</p>
             <p>Add pdf(optional)- {{form.pdf_name}} {{form.pdf}}</p>
-            <p>Add Links</p>
-              <div id="addlinkform{{post.pk}}">
-                 <p><input type="text"  placeholder="Add link name.." maxlength="20" name="link_name" value="">: <input type="url" placeholder="Add link url.." value="" maxlength="200"  name="link"></p>
-             </div>
-             <p style="text-decoration: underline;color: #000066;"><a onclick="addnewforms('addlinkform')"> Add more links</a></p>
 
             <div class="postformbtn">
             <button name="conferencebtn" value="button" type="submit">Submit</button>
@@ -104,4 +87,40 @@
 
 </div>
 
+<script type="text/javascript">
+let calender = document.getElementById('calender')
+let endcalender = document.getElementById('endcalender')
+
+let myPicker_start_date = new SimplePicker(calender, { zIndex: 10});
+let myPicker_end_date = new SimplePicker(endcalender, { zIndex: 10});
+
+let buttons = document.getElementsByClassName('simplepicker-icon');
+let xbuttons = document.getElementsByClassName('simplepicker-btn');
+for (var i = 0; i < buttons.length; i++) {
+  buttons[i].type = 'button';
+}
+for (var i = 0; i < xbuttons.length; i++) {
+  xbuttons[i].type = 'button';
+}
+function showcalender (x) {
+  if (x=='start') {
+myPicker_start_date.open()
+}
+if (x=='end') {
+myPicker_end_date.open()
+}
+
+}
+myPicker_start_date.on('submit', function(date,y){
+
+  document.getElementsByName('lecture_start_date')[0].value = y;
+
+})
+
+myPicker_end_date.on('submit', function(date,y){
+
+  document.getElementsByName('lecture_end_date')[0].value = y;
+
+})
+</script>
 {% endblock %}

@@ -61,14 +61,16 @@ class LecturePostCreateView(CreateView):
     model = LecturePost
     form_class = LecturePostForm
     success_url = '/'
-    template_name = 'home/lectureform.html'
-    def get(self, request, *args, **kwargs):
-        if request.GET.get('createconference'):
-            self.template_name = 'home/conferenceForm.html'
+    def get_template_names(self):
+        if self.request.GET.get('createconference'):
+            template_name = 'home/conferenceForm.html'
         else:
+            template_name = 'home/lectureForm.html'
+        return template_name
+
+    def get(self, request, *args, **kwargs):
+        if not request.GET.get('createconference'):
             self.kwargs['conference'] = None
-        print(self.kwargs)
-        print(self.template_name)
         return super().get(request, *args, **kwargs)
     def post(self, *args, **kwargs):
         if self.request.POST.get('conferencebtn'):
@@ -82,7 +84,6 @@ class LecturePostCreateView(CreateView):
         kwargs.update(self.kwargs)
         return kwargs
     def get_success_url(self):
-        print(self.kwargs)
         if self.kwargs['conference']:
             return reverse('home:conf')
         return reverse('archives:lectures')

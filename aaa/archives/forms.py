@@ -73,48 +73,48 @@ class LecturePostForm(CreatePostForm, ValidateLinkMixin):
     )
     class Meta:
         model = LecturePost
-        fields = ['heading','content', 'img', 'pdf_name', 'pdf', 'lecture_start_date', 'lecture_end_date']
+        fields = ['heading','content', 'img', 'pdf_name', 'pdf']
 
     def __init__(self, request=None, pk=None,conference=None,*args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['heading'].widget = forms.Textarea(attrs={ "cols":20, "style": "height:150px; width:95%; border:2px outset white;"})
         if conference:
             self.fields['heading'].widget.attrs['placeholder'] = 'Conference Heading'
         else:
             self.fields['heading'].widget.attrs['placeholder'] = 'Lecture Heading'
         self.conference = conference
         self.request = request
-        self.fields['lecture_start_date'].widget = widgets.AdminDateWidget()
-        self.fields['lecture_end_date'].widget = widgets.AdminDateWidget()
+
 
     def save(self, commit=True):
         saveobj = super().save(commit=False)
         if self.request.user.is_staff:
             saveobj.user = self.request.user
-        print(self.request.POST)
-
-        if self.conference:
-            saveobj.conference = True
+            print('oh yess oh yaa.')
+            if self.conference:
+                saveobj.conference = True
+            else:
+                saveobj.lecture = True
             try:
-                saveobj.lecture_start_date = self.cleaned_data['lecture_start_date']
-                saveobj.lecture_end_date = self.cleaned_data['lecture_end_date']
+                lecture_start_date =  self.request.POST.get('lecture_start_date').split(':')
+                lecture_start_date = ' '.join(lecture_start_date)
+                lecture_start_date = datetime.datetime.strptime(lecture_start_date, "%d %B %Y %H %M %p")
+                print(lecture_start_date)
+                saveobj.lecture_start_date = lecture_start_date
 
-            except Exception as e:
-                messages.error(self.request, 'Enter valid lecture start and end dates.', extra_tags = [self.request.user.email])
-                return redirect('home:home')
-        else:
-            saveobj.lecture = True
-            try:
-                dateobj = self.cleaned_data['lecture_start_date']
-                saveobj.lecture_start_date = datetime.datetime(dateobj.year, dateobj.month, dateobj.day, int(self.request.POST.get('starthour')), int(self.request.POST.get('startmin')))
-                saveobj.lecture_end_date = datetime.datetime(dateobj.year, dateobj.month, dateobj.day, int(self.request.POST.get('endhour')), int(self.request.POST.get('endmin')))
+                lecture_end_date = self.request.POST.get('lecture_end_date').split(':')
+                lecture_end_date = ' '.join(lecture_end_date)
+                lecture_end_date = datetime.datetime.strptime(lecture_end_date, "%d %B %Y %H %M %p")
 
+                saveobj.lecture_end_date = lecture_end_date
             except Exception as e:
-                messages.error(self.request, 'Enter valid lecture start and end dates.', extra_tags = [self.request.user.email])
-                return redirect('home:home')
+                messages.error(self.request, 'Enter valid lecture start and end dates.', extra_tags = self.request.user.email)
+                return redirect('archives:createconference')
 
 
         if commit:
             saveobj.save()
+        print('yay saved \n\n\n')
         print(saveobj.lecture_start_date)
         print(saveobj.lecture)
         if self.conference:
