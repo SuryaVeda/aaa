@@ -65,7 +65,7 @@ class LecturePostCreateView(CreateView):
         if self.request.GET.get('createconference'):
             template_name = 'home/conferenceForm.html'
         else:
-            template_name = 'home/lectureForm.html'
+            template_name = 'home/lectureform.html'
         return template_name
 
     def get(self, request, *args, **kwargs):
