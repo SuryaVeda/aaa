@@ -59,15 +59,11 @@ DATABASES = {
     }
 }
 
-DEBUG = True
 if DEBUG:
-    DOMAIN_NAME = 'https://allaboutanaesthesia.co'
-    x = os.getenv('allowedhosts')
-    ALLOWED_HOSTS = x.split(',')
-    FILE_UPLOAD_PERMISSIONS = 0o640
-    """DOMAIN_NAME = 'http://127.0.0.1:8000'
 
-    ALLOWED_HOSTS = ['*']"""
+    DOMAIN_NAME = 'http://127.0.0.1:8000'
+
+    ALLOWED_HOSTS = ['*']
 
 else:
     DOMAIN_NAME = 'https://allaboutanaesthesia.co'
