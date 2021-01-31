@@ -376,11 +376,12 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
 
                 a = form.save(commit=True)
                 a.user = self.request.user
-                post = a.save()
+                a.save()
+                post = a
                 if post.user.is_staff:
                     mess = Message.objects.create(post_url = post.get_absolute_url(), type = 'post', text = 'A new comment is added to {0}.. by user {1}'.format(post.heading[:10], post.user.username))
                     mess.create_notifications()
-    
+
                 if link_dict:
                     if link_dict['links']:
                         for i in link_dict['links']:

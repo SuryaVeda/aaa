@@ -41,7 +41,7 @@
  {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
 <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
 {% csrf_token %}
- <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Post" style="text-decoration: underline; color: #000066" >
+ <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Post" style="text-decoration: underline; color: white; background-color: #800000;" >
 </form>
 {%endif %}
  <div class="home-post-heading">
@@ -81,8 +81,11 @@
  </div>
  {% endif  %}
  <nav onclick="showcommentsdh('comments{{ post.pk  }}')" style="display: flex; justify-content: flex-start; height: auto;">
-   {% if request.user.is_staff %}
+   {% if request.user.is_authenticated and request.user.is_staff %}
    <a >{{ post.get_comments_length }}</a>
+   {% elif request.user.is_authenticated and request.user.is_staff == False %}
+   <a>You have visitor privileges and need to be approved by Admin to interact in the website.</a>
+
    {% else %}
    <a href="{% url 'accounts:login' %}">Login to see/post comments</a>
    {% endif %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from .models import *
@@ -23,7 +24,7 @@ from django.conf import settings
 class LecturePage(TemplateView):
     template_name = 'archives/hello.html'
 
-    @method_decorator(staff_required)
+    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -48,6 +49,9 @@ class LecturePage(TemplateView):
 
 class ConferencePage(TemplateView):
     template_name = 'home/conference.html'
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tag = Tag.objects.get(name='Conferences')
@@ -61,6 +65,9 @@ class LecturePostCreateView(CreateView):
     model = LecturePost
     form_class = LecturePostForm
     success_url = '/'
+    @method_decorator(staff_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
     def get_template_names(self):
         if self.request.GET.get('createconference'):
             template_name = 'home/conferenceForm.html'
@@ -118,7 +125,17 @@ class LecturePostUpdateView(UpdateView):
     model = LecturePost
     form_class = LecturePostForm
     success_url = '/'
-    template_name = 'home/lectureform.html'
+
+    @method_decorator(staff_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_template_names(self):
+        if self.request.GET.get('createconference'):
+            template_name = 'home/conferenceForm.html'
+        else:
+            template_name = 'home/lectureform.html'
+        return template_name
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update(request=self.request)
