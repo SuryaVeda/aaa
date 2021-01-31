@@ -33,14 +33,14 @@
 
 {% endif %}
 
-        {% if conferences %}
+        {% if conferences or oldposts %}
         <h2 class="tagbreak">#Conferences</h2>
 
         {% for post in conferences %}
         {% include "home/basetemplates/conferencebase.html" %}
         {% endfor %}
         {% for post in oldposts  %}
-        {% include "home/basetemplates/conferencebase.html" %}
+        {% include "home/basetemplates/homepost.html" %}
         {% endfor %}
 
         {% endif %}
