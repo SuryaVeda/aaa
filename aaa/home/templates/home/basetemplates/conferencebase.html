@@ -85,10 +85,11 @@
 
  {% if post.get_links %}
  <h3>Attached Links</h3>
- <form class="" action="{% url 'archives:sendmail' post.pk %}" method="post">
-   {% csrf_token %}
-   <button style="height: 50px;width: 80px;background-color: #000066;color:white;" type="submit" name="button"> Get Lecture link to your mail</button>
- </form>
+ {% for i in post.get_links %}
+ <div class="home-post-link">
+     <a href="{{i.link}}"><p>{{i.link_name}}: {{ i.link }}</p></a>
+ </div>
+ {%endfor%}
  {% endif  %}
 
  {% if post.pdf %}
