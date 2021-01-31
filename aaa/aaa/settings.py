@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MESSAGE_TAGS = {
     messages.DEBUG: 'debug',
     messages.INFO: 'info',
-    messages.SUCCESS: 'success',
+    messages.SUCCESS: '',
     messages.WARNING: 'warning',
     messages.ERROR: '',
 }

@@ -1426,7 +1426,8 @@ function addsubjectintro() {
   {% if message.tags == request.user.email %}
   <p class="bold-red"> {{ message }}</p>
   {% else %}
-  <p>no messages</p>
+  <p class="bold-red"> {{ message }}</p>
+
   {% endif %}
   {% endfor %}
 

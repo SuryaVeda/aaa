@@ -18,13 +18,14 @@
 <b class="center"><a href="{% url 'archives:createlecture' %}"> Create Lecture</a></b>
 {% endif %}
 
-{% if messages.extra_tags == request.user.email %}
-<p class="bold-green">{{ messages }}</p>
-
-{% endif %}
+{% if lectures %}
 {% for post in lectures %}
 {% include "home/basetemplates/lecturebase.html" %}
 {% endfor %}
+{% else %}
+<p class="bold-red center" style="margin:30px;"> No upcoming lectures.</p>
+{% endif %}
+
 </div>
 
 <div class="pastlectures flex-column">
