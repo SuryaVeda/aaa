@@ -1389,7 +1389,6 @@ function addsubjectintro() {
       <a class="nav-link nav-item" href="{% url 'mcq:qa' %}" >QuestionBank</a>
     <a class="nav-item nav-link" href="{% url 'home:speciality' 'NEET-SS' %}">NEET-SS</a>
     {% if request.user.is_staff %}
-    <a class="nav-item nav-link" href="{% url 'notifications:base' %}">Notifications</a>
 
     {% endif %}
 
@@ -1418,6 +1417,8 @@ function addsubjectintro() {
 {% endif %}
 </nav>
 <div id="empty">
+
+
 {% if messages %}
 {% for message in messages %}
 {% if message.extra_tags == request.user.email %}
@@ -1425,7 +1426,12 @@ function addsubjectintro() {
 {% endif %}
 {% endfor %}
 {% endif %}
+{% if request.user.is_authenticated and request.user.is_staff == False %}
+<h3 class="bold-red">You have visitor privileges and need to be approved by Admin to interact in the website.</h3>
+
+{% endif %}
 {% block main%}
+
 {% endblock %}
 
 {% block js%}

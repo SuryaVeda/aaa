@@ -1810,6 +1810,19 @@ COPY public.accounts_degree (id, name_id, finalyear, college_id) FROM stdin;
 53	1	\N	54
 54	7	\N	56
 55	1	\N	57
+56	7	\N	59
+57	1	\N	59
+58	7	\N	60
+59	1	\N	61
+60	7	\N	62
+61	1	\N	63
+62	7	\N	65
+63	1	\N	66
+64	7	\N	67
+65	7	\N	68
+66	1	\N	69
+67	1	\N	70
+68	1	\N	2
 \.
 
 
@@ -1876,6 +1889,19 @@ COPY public.accounts_medicalcollege (id, name) FROM stdin;
 56	Gmc patiala
 57	Pgimer chandigarh
 58	Mmimsr mullana
+59	Igmc shimla
+60	MIMS
+61	KIMS
+62	Shivamogga institute of medical sciences
+63	Mysore medical college and research institute
+64	MMCRI
+65	Jss medical college
+66	Sdumc
+67	RG KAR MCH
+68	Govt medical college, kozhikode
+69	Aiims bhopal
+70	MD anaesthesia 
+71	Pgi
 \.
 
 
@@ -1900,18 +1926,26 @@ COPY public.accounts_profile (id, user_id, dob, name, nationality, phone, backgr
 15	18	\N	PR	\N	\N		
 16	19	\N	TRIPTA	\N	\N		
 17	21	\N	Hithish M J	\N	\N		
+35	39	\N	Dr Vinay Somya 	\N	\N		
 18	22	\N	Naveen. S	\N	\N		
 19	23	\N	beeralingwalikar	\N	\N		
 20	24	\N	PRABA3006	\N	\N		
+36	41	\N	FA	\N	\N		
 21	25	\N	Pallavi	\N	\N		
+37	42	\N	Niriksha	\N	\N		
 22	\N	\N	Example	\N	\N		
 23	27	\N	Saikoushik	\N	\N		
 24	28	\N	Jharana 	\N	\N		
+38	43	\N	Balaji jegan	\N	\N		
 25	\N	\N	ఛషఛఠఛక	\N	\N		
+39	44	\N	DrSurja	\N	\N		
 26	\N	\N	Hi	\N	\N		
+40	45	\N	Rameesahamadanchukan	\N	\N		
 27	31	\N	drramya	\N	\N		
 28	32	\N	Sinchana	\N	\N		
 29	33	\N	Dr neha	\N	\N		
+41	46	\N	Pranitha 	\N	\N		
+42	47	\N	Pranitha 	\N	\N		
 \.
 
 
@@ -1976,6 +2010,22 @@ COPY public.accounts_profile_degree (id, profile_id, degree_id) FROM stdin;
 64	33	53
 65	34	54
 66	34	55
+67	35	56
+68	35	57
+69	36	58
+70	36	59
+71	37	60
+72	37	61
+73	38	62
+74	38	63
+75	39	64
+76	39	4
+77	40	65
+78	40	66
+79	41	3
+80	41	67
+81	42	3
+82	42	68
 \.
 
 
@@ -2152,6 +2202,54 @@ COPY public.accounts_profile_details (id, profile_id, profiledetail_id) FROM std
 196	34	211
 197	34	212
 198	34	213
+199	35	214
+200	35	215
+201	35	216
+202	35	217
+203	35	218
+204	35	219
+205	36	220
+206	36	221
+207	36	222
+208	36	223
+209	36	224
+210	36	225
+211	37	226
+212	37	227
+213	37	228
+214	37	229
+215	37	230
+216	37	231
+217	38	232
+218	38	233
+219	38	234
+220	38	235
+221	38	236
+222	38	237
+223	39	238
+224	39	239
+225	39	240
+226	39	241
+227	39	242
+228	39	243
+229	40	244
+230	40	245
+231	40	246
+232	40	247
+233	40	248
+234	40	249
+235	41	250
+236	41	251
+237	41	252
+238	41	253
+239	41	254
+240	41	255
+241	42	256
+242	42	257
+243	42	258
+244	42	259
+245	42	260
+246	42	261
 \.
 
 
@@ -2196,6 +2294,14 @@ COPY public.accounts_profile_work (id, profile_id, work_id) FROM stdin;
 31	32	29
 32	33	30
 33	34	31
+34	35	32
+35	36	33
+36	37	34
+37	38	35
+38	39	36
+39	40	37
+40	41	38
+41	42	39
 \.
 
 
@@ -2330,6 +2436,7 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 131	accomplishments		
 132	interests		
 96	About	 The practice of general anesthesia has been a dynamic process ever since it&#x27;s origin, on the fateful day of 16 Oct 1846 when WTG Morton demonstrated publicly ether anesthesia and changed the surgical fields forever.\n\nToday an anesthesiologist is not only an important part of OT team but takes a lead role in various fields like critical care team leader, BLS &amp;amp; ACLS team leader and trainer, covid management team, acute &amp;amp; chronic pain management and has come forward as a perioperative physician. With responsibilities of perioperative optimization of the patient, intraoperative conduct of anesthesia using a large armament of regional &amp;amp; general anesthesia and providing post operative pain relief, the anesthesiologist plays a pivotal role in patient care.\n\nThe demand for good general anesthesiologist is never ending, so more and and more PG aspirants take on the course of MD (3yrs) or DA (2yrs) each year either as a primary choice or as a path to further subspecialties like critical care, cardiac anesthesia, neuro-anesthesia or pain medicine.\n\nAs the exponential growth in various modalities of anesthesia come up every year, the future for general anesthesia looks promising. New innovations and technological advancements make the practice of general anesthesia a dynamic learning journey and more 	
+214	personal statement		
 134	About 	 As a sub-speciality, onco-anaesthesiology provides the anaesthesiologist with an opportunity to positively influence the surgical outcome. The aim is to help reduce length of hospital stay, imbibe multimodal interdisciplinary analgesia, integrate supportive care, potentially minimise cancer recurrence and improve oncological outcomes. \nWHO predicts the annual new cancer diagnosis is set to rise to 22 million by 2030. With these trends, need of onco-anaesthesiology as a sub speciality is the need of hour. \nSince most of cancer patients have multiple co morbidities, these cases will test your skill and knowledge on a daily basis. \n\n	
 135	personal statement		
 136	experience		
@@ -2410,6 +2517,53 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 211	recommendation		
 212	accomplishments		
 213	interests		
+215	experience		
+216	education		
+217	recommendation		
+218	accomplishments		
+219	interests		
+220	personal statement		
+221	experience		
+222	education		
+223	recommendation		
+224	accomplishments		
+225	interests		
+226	personal statement		
+227	experience		
+228	education		
+229	recommendation		
+230	accomplishments		
+231	interests		
+232	personal statement		
+233	experience		
+234	education		
+235	recommendation		
+236	accomplishments		
+237	interests		
+238	personal statement		
+239	experience		
+240	education		
+241	recommendation		
+242	accomplishments		
+243	interests		
+244	personal statement		
+245	experience		
+246	education		
+247	recommendation		
+248	accomplishments		
+249	interests		
+250	personal statement		
+251	experience		
+252	education		
+253	recommendation		
+254	accomplishments		
+255	interests		
+256	personal statement		
+257	experience		
+258	education		
+259	recommendation		
+260	accomplishments		
+261	interests		
 \.
 
 
@@ -2421,28 +2575,36 @@ COPY public.accounts_user (id, password, last_login, email, username, is_active,
 22	pbkdf2_sha256$216000$54dKlWTY7t28$v/dvYGBvnLWjeHjhCR9NPJepgMJw5D6S0Rb6tBznmhw=	2021-01-26 17:40:54.171877+00	naveenselvaraj1993@gmail.com	Naveen. S	t	t	t	\N
 35	pbkdf2_sha256$216000$GxAIee6lqNEf$DVWxn/YrVf7EpQsy79DQzeZj9LCqV1PBd+cpcdhUI+k=	2021-01-27 04:42:02.991278+00	drskg2005@gmail.com.com	drsharad05 	t	t	f	\N
 21	pbkdf2_sha256$216000$De9SlRr1cVbt$W4RoG50H4hnQahxCg/+OPoe/M/J3faiw1Mds5MEC7M4=	2021-01-02 14:14:43.925174+00	hithimachenahalli@gmail.com	Hithish M J	t	t	t	\N
+37	pbkdf2_sha256$216000$uKzzs9ZZLc8C$rlZpEb6lzw6I979VImmHzzkPgTp1k/AwXsDDanPKhlw=	2021-01-27 15:43:06.994584+00	sailakshminmc@gmail.com	Sai Lakshmi	t	t	f	\N
 25	pbkdf2_sha256$216000$Emf4YIIIvwAX$07AhM2JZUKCKr5B0i8Km2PLyMweL7oiJi7pa4Mvs7sQ=	\N	drpallavisingh2015@gmail.com	Pallavi	t	t	t	\N
 19	pbkdf2_sha256$216000$uOMpWUZSU4wk$J9+D8vEzmN3srMkKPkBZ7K02x3DcNDQ0N8+CrodtSaM=	\N	tripta.mgims@gmail.com	TRIPTA	t	t	t	\N
+36	pbkdf2_sha256$216000$Sj1RoymG4KGx$m1IYpkT9ah9k8SvrrEduLYdP89CVGVw+nmMB/aVSdh0=	\N	anup.gohatre@gmail.com	Anupg	t	t	f	\N
 13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t	\N
 23	pbkdf2_sha256$216000$ntvPoEpk8Jne$V9m+7WerQDypRXSadVo9bufWnu0dptIK+jvdYFoFllM=	2021-01-02 14:27:13.41801+00	beeralingnw@gmail.com	beeralingwalikar	t	t	t	\N
 14	pbkdf2_sha256$216000$T7dPeTz7oKit$s4UwZx3Mhn5/pn9amqGCrfJ2kBctzLOQM0DBP3XDQRk=	2021-01-06 08:40:30.9549+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
-36	pbkdf2_sha256$216000$Sj1RoymG4KGx$m1IYpkT9ah9k8SvrrEduLYdP89CVGVw+nmMB/aVSdh0=	\N	anup.gohatre@gmail.com	Anupg	t	f	f	\N
 15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t	\N
 31	pbkdf2_sha256$216000$TKBBAqGrsupN$dmpimthMYOmYExQg95caZgdmSKbCTtoSgmn9lmfwCnc=	2021-01-26 18:50:25.354432+00	ramya_chicks@yahoo.com	drramya	t	t	t	\N
 28	pbkdf2_sha256$216000$H8yzk2nhcxaj$Qwr4aNv3EBKUTbscNQEMzp2m44416F8/oDklZQhk67M=	2021-01-16 10:35:48.559405+00	cooljharana@gmail.com	Jharana 	t	t	t	\N
 32	pbkdf2_sha256$216000$9eKWyLlDWZ7L$xLsmVmidXWIYF34HThdRV+oAjTvDc72SHoKiweFOr+4=	2021-01-26 19:04:03.226046+00	sinchana993@gmail.com	Sinchana	t	t	t	\N
 16	pbkdf2_sha256$216000$0cgFkSw1M7h9$2rVbaqrjCLZmPfwQeaJ/p6sJN3HGciMMOnRYVa3dmfA=	\N	sherkhan_5195@yahoo.com	sherkhan_5195@yahoo.	t	t	t	\N
-37	pbkdf2_sha256$216000$uKzzs9ZZLc8C$rlZpEb6lzw6I979VImmHzzkPgTp1k/AwXsDDanPKhlw=	2021-01-27 15:43:06.994584+00	sailakshminmc@gmail.com	Sai Lakshmi	t	f	f	\N
 17	pbkdf2_sha256$216000$u12nNcUnJ1w4$dM3zR8lja8MaR1ElQghLh91ma7aox6AlFTljIecXOmw=	2020-12-23 16:15:37.721521+00	nitishtha220@gmail.com	Nitish	t	t	t	\N
+46	pbkdf2_sha256$216000$BYFVvbEbPd2X$2kWSmGAoNiyj479BfVZDtejtYpzFsXWYM5eN4WQVl2Q=	\N	pranithabasa@gmail.com	Pranitha 	t	f	f	\N
 18	pbkdf2_sha256$216000$Y269kX6KTayq$miEE07VMy9Q9MD0UemoB9KirVkdToMhSUxhxGIw+Tfs=	2020-12-23 16:54:59.679832+00	gpoojithareddy87@gmail.com	PR	t	t	t	\N
-38	pbkdf2_sha256$216000$OmmBkZGBq7di$qoi7BTpvscSX53rbKB6fL3jwY2WzkuO9GNgcyFGrnGc=	2021-01-27 18:04:22.12327+00	varunpatialaking@gmail.com	drvarunsingla	t	f	f	\N
+44	pbkdf2_sha256$216000$TkdygkrKfpf3$ykVz54FiNn1Cj3xpU0IQO6z4OAW+8kIHbIMVigMJYg0=	2021-01-28 16:07:42.684592+00	surja.rgkmch@gmail.com	DrSurja	t	t	f	\N
+43	pbkdf2_sha256$216000$WibdMWllpzl3$q1CqHx4qNP8IQmdxxIPlid0LzKvpkocxYXBkzhz/uuo=	\N	jeganbalaji30@gmail.com	Balaji jegan	t	t	f	\N
 27	pbkdf2_sha256$216000$edJBAyu6ggzp$6JGBBF79m5W/GZnA2GAeMJJnrhhFVawSgXJdGQInGI0=	2021-01-15 12:38:48.529431+00	evnskoushik@gmail.com	Saikoushik	t	t	f	\N
-2	pbkdf2_sha256$216000$drfIJxhp2IMm$Tk5CxMlG0DJ9Kapj99eTc8KJ1PrX0kc+yfQUn4N+nlA=	2021-01-27 19:08:52.551366+00	suryaveda@hotmail.com	sk	t	t	t	\N
+47	pbkdf2_sha256$216000$5NMw2f5Lbiq6$gpTwUZmtq36utB5j6n8jyGEU0fB2ylI+rBp7DkYXPwo=	\N	chinnupranitha98@gmail.com	Pranitha 	t	f	f	\N
 12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2021-01-27 04:56:23.238906+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
 3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-27 04:57:43.139913+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
 24	pbkdf2_sha256$216000$q5q3fliRCqbW$dfoBZFn3FWMOBmwA/0oFjkwpaPyaY1ug84eQJebwEN0=	2021-01-26 17:36:36.162744+00	prabakaranlee@gmail.com	PRABA3006	t	t	t	\N
 33	pbkdf2_sha256$216000$f7aZZUL0h5Ey$WVbH6XebkHnOIYiBCmqoDcuqc8HT2qAdL3sH9jCHKT8=	2021-01-27 03:23:21.295545+00	neharikab06@gmail.com	Dr neha	t	t	t	\N
 34	pbkdf2_sha256$216000$KEqs0MVtCRo5$zlQCdWfqA0G/0HPSr7Wkgu0m70MjTi+bolsp9fawbsU=	2021-01-27 03:47:55.725156+00	ganeshnaik888@gmail.com	ganesh	t	t	f	\N
+38	pbkdf2_sha256$216000$OmmBkZGBq7di$qoi7BTpvscSX53rbKB6fL3jwY2WzkuO9GNgcyFGrnGc=	2021-01-27 18:04:22.12327+00	varunpatialaking@gmail.com	drvarunsingla	t	t	t	\N
+39	pbkdf2_sha256$216000$TH1G0Q9JqE2p$utvMhyESdrmksGxbcqzQAo2oPOQ84kz//j87gjz+HBU=	\N	somyavinay2011@gmail.com	Dr Vinay Somya 	t	t	t	\N
+45	pbkdf2_sha256$216000$4XEW1ehUliy7$kwWKTltgeqFENDV8zyNqw220Jrcb12zBSw7dgjzcDEo=	2021-01-29 17:15:03.803616+00	rameesahamadanchukandan@gmail.com	Rameesahamadanchukan	t	t	f	\N
+42	pbkdf2_sha256$216000$nKtHrlfa292J$Zjs8tfRXw8zOlcXGwjWbY3Gr5wGjjy21frXnQcdIqso=	2021-01-28 05:55:43.873892+00	nirikshadcn@gmail.com	Niriksha	t	t	f	\N
+41	pbkdf2_sha256$216000$RKCWDUU5h5rK$qyRu8WqtrlFe+xtN8HOlmy2GXvAivTWgBvuMj1zxXpY=	\N	Farazahmed992@gmail.com	FA	t	t	f	\N
+2	pbkdf2_sha256$216000$0kXdkMNbB2uK$HPDwHZ6k+4XWD/8HQ8aT/NuTPFmHnYtfcguORYgoWwU=	2021-01-30 02:14:49.426491+00	suryaveda@hotmail.com	sk	t	t	t	\N
 \.
 
 
@@ -2482,6 +2644,14 @@ COPY public.accounts_work (id, "position", is_current, hospital_id) FROM stdin;
 29	JR3	t	52
 30	Anesthesia resident	t	55
 31	Assistant professor	t	58
+32	Assistant Professor 	t	59
+33	PG	t	61
+34	Postgraduate	t	64
+35	Juinor resident	t	66
+36	Resident doctor	t	3
+37	Junior resident	t	69
+38	Post graduation 	t	71
+39	Post graduate	t	71
 \.
 
 
@@ -2524,6 +2694,7 @@ COPY public.archives_fileadd (id, file_name, file, is_image) FROM stdin;
 COPY public.archives_lecturepost (post_ptr_id, lecture_start_date, lecture_end_date) FROM stdin;
 40	2021-01-16 11:30:00+00	2021-01-16 12:30:00+00
 49	2021-01-30 14:30:00+00	2021-01-30 15:30:00+00
+54	2021-01-27 18:30:00+00	2021-01-27 18:30:00+00
 \.
 
 
@@ -2975,7 +3146,10 @@ e6q0e4akpjhonropxbrlfa9ph7fnwnqw	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXe
 3knicc9irwznycyxl992e6b47uojhbv2	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l4d12:Rcn8XiNqX3cvgYlxtQ7F2mRA-TUyLBN6m9fxPifwwdA	2021-02-10 05:05:16.674905+00
 e05qjfwi7trus6wiyhv2b1b5b80tlfye	.eJxVjDsOwjAQBe_iGlnr-LMsJX3OYPmLA8iW4qRC3B0spYD2zcx7Mev2rdi9p9UukV2YRHb6Hb0Lj1QHiXdXb42HVrd18Xwo_KCdzy2m5_Vw_w6K62XUeM6YQvbaECk0EyiU0gEJrwiUIADSRmkRACeBKXrjCDErIcl_Xfb-ANx0Nm4:1l4myI:_VhCXDMLblUqB1Bn48WbZJMaAVDw_qmJbCJWO9y1lkg	2021-02-10 15:43:06.997964+00
 g0toldoe19p75m3qv03zc21n6em2cnl3	.eJxVjMEOwiAQRP-FsyFCWQoevfsNhGUXqRpISnsy_rtt0oMeZ96beYsQ16WEtfMcJhIXMThx-i0xpifXndAj1nuTqdVlnlDuijxol7dG_Loe7t9Bib1sa8t69JizNcmZqBgIMxiFGp3iTEzkfXTsLWICk_x5dGoLegB2BgjE5wsy4Di9:1l4pB0:IiMUJzEbumCa-LCP_rgRU1EHet_rm-Wc_REUw6ObdW4	2021-02-10 18:04:22.129158+00
-qkz8nja6gun9jr08djdkjf3f1oid0yew	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l4qBQ:JAtWEv_xHxkLd290iYuzguVuG-aB1ltl6m88F16V-bw	2021-02-10 19:08:52.556426+00
+8n1mf2v252hli4g0v39ifa15dymvxypo	.eJxVjEEOwiAURO_C2hDgQwGX7nsGAvxfqRqalHZlvLs06UKX8-bNvFmI-1bC3mgNM7Ir04pdfmGK-Un1aPAR633heanbOid-KPxsGx8XpNftdP8OSmylrx1Z1CbHQTnIyUuD0koNPfo4mJQ7VUQChXHkBSiwgAIIhTZSTZNlny_xEzdG:1l50HP:eNwLYfUM8vOWUizR2iivFxdOotu2s_t5N7BQniA44GA	2021-02-11 05:55:43.877359+00
+s0eh3kcgn1l13b51ntphxtwez63i6mei	.eJxVjEEOwiAQRe_C2pBhoJS6dO8ZyACDVA0kpV0Z765NutDtf-_9l_C0rcVvnRc_J3EWxojT7xgoPrjuJN2p3pqMra7LHOSuyIN2eW2Jn5fD_Tso1Mu3dskykGawgCaqlGOIE6uskbRzkCJjxmwAtAFSITuEyZAdEC2M4-DE-wMTljeN:1l59pe:OeoPgDUalnHLnMY4JkWEQduMW97rUCvnH_-LStSfKis	2021-02-11 16:07:42.687411+00
+zrg4s3oyvvcs5gykwgbzctq8mp79i7rm	.eJxVjEEOwiAQAP_C2RBAFopH776hWdhFqgaS0p6MfzckPeh1ZjJvMeO-lXnvvM4LiYuwIE6_MGJ6ch2GHljvTaZWt3WJciTysF3eGvHrerR_g4K9jK8znkw2yKAIrKbAecKoo7WonPWgE06eyQfIQcdz1gQKAzsO7L1G8fkCDFE4Qw:1l5XMN:iCBb3mgU5gwDDwL06ma5FI8V59HgH5w7u2l_5PTxIOc	2021-02-12 17:15:03.806227+00
+prt2pexok71wzfm1lv9pm1eq5q0nvquv	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l5fmj:7ltLeZCcbm32U1y9LMaTIujuVjYk_V_ySq6Ht0vy5fA	2021-02-13 02:14:49.428979+00
 \.
 
 
@@ -2994,6 +3168,7 @@ COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdi
 10	2021-01-05 14:10:32.158426+00	Link	3		\N	
 11	2021-01-10 15:54:35.006201+00	Hello!  allaboutanaesthesia.co \n \nDid you know that it is possible to send business proposal entirely lawfully? \nWe presentation a new method of sending business proposal through contact forms. Such forms are located on many sites. \nWhen such business offers are sent, no personal data is used, and messages are sent to forms specifically designed to receive messages and appeals. \nalso, messages sent through contact Forms do not get into spam because such messages are considered important. \nWe offer you to test our service for free. We will send up to 50,000 messages for you. \nThe cost of sending one million messages is 49 USD. \n \nThis message is created automatically. Please use the contact details below to contact us. \n \nContact us. \nTelegram - @FeedbackMessages \nSkype  live:contactform_18 \nWhatsApp - +375259112693	\N		\N	
 12	2021-01-22 16:41:27.286783+00	link\nhttps://amzn.in/b1PLVfT	3		\N	
+13	2021-01-28 03:07:43.933529+00	https://teams.microsoft.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fmeetup-join%2F19%3Ameeting_M2M4MjBhMDQtMWQ4Ny00ZmE4LWI5MzktZWQ3YTEyZDU4NjY3%40thread.v2%2F0%3Fcontext%3D%257b%2522Tid%2522%253a%2522f4c9877d-3607-4fe9-98d3-93c3d2a0c80d%2522%252c%2522Oid%2522%253a%2522b85ec603-65fe-4052-b6d2-1c88b84afa5c%2522%257d%26anon%3Dtrue&amp;type=meetup-join&amp;deeplinkId=8d40a778-48f2-42d2-adc3-0e5c89ac22eb&amp;directDl=true&amp;msLaunch=true&amp;enableMobilePage=true&amp;suppressPrompt=true	3		\N	
 \.
 
 
@@ -3038,7 +3213,8 @@ COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img, 
 44	2021-01-27 03:33:02.793476+00	RSACP Academic Webinar Series 2021\r\n\r\n27 January, Wednesday\r\n6-8:30PM \r\n\r\nTopics: Airway Management in Obstetrics, Airway Problems in PACU, Anaesthesia for TKR & Community Chronic Pain Management. \r\n\r\nLink\r\nhttps://us02web.zoom.us/j/8673955000 \r\nMeeting ID: 8673955000 Password: RSACP	\N	3		\N		f	f
 47	2021-01-27 08:00:29.522089+00	ALL ABOUT PAIN POST -1\r\nBest way to start the learning of a subject is by knowing its meaning.	“An unpleasant sensory and emotional experience associated with, or resembling that associated with, actual or potential tissue damage,”\r\n and\r\nis expanded upon by the addition of six key Notes and the etymology of the word pain for further valuable context.\r\n\r\n~Pain is always a personal experience that is influenced to varying degrees by biological, psychological, and social factors.\r\n~Pain and nociception are different phenomena. Pain cannot be inferred solely from activity in sensory neurons.\r\n~Through their life experiences, individuals learn the concept of pain.\r\n~A person’s report of an experience as pain should be respected.\r\n~Although pain usually serves an adaptive role, it may have adverse effects on function and social and psychological well-being.\r\n~Verbal description is only one of several behaviors to express pain; inability to communicate does not negate the possibility that a human or a nonhuman animal experiences pain.	12		\N	Postimages/2021/01/$D/pain_cm0t0gH_O125OR1.jpg	f	f
 49	2021-01-27 08:16:20.292096+00	ROLE OF CORTICOSTEROID IN TREATMENT OF LOWERBACK PAIN	\N	12		\N	Postimages/2021/01/$D/141201070_2757135964616183_1382591075290002633_n_8DOw4jn.jpg	t	f
-50	2021-01-27 17:49:18.680031+00	Dear Doctor,\r\nWe are pleased to invite you to the Webinar on “Clinical concept of vascular access through IO” organised by M/s Teleflex,under the banner of ISA Delhi branch, on Thursday, 28 th January, 2021, 6 pm to 7 pm\r\n (IST- India Time)\r\n\r\nSpeaker:  Dr. Vivek Vijayendra, India Head of Clinical and Medical Affairs, Teleflex Medical.\r\n\r\n\r\nPlatform: Virtually @Teams webinar. \r\nTo Join, click on https://teams.microsoft.com/l/meetup-join/19%3ameeting_M2M4MjBhMDQtMWQ4Ny00ZmE4LWI5MzktZWQ3YTEyZDU4NjY3%40thread.v2/0?context=%7b%22Tid%22%3a%22f4c9877d-3607-4fe9-98d3-93c3d2a0c80d%22%2c%22Oid%22%3a%22b85ec603-65fe-4052-b6d2-1c88b84afa5c%22%7d	\N	3		\N		f	f
+54	2021-01-28 06:47:25.69827+00	Dear Doctor, We are pleased to invite you to the Webinar on “Clinical concept of vascular access through IO” organised by M/s Teleflex,under the banner of ISA Delhi branch, on Thursday, 28 th January, 2021, 6 pm to 7 pm (IST- India Time)  Speaker: Dr. Vivek Vijayendra, India Head of Clinical and Medical Affairs, Teleflex Medical.  Platform: Virtually @Teams webinar.	\N	2		\N		f	t
+55	2021-01-28 11:03:18.098535+00	ISA Thiruvarur and Thanjavur joint invite  \r\nparthasarathy srinivasan is inviting you to a scheduled Zoom meeting.\r\n\r\nFRIDACE - Friday Anesthesia Continuing Education \r\nSpeaker Dr S Parthasarathy \r\nTopic: A to Y of Erector spinae plane block \r\n\r\nModerator : Dr Shashi Kiran MD DA DNB FICA \r\n Examiner - IDRA   \r\nProfessor - PGIMS Rohtak \r\n\r\nTime: Jan 29, 2021 06:00 PM India\r\n\r\nJoin Zoom Meeting\r\nhttps://zoom.us/j/6907913417?pwd=aWRkcVRVQzh5SXgrbWNuOVN4eHBpQT09\r\n\r\nMeeting ID: 690 791 3417\r\nPasscode: 1tZxj2	\N	3		\N		f	f
 \.
 
 
@@ -3071,6 +3247,8 @@ COPY public.home_post_link (id, post_id, postlink_id) FROM stdin;
 25	44	46
 26	45	48
 27	47	50
+28	54	51
+29	55	53
 \.
 
 
@@ -3120,8 +3298,10 @@ COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
 83	45	1
 85	47	1
 87	49	3
-88	50	9
-89	50	1
+95	54	9
+96	54	1
+97	55	9
+98	55	1
 \.
 
 
@@ -3178,6 +3358,9 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 48	https://chat.whatsapp.com/LMJgquHrqEZILDiPEBchuG	WhatsApp group	3
 49	https://www.iasp-pain.org/PublicationsNews/NewsDetail.aspx?ItemNumber=10475#:~:text=Jul%2016%2C%202020&text=The%20definition%20is%3A%20%E2%80%9CAn%20unpleasant,pain%20for%20further%20valuable%20contex	link address	\N
 50	https://www.iasp-pain.org/PublicationsNews/NewsDetail.aspx?ItemNumber=10475#:~:text=Jul%2016%2C%202020&text=The%20definition%20is%3A%20%E2%80%9CAn%20unpleasant,pain%20for%20further%20valuable%20contex	link address	12
+51	https://teams.microsoft.com/l/meetup-join/19%3ameeting_M2M4MjBhMDQtMWQ4Ny00ZmE4LWI5MzktZWQ3YTEyZDU4NjY3%40thread.v2/0?context=%7b%22Tid%22%3a%22f4c9877d-3607-4fe9-98d3-93c3d2a0c80d%22%2c%22Oid%22%3a%2	Microsoft Teams link	\N
+52	https://zoom.us/j/6907913417?pwd=aWRkcVRVQzh5SXgrbWNuOVN4eHBpQT09	FRIDACE	\N
+53	https://zoom.us/j/6907913417?pwd=aWRkcVRVQzh5SXgrbWNuOVN4eHBpQT09	FRIDACE	3
 \.
 
 
@@ -3273,10 +3456,6 @@ COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 --
 
 COPY public.notifications_notification (id, message, post_id, user_id, date) FROM stdin;
-1	A new comment is added to Stoppage o.. by new user	16	2	2021-01-05 11:44:52.087447+00
-2	A new comment is added to Dear Colle.. by new user	\N	\N	2021-01-06 03:48:29.251751+00
-3	A new comment is added to Anaesthesi.. by new user	\N	3	2021-01-11 23:17:02.475477+00
-4	A new comment is added to Pain Medic.. by new user	\N	3	2021-01-22 16:56:39.697052+00
 \.
 
 
@@ -3285,43 +3464,55 @@ COPY public.notifications_notification (id, message, post_id, user_id, date) FRO
 --
 
 COPY public.stats_pageobj (id, url, count) FROM stdin;
+63	https://allaboutanaesthesia.co/conferences	57
 80	https://allaboutanaesthesia.co/posts/16	1
-78	https://allaboutanaesthesia.co/mcq/6	8
+85	https://allaboutanaesthesia.co/mcq/1	4
+56	https://allaboutanaesthesia.co/managewebsite	44
+55	https://allaboutanaesthesia.co/notifications/	6
+86	https://allaboutanaesthesia.co/create_post	4
+77	https://allaboutanaesthesia.co/posts/30	21
 72	https://allaboutanaesthesia.co/mcq/getnewquestions/1	17
-88	https://allaboutanaesthesia.co/mcq/5	1
 59	https://allaboutanaesthesia.co/accounts/changeuserprivileges/27	1
-77	https://allaboutanaesthesia.co/posts/30	2
+92	https://allaboutanaesthesia.co/archives/edit-lecture-detail/201/49	2
+99	https://allaboutanaesthesia.co/delete_post/50	1
+90	https://allaboutanaesthesia.co/getnewposts/16	1
+87	https://allaboutanaesthesia.co/posts/44	36
+83	https://allaboutanaesthesia.co/accounts/reset-your-password	11
+74	https://allaboutanaesthesia.co/posts/10	2
+91	https://allaboutanaesthesia.co/getnewposts/19	2
 71	https://allaboutanaesthesia.co/mcq/3	2
-55	https://allaboutanaesthesia.co/notifications/	5
-81	https://allaboutanaesthesia.co/posts/15	1
-70	https://allaboutanaesthesia.co/mcq/	8
+84	https://allaboutanaesthesia.co/accounts/passreset	5
+78	https://allaboutanaesthesia.co/mcq/6	9
 67	https://allaboutanaesthesia.co/posts/31	3
 62	https://allaboutanaesthesia.co/posts/24	1
-83	https://allaboutanaesthesia.co/accounts/reset-your-password	2
+54	https://allaboutanaesthesia.co/archives/lectures	46
 75	https://allaboutanaesthesia.co/posts/13	2
-84	https://allaboutanaesthesia.co/accounts/passreset	2
+64	https://allaboutanaesthesia.co/accounts/signin	97
+101	https://allaboutanaesthesia.co/posts/54	1
+66	https://allaboutanaesthesia.co/accounts/signup/staff_signup	59
+82	https://allaboutanaesthesia.co/home/PAIN-MEDICINE	2
 76	https://allaboutanaesthesia.co/posts/14	2
-74	https://allaboutanaesthesia.co/posts/10	1
-69	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA	18
-82	https://allaboutanaesthesia.co/home/PAIN-MEDICINE	1
-65	https://allaboutanaesthesia.co/home/NEET-SS	7
+53	https://allaboutanaesthesia.co/	198
+57	https://allaboutanaesthesia.co/stats/	96
+81	https://allaboutanaesthesia.co/posts/15	2
+70	https://allaboutanaesthesia.co/mcq/	10
+88	https://allaboutanaesthesia.co/mcq/5	2
+79	https://allaboutanaesthesia.co/posts/29	97
+58	https://allaboutanaesthesia.co/searchPage	9
+61	https://allaboutanaesthesia.co/home/CRITICAL-CARE	23
 60	https://allaboutanaesthesia.co/posts/11	2
-54	https://allaboutanaesthesia.co/archives/lectures	32
-61	https://allaboutanaesthesia.co/home/CRITICAL-CARE	18
-66	https://allaboutanaesthesia.co/accounts/signup/staff_signup	27
+93	https://allaboutanaesthesia.co/getnewposts/18	26
 73	https://allaboutanaesthesia.co/mcq/getnewquestions/2	13
-68	https://allaboutanaesthesia.co/home/Conferences	17
-63	https://allaboutanaesthesia.co/conferences	27
-79	https://allaboutanaesthesia.co/posts/29	79
-57	https://allaboutanaesthesia.co/stats/	72
-56	https://allaboutanaesthesia.co/managewebsite	22
-53	https://allaboutanaesthesia.co/	103
-64	https://allaboutanaesthesia.co/accounts/signin	39
+65	https://allaboutanaesthesia.co/home/NEET-SS	11
 89	https://allaboutanaesthesia.co/posts/45	12
-86	https://allaboutanaesthesia.co/create_post	3
-85	https://allaboutanaesthesia.co/mcq/1	3
-87	https://allaboutanaesthesia.co/posts/44	30
-58	https://allaboutanaesthesia.co/searchPage	8
+100	https://allaboutanaesthesia.co/getnewposts/9	18
+97	https://allaboutanaesthesia.co/delete_post/53	1
+94	https://allaboutanaesthesia.co/posts/50	32
+69	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA	21
+68	https://allaboutanaesthesia.co/home/Conferences	25
+95	https://allaboutanaesthesia.co/archives/create-conference	2
+96	https://allaboutanaesthesia.co/admin/jsi18n/	2
+98	https://allaboutanaesthesia.co/accounts/profile	1
 \.
 
 
@@ -3330,523 +3521,438 @@ COPY public.stats_pageobj (id, url, count) FROM stdin;
 --
 
 COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
-531	223.227.66.40	2	2021-01-24	57
-588	49.36.162.24	2	2021-01-25	54
-532	223.227.66.40	2	2021-01-24	57
-533	223.227.66.40	2	2021-01-24	56
-589	49.36.162.24	\N	2021-01-25	53
-534	223.227.66.40	2	2021-01-24	57
-535	223.227.66.40	2	2021-01-24	53
-590	49.36.162.24	\N	2021-01-25	61
-536	66.249.73.59	\N	2021-01-24	67
-537	66.249.73.55	\N	2021-01-24	67
-591	49.36.162.24	\N	2021-01-25	78
-538	223.236.85.30	\N	2021-01-24	53
-539	223.227.66.40	\N	2021-01-24	53
-592	49.36.162.24	\N	2021-01-25	72
-540	223.227.66.40	\N	2021-01-24	63
-541	223.227.66.40	\N	2021-01-24	68
-593	49.36.162.24	\N	2021-01-25	72
-542	223.227.66.40	\N	2021-01-24	68
-543	223.227.66.40	\N	2021-01-24	68
-594	49.36.162.24	\N	2021-01-25	72
-544	223.227.66.40	\N	2021-01-24	69
-545	223.227.66.40	\N	2021-01-24	66
-595	49.36.162.24	\N	2021-01-25	72
-546	223.227.66.40	\N	2021-01-24	70
-547	223.227.66.40	\N	2021-01-24	71
-596	49.36.162.24	\N	2021-01-25	65
-548	223.227.66.40	\N	2021-01-24	72
-549	223.227.66.40	\N	2021-01-24	72
-597	49.36.162.24	\N	2021-01-25	73
-550	223.227.66.40	\N	2021-01-24	72
-551	223.227.66.40	\N	2021-01-24	73
-598	49.36.162.24	\N	2021-01-25	73
-552	223.227.66.40	\N	2021-01-24	73
-553	223.227.66.40	\N	2021-01-24	73
-599	49.36.162.24	\N	2021-01-25	73
-554	223.227.66.40	\N	2021-01-24	71
-555	223.227.66.40	\N	2021-01-24	72
-600	49.36.162.24	\N	2021-01-25	78
-556	223.227.66.40	\N	2021-01-24	73
-557	223.227.66.40	\N	2021-01-24	73
-601	66.249.79.71	\N	2021-01-25	79
-558	223.227.66.40	\N	2021-01-24	73
-559	223.227.66.40	\N	2021-01-24	53
-602	66.249.79.71	\N	2021-01-25	80
-560	223.227.66.40	\N	2021-01-24	53
-561	223.227.66.40	\N	2021-01-24	53
-527	223.227.66.40	2	2021-01-23	57
-603	66.249.79.67	\N	2021-01-25	53
-562	223.227.66.40	\N	2021-01-24	64
-528	223.227.66.40	2	2021-01-23	53
-563	223.227.66.40	2	2021-01-24	54
-604	49.36.174.120	\N	2021-01-25	78
-564	223.227.66.40	2	2021-01-24	57
-529	223.227.66.40	2	2021-01-23	57
-565	223.227.66.40	2	2021-01-24	57
-605	49.36.174.120	\N	2021-01-25	53
-530	223.227.66.40	2	2021-01-23	57
-566	223.227.66.40	2	2021-01-24	57
-567	223.227.66.40	2	2021-01-24	63
-606	49.36.174.120	\N	2021-01-25	64
-568	223.227.66.40	2	2021-01-24	57
-569	223.227.66.40	2	2021-01-24	57
-607	49.36.174.120	\N	2021-01-25	64
-570	223.227.66.40	2	2021-01-24	57
-571	223.227.66.40	2	2021-01-24	57
-608	49.36.174.120	2	2021-01-25	54
-572	223.227.66.40	2	2021-01-24	53
-573	223.181.29.123	\N	2021-01-24	53
-609	49.36.174.120	2	2021-01-25	53
-574	223.181.29.195	\N	2021-01-24	53
-575	66.249.72.131	\N	2021-01-24	74
-610	49.36.174.120	2	2021-01-25	53
-576	66.249.72.128	\N	2021-01-24	75
-577	66.249.72.131	\N	2021-01-24	76
-611	49.36.174.120	2	2021-01-25	54
-578	66.249.72.135	\N	2021-01-24	58
-579	66.249.72.128	\N	2021-01-24	66
-612	49.36.174.120	2	2021-01-25	70
-580	66.249.72.131	\N	2021-01-24	61
-581	103.55.72.32	\N	2021-01-24	53
-613	49.36.174.120	2	2021-01-25	53
-582	66.249.79.71	\N	2021-01-25	53
-583	66.249.79.67	\N	2021-01-25	77
-614	49.36.174.120	2	2021-01-25	57
-584	49.36.162.24	\N	2021-01-25	53
-585	49.36.162.24	\N	2021-01-25	64
-615	49.36.174.120	2	2021-01-25	77
-586	49.36.162.24	2	2021-01-25	54
-587	49.36.162.24	2	2021-01-25	57
-616	49.36.174.120	2	2021-01-25	69
-617	49.36.174.120	2	2021-01-25	53
-618	49.36.174.120	\N	2021-01-25	53
-619	66.249.79.71	\N	2021-01-25	66
-620	66.249.79.64	\N	2021-01-25	61
-621	66.249.79.71	\N	2021-01-25	81
-622	27.63.178.39	\N	2021-01-25	53
-623	27.63.178.39	\N	2021-01-25	64
-624	27.63.178.39	2	2021-01-25	54
-625	27.63.178.39	2	2021-01-25	53
-626	27.63.178.39	2	2021-01-25	57
-627	66.249.79.64	\N	2021-01-25	68
-628	66.249.79.71	\N	2021-01-26	53
-629	52.12.163.174	\N	2021-01-26	53
-630	84.17.51.32	\N	2021-01-26	53
-631	66.249.64.131	\N	2021-01-26	75
-632	223.227.66.36	2	2021-01-26	53
-633	223.227.66.36	2	2021-01-26	57
-634	66.249.64.131	\N	2021-01-26	78
-635	66.249.64.131	\N	2021-01-26	66
-636	66.249.64.131	\N	2021-01-26	53
-637	49.36.162.24	2	2021-01-26	57
-638	49.36.162.24	2	2021-01-26	76
-639	49.36.161.234	3	2021-01-26	53
-640	49.36.161.234	3	2021-01-26	57
-641	49.36.161.234	3	2021-01-26	53
-642	49.36.161.234	3	2021-01-26	55
-643	49.36.161.234	3	2021-01-26	53
-644	49.36.161.234	3	2021-01-26	63
-645	49.36.161.234	3	2021-01-26	82
-646	49.36.161.234	3	2021-01-26	63
-647	49.36.161.234	3	2021-01-26	53
-648	49.36.161.234	3	2021-01-26	63
-649	49.36.161.234	3	2021-01-26	53
-650	49.36.161.234	3	2021-01-26	63
-651	49.36.161.234	\N	2021-01-26	79
-652	49.36.161.234	3	2021-01-26	79
-653	117.209.244.164	\N	2021-01-26	79
-654	49.36.161.234	3	2021-01-26	57
-655	117.230.176.98	\N	2021-01-26	79
-656	117.230.176.98	\N	2021-01-26	68
-657	157.48.162.33	\N	2021-01-26	79
-663	49.36.161.234	3	2021-01-26	57
-658	117.246.186.11	\N	2021-01-26	79
-754	49.36.161.234	\N	2021-01-26	79
-659	49.36.161.234	3	2021-01-26	57
-664	157.47.66.235	\N	2021-01-26	79
-660	117.246.186.11	\N	2021-01-26	61
-661	117.246.186.11	\N	2021-01-26	61
-665	157.47.66.235	\N	2021-01-26	79
-662	117.246.186.11	\N	2021-01-26	61
-755	49.36.161.234	\N	2021-01-26	63
-666	157.47.66.235	\N	2021-01-26	64
-667	157.47.66.235	\N	2021-01-26	79
-756	49.36.161.234	\N	2021-01-26	53
-668	157.48.182.22	\N	2021-01-26	79
-669	49.36.164.173	\N	2021-01-26	79
-757	49.36.161.234	\N	2021-01-26	63
-670	157.48.182.22	\N	2021-01-26	79
-671	157.48.182.22	\N	2021-01-26	64
-758	49.36.164.173	22	2021-01-26	79
-672	157.48.182.22	\N	2021-01-26	79
-673	49.36.164.173	\N	2021-01-26	64
-759	49.36.164.173	22	2021-01-26	79
-674	157.47.66.235	\N	2021-01-26	79
-675	106.223.184.68	\N	2021-01-26	79
-760	27.56.206.44	\N	2021-01-26	79
-676	49.36.164.173	\N	2021-01-26	64
-677	157.47.66.235	\N	2021-01-26	65
-761	27.56.206.44	\N	2021-01-26	61
-678	106.223.184.68	\N	2021-01-26	79
-679	49.36.164.173	\N	2021-01-26	66
-762	27.56.206.44	\N	2021-01-26	78
-680	49.36.164.173	\N	2021-01-26	66
-681	49.36.164.173	\N	2021-01-26	66
-763	27.56.206.44	\N	2021-01-26	72
-682	49.36.164.173	\N	2021-01-26	66
-683	49.36.164.173	\N	2021-01-26	66
-764	49.36.161.234	3	2021-01-26	57
-684	49.36.164.173	\N	2021-01-26	64
-685	49.36.164.173	\N	2021-01-26	83
-765	157.34.120.57	\N	2021-01-26	79
-686	49.36.164.173	\N	2021-01-26	83
-687	49.36.164.173	\N	2021-01-26	84
-766	49.36.161.234	\N	2021-01-26	53
-688	42.106.161.10	\N	2021-01-26	84
-689	49.36.164.173	\N	2021-01-26	64
-767	49.36.161.234	3	2021-01-26	57
-690	49.36.164.173	24	2021-01-26	54
-691	49.36.164.173	24	2021-01-26	53
-768	42.111.162.131	\N	2021-01-26	79
-692	49.36.164.173	24	2021-01-26	79
-693	195.74.76.194	\N	2021-01-26	64
-769	110.224.165.35	\N	2021-01-27	79
-694	157.47.66.235	\N	2021-01-26	79
-695	157.47.66.235	\N	2021-01-26	64
-770	49.36.161.234	3	2021-01-27	57
-696	49.36.161.234	\N	2021-01-26	53
-697	195.74.76.194	\N	2021-01-26	64
-771	106.195.127.221	\N	2021-01-27	79
-698	49.36.164.173	\N	2021-01-26	79
-699	157.48.182.22	\N	2021-01-26	79
-772	106.195.127.221	\N	2021-01-27	53
-700	49.36.164.173	\N	2021-01-26	64
-701	49.36.164.173	22	2021-01-26	54
-773	106.195.127.221	\N	2021-01-27	79
-702	49.36.164.173	22	2021-01-26	54
-703	49.36.164.173	22	2021-01-26	54
-774	117.249.170.25	\N	2021-01-27	79
-704	49.36.164.173	22	2021-01-26	64
-705	106.215.185.228	\N	2021-01-26	79
-775	49.36.161.234	3	2021-01-27	53
-706	106.198.95.173	\N	2021-01-26	79
-707	106.223.184.68	\N	2021-01-26	79
-776	49.36.161.234	3	2021-01-27	57
-708	106.223.184.68	\N	2021-01-26	53
-709	49.36.161.234	3	2021-01-26	57
-777	157.34.101.197	\N	2021-01-27	79
-710	49.36.161.234	3	2021-01-26	57
-711	49.36.161.234	3	2021-01-26	57
-778	45.115.89.59	\N	2021-01-27	53
-712	106.206.24.104	\N	2021-01-26	79
-713	106.206.24.104	\N	2021-01-26	63
-779	45.115.89.59	\N	2021-01-27	64
-714	49.36.161.234	3	2021-01-26	57
-715	106.206.24.104	\N	2021-01-26	61
-780	45.115.89.59	\N	2021-01-27	66
-716	106.206.24.104	\N	2021-01-26	79
-717	49.36.161.234	3	2021-01-26	57
-781	49.36.161.234	\N	2021-01-27	53
-718	157.41.134.40	\N	2021-01-26	79
-719	49.36.161.234	\N	2021-01-26	79
-782	45.115.89.59	\N	2021-01-27	66
-720	49.36.161.234	3	2021-01-26	57
-721	49.36.161.234	3	2021-01-26	57
-783	45.115.89.59	\N	2021-01-27	64
-722	49.36.161.234	3	2021-01-26	57
-723	31.13.103.18	\N	2021-01-26	79
-784	45.115.89.59	\N	2021-01-27	64
-724	31.13.103.19	\N	2021-01-26	79
-725	31.13.103.23	\N	2021-01-26	79
-785	45.115.89.59	31	2021-01-27	54
-726	31.13.103.119	\N	2021-01-26	79
-727	31.13.103.7	\N	2021-01-26	53
-786	45.115.89.59	31	2021-01-27	63
-728	49.36.161.234	\N	2021-01-26	79
-729	31.13.115.2	\N	2021-01-26	79
-787	45.115.89.59	\N	2021-01-27	63
-730	49.36.161.234	3	2021-01-26	57
-731	122.175.131.6	\N	2021-01-26	79
-788	45.115.89.59	31	2021-01-27	54
-732	47.247.167.229	\N	2021-01-26	79
-733	27.56.206.44	\N	2021-01-26	79
-734	27.62.193.192	\N	2021-01-26	79
-735	122.168.104.200	\N	2021-01-26	79
-736	27.56.206.44	\N	2021-01-26	68
-737	27.62.193.192	\N	2021-01-26	79
-738	31.13.127.6	\N	2021-01-26	79
-739	31.13.127.26	\N	2021-01-26	79
-740	27.62.164.25	\N	2021-01-26	79
-741	27.62.164.25	\N	2021-01-26	70
-742	27.62.164.25	\N	2021-01-26	66
-743	27.62.164.25	\N	2021-01-26	70
-744	27.62.164.25	\N	2021-01-26	85
-745	27.62.164.25	\N	2021-01-26	53
-746	27.56.206.44	\N	2021-01-26	79
-747	49.15.131.241	\N	2021-01-26	79
-748	27.62.164.25	\N	2021-01-26	64
-749	49.15.131.241	\N	2021-01-26	66
-750	157.39.119.124	\N	2021-01-26	79
-751	157.39.119.124	\N	2021-01-26	64
-752	49.36.161.234	3	2021-01-26	57
-753	14.139.51.66	\N	2021-01-26	79
-872	223.237.152.60	\N	2021-01-27	87
-789	45.115.89.59	31	2021-01-27	54
-790	117.230.185.90	\N	2021-01-27	79
-873	157.32.146.206	\N	2021-01-27	66
-791	117.230.185.90	\N	2021-01-27	68
-792	117.230.185.90	\N	2021-01-27	65
-874	157.32.146.206	\N	2021-01-27	64
-793	117.230.185.90	\N	2021-01-27	73
-794	117.230.185.90	\N	2021-01-27	66
-875	157.32.146.206	\N	2021-01-27	64
-795	117.230.185.90	\N	2021-01-27	66
-796	117.230.185.90	\N	2021-01-27	64
-876	157.32.146.206	34	2021-01-27	54
-797	117.230.185.90	\N	2021-01-27	64
-798	117.230.185.90	32	2021-01-27	54
-877	106.215.157.198	\N	2021-01-27	87
-799	117.230.185.90	32	2021-01-27	54
-800	117.230.185.90	32	2021-01-27	54
-878	157.32.146.206	34	2021-01-27	54
-801	106.214.32.108	\N	2021-01-27	79
-802	66.249.64.135	\N	2021-01-27	67
-879	157.32.146.206	34	2021-01-27	54
-803	49.36.161.234	3	2021-01-27	53
-804	49.36.161.234	3	2021-01-27	57
-880	157.32.146.206	34	2021-01-27	54
-805	106.200.191.121	\N	2021-01-27	79
-806	106.200.191.121	\N	2021-01-27	79
-881	49.36.161.234	3	2021-01-27	53
-807	106.200.191.121	\N	2021-01-27	53
-808	47.31.130.155	\N	2021-01-27	79
-882	49.36.161.234	3	2021-01-27	57
-809	47.247.115.189	\N	2021-01-27	79
-810	47.247.115.189	\N	2021-01-27	64
-883	157.42.247.7	\N	2021-01-27	87
-811	103.112.27.3	\N	2021-01-27	79
-812	110.224.161.212	\N	2021-01-27	79
-884	103.106.30.102	\N	2021-01-27	87
-813	110.224.161.212	\N	2021-01-27	61
-814	110.224.161.185	\N	2021-01-27	78
-885	157.32.141.57	34	2021-01-27	87
-815	66.249.64.128	\N	2021-01-27	60
-816	157.34.70.251	\N	2021-01-27	79
-886	157.32.141.57	34	2021-01-27	70
-817	157.34.70.251	\N	2021-01-27	66
-818	157.34.70.251	\N	2021-01-27	70
-887	157.32.141.57	34	2021-01-27	85
-819	157.34.70.251	\N	2021-01-27	85
-820	157.34.70.251	\N	2021-01-27	73
-888	117.97.76.78	\N	2021-01-27	87
-821	157.34.70.251	\N	2021-01-27	73
-822	157.34.70.251	\N	2021-01-27	73
-889	157.45.161.23	\N	2021-01-27	87
-823	47.247.186.93	\N	2021-01-27	79
-824	106.223.214.56	\N	2021-01-27	79
-890	157.45.161.23	\N	2021-01-27	69
-825	27.56.222.233	\N	2021-01-27	79
-826	27.56.222.233	\N	2021-01-27	64
-891	14.139.54.114	\N	2021-01-27	87
-827	27.56.222.233	\N	2021-01-27	79
-828	103.110.171.154	\N	2021-01-27	79
-892	106.215.209.150	\N	2021-01-27	87
-829	49.36.161.234	3	2021-01-27	53
-830	49.36.161.234	3	2021-01-27	57
-893	106.215.146.150	\N	2021-01-27	70
-831	31.13.127.10	\N	2021-01-27	53
-832	31.13.103.118	\N	2021-01-27	53
-894	106.215.209.150	\N	2021-01-27	78
-833	49.36.161.234	3	2021-01-27	53
-834	49.36.161.234	3	2021-01-27	56
-895	106.215.146.150	\N	2021-01-27	72
-835	49.36.161.234	3	2021-01-27	56
-836	49.36.161.234	3	2021-01-27	56
-896	106.215.146.150	\N	2021-01-27	72
-837	49.36.161.234	3	2021-01-27	56
-838	49.36.161.245	\N	2021-01-27	79
-897	106.215.146.150	\N	2021-01-27	72
-839	49.36.161.245	\N	2021-01-27	61
-840	49.36.161.245	\N	2021-01-27	61
-898	106.215.146.150	\N	2021-01-27	72
-841	49.36.161.245	\N	2021-01-27	66
-842	49.36.161.245	\N	2021-01-27	66
-899	106.215.146.150	\N	2021-01-27	88
-843	49.36.161.245	\N	2021-01-27	78
-844	49.36.161.245	\N	2021-01-27	72
-900	106.215.146.150	\N	2021-01-27	66
-845	49.36.161.245	\N	2021-01-27	72
-846	49.36.161.245	\N	2021-01-27	72
-901	49.36.161.78	\N	2021-01-27	87
-847	49.36.161.245	\N	2021-01-27	72
-848	49.36.161.234	3	2021-01-27	53
-902	27.97.215.129	\N	2021-01-27	87
-849	49.36.161.234	3	2021-01-27	56
-850	223.176.105.152	\N	2021-01-27	79
-903	49.36.161.234	3	2021-01-27	53
-851	223.176.105.152	\N	2021-01-27	64
-852	223.176.105.152	\N	2021-01-27	64
-904	49.36.161.234	3	2021-01-27	57
-853	223.176.105.152	\N	2021-01-27	66
-854	223.176.105.152	\N	2021-01-27	66
-905	47.9.129.232	\N	2021-01-27	87
-855	223.176.105.152	\N	2021-01-27	64
-856	223.176.105.152	33	2021-01-27	54
-906	47.9.129.232	\N	2021-01-27	64
-857	49.36.161.234	3	2021-01-27	53
-858	49.36.161.234	3	2021-01-27	86
-907	47.9.129.232	\N	2021-01-27	87
-859	49.36.161.234	3	2021-01-27	53
-860	49.36.161.234	3	2021-01-27	63
-908	47.9.129.232	\N	2021-01-27	87
-861	49.36.161.234	3	2021-01-27	53
-862	49.36.161.234	\N	2021-01-27	87
-909	47.9.129.232	\N	2021-01-27	87
-863	106.215.139.69	\N	2021-01-27	87
-864	157.39.51.146	\N	2021-01-27	87
-910	47.9.129.232	\N	2021-01-27	64
-865	157.41.129.139	31	2021-01-27	87
-866	49.36.173.31	\N	2021-01-27	87
-911	47.9.129.232	\N	2021-01-27	66
-867	106.215.197.180	\N	2021-01-27	87
-868	106.215.247.168	\N	2021-01-27	87
-912	47.9.129.232	\N	2021-01-27	66
-869	157.32.146.206	\N	2021-01-27	87
-870	49.36.173.31	\N	2021-01-27	79
-913	47.9.129.232	\N	2021-01-27	64
-871	157.32.146.206	\N	2021-01-27	66
-914	47.9.129.232	35	2021-01-27	54
-915	47.9.129.232	35	2021-01-27	54
-916	47.9.129.232	35	2021-01-27	64
-917	47.9.129.232	35	2021-01-27	63
-918	117.209.253.227	\N	2021-01-27	79
-919	117.209.253.227	\N	2021-01-27	68
-920	117.209.253.227	\N	2021-01-27	68
-1016	14.139.54.114	\N	2021-01-27	53
-921	103.144.119.2	\N	2021-01-27	87
-922	117.209.253.227	\N	2021-01-27	79
-1017	14.139.54.114	\N	2021-01-27	61
-923	14.139.54.114	\N	2021-01-27	53
-924	14.139.54.114	\N	2021-01-27	87
-1018	14.139.54.114	\N	2021-01-27	61
-925	14.139.54.114	\N	2021-01-27	64
-926	14.139.54.114	12	2021-01-27	54
-1019	14.139.54.114	\N	2021-01-27	61
-927	14.139.54.114	12	2021-01-27	53
-928	14.139.54.114	12	2021-01-27	86
-1020	14.139.54.114	\N	2021-01-27	69
-929	14.139.54.114	\N	2021-01-27	66
-930	14.139.54.114	\N	2021-01-27	64
-1021	14.139.54.114	\N	2021-01-27	69
-931	14.139.54.114	3	2021-01-27	54
-932	14.139.54.114	3	2021-01-27	53
-1022	117.97.66.61	2	2021-01-27	69
-933	14.139.54.114	3	2021-01-27	57
-934	14.139.54.114	3	2021-01-27	56
-1023	117.97.66.61	2	2021-01-27	68
-935	14.139.54.114	3	2021-01-27	56
-936	14.139.54.114	3	2021-01-27	56
-1024	14.139.54.114	\N	2021-01-27	68
-937	14.139.54.114	3	2021-01-27	56
-938	14.139.54.114	3	2021-01-27	53
-1025	14.139.54.114	\N	2021-01-27	68
-939	14.139.54.114	3	2021-01-27	86
-940	14.139.54.114	3	2021-01-27	53
-1026	117.97.66.61	2	2021-01-27	53
-941	106.223.223.34	\N	2021-01-27	89
-942	106.223.223.34	\N	2021-01-27	89
-1027	117.97.66.61	2	2021-01-27	69
-943	14.139.54.114	3	2021-01-27	53
-944	49.36.162.24	\N	2021-01-27	53
-1028	117.97.66.61	2	2021-01-27	65
-945	49.36.162.24	\N	2021-01-27	64
-946	14.139.54.114	3	2021-01-27	63
-1029	117.97.66.61	2	2021-01-27	54
-947	106.215.220.1	\N	2021-01-27	87
-948	49.36.162.24	2	2021-01-27	54
-1030	117.97.66.61	2	2021-01-27	63
-949	49.36.162.24	2	2021-01-27	63
-950	14.139.54.114	3	2021-01-27	57
-1031	117.97.66.61	2	2021-01-27	68
-951	49.36.162.24	2	2021-01-27	57
-952	49.36.162.24	2	2021-01-27	87
-1032	117.97.66.61	2	2021-01-27	53
-953	49.36.162.24	2	2021-01-27	63
-954	49.36.162.24	2	2021-01-27	55
-1033	117.97.66.61	2	2021-01-27	68
-955	49.36.162.24	2	2021-01-27	63
-956	49.36.162.24	2	2021-01-27	61
-1034	117.97.66.61	2	2021-01-27	68
-957	49.36.162.24	2	2021-01-27	69
-958	14.139.54.114	3	2021-01-27	57
-1035	14.139.54.114	\N	2021-01-27	79
-959	14.139.54.114	3	2021-01-27	56
-960	14.139.54.114	3	2021-01-27	55
-1036	14.139.54.114	\N	2021-01-27	61
-961	14.139.54.114	3	2021-01-27	58
-962	14.139.54.114	3	2021-01-27	58
-1037	14.139.54.114	\N	2021-01-27	63
-963	14.139.54.114	3	2021-01-27	65
-964	14.139.54.114	3	2021-01-27	70
-1038	14.139.54.114	\N	2021-01-27	53
-965	14.139.54.114	3	2021-01-27	54
-966	14.139.54.114	3	2021-01-27	54
-1039	117.97.66.61	2	2021-01-27	68
-967	14.139.54.114	3	2021-01-27	63
-968	14.139.54.114	3	2021-01-27	63
-1040	117.97.66.61	2	2021-01-27	63
-969	14.139.54.114	3	2021-01-27	53
-970	14.139.54.114	3	2021-01-27	53
-1041	202.83.18.249	\N	2021-01-27	79
-971	66.249.64.135	\N	2021-01-27	53
-972	14.139.54.114	\N	2021-01-27	89
-1042	47.15.208.91	\N	2021-01-27	53
-973	14.139.54.114	3	2021-01-27	57
-974	14.139.54.114	3	2021-01-27	53
-1043	47.15.208.91	\N	2021-01-27	64
-975	14.139.54.114	3	2021-01-27	53
-976	14.139.54.114	3	2021-01-27	57
-977	31.13.103.111	\N	2021-01-27	89
-978	31.13.103.120	\N	2021-01-27	89
-979	106.223.136.112	\N	2021-01-27	89
-980	31.13.103.9	\N	2021-01-27	89
-981	31.13.103.9	\N	2021-01-27	89
-982	31.13.103.24	\N	2021-01-27	53
-983	31.13.115.15	\N	2021-01-27	89
-984	106.223.136.112	\N	2021-01-27	89
-985	14.139.54.114	3	2021-01-27	57
-986	14.139.54.114	3	2021-01-27	56
-987	183.83.143.118	\N	2021-01-27	89
-988	117.97.66.61	2	2021-01-27	69
-989	66.249.64.135	\N	2021-01-27	89
-990	66.249.64.135	\N	2021-01-27	87
-991	106.223.136.112	\N	2021-01-27	53
-992	157.34.107.89	\N	2021-01-27	53
-993	157.41.119.53	\N	2021-01-27	87
-994	27.56.206.44	\N	2021-01-27	87
-995	47.15.208.91	\N	2021-01-27	53
-996	117.97.66.61	2	2021-01-27	68
-997	117.97.66.61	2	2021-01-27	69
-998	117.97.66.61	2	2021-01-27	58
-999	117.97.66.61	2	2021-01-27	63
-1000	117.97.66.61	2	2021-01-27	69
-1001	117.97.66.61	2	2021-01-27	69
-1002	14.139.54.114	2	2021-01-27	53
-1003	14.139.54.114	2	2021-01-27	53
-1004	117.97.66.61	2	2021-01-27	63
-1005	14.139.54.114	2	2021-01-27	53
-1006	117.97.66.61	2	2021-01-27	63
-1007	117.97.66.61	2	2021-01-27	63
-1008	117.97.66.61	2	2021-01-27	69
-1009	14.139.54.114	2	2021-01-27	69
-1010	14.139.54.114	\N	2021-01-27	69
-1011	14.139.54.114	\N	2021-01-27	69
-1012	14.139.54.114	\N	2021-01-27	69
-1013	14.139.54.114	\N	2021-01-27	69
-1014	14.139.54.114	\N	2021-01-27	65
-1015	14.139.54.114	\N	2021-01-27	61
+1064	66.249.66.73	\N	2021-01-28	74
+1123	124.123.166.64	\N	2021-01-28	79
+1069	157.45.94.248	\N	2021-01-28	66
+1198	106.193.29.255	\N	2021-01-28	64
+1074	157.45.94.248	\N	2021-01-28	64
+1128	124.123.166.64	\N	2021-01-28	79
+1079	14.139.54.114	2	2021-01-28	53
+1287	49.36.161.198	3	2021-01-28	53
+1084	157.45.94.248	\N	2021-01-28	64
+1133	49.36.161.198	3	2021-01-28	57
+1089	157.45.94.248	\N	2021-01-28	83
+1203	117.97.66.36	2	2021-01-28	53
+1094	157.45.94.248	\N	2021-01-28	64
+1138	49.36.161.198	\N	2021-01-28	64
+1099	117.97.66.36	2	2021-01-28	53
+1403	14.139.233.71	\N	2021-01-29	64
+1104	117.97.66.36	2	2021-01-28	57
+1143	49.36.161.198	3	2021-01-28	57
+1109	14.139.54.114	2	2021-01-28	93
+1208	117.97.66.36	2	2021-01-28	53
+1114	117.97.66.36	2	2021-01-28	93
+1148	106.215.196.186	\N	2021-01-28	64
+1119	117.97.66.36	2	2021-01-28	93
+1292	49.36.161.198	3	2021-01-28	53
+1153	106.215.196.186	\N	2021-01-28	66
+1213	117.97.66.36	2	2021-01-28	93
+1158	31.13.103.19	\N	2021-01-28	94
+1163	66.220.149.28	\N	2021-01-28	94
+1218	117.97.66.36	2	2021-01-28	93
+1168	223.181.43.50	\N	2021-01-28	94
+1297	117.97.66.52	2	2021-01-28	53
+1173	136.232.195.22	\N	2021-01-28	53
+1223	117.97.66.36	2	2021-01-28	93
+1178	77.74.177.113	\N	2021-01-28	53
+1408	157.45.189.216	\N	2021-01-29	64
+1183	157.41.101.210	\N	2021-01-28	64
+1228	117.97.66.36	2	2021-01-28	54
+1188	157.42.5.18	\N	2021-01-28	94
+1302	157.49.193.225	\N	2021-01-28	66
+1193	106.193.29.255	\N	2021-01-28	66
+1233	117.97.66.36	2	2021-01-28	63
+1238	49.36.162.24	2	2021-01-28	53
+1307	46.248.187.120	\N	2021-01-28	63
+1243	49.36.162.24	2	2021-01-28	98
+1413	117.209.228.158	\N	2021-01-29	77
+1248	49.36.162.24	2	2021-01-28	54
+1312	49.36.166.106	\N	2021-01-28	64
+1253	49.36.162.24	2	2021-01-28	63
+1258	49.36.162.24	2	2021-01-28	68
+1317	49.36.166.106	44	2021-01-28	54
+1263	49.36.162.24	2	2021-01-28	53
+1418	117.209.228.158	\N	2021-01-29	79
+1268	223.186.139.158	\N	2021-01-28	64
+1322	223.227.68.57	3	2021-01-28	53
+1273	223.186.139.158	\N	2021-01-28	64
+1278	223.186.139.158	\N	2021-01-28	63
+1327	49.36.161.198	3	2021-01-28	57
+1283	49.36.161.198	3	2021-01-28	57
+1423	66.249.66.74	\N	2021-01-30	61
+1332	106.193.76.237	\N	2021-01-28	79
+1337	49.36.161.198	3	2021-01-28	53
+1428	49.36.162.24	2	2021-01-30	100
+1342	157.48.138.213	\N	2021-01-28	63
+1347	157.48.138.213	\N	2021-01-28	66
+1433	49.36.162.24	2	2021-01-30	100
+1352	49.36.162.24	2	2021-01-29	65
+1357	66.249.66.74	\N	2021-01-29	77
+1438	49.36.162.24	2	2021-01-30	57
+1362	49.36.162.24	2	2021-01-29	100
+1367	49.36.162.24	2	2021-01-29	100
+1443	66.249.66.71	\N	2021-01-30	63
+1372	158.101.118.106	\N	2021-01-29	53
+1377	49.36.162.24	2	2021-01-29	56
+1448	49.36.162.24	2	2021-01-30	56
+1382	66.249.66.74	\N	2021-01-29	61
+1387	104.236.16.161	\N	2021-01-29	53
+1453	49.36.162.24	\N	2021-01-30	64
+1392	49.36.161.198	3	2021-01-29	53
+1397	14.139.233.71	\N	2021-01-29	64
+1458	49.36.162.24	2	2021-01-30	54
+1402	14.139.233.71	\N	2021-01-29	66
+1463	66.249.66.74	\N	2021-01-30	58
+1468	157.39.250.23	\N	2021-01-30	66
+1473	157.39.250.23	\N	2021-01-30	64
+1478	157.39.250.23	\N	2021-01-30	64
+1483	157.39.250.23	\N	2021-01-30	66
+1488	157.39.250.23	\N	2021-01-30	83
+1493	157.39.250.23	\N	2021-01-30	66
+1065	106.215.135.170	\N	2021-01-28	53
+1124	35.245.188.175	\N	2021-01-28	79
+1070	157.45.94.248	\N	2021-01-28	66
+1199	106.193.29.255	42	2021-01-28	54
+1075	157.45.94.248	\N	2021-01-28	64
+1129	46.248.164.216	\N	2021-01-28	63
+1080	157.45.94.248	\N	2021-01-28	64
+1288	49.36.161.198	3	2021-01-28	57
+1085	157.45.94.248	\N	2021-01-28	64
+1134	49.36.161.198	\N	2021-01-28	94
+1090	157.45.94.248	\N	2021-01-28	83
+1204	117.97.66.36	2	2021-01-28	93
+1095	14.139.54.114	2	2021-01-28	53
+1139	49.36.161.198	3	2021-01-28	53
+1100	14.139.54.114	2	2021-01-28	53
+1404	14.139.233.71	\N	2021-01-29	64
+1105	117.97.66.36	2	2021-01-28	92
+1144	223.237.245.111	\N	2021-01-28	53
+1110	14.139.54.114	2	2021-01-28	91
+1209	117.97.66.36	2	2021-01-28	93
+1115	117.97.66.36	2	2021-01-28	93
+1149	106.215.133.162	\N	2021-01-28	66
+1120	117.97.66.36	2	2021-01-28	93
+1293	49.36.161.198	3	2021-01-28	63
+1154	49.36.161.198	3	2021-01-28	57
+1214	117.97.66.36	2	2021-01-28	93
+1159	31.13.103.4	\N	2021-01-28	94
+1164	106.215.195.238	\N	2021-01-28	94
+1219	117.97.66.36	2	2021-01-28	93
+1169	157.41.127.24	31	2021-01-28	94
+1298	117.97.66.52	2	2021-01-28	100
+1174	42.106.17.208	\N	2021-01-28	79
+1224	117.97.66.36	2	2021-01-28	56
+1179	93.159.230.28	\N	2021-01-28	53
+1409	106.215.221.187	\N	2021-01-29	77
+1184	157.41.101.210	\N	2021-01-28	94
+1229	117.97.66.36	2	2021-01-28	65
+1189	47.30.157.237	\N	2021-01-28	94
+1303	103.92.46.244	\N	2021-01-28	87
+1194	112.133.228.69	\N	2021-01-28	64
+1234	49.36.162.24	2	2021-01-28	95
+1239	49.36.162.24	2	2021-01-28	63
+1308	66.249.66.74	\N	2021-01-28	79
+1244	49.36.162.24	2	2021-01-28	63
+1414	183.83.241.160	\N	2021-01-29	77
+1249	49.36.162.24	2	2021-01-28	54
+1313	49.36.166.106	\N	2021-01-28	66
+1254	49.36.162.24	2	2021-01-28	68
+1259	49.36.162.24	2	2021-01-28	68
+1318	49.36.166.106	44	2021-01-28	54
+1264	223.186.139.158	\N	2021-01-28	53
+1419	117.209.228.158	\N	2021-01-29	68
+1269	223.186.139.158	\N	2021-01-28	66
+1323	223.227.68.57	3	2021-01-28	57
+1274	223.186.139.158	\N	2021-01-28	53
+1279	223.186.139.158	\N	2021-01-28	66
+1328	157.38.58.247	\N	2021-01-28	66
+1284	46.248.173.38	\N	2021-01-28	53
+1424	49.36.162.24	2	2021-01-30	53
+1333	106.193.76.237	\N	2021-01-28	79
+1338	49.36.161.198	3	2021-01-28	56
+1429	49.36.162.24	2	2021-01-30	100
+1343	157.48.138.213	\N	2021-01-28	66
+1348	157.48.138.213	\N	2021-01-28	66
+1434	49.36.162.24	2	2021-01-30	100
+1353	49.36.162.24	2	2021-01-29	57
+1358	49.36.162.24	2	2021-01-29	53
+1439	66.249.66.74	\N	2021-01-30	53
+1363	49.36.162.24	2	2021-01-29	100
+1368	49.36.162.24	2	2021-01-29	100
+1444	66.249.66.71	\N	2021-01-30	63
+1373	66.249.66.73	\N	2021-01-29	53
+1378	66.249.66.74	\N	2021-01-29	68
+1449	49.36.162.24	2	2021-01-30	53
+1383	66.249.66.73	\N	2021-01-29	81
+1388	66.249.66.73	\N	2021-01-29	79
+1454	49.36.162.24	\N	2021-01-30	83
+1393	157.41.114.131	31	2021-01-29	77
+1398	49.36.161.198	3	2021-01-29	53
+1459	49.36.162.24	2	2021-01-30	64
+1464	157.39.250.23	\N	2021-01-30	77
+1469	157.39.250.23	\N	2021-01-30	64
+1474	157.39.250.23	\N	2021-01-30	64
+1479	157.39.250.23	\N	2021-01-30	77
+1484	157.39.250.23	\N	2021-01-30	66
+1489	157.39.250.23	\N	2021-01-30	66
+1066	157.45.94.248	\N	2021-01-28	79
+1125	124.123.166.64	\N	2021-01-28	79
+1071	157.45.94.248	\N	2021-01-28	64
+1200	49.36.161.198	3	2021-01-28	53
+1076	157.45.94.248	\N	2021-01-28	83
+1130	49.36.161.198	3	2021-01-28	53
+1081	157.45.94.248	\N	2021-01-28	64
+1289	49.36.161.198	3	2021-01-28	53
+1086	157.45.94.248	\N	2021-01-28	64
+1135	49.36.161.198	\N	2021-01-28	94
+1091	157.45.94.248	\N	2021-01-28	84
+1205	117.97.66.36	2	2021-01-28	56
+1096	14.139.54.114	2	2021-01-28	53
+1140	106.215.148.98	\N	2021-01-28	94
+1101	117.97.66.36	2	2021-01-28	53
+1405	14.139.233.71	45	2021-01-29	54
+1106	117.97.66.36	2	2021-01-28	92
+1145	106.215.133.162	\N	2021-01-28	94
+1111	14.139.54.114	2	2021-01-28	53
+1210	117.97.66.36	2	2021-01-28	53
+1116	117.97.66.36	2	2021-01-28	93
+1150	14.139.54.114	\N	2021-01-28	94
+1121	117.97.66.36	2	2021-01-28	93
+1294	117.97.66.52	2	2021-01-28	63
+1155	106.215.214.197	\N	2021-01-28	94
+1215	117.97.66.36	2	2021-01-28	93
+1160	31.13.103.116	\N	2021-01-28	94
+1165	103.49.154.17	\N	2021-01-28	87
+1220	117.97.66.36	2	2021-01-28	93
+1170	157.41.58.153	\N	2021-01-28	94
+1299	46.248.173.38	\N	2021-01-28	63
+1175	49.36.161.198	3	2021-01-28	53
+1225	117.97.66.36	2	2021-01-28	53
+1180	157.48.222.43	\N	2021-01-28	94
+1410	106.206.106.86	42	2021-01-29	77
+1185	157.41.101.210	\N	2021-01-28	87
+1230	46.248.173.38	\N	2021-01-28	63
+1190	106.193.29.255	\N	2021-01-28	94
+1304	103.92.46.244	\N	2021-01-28	65
+1195	49.36.161.198	3	2021-01-28	53
+1235	49.36.162.24	2	2021-01-28	96
+1240	49.36.162.24	2	2021-01-28	95
+1309	46.248.187.37	\N	2021-01-28	53
+1245	49.36.162.24	2	2021-01-28	54
+1415	117.209.228.158	\N	2021-01-29	79
+1250	49.36.162.24	2	2021-01-28	63
+1314	49.36.166.106	\N	2021-01-28	66
+1255	49.36.162.24	2	2021-01-28	68
+1260	49.36.162.24	2	2021-01-28	63
+1319	49.36.166.106	44	2021-01-28	54
+1265	223.186.139.158	\N	2021-01-28	70
+1420	117.209.228.158	\N	2021-01-29	77
+1270	223.186.139.158	\N	2021-01-28	66
+1324	106.195.96.50	\N	2021-01-28	53
+1275	223.186.139.158	\N	2021-01-28	100
+1280	66.249.66.73	\N	2021-01-28	63
+1329	106.193.76.237	\N	2021-01-28	79
+1285	46.248.173.38	\N	2021-01-28	63
+1425	49.36.162.24	2	2021-01-30	56
+1334	106.193.76.237	\N	2021-01-28	68
+1339	49.36.161.198	3	2021-01-28	56
+1430	49.36.162.24	2	2021-01-30	100
+1344	157.48.138.213	\N	2021-01-28	64
+1349	47.247.189.215	\N	2021-01-29	79
+1435	49.36.162.24	2	2021-01-30	69
+1354	49.36.162.24	2	2021-01-29	56
+1359	49.36.162.24	2	2021-01-29	53
+1440	49.36.162.24	2	2021-01-30	57
+1364	49.36.162.24	2	2021-01-29	100
+1369	49.36.162.24	2	2021-01-29	55
+1445	138.246.253.24	\N	2021-01-30	53
+1374	46.248.190.195	\N	2021-01-29	53
+1379	66.249.66.71	\N	2021-01-29	101
+1450	49.36.162.24	2	2021-01-30	54
+1384	182.48.201.8	\N	2021-01-29	79
+1389	66.249.66.74	\N	2021-01-29	66
+1455	49.36.162.24	\N	2021-01-30	83
+1394	49.36.161.198	3	2021-01-29	57
+1399	14.139.233.71	\N	2021-01-29	66
+1460	49.36.161.198	3	2021-01-30	53
+1465	157.39.250.23	\N	2021-01-30	64
+1470	157.39.250.23	\N	2021-01-30	64
+1475	157.39.250.23	\N	2021-01-30	66
+1480	157.39.250.23	\N	2021-01-30	64
+1485	157.39.250.23	\N	2021-01-30	77
+1490	157.39.250.23	\N	2021-01-30	66
+1067	157.45.94.248	\N	2021-01-28	61
+1126	124.123.166.64	\N	2021-01-28	53
+1072	157.45.94.248	\N	2021-01-28	64
+1201	117.97.66.36	2	2021-01-28	53
+1077	157.45.94.248	\N	2021-01-28	83
+1131	49.36.161.198	3	2021-01-28	53
+1082	157.45.94.248	\N	2021-01-28	64
+1290	49.36.161.198	3	2021-01-28	86
+1087	157.45.94.248	\N	2021-01-28	64
+1136	106.195.111.182	\N	2021-01-28	94
+1092	157.45.94.248	\N	2021-01-28	64
+1206	117.97.66.36	2	2021-01-28	56
+1097	117.97.66.36	2	2021-01-28	56
+1141	49.36.161.198	3	2021-01-28	53
+1102	117.97.66.36	2	2021-01-28	53
+1406	14.139.233.71	45	2021-01-29	53
+1107	14.139.54.114	2	2021-01-28	53
+1146	106.215.196.186	\N	2021-01-28	64
+1112	117.97.66.36	2	2021-01-28	53
+1211	117.97.66.36	2	2021-01-28	93
+1117	117.97.66.36	2	2021-01-28	93
+1151	49.36.162.155	\N	2021-01-28	94
+1122	117.97.66.36	2	2021-01-28	93
+1295	117.97.66.52	2	2021-01-28	57
+1156	106.215.128.228	\N	2021-01-28	94
+1216	117.97.66.36	2	2021-01-28	93
+1161	31.13.103.3	\N	2021-01-28	94
+1166	106.215.195.238	\N	2021-01-28	87
+1221	117.97.66.36	2	2021-01-28	93
+1171	49.36.162.209	\N	2021-01-28	94
+1300	66.249.66.73	\N	2021-01-28	53
+1176	49.36.161.198	3	2021-01-28	57
+1226	117.97.66.36	2	2021-01-28	63
+1181	157.48.222.43	\N	2021-01-28	94
+1411	106.206.106.86	42	2021-01-29	69
+1186	157.44.73.2	\N	2021-01-28	94
+1231	117.97.66.36	2	2021-01-28	56
+1191	106.193.29.255	\N	2021-01-28	64
+1305	103.92.46.244	\N	2021-01-28	66
+1196	106.193.29.255	\N	2021-01-28	66
+1236	49.36.162.24	2	2021-01-28	63
+1241	49.36.162.24	2	2021-01-28	96
+1310	158.101.118.106	\N	2021-01-28	53
+1246	49.36.162.24	2	2021-01-28	63
+1416	117.209.228.158	\N	2021-01-29	64
+1251	49.36.162.24	2	2021-01-28	99
+1315	49.36.166.106	\N	2021-01-28	64
+1256	49.36.162.24	2	2021-01-28	53
+1261	49.36.162.24	2	2021-01-28	82
+1320	49.36.166.106	44	2021-01-28	54
+1266	223.186.139.158	\N	2021-01-28	88
+1421	117.209.228.158	\N	2021-01-29	77
+1271	223.186.139.158	\N	2021-01-28	64
+1325	46.248.190.193	\N	2021-01-28	53
+1276	223.186.139.158	\N	2021-01-28	100
+1281	157.39.19.238	\N	2021-01-28	87
+1330	106.193.76.237	\N	2021-01-28	61
+1286	171.76.227.232	\N	2021-01-28	66
+1426	49.36.162.24	2	2021-01-30	56
+1335	46.248.173.37	\N	2021-01-28	63
+1340	49.36.161.198	3	2021-01-28	56
+1431	49.36.162.24	2	2021-01-30	100
+1345	157.48.138.213	\N	2021-01-28	66
+1350	46.248.187.38	\N	2021-01-29	53
+1436	49.36.162.24	2	2021-01-30	57
+1355	49.36.162.24	2	2021-01-29	53
+1360	49.36.162.24	2	2021-01-29	53
+1441	49.36.162.24	2	2021-01-30	57
+1365	49.36.162.24	2	2021-01-29	100
+1370	46.248.187.121	\N	2021-01-29	53
+1446	66.249.66.73	\N	2021-01-30	63
+1375	46.248.187.121	\N	2021-01-29	53
+1380	49.36.161.198	3	2021-01-29	53
+1451	49.36.162.24	2	2021-01-30	54
+1385	157.44.91.109	\N	2021-01-29	64
+1390	49.36.161.198	3	2021-01-29	53
+1456	49.36.162.24	\N	2021-01-30	84
+1395	157.38.26.218	\N	2021-01-29	77
+1400	106.215.131.23	\N	2021-01-29	77
+1461	49.36.161.198	3	2021-01-30	57
+1466	157.39.250.23	\N	2021-01-30	64
+1471	157.39.250.23	\N	2021-01-30	64
+1476	157.39.250.23	\N	2021-01-30	66
+1481	157.39.250.23	\N	2021-01-30	64
+1486	157.39.250.23	\N	2021-01-30	64
+1491	157.39.250.23	\N	2021-01-30	64
+1068	157.45.94.248	\N	2021-01-28	78
+1127	35.245.188.175	\N	2021-01-28	53
+1073	157.45.94.248	\N	2021-01-28	64
+1202	117.97.66.36	2	2021-01-28	57
+1078	157.45.94.248	\N	2021-01-28	84
+1132	49.36.161.198	3	2021-01-28	53
+1083	157.45.94.248	\N	2021-01-28	83
+1291	49.36.161.198	3	2021-01-28	53
+1088	157.45.94.248	\N	2021-01-28	64
+1137	49.36.171.197	\N	2021-01-28	94
+1093	157.45.94.248	\N	2021-01-28	64
+1207	117.97.66.36	2	2021-01-28	56
+1098	117.97.66.36	2	2021-01-28	53
+1142	106.206.61.193	\N	2021-01-28	53
+1103	14.139.54.114	2	2021-01-28	53
+1407	157.45.189.216	\N	2021-01-29	77
+1108	14.139.54.114	2	2021-01-28	53
+1147	117.230.173.86	32	2021-01-28	94
+1113	117.97.66.36	2	2021-01-28	93
+1062	14.139.54.114	2	2021-01-28	57
+1212	117.97.66.36	2	2021-01-28	93
+1063	14.139.54.114	2	2021-01-28	57
+1118	117.97.66.36	2	2021-01-28	93
+1152	49.36.161.198	3	2021-01-28	53
+1296	117.97.66.52	2	2021-01-28	56
+1157	157.49.238.139	\N	2021-01-28	53
+1217	117.97.66.36	2	2021-01-28	93
+1162	31.13.103.10	\N	2021-01-28	53
+1167	27.56.206.44	\N	2021-01-28	94
+1222	117.97.66.36	2	2021-01-28	93
+1172	157.41.49.19	\N	2021-01-28	94
+1301	66.249.66.74	\N	2021-01-28	53
+1177	157.41.150.215	\N	2021-01-28	94
+1227	117.97.66.36	2	2021-01-28	70
+1182	157.41.101.210	\N	2021-01-28	94
+1412	106.217.82.110	\N	2021-01-29	77
+1187	157.44.73.2	\N	2021-01-28	53
+1232	49.36.162.24	2	2021-01-28	63
+1192	106.193.29.255	\N	2021-01-28	64
+1306	103.92.46.244	\N	2021-01-28	65
+1197	49.36.161.198	3	2021-01-28	57
+1237	49.36.162.24	2	2021-01-28	97
+1242	49.36.162.24	2	2021-01-28	63
+1311	49.36.166.106	\N	2021-01-28	79
+1247	49.36.162.24	2	2021-01-28	63
+1417	117.209.228.158	\N	2021-01-29	64
+1252	49.36.162.24	2	2021-01-28	53
+1316	49.36.166.106	\N	2021-01-28	64
+1257	46.248.187.38	\N	2021-01-28	63
+1262	49.36.162.24	2	2021-01-28	53
+1321	106.195.96.50	\N	2021-01-28	53
+1267	223.186.139.158	\N	2021-01-28	66
+1422	117.209.228.158	\N	2021-01-29	77
+1272	223.186.139.158	\N	2021-01-28	64
+1326	49.36.161.198	3	2021-01-28	53
+1277	223.186.139.158	\N	2021-01-28	100
+1282	49.36.161.198	3	2021-01-28	53
+1331	106.193.76.237	\N	2021-01-28	79
+1427	49.36.162.24	2	2021-01-30	53
+1336	46.248.173.37	\N	2021-01-28	53
+1341	157.48.138.213	\N	2021-01-28	53
+1432	49.36.162.24	2	2021-01-30	100
+1346	157.48.138.213	\N	2021-01-28	64
+1351	49.36.162.24	2	2021-01-29	53
+1437	66.249.66.71	\N	2021-01-30	68
+1356	49.36.162.24	2	2021-01-29	53
+1361	49.36.162.24	2	2021-01-29	53
+1442	49.36.162.24	2	2021-01-30	56
+1366	49.36.162.24	2	2021-01-29	100
+1371	106.223.153.128	\N	2021-01-29	87
+1447	66.249.66.71	\N	2021-01-30	63
+1376	49.36.162.24	2	2021-01-29	53
+1381	49.36.161.198	3	2021-01-29	57
+1452	49.36.162.24	\N	2021-01-30	53
+1386	13.66.139.16	\N	2021-01-29	53
+1391	49.36.161.198	\N	2021-01-29	77
+1457	49.36.162.24	\N	2021-01-30	64
+1396	14.139.233.71	\N	2021-01-29	77
+1401	49.36.161.198	3	2021-01-29	57
+1462	27.34.249.196	\N	2021-01-30	79
+1467	157.39.250.23	\N	2021-01-30	66
+1472	157.39.250.23	\N	2021-01-30	77
+1477	157.39.250.23	\N	2021-01-30	64
+1482	157.39.250.23	\N	2021-01-30	64
+1487	157.39.250.23	\N	2021-01-30	83
+1492	157.39.250.23	\N	2021-01-30	64
 \.
 
 
@@ -3854,35 +3960,35 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 -- Name: accounts_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_degree_id_seq', 55, true);
+SELECT pg_catalog.setval('public.accounts_degree_id_seq', 68, true);
 
 
 --
 -- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 58, true);
+SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 71, true);
 
 
 --
 -- Name: accounts_profile_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 66, true);
+SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 82, true);
 
 
 --
 -- Name: accounts_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 198, true);
+SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 246, true);
 
 
 --
 -- Name: accounts_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_id_seq', 34, true);
+SELECT pg_catalog.setval('public.accounts_profile_id_seq', 42, true);
 
 
 --
@@ -3896,28 +4002,28 @@ SELECT pg_catalog.setval('public.accounts_profile_links_id_seq', 1, false);
 -- Name: accounts_profile_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 33, true);
+SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 41, true);
 
 
 --
 -- Name: accounts_profiledetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 213, true);
+SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 261, true);
 
 
 --
 -- Name: accounts_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_user_id_seq', 38, true);
+SELECT pg_catalog.setval('public.accounts_user_id_seq', 47, true);
 
 
 --
 -- Name: accounts_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_work_id_seq', 31, true);
+SELECT pg_catalog.setval('public.accounts_work_id_seq', 39, true);
 
 
 --
@@ -4001,7 +4107,7 @@ SELECT pg_catalog.setval('public.django_migrations_id_seq', 193, true);
 -- Name: home_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_comment_id_seq', 12, true);
+SELECT pg_catalog.setval('public.home_comment_id_seq', 13, true);
 
 
 --
@@ -4022,35 +4128,35 @@ SELECT pg_catalog.setval('public.home_imageadd_id_seq', 1, false);
 -- Name: home_post_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_comments_id_seq', 12, true);
+SELECT pg_catalog.setval('public.home_post_comments_id_seq', 13, true);
 
 
 --
 -- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_id_seq', 52, true);
+SELECT pg_catalog.setval('public.home_post_id_seq', 55, true);
 
 
 --
 -- Name: home_post_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_link_id_seq', 27, true);
+SELECT pg_catalog.setval('public.home_post_link_id_seq', 29, true);
 
 
 --
 -- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_tag_id_seq', 92, true);
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 98, true);
 
 
 --
 -- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_postlink_id_seq', 50, true);
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 53, true);
 
 
 --
@@ -4106,21 +4212,21 @@ SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 9, true);
 -- Name: notifications_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.notifications_notification_id_seq', 4, true);
+SELECT pg_catalog.setval('public.notifications_notification_id_seq', 5, true);
 
 
 --
 -- Name: stats_pageobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 89, true);
+SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 101, true);
 
 
 --
 -- Name: stats_requestobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 1043, true);
+SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 1493, true);
 
 
 --

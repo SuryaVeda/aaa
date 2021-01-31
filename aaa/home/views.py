@@ -17,7 +17,7 @@ from  django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.views import View
 from mcq.models import QuestionBank
-from notifications.models import Notification
+from notifications.models import Notification, Message
 from archives.models import LecturePost
 # Create your views here.
 class Manage(TemplateView):
@@ -376,7 +376,11 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
 
                 a = form.save(commit=True)
                 a.user = self.request.user
-                a.save()
+                post = a.save()
+                if post.user.is_staff:
+                    mess = Message.objects.create(post_url = post.get_absolute_url(), type = 'post', text = 'A new comment is added to {0}.. by user {1}'.format(post.heading[:10], post.user.username))
+                    mess.create_notifications()
+    
                 if link_dict:
                     if link_dict['links']:
                         for i in link_dict['links']:
@@ -431,13 +435,20 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                         x.link.add(linkobj)
             x.save()
             post.comments.add(x)
-            try:
-                notify = Notification.objects.get(user=post.user, post = post)
-                notify.message = 'A new comment is added to {0}.. by new user'.format(post.heading[:10])
-                notify.date = datetime.datetime.now()
-                notify.save()
-            except Exception as e:
-                notify = Notification.objects.create(date=datetime.datetime.now(),user = post.user, post = post, message = 'A new comment is added to {0}.. by new user'.format(post.heading[:10]))
+            if post.user.is_staff:
+                try:
+                    nots = Notification.objects.get(user = post.user)
+                except Exception as e:
+                    nots = Notification.objects.create(user=post.user, count = 0)
+                try:
+                    mess = Message.objects.get(post_url = post.get_absolute_url(), type = 'post')
+                except Exception as e:
+                    mess = Message.objects.create( text = 'A new comment is added to {0}.. by new user'.format(post.heading[:10]))
+                nots.message.add(mess)
+                nots.count += 1
+                nots.save()
+
+
             post.save()
 
         except:
