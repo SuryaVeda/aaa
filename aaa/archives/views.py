@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from .models import *
-from home.decorators import staff_required
+from home.decorators import staff_required, log_required
 from accounts.models import User, Profile, ProfileDetail
 from home.models import  Tag, PostLink
 from .forms import *
@@ -24,7 +24,7 @@ from django.conf import settings
 class LecturePage(TemplateView):
     template_name = 'archives/hello.html'
 
-    @method_decorator(login_required)
+    @method_decorator(log_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -49,7 +49,7 @@ class LecturePage(TemplateView):
 
 class ConferencePage(TemplateView):
     template_name = 'home/conference.html'
-    @method_decorator(login_required)
+    @method_decorator(log_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
     def get_context_data(self, **kwargs):
