@@ -160,6 +160,8 @@ USE_I18N = True
 
 USE_L10N = True
 
+LOGIN_URL = 'accounts/signup/staff_signup'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('emailhost')
 EMAIL_USE_TLS = True
