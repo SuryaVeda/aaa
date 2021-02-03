@@ -95,7 +95,7 @@
  {% if post.pdf %}
  <b>Attached Pdfs</b>
  <div class="home-post-pdf">
-     <a href="{{post.pdf}}"><p>{{post.pdf_name}}: {{post.pdf}}</p></a>
+     <a href="/media/{{post.pdf}}"><p>{{post.pdf_name}}: /media/{{post.pdf}}</p></a>
  </div>
  {% endif  %}
  <div class="blue-block flex-column" onclick="showcommentsdh('comments{{ post.pk  }}')"  style="min-height: 40px">
