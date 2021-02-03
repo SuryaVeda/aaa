@@ -66,7 +66,7 @@ class HomeView(TemplateView):
         context['conferences'] = [i for i in LecturePost.objects.filter(lecture=False).order_by('lecture_start_date') if utc.localize(i.lecture_start_date) > today]
         context['posts'] = postslist[0:15]
         tag = Tag.objects.get(name='Conferences')
-        context['oldposts'] = Post.objects.filter(tag=tag, conference=False).order_by('-pk')
+        #context['oldposts'] = Post.objects.filter(tag=tag, conference=False).order_by('-pk')
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context['tag_speciality'] = list(tag_speciality)
         return context
