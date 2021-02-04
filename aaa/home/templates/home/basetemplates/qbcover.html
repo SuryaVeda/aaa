@@ -186,7 +186,7 @@ function deletequestion(e,pk) {
 
         dhttp.open('POST', '/mcq/deletequestions' + '/' + pk );
         dhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        dhttp.send("csrfmiddlewaretoken=" +document.getElementsByName('csrfmiddlewaretoken')[0].value +  "&deletepostbtn=Deletepost");
+        dhttp.send("csrfmiddlewaretoken=" +document.getElementsByName('csrfmiddlewaretoken')[0].value + "&redirect_url=" +document.getElementsByName('redirect_url')[0].value +   "&deletepostbtn=Deletepost");
 
         console.log(true);
     }

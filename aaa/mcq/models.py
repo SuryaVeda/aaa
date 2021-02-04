@@ -96,18 +96,19 @@ class QuestionBank(models.Model):
     @property
     def get_question_image(self):
         try:
-            x = self.qimage_set.filter(qimage = True)
-            return x
+            x = self.qimage_set.get(qimage = True)
+            return x.image.url
         except:
             return False
 
     @property
     def get_answer_image(self):
         try:
-            x = self.qimage_set.filter(aimage=True)
-            return x
+            x = self.qimage_set.get(aimage=True)
+            return x.image.url
         except:
             return False
+
 
     @property
     def get_links(self):

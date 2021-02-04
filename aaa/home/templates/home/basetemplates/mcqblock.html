@@ -1,6 +1,6 @@
 {% load static %}
 <div class="mcqblock" >
-  <div class="flex-column">
+  <div style="align-self: flex-start;flex-grow: 1;width: 100%;" class="flex-column">
       <div class="regulartags tags">
         {% for tag in post.get_tags %}
         {% if tag.is_degree %}
@@ -10,24 +10,36 @@
 
         {% endif %}
         {% endfor %}
-
         <b style="margin-left: auto; background-color: #000066; color: white;"> {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
  <form onsubmit="deletequestion(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
  {% csrf_token %}
+
+ <input type="hidden" name="redirect_url" value="{{ request.build_absolute_uri }}">
+
      <input  type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete" style="text-decoration: underline; color: #000066" >
  </form>
  {%endif %}</b>
+
+
       </div>
       <div class="socialmediatags tags">
 
-        <a href="whatsapp://send?text={{ post.get_absolute_url }}"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
+        <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
 <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
       </div>
 
   </div>
 
     <p>{{post.question|linebreaks}}</p>
-    <b style="display: none;color: red;" id = "mcq{{post.pk}}">{{post.answer|linebreaks }}</b>
+    {% if post.get_question_image %}
+    <img style="align-self: center" src="{{post.get_question_image}}" height="200px" width="200px">
+    {% endif %}
+    <div style="margin:40px;display: none; align-self: center" id = "mcq{{post.pk}}">
+        <b style="color: red;" >{{post.answer|linebreaks }}</b>
+        {% if post.get_answer_image %}
+    <img style="align-self: center" src="{{post.get_answer_image}}" height="200px" width="200px">
+    {% endif %}
+    </div>
 
 
     <p onclick="revealmcq(document.getElementById('mcq{{post.pk}}'))" style="align-self: center;color: rebeccapurple; font-weight: 600;">See Answer</p>

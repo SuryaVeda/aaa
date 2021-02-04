@@ -1,6 +1,6 @@
 from django.db import models
 from urllib.parse import urlparse, parse_qs
-import datetime
+import datetime, pytz, humanize
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -233,9 +233,13 @@ class Post(models.Model):
 
     @property
     def posted_on(self):
+        timezone = pytz.timezone('Asia/Kolkata')
+        today = datetime.datetime.now(timezone)
+        difference = today - pytz.utc.localize(self.date)
+        difference = humanize.naturaldelta(difference)
         try:
             #x = '{0}  |  {1} '.format(self.user.username, self.date.strftime('%d %b %Y %I %M %p'))
-            x = '{0}  |  {1} '.format(self.get_user(), self.date.strftime('%d %b %Y %I %M %p'))
+            x = '{0}  |  {1} ago'.format(self.get_user(), difference)
 
             return x
         except:

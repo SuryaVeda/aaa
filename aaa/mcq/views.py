@@ -9,6 +9,7 @@ from django.http import HttpResponse
 # Create your views here.
 from django.contrib import messages
 from home.models import Tag
+from home.decorators import staff_required
 
 class McqView(TemplateView):
     template_name = 'mcq/basepage.html'
@@ -68,31 +69,31 @@ class QuestionDetail(TemplateView):
         return context
 def refresh_questions_view():
     McqView.questionbank = {i.pk:i.get_questions for i in Tag.objects.all().prefetch_related()}
-    return redirect('/home/{0}'.format('NEET SS'))
+    return redirect('/home/{0}'.format('NEET-SS'))
 
-
+@staff_required
 def delete_question_view(request,pk):
-    x = refresh_questions_view()
-    if pk and request.user.is_authenticated:
+
+    if request.method == 'POST':
         try:
+            print(request.POST)
+            redirect_url = request.POST.get('redirect_url')
+            print(redirect_url)
+            print('\n \n \n fuck \n \n\n')
             x = QuestionBank.objects.get(pk = pk)
             if x.user == request.user or request.user.is_admin:
                 x.delete()
-                x = refresh_questions_view()
-                print(x.status_code)
-                return JsonResponse({'success': x.url}, safe=False)
+                return JsonResponse({'success': redirect_url}, safe=False)
             else:
                 messages.error(request, 'not a valid user', extra_tags=request.user.email)
-
-                print(x.status_code)
-                return JsonResponse({"success": x.url}, safe=False)
+                return JsonResponse({"success": redirect_url.url}, safe=False)
         except:
             messages.error(request, 'post is not present in database', extra_tags=request.user.email)
-            return JsonResponse({"success": x.url}, safe=False)
+            return JsonResponse({"success": redirect_url.url}, safe=False)
     else:
-        messages.error(request, 'select valid post', extra_tags=request.user.email)
+        messages.error(request, 'invalid request', extra_tags=request.user.email)
 
-        return JsonResponse({"success": x.url}, safe=False)
+        return redirect('home:home')
 
 
 class GetQuestions(View):
