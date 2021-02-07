@@ -494,12 +494,18 @@ class PostDetail(TemplateView):
         return context
 
 @method_decorator(staff_required, name = 'dispatch')
-class YourPost(TemplateView, GeneralContextMixin):
+class YourPost(TemplateView):
     template_name = 'home/myposts.html'
     def get(self, request, *args, **kwargs):
+        username = kwargs['username']
+        x = User.objects.filter(username = username)
+        if x:
+            return super().get(request, *args, **kwargs)
+        else:
+            messages.error(request, 'invalid user', extra_tags = self.request.user.email)
+            return redirect('home:home')
         try:
-            z = self.get_context()
-            print(z)
+
             username = kwargs['username']
             x = User.objects.filter(username = username)
             if x:
@@ -512,10 +518,12 @@ class YourPost(TemplateView, GeneralContextMixin):
             return redirect('home:home')
 
     def get_context_data(self, **kwargs):
-        context = self.get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         utc = pytz.UTC
         tz = pytz.timezone('Asia/Kolkata')
         today = datetime.datetime.now(tz)
+        tag_speciality = Tag.objects.filter(is_speciality=True)
+        context['tag_speciality'] = tag_speciality
         context['lectures'] = [i for i in LecturePost.objects.filter(lecture=True, user = self.request.user).order_by('-pk') if utc.localize(i.lecture_start_date) > today]
         context['conferences'] = [i for i in LecturePost.objects.filter(lecture=False, user = self.request.user).order_by('lecture_start_date') if utc.localize(i.lecture_start_date) > today]
 
