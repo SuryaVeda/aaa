@@ -45,7 +45,7 @@
       {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
      <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
      {% csrf_token %}
-      <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Lecture" style="text-decoration: underline;color: white; background-color: #800000; >
+      <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Lecture" style="text-decoration: underline;color: white; background-color: #800000;" >
      </form>
      {%endif %}
 
@@ -57,12 +57,12 @@
  <div class="home-post-img">
      <img  src="/media/{{post.img}}" width="250px" height="250px">
  </div>
-
  {% endif  %}
+
  {% if request.user.is_admin and request.user == post.user %}
  <p><a href="{% url 'archives:adddetail' post.pk %}"><img src="{% static 'home/images/details.png' %}" height="30px" width="30px" alt=""></a></p>
-
  {% endif %}
+
  {% if post.get_post_details %}
  {% for i in post.get_post_details %}
  <div class="showsubjectintro">
@@ -98,6 +98,7 @@
      <a href="/media/{{post.pdf}}"><p>{{post.pdf_name}}: /media/{{post.pdf}}</p></a>
  </div>
  {% endif  %}
+ 
  <div class="blue-block flex-column" onclick="showcommentsdh('comments{{ post.pk  }}')"  style="min-height: 40px">
    {% if request.user.is_authenticated and request.user.is_staff %}
    <a >{{ post.get_comments_length }}</a>

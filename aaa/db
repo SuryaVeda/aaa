@@ -1369,15 +1369,51 @@ ALTER SEQUENCE public.mcq_questionbank_tag_id_seq OWNED BY public.mcq_questionba
 
 
 --
+-- Name: notifications_message; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.notifications_message (
+    id integer NOT NULL,
+    date timestamp with time zone,
+    text character varying(200),
+    post_url character varying(200),
+    type character varying(100),
+    read boolean
+);
+
+
+ALTER TABLE public.notifications_message OWNER TO sk;
+
+--
+-- Name: notifications_message_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.notifications_message_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notifications_message_id_seq OWNER TO sk;
+
+--
+-- Name: notifications_message_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.notifications_message_id_seq OWNED BY public.notifications_message.id;
+
+
+--
 -- Name: notifications_notification; Type: TABLE; Schema: public; Owner: sk
 --
 
 CREATE TABLE public.notifications_notification (
     id integer NOT NULL,
-    message character varying(100),
-    post_id integer,
     user_id integer,
-    date timestamp with time zone
+    count integer
 );
 
 
@@ -1403,6 +1439,41 @@ ALTER TABLE public.notifications_notification_id_seq OWNER TO sk;
 --
 
 ALTER SEQUENCE public.notifications_notification_id_seq OWNED BY public.notifications_notification.id;
+
+
+--
+-- Name: notifications_notification_message; Type: TABLE; Schema: public; Owner: sk
+--
+
+CREATE TABLE public.notifications_notification_message (
+    id integer NOT NULL,
+    notification_id integer NOT NULL,
+    message_id integer NOT NULL
+);
+
+
+ALTER TABLE public.notifications_notification_message OWNER TO sk;
+
+--
+-- Name: notifications_notification_message_id_seq; Type: SEQUENCE; Schema: public; Owner: sk
+--
+
+CREATE SEQUENCE public.notifications_notification_message_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notifications_notification_message_id_seq OWNER TO sk;
+
+--
+-- Name: notifications_notification_message_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sk
+--
+
+ALTER SEQUENCE public.notifications_notification_message_id_seq OWNED BY public.notifications_notification_message.id;
 
 
 --
@@ -1730,10 +1801,24 @@ ALTER TABLE ONLY public.mcq_questionbank_tag ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: notifications_message id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_message ALTER COLUMN id SET DEFAULT nextval('public.notifications_message_id_seq'::regclass);
+
+
+--
 -- Name: notifications_notification id; Type: DEFAULT; Schema: public; Owner: sk
 --
 
 ALTER TABLE ONLY public.notifications_notification ALTER COLUMN id SET DEFAULT nextval('public.notifications_notification_id_seq'::regclass);
+
+
+--
+-- Name: notifications_notification_message id; Type: DEFAULT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification_message ALTER COLUMN id SET DEFAULT nextval('public.notifications_notification_message_id_seq'::regclass);
 
 
 --
@@ -1823,6 +1908,10 @@ COPY public.accounts_degree (id, name_id, finalyear, college_id) FROM stdin;
 66	1	\N	69
 67	1	\N	70
 68	1	\N	2
+69	7	\N	72
+70	1	\N	73
+71	7	\N	75
+72	1	\N	76
 \.
 
 
@@ -1902,6 +1991,11 @@ COPY public.accounts_medicalcollege (id, name) FROM stdin;
 69	Aiims bhopal
 70	MD anaesthesia 
 71	Pgi
+72	university of medical sciences
+73	institute of Medical sciences
+74	Volta Regional Hospital
+75	JIPMER
+76	AIIMS,Rishikesh
 \.
 
 
@@ -1946,6 +2040,8 @@ COPY public.accounts_profile (id, user_id, dob, name, nationality, phone, backgr
 29	33	\N	Dr neha	\N	\N		
 41	46	\N	Pranitha 	\N	\N		
 42	47	\N	Pranitha 	\N	\N		
+43	48	\N	MAITE	\N	\N		
+44	49	\N	priyatk	\N	\N		
 \.
 
 
@@ -2026,6 +2122,10 @@ COPY public.accounts_profile_degree (id, profile_id, degree_id) FROM stdin;
 80	41	67
 81	42	3
 82	42	68
+83	43	69
+84	43	70
+85	44	71
+86	44	72
 \.
 
 
@@ -2250,6 +2350,18 @@ COPY public.accounts_profile_details (id, profile_id, profiledetail_id) FROM std
 244	42	259
 245	42	260
 246	42	261
+247	43	262
+248	43	263
+249	43	264
+250	43	265
+251	43	266
+252	43	267
+253	44	268
+254	44	269
+255	44	270
+256	44	271
+257	44	272
+258	44	273
 \.
 
 
@@ -2302,6 +2414,8 @@ COPY public.accounts_profile_work (id, profile_id, work_id) FROM stdin;
 39	40	37
 40	41	38
 41	42	39
+42	43	40
+43	44	41
 \.
 
 
@@ -2564,6 +2678,18 @@ COPY public.accounts_profiledetail (id, heading, details, pdf) FROM stdin;
 259	recommendation		
 260	accomplishments		
 261	interests		
+262	personal statement		
+263	experience		
+264	education		
+265	recommendation		
+266	accomplishments		
+267	interests		
+268	personal statement		
+269	experience		
+270	education		
+271	recommendation		
+272	accomplishments		
+273	interests		
 \.
 
 
@@ -2581,19 +2707,20 @@ COPY public.accounts_user (id, password, last_login, email, username, is_active,
 36	pbkdf2_sha256$216000$Sj1RoymG4KGx$m1IYpkT9ah9k8SvrrEduLYdP89CVGVw+nmMB/aVSdh0=	\N	anup.gohatre@gmail.com	Anupg	t	t	f	\N
 13	pbkdf2_sha256$216000$cwb7xX4Sw33k$rEUaZvabeTHjYjd6dcgb+Bl3v1kZY/ni4HO3kmHWsyg=	2020-12-07 08:22:07.950752+00	poojithagunnam@gmail.com	Poojitha Reddy	t	t	t	\N
 23	pbkdf2_sha256$216000$ntvPoEpk8Jne$V9m+7WerQDypRXSadVo9bufWnu0dptIK+jvdYFoFllM=	2021-01-02 14:27:13.41801+00	beeralingnw@gmail.com	beeralingwalikar	t	t	t	\N
-14	pbkdf2_sha256$216000$T7dPeTz7oKit$s4UwZx3Mhn5/pn9amqGCrfJ2kBctzLOQM0DBP3XDQRk=	2021-01-06 08:40:30.9549+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
 15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2020-12-08 07:35:00.322906+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t	\N
 31	pbkdf2_sha256$216000$TKBBAqGrsupN$dmpimthMYOmYExQg95caZgdmSKbCTtoSgmn9lmfwCnc=	2021-01-26 18:50:25.354432+00	ramya_chicks@yahoo.com	drramya	t	t	t	\N
 28	pbkdf2_sha256$216000$H8yzk2nhcxaj$Qwr4aNv3EBKUTbscNQEMzp2m44416F8/oDklZQhk67M=	2021-01-16 10:35:48.559405+00	cooljharana@gmail.com	Jharana 	t	t	t	\N
 32	pbkdf2_sha256$216000$9eKWyLlDWZ7L$xLsmVmidXWIYF34HThdRV+oAjTvDc72SHoKiweFOr+4=	2021-01-26 19:04:03.226046+00	sinchana993@gmail.com	Sinchana	t	t	t	\N
 16	pbkdf2_sha256$216000$0cgFkSw1M7h9$2rVbaqrjCLZmPfwQeaJ/p6sJN3HGciMMOnRYVa3dmfA=	\N	sherkhan_5195@yahoo.com	sherkhan_5195@yahoo.	t	t	t	\N
+48	pbkdf2_sha256$216000$eRvwfH2Omq3i$ge9M/cJIlgoJRQ5XZPG+/RG+PjmAjazK5E0fl5r3MKs=	2021-01-30 18:00:12.606849+00	maiteciego@yahoo.com	MAITE	t	t	f	\N
 17	pbkdf2_sha256$216000$u12nNcUnJ1w4$dM3zR8lja8MaR1ElQghLh91ma7aox6AlFTljIecXOmw=	2020-12-23 16:15:37.721521+00	nitishtha220@gmail.com	Nitish	t	t	t	\N
-46	pbkdf2_sha256$216000$BYFVvbEbPd2X$2kWSmGAoNiyj479BfVZDtejtYpzFsXWYM5eN4WQVl2Q=	\N	pranithabasa@gmail.com	Pranitha 	t	f	f	\N
+49	pbkdf2_sha256$216000$CKit2bv068jX$LlCEhbQ5Ba2a7K3B2vT+60W35CSHJ+EmXKWDenloOQI=	2021-02-04 07:15:30.191461+00	priyatk26@gmail.com	priyatk	t	f	f	\N
 18	pbkdf2_sha256$216000$Y269kX6KTayq$miEE07VMy9Q9MD0UemoB9KirVkdToMhSUxhxGIw+Tfs=	2020-12-23 16:54:59.679832+00	gpoojithareddy87@gmail.com	PR	t	t	t	\N
 44	pbkdf2_sha256$216000$TkdygkrKfpf3$ykVz54FiNn1Cj3xpU0IQO6z4OAW+8kIHbIMVigMJYg0=	2021-01-28 16:07:42.684592+00	surja.rgkmch@gmail.com	DrSurja	t	t	f	\N
 43	pbkdf2_sha256$216000$WibdMWllpzl3$q1CqHx4qNP8IQmdxxIPlid0LzKvpkocxYXBkzhz/uuo=	\N	jeganbalaji30@gmail.com	Balaji jegan	t	t	f	\N
 27	pbkdf2_sha256$216000$edJBAyu6ggzp$6JGBBF79m5W/GZnA2GAeMJJnrhhFVawSgXJdGQInGI0=	2021-01-15 12:38:48.529431+00	evnskoushik@gmail.com	Saikoushik	t	t	f	\N
-47	pbkdf2_sha256$216000$5NMw2f5Lbiq6$gpTwUZmtq36utB5j6n8jyGEU0fB2ylI+rBp7DkYXPwo=	\N	chinnupranitha98@gmail.com	Pranitha 	t	f	f	\N
+2	pbkdf2_sha256$216000$0kXdkMNbB2uK$HPDwHZ6k+4XWD/8HQ8aT/NuTPFmHnYtfcguORYgoWwU=	2021-02-02 12:47:41.478429+00	suryaveda@hotmail.com	sk	t	t	t	\N
+47	pbkdf2_sha256$216000$5NMw2f5Lbiq6$gpTwUZmtq36utB5j6n8jyGEU0fB2ylI+rBp7DkYXPwo=	\N	chinnupranitha98@gmail.com	Pranitha 	t	t	f	\N
 12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2021-01-27 04:56:23.238906+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
 3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-01-27 04:57:43.139913+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
 24	pbkdf2_sha256$216000$q5q3fliRCqbW$dfoBZFn3FWMOBmwA/0oFjkwpaPyaY1ug84eQJebwEN0=	2021-01-26 17:36:36.162744+00	prabakaranlee@gmail.com	PRABA3006	t	t	t	\N
@@ -2604,7 +2731,8 @@ COPY public.accounts_user (id, password, last_login, email, username, is_active,
 45	pbkdf2_sha256$216000$4XEW1ehUliy7$kwWKTltgeqFENDV8zyNqw220Jrcb12zBSw7dgjzcDEo=	2021-01-29 17:15:03.803616+00	rameesahamadanchukandan@gmail.com	Rameesahamadanchukan	t	t	f	\N
 42	pbkdf2_sha256$216000$nKtHrlfa292J$Zjs8tfRXw8zOlcXGwjWbY3Gr5wGjjy21frXnQcdIqso=	2021-01-28 05:55:43.873892+00	nirikshadcn@gmail.com	Niriksha	t	t	f	\N
 41	pbkdf2_sha256$216000$RKCWDUU5h5rK$qyRu8WqtrlFe+xtN8HOlmy2GXvAivTWgBvuMj1zxXpY=	\N	Farazahmed992@gmail.com	FA	t	t	f	\N
-2	pbkdf2_sha256$216000$0kXdkMNbB2uK$HPDwHZ6k+4XWD/8HQ8aT/NuTPFmHnYtfcguORYgoWwU=	2021-01-30 02:14:49.426491+00	suryaveda@hotmail.com	sk	t	t	t	\N
+46	pbkdf2_sha256$216000$BYFVvbEbPd2X$2kWSmGAoNiyj479BfVZDtejtYpzFsXWYM5eN4WQVl2Q=	\N	pranithabasa@gmail.com	Pranitha 	t	t	f	\N
+14	pbkdf2_sha256$216000$ocfIIkrRaw50$joqZymDOnht8lO2xqlNiuyWpWfw0J1xdtoknm0Ax5W8=	2021-02-04 04:34:03.436886+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
 \.
 
 
@@ -2652,6 +2780,8 @@ COPY public.accounts_work (id, "position", is_current, hospital_id) FROM stdin;
 37	Junior resident	t	69
 38	Post graduation 	t	71
 39	Post graduate	t	71
+40	LECTURER	t	74
+41	JR	t	76
 \.
 
 
@@ -2845,6 +2975,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 102	Can change page obj	26	change_pageobj
 103	Can delete page obj	26	delete_pageobj
 104	Can view page obj	26	view_pageobj
+105	Can add message	27	add_message
+106	Can change message	27	change_message
+107	Can delete message	27	delete_message
+108	Can view message	27	view_message
 \.
 
 
@@ -2904,6 +3038,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 24	archives	lecturepost
 25	stats	requestobj
 26	stats	pageobj
+27	notifications	message
 \.
 
 
@@ -3105,6 +3240,20 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 191	home	0072_auto_20210128_0148	2021-01-27 20:58:12.980425+00
 192	home	0073_merge_20210128_0228	2021-01-27 20:58:12.98428+00
 193	stats	0006_auto_20210128_0148	2021-01-27 20:58:13.049403+00
+194	archives	0037_auto_20210130_1051	2021-01-31 03:27:39.004138+00
+195	archives	0038_auto_20210130_1129	2021-01-31 03:27:39.077356+00
+196	archives	0039_auto_20210130_1641	2021-01-31 03:27:39.152349+00
+197	archives	0040_merge_20210131_0857	2021-01-31 03:27:39.155919+00
+198	home	0073_auto_20210130_1051	2021-01-31 03:27:39.252408+00
+199	home	0074_auto_20210130_1129	2021-01-31 03:27:39.353574+00
+200	home	0075_auto_20210130_1641	2021-01-31 03:27:39.459109+00
+201	home	0076_merge_20210131_0857	2021-01-31 03:27:39.462659+00
+202	notifications	0003_auto_20210130_1051	2021-01-31 03:27:40.118779+00
+203	notifications	0004_message_read	2021-01-31 03:27:40.150884+00
+204	stats	0007_auto_20210130_1051	2021-01-31 03:27:40.221753+00
+205	archives	0041_auto_20210204_1419	2021-02-04 08:49:11.87539+00
+206	home	0077_auto_20210204_1419	2021-02-04 08:49:11.977691+00
+207	stats	0008_auto_20210204_1419	2021-02-04 08:49:12.045573+00
 \.
 
 
@@ -3150,6 +3299,12 @@ g0toldoe19p75m3qv03zc21n6em2cnl3	.eJxVjMEOwiAQRP-FsyFCWQoevfsNhGUXqRpISnsy_rtt0o
 s0eh3kcgn1l13b51ntphxtwez63i6mei	.eJxVjEEOwiAQRe_C2pBhoJS6dO8ZyACDVA0kpV0Z765NutDtf-_9l_C0rcVvnRc_J3EWxojT7xgoPrjuJN2p3pqMra7LHOSuyIN2eW2Jn5fD_Tso1Mu3dskykGawgCaqlGOIE6uskbRzkCJjxmwAtAFSITuEyZAdEC2M4-DE-wMTljeN:1l59pe:OeoPgDUalnHLnMY4JkWEQduMW97rUCvnH_-LStSfKis	2021-02-11 16:07:42.687411+00
 zrg4s3oyvvcs5gykwgbzctq8mp79i7rm	.eJxVjEEOwiAQAP_C2RBAFopH776hWdhFqgaS0p6MfzckPeh1ZjJvMeO-lXnvvM4LiYuwIE6_MGJ6ch2GHljvTaZWt3WJciTysF3eGvHrerR_g4K9jK8znkw2yKAIrKbAecKoo7WonPWgE06eyQfIQcdz1gQKAzsO7L1G8fkCDFE4Qw:1l5XMN:iCBb3mgU5gwDDwL06ma5FI8V59HgH5w7u2l_5PTxIOc	2021-02-12 17:15:03.806227+00
 prt2pexok71wzfm1lv9pm1eq5q0nvquv	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l5fmj:7ltLeZCcbm32U1y9LMaTIujuVjYk_V_ySq6Ht0vy5fA	2021-02-13 02:14:49.428979+00
+j08skvb8wqo6doopdpjg99h9d9qa1ltq	.eJxVjEEOwiAQRe_C2hBAYEaX7j1DwzBTqRpISrsy3l2bdKHb_977LzWkdSnD2mUeJlZn5VEdfkdK-SF1I3xP9dZ0bnWZJ9Kbonfa9bWxPC-7-3dQUi_fmqwQEVNgY4KPEILYI_DJcORss8tivAcOLgMaG93IMjpARIjRI4l6fwAbgjgS:1l5uXc:gG502inhLe1uXKjm_4cA0nA9F1mxIRB9vtS9UP1gL6E	2021-02-13 18:00:12.613002+00
+my0801kybwb59m3g8wsp31lz7z3588v7	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l67JJ:PWjhrGyFdzjYFx3D0XcqHxIhemEKzVVtNfV97YICy7w	2021-02-14 07:38:17.275863+00
+r2fpb0b3jlzpqv7ed3ut5r7e2x0c57xa	.eJxVjEEOwiAQRe_C2pChZQq4dO8ZyAwDUjVtUtqV8e7apAvd_vfef6lI21rj1vISR1FnZaw6_Y5M6ZGnncidptus0zyty8h6V_RBm77Okp-Xw_07qNTqty5UgFwA7iA4k4kLQIeMlrvinXcDJBt6xCIhCREaTgOKIHnpwaNV7w8P6zgv:1l6oqB:QB4Mu5PYpMYZUAQ_x9DIP8r7Vafg7GvZU7aWg9Dv7VI	2021-02-16 06:07:07.866628+00
+3s3gd0ybum7f27agtnen855fpzm7dpfz	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l6v5p:k964_bN2hYgrXr7ircOYB3OSeLZOUfic-azVZXKXbtg	2021-02-16 12:47:41.481236+00
+932zitwull34hpq2sej5d4zm55p5vn6x	.eJxVjEEOwiAQRe_C2pACQxlduvcMBJhBqgaS0q6Md7dNutDtf-_9t_BhXYpfO89-InERCsTpd4whPbnuhB6h3ptMrS7zFOWuyIN2eWvEr-vh_h2U0MtWj8pEw2edMxpGHC2igyEEjbARpBit1UQpkrKZjaPsAMhgGsAygRGfL_6POBQ:1l7WLD:l1CND3u7kAIGbwBFya7bbvTOHMDXmqV623TE9LO_MvE	2021-02-18 04:34:03.441336+00
+7yolpj6pslet22k4976l5b4zb5a8etua	.eJxVjDsOwjAQBe_iGln-LE5MSZ8zRLv2Lg4gW8qnQtwdIqWA9s3Me6kRt7WM28LzOGV1URDV6XckTA-uO8l3rLemU6vrPJHeFX3QRQ8t8_N6uH8HBZfyrXtjUhSKwaElAbHCERLSmSGC5R699ew9hZCSA2M68k64884wiJig3h8ZTDgv:1l7YrS:o7GRmXFMIwJuiTQGVvTsrHa-qUbC2ZgrHUYGI90we78	2021-02-18 07:15:30.200708+00
 \.
 
 
@@ -3169,6 +3324,7 @@ COPY public.home_comment (id, date, text, user_id, pdf, pdf_name, img) FROM stdi
 11	2021-01-10 15:54:35.006201+00	Hello!  allaboutanaesthesia.co \n \nDid you know that it is possible to send business proposal entirely lawfully? \nWe presentation a new method of sending business proposal through contact forms. Such forms are located on many sites. \nWhen such business offers are sent, no personal data is used, and messages are sent to forms specifically designed to receive messages and appeals. \nalso, messages sent through contact Forms do not get into spam because such messages are considered important. \nWe offer you to test our service for free. We will send up to 50,000 messages for you. \nThe cost of sending one million messages is 49 USD. \n \nThis message is created automatically. Please use the contact details below to contact us. \n \nContact us. \nTelegram - @FeedbackMessages \nSkype  live:contactform_18 \nWhatsApp - +375259112693	\N		\N	
 12	2021-01-22 16:41:27.286783+00	link\nhttps://amzn.in/b1PLVfT	3		\N	
 13	2021-01-28 03:07:43.933529+00	https://teams.microsoft.com/dl/launcher/launcher.html?url=%2F_%23%2Fl%2Fmeetup-join%2F19%3Ameeting_M2M4MjBhMDQtMWQ4Ny00ZmE4LWI5MzktZWQ3YTEyZDU4NjY3%40thread.v2%2F0%3Fcontext%3D%257b%2522Tid%2522%253a%2522f4c9877d-3607-4fe9-98d3-93c3d2a0c80d%2522%252c%2522Oid%2522%253a%2522b85ec603-65fe-4052-b6d2-1c88b84afa5c%2522%257d%26anon%3Dtrue&amp;type=meetup-join&amp;deeplinkId=8d40a778-48f2-42d2-adc3-0e5c89ac22eb&amp;directDl=true&amp;msLaunch=true&amp;enableMobilePage=true&amp;suppressPrompt=true	3		\N	
+14	2021-02-03 05:45:01.670823+00	Today at 6pm IST	12		\N	
 \.
 
 
@@ -3215,6 +3371,9 @@ COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img, 
 49	2021-01-27 08:16:20.292096+00	ROLE OF CORTICOSTEROID IN TREATMENT OF LOWERBACK PAIN	\N	12		\N	Postimages/2021/01/$D/141201070_2757135964616183_1382591075290002633_n_8DOw4jn.jpg	t	f
 54	2021-01-28 06:47:25.69827+00	Dear Doctor, We are pleased to invite you to the Webinar on “Clinical concept of vascular access through IO” organised by M/s Teleflex,under the banner of ISA Delhi branch, on Thursday, 28 th January, 2021, 6 pm to 7 pm (IST- India Time)  Speaker: Dr. Vivek Vijayendra, India Head of Clinical and Medical Affairs, Teleflex Medical.  Platform: Virtually @Teams webinar.	\N	2		\N		f	t
 55	2021-01-28 11:03:18.098535+00	ISA Thiruvarur and Thanjavur joint invite  \r\nparthasarathy srinivasan is inviting you to a scheduled Zoom meeting.\r\n\r\nFRIDACE - Friday Anesthesia Continuing Education \r\nSpeaker Dr S Parthasarathy \r\nTopic: A to Y of Erector spinae plane block \r\n\r\nModerator : Dr Shashi Kiran MD DA DNB FICA \r\n Examiner - IDRA   \r\nProfessor - PGIMS Rohtak \r\n\r\nTime: Jan 29, 2021 06:00 PM India\r\n\r\nJoin Zoom Meeting\r\nhttps://zoom.us/j/6907913417?pwd=aWRkcVRVQzh5SXgrbWNuOVN4eHBpQT09\r\n\r\nMeeting ID: 690 791 3417\r\nPasscode: 1tZxj2	\N	3		\N		f	f
+59	2021-02-02 12:10:17.586092+00	Ever wondered if opioids can be used for non cancer pain??	How much? \r\nWhen?\r\nAssociated Risks?\r\nFind out the guidelines to prescribe opioids in chronic pain in non-cancer conditions below :	12	homePosts/pdf/2021/02/$D/1-s2.0-S0946672X16300207-main.pdf	\N		f	f
+61	2021-02-02 12:13:57.936052+00	ALL ABOUT PAIN POST 2 \r\nEver wondered the proper way to prescribe opioids in non cancer chronic pain patients??	How?\r\nWhen?\r\nWhy ?\r\nRisks?\r\nAll questions answered in the article mentioning GUIDELINES linked below..	12	homePosts/pdf/2021/02/$D/1-s2.0-S1526590008008316-main.pdf	\N		f	f
+62	2021-02-03 05:32:54.573706+00	NATIONAL WEBINAR	Pain Medicine- an emerging speciality. Scope and challenges	12		\N	Postimages/2021/02/$D/received_234954458183124_XUkQQ1T_EQeFhzk.jpg	f	f
 \.
 
 
@@ -3226,6 +3385,7 @@ COPY public.home_post_comments (id, post_id, comment_id) FROM stdin;
 7	14	7
 8	13	8
 9	16	9
+14	62	14
 \.
 
 
@@ -3302,6 +3462,10 @@ COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
 96	54	1
 97	55	9
 98	55	1
+103	59	1
+104	59	3
+107	61	3
+108	62	3
 \.
 
 
@@ -3361,6 +3525,12 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 51	https://teams.microsoft.com/l/meetup-join/19%3ameeting_M2M4MjBhMDQtMWQ4Ny00ZmE4LWI5MzktZWQ3YTEyZDU4NjY3%40thread.v2/0?context=%7b%22Tid%22%3a%22f4c9877d-3607-4fe9-98d3-93c3d2a0c80d%22%2c%22Oid%22%3a%2	Microsoft Teams link	\N
 52	https://zoom.us/j/6907913417?pwd=aWRkcVRVQzh5SXgrbWNuOVN4eHBpQT09	FRIDACE	\N
 53	https://zoom.us/j/6907913417?pwd=aWRkcVRVQzh5SXgrbWNuOVN4eHBpQT09	FRIDACE	3
+54	https://allaboutanaesthesia.co/archives/create-conference?createconference=True	Ex	\N
+55	https://allaboutanaesthesia.co/archives/create-conference?createconference=True	Ex	\N
+56	https://www.sciencedirect.com/science/article/pii/S1526590008008316	link address	\N
+57	https://www.sciencedirect.com/science/article/pii/S1526590008008316	link address	\N
+58	https://www.sciencedirect.com/science/article/pii/S1526590008008316	link address	\N
+59	https://allaboutanaesthesia.co/create_post	Trail	\N
 \.
 
 
@@ -3452,10 +3622,32 @@ COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 
 
 --
+-- Data for Name: notifications_message; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.notifications_message (id, date, text, post_url, type, read) FROM stdin;
+1	2021-02-02 12:10:17.608923+00	A new comment is added to Ever wonde.. by user drniyati	https://allaboutanaesthesia.co/posts/59	post	f
+2	2021-02-02 12:10:59.666212+00	A new comment is added to ALL ABOUT .. by user drniyati	https://allaboutanaesthesia.co/posts/60	post	f
+3	2021-02-02 12:13:57.951826+00	A new comment is added to ALL ABOUT .. by user drniyati	https://allaboutanaesthesia.co/posts/61	post	f
+4	2021-02-03 05:32:54.664892+00	A new comment is added to NATIONAL W.. by user drniyati	https://allaboutanaesthesia.co/posts/62	post	f
+5	2021-02-03 05:34:30.367937+00	A new comment is added to Trail.. by user Vijay Adabala	https://allaboutanaesthesia.co/posts/63	post	f
+6	2021-02-03 05:35:31.568719+00	A new comment is added to Ex.. by user sk	https://allaboutanaesthesia.co/posts/64	post	f
+\.
+
+
+--
 -- Data for Name: notifications_notification; Type: TABLE DATA; Schema: public; Owner: sk
 --
 
-COPY public.notifications_notification (id, message, post_id, user_id, date) FROM stdin;
+COPY public.notifications_notification (id, user_id, count) FROM stdin;
+\.
+
+
+--
+-- Data for Name: notifications_notification_message; Type: TABLE DATA; Schema: public; Owner: sk
+--
+
+COPY public.notifications_notification_message (id, notification_id, message_id) FROM stdin;
 \.
 
 
@@ -3464,55 +3656,74 @@ COPY public.notifications_notification (id, message, post_id, user_id, date) FRO
 --
 
 COPY public.stats_pageobj (id, url, count) FROM stdin;
-63	https://allaboutanaesthesia.co/conferences	57
-80	https://allaboutanaesthesia.co/posts/16	1
-85	https://allaboutanaesthesia.co/mcq/1	4
-56	https://allaboutanaesthesia.co/managewebsite	44
+73	https://allaboutanaesthesia.co/mcq/getnewquestions/2	23
+102	https://allaboutanaesthesia.co/getnewposts/17	2
 55	https://allaboutanaesthesia.co/notifications/	6
-86	https://allaboutanaesthesia.co/create_post	4
-77	https://allaboutanaesthesia.co/posts/30	21
-72	https://allaboutanaesthesia.co/mcq/getnewquestions/1	17
+85	https://allaboutanaesthesia.co/mcq/1	8
+80	https://allaboutanaesthesia.co/posts/16	3
 59	https://allaboutanaesthesia.co/accounts/changeuserprivileges/27	1
 92	https://allaboutanaesthesia.co/archives/edit-lecture-detail/201/49	2
 99	https://allaboutanaesthesia.co/delete_post/50	1
 90	https://allaboutanaesthesia.co/getnewposts/16	1
-87	https://allaboutanaesthesia.co/posts/44	36
-83	https://allaboutanaesthesia.co/accounts/reset-your-password	11
+86	https://allaboutanaesthesia.co/create_post	11
 74	https://allaboutanaesthesia.co/posts/10	2
 91	https://allaboutanaesthesia.co/getnewposts/19	2
-71	https://allaboutanaesthesia.co/mcq/3	2
-84	https://allaboutanaesthesia.co/accounts/passreset	5
-78	https://allaboutanaesthesia.co/mcq/6	9
+87	https://allaboutanaesthesia.co/posts/44	37
+112	https://allaboutanaesthesia.co/postform	2
 67	https://allaboutanaesthesia.co/posts/31	3
-62	https://allaboutanaesthesia.co/posts/24	1
-54	https://allaboutanaesthesia.co/archives/lectures	46
+63	https://allaboutanaesthesia.co/conferences	79
 75	https://allaboutanaesthesia.co/posts/13	2
-64	https://allaboutanaesthesia.co/accounts/signin	97
+82	https://allaboutanaesthesia.co/home/PAIN-MEDICINE	7
 101	https://allaboutanaesthesia.co/posts/54	1
-66	https://allaboutanaesthesia.co/accounts/signup/staff_signup	59
-82	https://allaboutanaesthesia.co/home/PAIN-MEDICINE	2
+61	https://allaboutanaesthesia.co/home/CRITICAL-CARE	25
+111	https://allaboutanaesthesia.co/home/ONCO-ANAESTHESIA	2
 76	https://allaboutanaesthesia.co/posts/14	2
-53	https://allaboutanaesthesia.co/	198
-57	https://allaboutanaesthesia.co/stats/	96
+114	https://allaboutanaesthesia.co/delete_post/64	1
+119	https://allaboutanaesthesia.co/posts/61	10
 81	https://allaboutanaesthesia.co/posts/15	2
-70	https://allaboutanaesthesia.co/mcq/	10
-88	https://allaboutanaesthesia.co/mcq/5	2
-79	https://allaboutanaesthesia.co/posts/29	97
-58	https://allaboutanaesthesia.co/searchPage	9
-61	https://allaboutanaesthesia.co/home/CRITICAL-CARE	23
+98	https://allaboutanaesthesia.co/accounts/profile	2
+71	https://allaboutanaesthesia.co/mcq/3	3
+115	https://allaboutanaesthesia.co/delete_post/63	1
+66	https://allaboutanaesthesia.co/accounts/signup/staff_signup	76
 60	https://allaboutanaesthesia.co/posts/11	2
 93	https://allaboutanaesthesia.co/getnewposts/18	26
-73	https://allaboutanaesthesia.co/mcq/getnewquestions/2	13
-65	https://allaboutanaesthesia.co/home/NEET-SS	11
+100	https://allaboutanaesthesia.co/getnewposts/9	19
+62	https://allaboutanaesthesia.co/posts/24	3
+103	https://allaboutanaesthesia.co/delete_post/56	1
+95	https://allaboutanaesthesia.co/archives/create-conference	6
+116	https://allaboutanaesthesia.co/delete_post/65	1
+65	https://allaboutanaesthesia.co/home/NEET-SS	21
+83	https://allaboutanaesthesia.co/accounts/reset-your-password	15
+84	https://allaboutanaesthesia.co/accounts/passreset	6
+72	https://allaboutanaesthesia.co/mcq/getnewquestions/1	20
+56	https://allaboutanaesthesia.co/managewebsite	59
 89	https://allaboutanaesthesia.co/posts/45	12
-100	https://allaboutanaesthesia.co/getnewposts/9	18
 97	https://allaboutanaesthesia.co/delete_post/53	1
 94	https://allaboutanaesthesia.co/posts/50	32
-69	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA	21
-68	https://allaboutanaesthesia.co/home/Conferences	25
-95	https://allaboutanaesthesia.co/archives/create-conference	2
+105	https://allaboutanaesthesia.co/delete_post/57	1
+88	https://allaboutanaesthesia.co/mcq/5	4
 96	https://allaboutanaesthesia.co/admin/jsi18n/	2
-98	https://allaboutanaesthesia.co/accounts/profile	1
+109	https://allaboutanaesthesia.co/mcq/4	1
+104	https://allaboutanaesthesia.co/archives/create-lecture	3
+79	https://allaboutanaesthesia.co/posts/29	99
+68	https://allaboutanaesthesia.co/home/Conferences	35
+106	https://allaboutanaesthesia.co/delete_post/58	1
+113	https://allaboutanaesthesia.co/getnewposts/20	12
+108	https://allaboutanaesthesia.co/home/NEURO-ANAESTHESIA	2
+53	https://allaboutanaesthesia.co/	310
+64	https://allaboutanaesthesia.co/accounts/signin	119
+120	https://allaboutanaesthesia.co/mcq/2	1
+110	https://allaboutanaesthesia.co/mcq/createquestions/mcq	2
+70	https://allaboutanaesthesia.co/mcq/	16
+78	https://allaboutanaesthesia.co/mcq/6	11
+118	https://allaboutanaesthesia.co/getnewposts/11	8
+54	https://allaboutanaesthesia.co/archives/lectures	68
+117	https://allaboutanaesthesia.co/delete_post/60	1
+107	https://allaboutanaesthesia.co/home/CARDIO-ANAESTHESIA	2
+69	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA	29
+58	https://allaboutanaesthesia.co/searchPage	14
+77	https://allaboutanaesthesia.co/posts/30	23
+57	https://allaboutanaesthesia.co/stats/	114
 \.
 
 
@@ -3548,6 +3759,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1153	106.215.196.186	\N	2021-01-28	66
 1213	117.97.66.36	2	2021-01-28	93
 1158	31.13.103.19	\N	2021-01-28	94
+1542	66.249.66.73	\N	2021-01-31	53
 1163	66.220.149.28	\N	2021-01-28	94
 1218	117.97.66.36	2	2021-01-28	93
 1168	223.181.43.50	\N	2021-01-28	94
@@ -3569,6 +3781,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1248	49.36.162.24	2	2021-01-28	54
 1312	49.36.166.106	\N	2021-01-28	64
 1253	49.36.162.24	2	2021-01-28	63
+1547	49.36.162.24	2	2021-01-31	53
 1258	49.36.162.24	2	2021-01-28	68
 1317	49.36.166.106	44	2021-01-28	54
 1263	49.36.162.24	2	2021-01-28	53
@@ -3581,34 +3794,74 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1283	49.36.161.198	3	2021-01-28	57
 1423	66.249.66.74	\N	2021-01-30	61
 1332	106.193.76.237	\N	2021-01-28	79
+1552	49.36.162.24	2	2021-01-31	63
 1337	49.36.161.198	3	2021-01-28	53
 1428	49.36.162.24	2	2021-01-30	100
 1342	157.48.138.213	\N	2021-01-28	63
 1347	157.48.138.213	\N	2021-01-28	66
 1433	49.36.162.24	2	2021-01-30	100
 1352	49.36.162.24	2	2021-01-29	65
+1557	49.36.162.24	2	2021-01-31	63
 1357	66.249.66.74	\N	2021-01-29	77
 1438	49.36.162.24	2	2021-01-30	57
 1362	49.36.162.24	2	2021-01-29	100
 1367	49.36.162.24	2	2021-01-29	100
 1443	66.249.66.71	\N	2021-01-30	63
 1372	158.101.118.106	\N	2021-01-29	53
+1562	49.36.162.24	2	2021-01-31	102
 1377	49.36.162.24	2	2021-01-29	56
 1448	49.36.162.24	2	2021-01-30	56
 1382	66.249.66.74	\N	2021-01-29	61
 1387	104.236.16.161	\N	2021-01-29	53
 1453	49.36.162.24	\N	2021-01-30	64
 1392	49.36.161.198	3	2021-01-29	53
+1567	49.36.162.24	2	2021-01-31	63
 1397	14.139.233.71	\N	2021-01-29	64
 1458	49.36.162.24	2	2021-01-30	54
 1402	14.139.233.71	\N	2021-01-29	66
 1463	66.249.66.74	\N	2021-01-30	58
+1572	49.36.162.24	2	2021-01-31	54
 1468	157.39.250.23	\N	2021-01-30	66
 1473	157.39.250.23	\N	2021-01-30	64
+1577	49.36.162.24	2	2021-01-31	53
 1478	157.39.250.23	\N	2021-01-30	64
 1483	157.39.250.23	\N	2021-01-30	66
+1582	49.36.162.24	2	2021-01-31	104
 1488	157.39.250.23	\N	2021-01-30	83
 1493	157.39.250.23	\N	2021-01-30	66
+1587	49.36.162.24	2	2021-01-31	54
+1498	117.97.66.37	\N	2021-01-30	53
+1503	117.97.66.37	\N	2021-01-30	83
+1592	49.36.162.24	2	2021-01-31	53
+1508	49.36.162.24	2	2021-01-30	53
+1513	161.35.187.249	\N	2021-01-30	53
+1597	49.36.162.24	2	2021-01-31	53
+1518	31.13.103.11	\N	2021-01-30	66
+1523	41.210.11.155	\N	2021-01-30	53
+1602	49.36.162.24	2	2021-01-31	53
+1528	46.248.190.193	\N	2021-01-30	68
+1533	41.210.11.155	48	2021-01-30	69
+1607	223.181.111.208	2	2021-01-31	53
+1538	46.248.190.195	\N	2021-01-31	68
+1612	49.36.162.24	2	2021-01-31	53
+1617	49.36.162.24	2	2021-01-31	88
+1622	49.36.162.24	2	2021-01-31	73
+1627	49.36.162.24	2	2021-01-31	73
+1632	49.36.162.24	2	2021-01-31	110
+1637	49.36.172.49	\N	2021-01-31	64
+1642	27.63.164.40	3	2021-02-01	53
+1647	157.38.90.204	\N	2021-02-01	66
+1652	49.36.162.24	2	2021-02-02	57
+1657	106.223.132.103	\N	2021-02-02	53
+1662	103.144.119.2	\N	2021-02-02	53
+1667	14.139.54.114	2	2021-02-02	63
+1672	14.139.54.114	2	2021-02-02	63
+1677	49.36.165.59	14	2021-02-02	54
+1682	49.36.165.59	14	2021-02-02	108
+1687	106.223.176.245	\N	2021-02-02	53
+1692	49.36.161.79	12	2021-02-02	112
+1697	49.36.161.79	12	2021-02-02	86
+1702	49.36.162.24	2	2021-02-02	54
 1065	106.215.135.170	\N	2021-01-28	53
 1124	35.245.188.175	\N	2021-01-28	79
 1070	157.45.94.248	\N	2021-01-28	66
@@ -3636,6 +3889,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1154	49.36.161.198	3	2021-01-28	57
 1214	117.97.66.36	2	2021-01-28	93
 1159	31.13.103.4	\N	2021-01-28	94
+1543	49.36.162.24	2	2021-01-31	53
 1164	106.215.195.238	\N	2021-01-28	94
 1219	117.97.66.36	2	2021-01-28	93
 1169	157.41.127.24	31	2021-01-28	94
@@ -3657,6 +3911,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1249	49.36.162.24	2	2021-01-28	54
 1313	49.36.166.106	\N	2021-01-28	66
 1254	49.36.162.24	2	2021-01-28	68
+1548	49.36.162.24	2	2021-01-31	63
 1259	49.36.162.24	2	2021-01-28	68
 1318	49.36.166.106	44	2021-01-28	54
 1264	223.186.139.158	\N	2021-01-28	53
@@ -3669,32 +3924,76 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1284	46.248.173.38	\N	2021-01-28	53
 1424	49.36.162.24	2	2021-01-30	53
 1333	106.193.76.237	\N	2021-01-28	79
+1553	49.36.162.24	2	2021-01-31	54
 1338	49.36.161.198	3	2021-01-28	56
 1429	49.36.162.24	2	2021-01-30	100
 1343	157.48.138.213	\N	2021-01-28	66
 1348	157.48.138.213	\N	2021-01-28	66
 1434	49.36.162.24	2	2021-01-30	100
 1353	49.36.162.24	2	2021-01-29	57
+1558	49.36.162.24	2	2021-01-31	54
 1358	49.36.162.24	2	2021-01-29	53
 1439	66.249.66.74	\N	2021-01-30	53
 1363	49.36.162.24	2	2021-01-29	100
 1368	49.36.162.24	2	2021-01-29	100
 1444	66.249.66.71	\N	2021-01-30	63
 1373	66.249.66.73	\N	2021-01-29	53
+1563	66.249.66.74	\N	2021-01-31	53
 1378	66.249.66.74	\N	2021-01-29	68
 1449	49.36.162.24	2	2021-01-30	53
 1383	66.249.66.73	\N	2021-01-29	81
 1388	66.249.66.73	\N	2021-01-29	79
 1454	49.36.162.24	\N	2021-01-30	83
 1393	157.41.114.131	31	2021-01-29	77
+1568	49.36.162.24	2	2021-01-31	95
 1398	49.36.161.198	3	2021-01-29	53
 1459	49.36.162.24	2	2021-01-30	64
 1464	157.39.250.23	\N	2021-01-30	77
+1573	49.36.162.24	2	2021-01-31	63
 1469	157.39.250.23	\N	2021-01-30	64
 1474	157.39.250.23	\N	2021-01-30	64
+1578	49.36.162.24	2	2021-01-31	54
 1479	157.39.250.23	\N	2021-01-30	77
 1484	157.39.250.23	\N	2021-01-30	66
+1583	49.36.162.24	2	2021-01-31	53
 1489	157.39.250.23	\N	2021-01-30	66
+1494	66.249.66.73	\N	2021-01-30	66
+1588	49.36.162.24	2	2021-01-31	104
+1499	117.97.66.37	\N	2021-01-30	53
+1504	49.36.162.24	2	2021-01-30	53
+1593	49.36.162.24	2	2021-01-31	56
+1509	46.248.187.38	\N	2021-01-30	68
+1514	47.247.162.132	45	2021-01-30	53
+1598	49.36.162.24	2	2021-01-31	54
+1519	31.13.103.4	\N	2021-01-30	66
+1524	41.210.11.155	\N	2021-01-30	53
+1603	49.36.162.24	2	2021-01-31	63
+1529	41.210.11.155	\N	2021-01-30	66
+1534	49.36.165.202	3	2021-01-30	53
+1608	47.15.231.125	\N	2021-01-31	79
+1539	46.248.187.38	\N	2021-01-31	68
+1613	49.36.162.24	2	2021-01-31	58
+1618	49.36.162.24	2	2021-01-31	88
+1623	49.36.162.24	2	2021-01-31	69
+1628	49.36.162.24	2	2021-01-31	73
+1633	49.36.172.49	\N	2021-01-31	53
+1638	49.36.172.49	\N	2021-01-31	85
+1643	27.63.164.40	3	2021-02-01	57
+1648	54.221.27.173	\N	2021-02-01	53
+1653	49.36.162.24	2	2021-02-02	56
+1658	106.223.132.103	\N	2021-02-02	61
+1663	106.223.132.103	\N	2021-02-02	66
+1668	14.139.54.114	2	2021-02-02	54
+1673	14.139.54.114	2	2021-02-02	95
+1678	49.36.165.59	14	2021-02-02	53
+1683	49.36.165.59	14	2021-02-02	65
+1688	106.223.176.245	\N	2021-02-02	53
+1693	49.36.161.79	12	2021-02-02	112
+1698	49.36.162.24	\N	2021-02-02	66
+1703	49.36.162.24	2	2021-02-02	53
+1707	49.36.162.24	2	2021-02-02	113
+1711	49.36.162.24	2	2021-02-02	69
+1715	49.36.162.24	2	2021-02-02	73
 1066	157.45.94.248	\N	2021-01-28	79
 1125	124.123.166.64	\N	2021-01-28	79
 1071	157.45.94.248	\N	2021-01-28	64
@@ -3722,6 +4021,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1155	106.215.214.197	\N	2021-01-28	94
 1215	117.97.66.36	2	2021-01-28	93
 1160	31.13.103.116	\N	2021-01-28	94
+1544	49.36.162.24	2	2021-01-31	56
 1165	103.49.154.17	\N	2021-01-28	87
 1220	117.97.66.36	2	2021-01-28	93
 1170	157.41.58.153	\N	2021-01-28	94
@@ -3743,6 +4043,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1250	49.36.162.24	2	2021-01-28	63
 1314	49.36.166.106	\N	2021-01-28	66
 1255	49.36.162.24	2	2021-01-28	68
+1549	49.36.162.24	2	2021-01-31	54
 1260	49.36.162.24	2	2021-01-28	63
 1319	49.36.166.106	44	2021-01-28	54
 1265	223.186.139.158	\N	2021-01-28	70
@@ -3755,32 +4056,77 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1285	46.248.173.38	\N	2021-01-28	63
 1425	49.36.162.24	2	2021-01-30	56
 1334	106.193.76.237	\N	2021-01-28	68
+1554	49.36.162.24	2	2021-01-31	65
 1339	49.36.161.198	3	2021-01-28	56
 1430	49.36.162.24	2	2021-01-30	100
 1344	157.48.138.213	\N	2021-01-28	64
 1349	47.247.189.215	\N	2021-01-29	79
 1435	49.36.162.24	2	2021-01-30	69
 1354	49.36.162.24	2	2021-01-29	56
+1559	49.36.162.24	2	2021-01-31	53
 1359	49.36.162.24	2	2021-01-29	53
 1440	49.36.162.24	2	2021-01-30	57
 1364	49.36.162.24	2	2021-01-29	100
 1369	49.36.162.24	2	2021-01-29	55
 1445	138.246.253.24	\N	2021-01-30	53
 1374	46.248.190.195	\N	2021-01-29	53
+1564	157.45.214.224	\N	2021-01-31	87
 1379	66.249.66.71	\N	2021-01-29	101
 1450	49.36.162.24	2	2021-01-30	54
 1384	182.48.201.8	\N	2021-01-29	79
 1389	66.249.66.74	\N	2021-01-29	66
 1455	49.36.162.24	\N	2021-01-30	83
 1394	49.36.161.198	3	2021-01-29	57
+1569	49.36.162.24	2	2021-01-31	95
 1399	14.139.233.71	\N	2021-01-29	66
 1460	49.36.161.198	3	2021-01-30	53
 1465	157.39.250.23	\N	2021-01-30	64
+1574	49.36.162.24	2	2021-01-31	95
 1470	157.39.250.23	\N	2021-01-30	64
 1475	157.39.250.23	\N	2021-01-30	66
+1579	49.36.162.24	2	2021-01-31	54
 1480	157.39.250.23	\N	2021-01-30	64
 1485	157.39.250.23	\N	2021-01-30	77
+1584	49.36.162.24	2	2021-01-31	54
 1490	157.39.250.23	\N	2021-01-30	66
+1495	13.66.139.68	\N	2021-01-30	53
+1589	49.36.162.24	2	2021-01-31	54
+1500	117.97.66.37	\N	2021-01-30	64
+1505	49.36.162.24	2	2021-01-30	56
+1594	49.36.162.24	2	2021-01-31	57
+1510	46.248.187.37	\N	2021-01-30	68
+1515	84.17.51.124	\N	2021-01-30	53
+1599	49.36.162.24	2	2021-01-31	63
+1520	31.13.103.12	\N	2021-01-30	66
+1525	41.210.11.155	\N	2021-01-30	64
+1604	49.36.162.24	2	2021-01-31	56
+1530	41.210.11.155	\N	2021-01-30	66
+1535	49.36.165.202	3	2021-01-30	57
+1609	106.215.217.33	\N	2021-01-31	62
+1540	66.249.66.74	\N	2021-01-31	68
+1614	49.36.162.24	2	2021-01-31	58
+1619	49.36.162.24	2	2021-01-31	108
+1624	49.36.162.24	2	2021-01-31	85
+1629	49.36.162.24	2	2021-01-31	73
+1634	49.36.172.49	\N	2021-01-31	69
+1639	49.36.172.49	\N	2021-01-31	82
+1644	49.36.162.24	2	2021-02-01	53
+1649	49.36.141.17	\N	2021-02-01	79
+1654	49.36.162.24	2	2021-02-02	53
+1659	106.223.132.103	\N	2021-02-02	107
+1664	106.223.132.103	\N	2021-02-02	66
+1669	14.139.54.114	2	2021-02-02	65
+1674	14.139.54.114	2	2021-02-02	53
+1679	49.36.165.59	14	2021-02-02	111
+1684	49.36.161.79	12	2021-02-02	53
+1689	49.36.161.79	12	2021-02-02	53
+1694	49.36.161.79	12	2021-02-02	53
+1699	49.36.162.24	\N	2021-02-02	53
+1704	49.36.162.24	2	2021-02-02	113
+1708	49.36.162.24	2	2021-02-02	113
+1712	49.36.162.24	2	2021-02-02	70
+1716	49.36.162.24	2	2021-02-02	73
+1717	49.36.162.24	2	2021-02-02	57
 1067	157.45.94.248	\N	2021-01-28	61
 1126	124.123.166.64	\N	2021-01-28	53
 1072	157.45.94.248	\N	2021-01-28	64
@@ -3808,6 +4154,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1156	106.215.128.228	\N	2021-01-28	94
 1216	117.97.66.36	2	2021-01-28	93
 1161	31.13.103.3	\N	2021-01-28	94
+1545	49.36.162.24	2	2021-01-31	57
 1166	106.215.195.238	\N	2021-01-28	87
 1221	117.97.66.36	2	2021-01-28	93
 1171	49.36.162.209	\N	2021-01-28	94
@@ -3829,6 +4176,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1251	49.36.162.24	2	2021-01-28	99
 1315	49.36.166.106	\N	2021-01-28	64
 1256	49.36.162.24	2	2021-01-28	53
+1550	49.36.162.24	2	2021-01-31	63
 1261	49.36.162.24	2	2021-01-28	82
 1320	49.36.166.106	44	2021-01-28	54
 1266	223.186.139.158	\N	2021-01-28	88
@@ -3841,32 +4189,75 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1286	171.76.227.232	\N	2021-01-28	66
 1426	49.36.162.24	2	2021-01-30	56
 1335	46.248.173.37	\N	2021-01-28	63
+1555	49.36.162.24	2	2021-01-31	56
 1340	49.36.161.198	3	2021-01-28	56
 1431	49.36.162.24	2	2021-01-30	100
 1345	157.48.138.213	\N	2021-01-28	66
 1350	46.248.187.38	\N	2021-01-29	53
 1436	49.36.162.24	2	2021-01-30	57
 1355	49.36.162.24	2	2021-01-29	53
+1560	49.36.162.24	2	2021-01-31	63
 1360	49.36.162.24	2	2021-01-29	53
 1441	49.36.162.24	2	2021-01-30	57
 1365	49.36.162.24	2	2021-01-29	100
 1370	46.248.187.121	\N	2021-01-29	53
 1446	66.249.66.73	\N	2021-01-30	63
 1375	46.248.187.121	\N	2021-01-29	53
+1565	157.45.214.224	\N	2021-01-31	70
 1380	49.36.161.198	3	2021-01-29	53
 1451	49.36.162.24	2	2021-01-30	54
 1385	157.44.91.109	\N	2021-01-29	64
 1390	49.36.161.198	3	2021-01-29	53
 1456	49.36.162.24	\N	2021-01-30	84
 1395	157.38.26.218	\N	2021-01-29	77
+1570	49.36.162.24	\N	2021-01-31	83
 1400	106.215.131.23	\N	2021-01-29	77
 1461	49.36.161.198	3	2021-01-30	57
 1466	157.39.250.23	\N	2021-01-30	64
+1575	49.36.162.24	2	2021-01-31	63
 1471	157.39.250.23	\N	2021-01-30	64
 1476	157.39.250.23	\N	2021-01-30	66
+1580	49.36.162.24	2	2021-01-31	54
 1481	157.39.250.23	\N	2021-01-30	64
 1486	157.39.250.23	\N	2021-01-30	64
+1585	49.36.162.24	2	2021-01-31	105
 1491	157.39.250.23	\N	2021-01-30	64
+1496	46.248.187.38	\N	2021-01-30	68
+1590	49.36.162.24	2	2021-01-31	54
+1501	117.97.66.37	\N	2021-01-30	64
+1506	49.36.162.24	2	2021-01-30	56
+1595	49.36.162.24	2	2021-01-31	54
+1511	66.249.66.74	\N	2021-01-30	53
+1516	41.210.11.155	\N	2021-01-30	53
+1600	49.36.162.24	2	2021-01-31	53
+1521	31.13.103.11	\N	2021-01-30	66
+1526	46.248.187.37	\N	2021-01-30	68
+1605	49.36.162.24	2	2021-01-31	56
+1531	41.210.11.155	\N	2021-01-30	64
+1536	49.36.165.202	3	2021-01-30	56
+1610	49.36.162.24	2	2021-01-31	53
+1541	66.249.66.73	\N	2021-01-31	58
+1615	49.36.162.24	2	2021-01-31	57
+1620	49.36.162.24	2	2021-01-31	109
+1625	49.36.162.24	2	2021-01-31	73
+1630	49.36.162.24	2	2021-01-31	53
+1635	49.36.172.49	\N	2021-01-31	69
+1640	49.36.172.49	\N	2021-01-31	71
+1645	66.249.66.71	\N	2021-02-01	53
+1650	49.36.141.17	\N	2021-02-01	68
+1655	49.36.162.24	2	2021-02-02	53
+1660	106.223.132.103	\N	2021-02-02	58
+1665	14.139.54.114	2	2021-02-02	53
+1670	14.139.54.114	2	2021-02-02	53
+1675	49.36.165.59	\N	2021-02-02	53
+1680	49.36.165.59	14	2021-02-02	69
+1685	49.36.161.79	12	2021-02-02	69
+1690	49.36.161.79	12	2021-02-02	82
+1695	49.36.161.79	12	2021-02-02	53
+1700	49.36.162.24	\N	2021-02-02	66
+1705	49.36.162.24	2	2021-02-02	113
+1709	49.36.162.24	2	2021-02-02	113
+1713	49.36.162.24	2	2021-02-02	85
 1068	157.45.94.248	\N	2021-01-28	78
 1127	35.245.188.175	\N	2021-01-28	53
 1073	157.45.94.248	\N	2021-01-28	64
@@ -3895,6 +4286,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1157	157.49.238.139	\N	2021-01-28	53
 1217	117.97.66.36	2	2021-01-28	93
 1162	31.13.103.10	\N	2021-01-28	53
+1546	49.36.162.24	2	2021-01-31	63
 1167	27.56.206.44	\N	2021-01-28	94
 1222	117.97.66.36	2	2021-01-28	93
 1172	157.41.49.19	\N	2021-01-28	94
@@ -3909,6 +4301,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1306	103.92.46.244	\N	2021-01-28	65
 1197	49.36.161.198	3	2021-01-28	57
 1237	49.36.162.24	2	2021-01-28	97
+1718	49.36.162.24	2	2021-02-02	56
 1242	49.36.162.24	2	2021-01-28	63
 1311	49.36.166.106	\N	2021-01-28	79
 1247	49.36.162.24	2	2021-01-28	63
@@ -3916,6 +4309,7 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1252	49.36.162.24	2	2021-01-28	53
 1316	49.36.166.106	\N	2021-01-28	64
 1257	46.248.187.38	\N	2021-01-28	63
+1551	49.36.162.24	2	2021-01-31	53
 1262	49.36.162.24	2	2021-01-28	53
 1321	106.195.96.50	\N	2021-01-28	53
 1267	223.186.139.158	\N	2021-01-28	66
@@ -3927,32 +4321,226 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 1331	106.193.76.237	\N	2021-01-28	79
 1427	49.36.162.24	2	2021-01-30	53
 1336	46.248.173.37	\N	2021-01-28	53
+1556	49.36.162.24	2	2021-01-31	63
 1341	157.48.138.213	\N	2021-01-28	53
 1432	49.36.162.24	2	2021-01-30	100
 1346	157.48.138.213	\N	2021-01-28	64
+1719	49.36.162.24	2	2021-02-02	53
 1351	49.36.162.24	2	2021-01-29	53
 1437	66.249.66.71	\N	2021-01-30	68
 1356	49.36.162.24	2	2021-01-29	53
+1561	49.36.162.24	2	2021-01-31	53
 1361	49.36.162.24	2	2021-01-29	53
 1442	49.36.162.24	2	2021-01-30	56
 1366	49.36.162.24	2	2021-01-29	100
 1371	106.223.153.128	\N	2021-01-29	87
 1447	66.249.66.71	\N	2021-01-30	63
 1376	49.36.162.24	2	2021-01-29	53
+1566	185.210.217.13	\N	2021-01-31	53
 1381	49.36.161.198	3	2021-01-29	57
 1452	49.36.162.24	\N	2021-01-30	53
 1386	13.66.139.16	\N	2021-01-29	53
+1720	49.36.162.24	2	2021-02-02	113
 1391	49.36.161.198	\N	2021-01-29	77
 1457	49.36.162.24	\N	2021-01-30	64
 1396	14.139.233.71	\N	2021-01-29	77
+1571	49.36.162.24	\N	2021-01-31	64
 1401	49.36.161.198	3	2021-01-29	57
 1462	27.34.249.196	\N	2021-01-30	79
 1467	157.39.250.23	\N	2021-01-30	66
+1576	49.36.162.24	2	2021-01-31	103
 1472	157.39.250.23	\N	2021-01-30	77
 1477	157.39.250.23	\N	2021-01-30	64
+1581	49.36.162.24	2	2021-01-31	104
 1482	157.39.250.23	\N	2021-01-30	64
 1487	157.39.250.23	\N	2021-01-30	83
+1586	49.36.162.24	2	2021-01-31	53
 1492	157.39.250.23	\N	2021-01-30	64
+1497	117.97.66.37	\N	2021-01-30	53
+1591	49.36.162.24	2	2021-01-31	106
+1502	117.97.66.37	\N	2021-01-30	64
+1507	49.36.162.24	2	2021-01-30	56
+1596	49.36.162.24	2	2021-01-31	63
+1512	46.248.167.73	\N	2021-01-30	63
+1517	31.13.103.4	\N	2021-01-30	66
+1601	49.36.162.24	2	2021-01-31	53
+1522	41.210.11.155	\N	2021-01-30	82
+1527	38.100.21.45	\N	2021-01-30	63
+1606	49.36.162.24	2	2021-01-31	53
+1532	41.210.11.155	48	2021-01-30	54
+1537	49.36.165.202	3	2021-01-31	100
+1611	49.36.162.24	2	2021-01-31	56
+1616	49.36.162.24	2	2021-01-31	107
+1621	49.36.162.24	2	2021-01-31	73
+1626	49.36.162.24	2	2021-01-31	73
+1631	49.36.162.24	2	2021-01-31	102
+1636	84.17.51.74	\N	2021-01-31	53
+1641	203.81.241.116	\N	2021-01-31	68
+1646	65.154.226.165	\N	2021-02-01	53
+1651	49.36.162.24	2	2021-02-02	53
+1656	106.223.132.103	\N	2021-02-02	53
+1661	106.223.132.103	\N	2021-02-02	65
+1666	14.139.54.114	2	2021-02-02	61
+1671	14.139.54.114	2	2021-02-02	63
+1676	49.36.165.59	\N	2021-02-02	64
+1681	49.36.165.59	14	2021-02-02	53
+1686	49.36.161.79	12	2021-02-02	53
+1691	49.36.161.79	12	2021-02-02	86
+1696	49.36.161.79	12	2021-02-02	53
+1701	49.36.162.24	\N	2021-02-02	64
+1706	49.36.162.24	2	2021-02-02	113
+1710	49.36.162.24	2	2021-02-02	113
+1714	49.36.162.24	2	2021-02-02	73
+1721	49.36.162.24	2	2021-02-02	63
+1722	106.51.234.151	\N	2021-02-02	82
+1723	106.51.234.151	\N	2021-02-02	82
+1724	212.83.146.233	\N	2021-02-02	53
+1725	195.154.62.232	\N	2021-02-02	53
+1726	42.236.10.75	\N	2021-02-02	53
+1727	180.163.220.4	\N	2021-02-02	53
+1728	171.13.14.15	\N	2021-02-02	53
+1729	49.36.162.24	2	2021-02-02	63
+1730	49.36.162.24	2	2021-02-02	57
+1731	49.36.162.24	2	2021-02-02	53
+1732	49.36.162.24	2	2021-02-02	113
+1733	49.36.162.24	2	2021-02-02	113
+1734	49.36.162.24	2	2021-02-02	113
+1735	49.36.162.24	2	2021-02-02	113
+1736	37.120.143.173	\N	2021-02-03	53
+1737	123.136.250.181	\N	2021-02-03	66
+1738	49.36.162.24	2	2021-02-03	53
+1739	49.36.162.24	2	2021-02-03	57
+1740	14.139.54.114	12	2021-02-03	53
+1741	14.139.54.114	12	2021-02-03	86
+1742	49.36.169.134	3	2021-02-03	53
+1743	49.36.169.134	3	2021-02-03	57
+1744	49.36.169.134	3	2021-02-03	86
+1745	49.36.162.24	2	2021-02-03	53
+1746	49.36.162.24	2	2021-02-03	86
+1747	49.36.162.24	2	2021-02-03	53
+1748	49.36.169.134	3	2021-02-03	53
+1749	49.36.162.24	2	2021-02-03	114
+1750	49.36.162.24	2	2021-02-03	53
+1751	49.36.169.134	3	2021-02-03	115
+1752	49.36.169.134	3	2021-02-03	53
+1753	49.36.162.24	2	2021-02-03	53
+1754	49.36.162.24	2	2021-02-03	86
+1755	49.36.162.24	2	2021-02-03	53
+1756	49.36.162.24	2	2021-02-03	116
+1757	49.36.162.24	2	2021-02-03	53
+1758	49.36.162.24	2	2021-02-03	53
+1759	49.36.162.24	2	2021-02-03	63
+1760	49.36.162.24	2	2021-02-03	53
+1761	49.36.162.24	2	2021-02-03	53
+1762	14.139.54.114	12	2021-02-03	53
+1763	14.139.54.114	12	2021-02-03	53
+1764	14.139.54.114	12	2021-02-03	53
+1765	14.139.54.114	12	2021-02-03	53
+1766	14.139.54.114	12	2021-02-03	117
+1767	14.139.54.114	12	2021-02-03	53
+1768	14.139.54.114	12	2021-02-03	53
+1769	14.139.54.114	12	2021-02-03	53
+1770	117.209.199.14	\N	2021-02-03	77
+1771	49.36.162.24	2	2021-02-03	57
+1772	49.36.162.24	2	2021-02-03	56
+1773	49.36.162.24	2	2021-02-03	53
+1774	49.36.162.24	2	2021-02-03	53
+1775	49.36.162.24	2	2021-02-03	53
+1776	49.36.162.24	2	2021-02-03	53
+1777	49.36.162.24	2	2021-02-03	53
+1778	49.36.162.24	2	2021-02-03	118
+1779	106.215.159.207	\N	2021-02-03	62
+1780	62.4.14.198	\N	2021-02-04	53
+1781	100.21.218.158	\N	2021-02-04	53
+1782	49.36.162.24	2	2021-02-04	53
+1783	49.36.162.24	2	2021-02-04	57
+1784	49.36.162.24	2	2021-02-04	56
+1785	49.36.162.24	2	2021-02-04	57
+1786	49.36.162.24	2	2021-02-04	57
+1787	49.36.162.24	2	2021-02-04	54
+1788	49.36.162.24	2	2021-02-04	53
+1789	49.36.162.24	2	2021-02-04	69
+1790	49.36.162.24	2	2021-02-04	58
+1791	49.36.162.24	2	2021-02-04	65
+1792	49.36.162.24	2	2021-02-04	65
+1793	120.52.152.20	\N	2021-02-04	53
+1794	14.139.54.114	\N	2021-02-04	80
+1795	14.139.54.114	\N	2021-02-04	80
+1796	14.139.54.114	\N	2021-02-04	64
+1797	14.139.54.114	\N	2021-02-04	64
+1798	14.139.54.114	\N	2021-02-04	64
+1799	182.18.178.196	\N	2021-02-04	64
+1800	14.139.54.114	\N	2021-02-04	64
+1801	132.154.238.118	14	2021-02-04	53
+1802	132.154.238.118	14	2021-02-04	98
+1803	132.154.238.118	14	2021-02-04	53
+1804	14.139.54.114	\N	2021-02-04	64
+1805	14.139.54.114	\N	2021-02-04	83
+1806	14.139.54.114	\N	2021-02-04	83
+1807	14.139.54.114	\N	2021-02-04	84
+1808	14.139.54.114	\N	2021-02-04	64
+1809	49.44.81.165	\N	2021-02-04	64
+1810	14.139.54.114	14	2021-02-04	54
+1811	14.139.54.114	14	2021-02-04	65
+1812	14.139.54.114	14	2021-02-04	110
+1813	14.139.54.114	14	2021-02-04	70
+1814	14.139.54.114	14	2021-02-04	85
+1815	14.139.54.114	14	2021-02-04	65
+1816	14.139.54.114	14	2021-02-04	86
+1817	171.34.177.246	\N	2021-02-04	53
+1818	171.34.178.193	\N	2021-02-04	53
+1819	106.223.185.80	2	2021-02-04	65
+1820	14.139.54.114	14	2021-02-04	63
+1821	14.139.54.114	14	2021-02-04	111
+1822	106.223.136.65	\N	2021-02-04	53
+1823	106.223.136.65	\N	2021-02-04	119
+1824	157.41.69.225	31	2021-02-04	119
+1825	106.215.212.234	\N	2021-02-04	119
+1826	106.215.131.70	\N	2021-02-04	119
+1827	106.215.193.94	\N	2021-02-04	64
+1828	106.215.193.94	\N	2021-02-04	66
+1829	106.215.131.70	\N	2021-02-04	66
+1830	117.246.167.65	\N	2021-02-04	119
+1831	117.246.167.65	\N	2021-02-04	77
+1832	117.246.167.65	\N	2021-02-04	119
+1833	14.139.200.27	\N	2021-02-04	119
+1834	106.215.131.70	\N	2021-02-04	64
+1835	106.215.131.70	49	2021-02-04	54
+1836	106.215.193.94	49	2021-02-04	119
+1837	106.215.193.94	49	2021-02-04	64
+1838	106.215.131.70	49	2021-02-04	54
+1839	106.215.193.94	49	2021-02-04	70
+1840	106.215.193.94	49	2021-02-04	78
+1841	106.215.131.70	49	2021-02-04	72
+1842	106.215.131.70	49	2021-02-04	72
+1843	106.215.131.70	49	2021-02-04	72
+1844	106.215.131.70	49	2021-02-04	70
+1845	106.215.131.70	49	2021-02-04	120
+1846	106.215.193.94	49	2021-02-04	70
+1847	106.215.193.94	49	2021-02-04	78
+1848	106.215.193.94	49	2021-02-04	53
+1849	106.215.193.94	49	2021-02-04	54
+1850	106.215.131.70	49	2021-02-04	53
+1851	106.215.193.94	49	2021-02-04	118
+1852	106.215.193.94	49	2021-02-04	118
+1853	106.215.193.94	49	2021-02-04	118
+1854	106.215.193.94	49	2021-02-04	118
+1855	106.215.193.94	49	2021-02-04	118
+1856	106.215.131.70	49	2021-02-04	118
+1857	103.226.226.205	\N	2021-02-04	119
+1858	27.56.212.62	\N	2021-02-04	119
+1859	27.56.212.62	\N	2021-02-04	66
+1860	27.56.212.62	\N	2021-02-04	64
+1861	49.36.164.6	2	2021-02-04	53
+1862	49.36.164.6	2	2021-02-04	65
+1863	49.36.164.6	2	2021-02-04	57
+1864	49.36.164.6	2	2021-02-04	56
+1865	49.36.164.6	2	2021-02-04	53
+1866	49.36.164.6	2	2021-02-04	64
+1867	49.36.164.6	2	2021-02-04	118
+1868	49.36.164.6	2	2021-02-04	57
+1869	49.36.164.6	2	2021-02-04	57
+1870	49.36.164.6	2	2021-02-04	57
 \.
 
 
@@ -3960,35 +4548,35 @@ COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 -- Name: accounts_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_degree_id_seq', 68, true);
+SELECT pg_catalog.setval('public.accounts_degree_id_seq', 72, true);
 
 
 --
 -- Name: accounts_medicalcollege_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 71, true);
+SELECT pg_catalog.setval('public.accounts_medicalcollege_id_seq', 76, true);
 
 
 --
 -- Name: accounts_profile_degree_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 82, true);
+SELECT pg_catalog.setval('public.accounts_profile_degree_id_seq', 86, true);
 
 
 --
 -- Name: accounts_profile_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 246, true);
+SELECT pg_catalog.setval('public.accounts_profile_details_id_seq', 258, true);
 
 
 --
 -- Name: accounts_profile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_id_seq', 42, true);
+SELECT pg_catalog.setval('public.accounts_profile_id_seq', 44, true);
 
 
 --
@@ -4002,28 +4590,28 @@ SELECT pg_catalog.setval('public.accounts_profile_links_id_seq', 1, false);
 -- Name: accounts_profile_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 41, true);
+SELECT pg_catalog.setval('public.accounts_profile_work_id_seq', 43, true);
 
 
 --
 -- Name: accounts_profiledetail_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 261, true);
+SELECT pg_catalog.setval('public.accounts_profiledetail_id_seq', 273, true);
 
 
 --
 -- Name: accounts_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_user_id_seq', 47, true);
+SELECT pg_catalog.setval('public.accounts_user_id_seq', 49, true);
 
 
 --
 -- Name: accounts_work_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.accounts_work_id_seq', 39, true);
+SELECT pg_catalog.setval('public.accounts_work_id_seq', 41, true);
 
 
 --
@@ -4079,7 +4667,7 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 104, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 108, true);
 
 
 --
@@ -4093,21 +4681,21 @@ SELECT pg_catalog.setval('public.django_admin_log_id_seq', 20, true);
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 26, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 27, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 193, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 207, true);
 
 
 --
 -- Name: home_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_comment_id_seq', 13, true);
+SELECT pg_catalog.setval('public.home_comment_id_seq', 14, true);
 
 
 --
@@ -4128,35 +4716,35 @@ SELECT pg_catalog.setval('public.home_imageadd_id_seq', 1, false);
 -- Name: home_post_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_comments_id_seq', 13, true);
+SELECT pg_catalog.setval('public.home_post_comments_id_seq', 14, true);
 
 
 --
 -- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_id_seq', 55, true);
+SELECT pg_catalog.setval('public.home_post_id_seq', 65, true);
 
 
 --
 -- Name: home_post_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_link_id_seq', 29, true);
+SELECT pg_catalog.setval('public.home_post_link_id_seq', 31, true);
 
 
 --
 -- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_tag_id_seq', 98, true);
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 111, true);
 
 
 --
 -- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_postlink_id_seq', 53, true);
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 59, true);
 
 
 --
@@ -4209,6 +4797,13 @@ SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 9, true);
 
 
 --
+-- Name: notifications_message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.notifications_message_id_seq', 6, true);
+
+
+--
 -- Name: notifications_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
@@ -4216,17 +4811,24 @@ SELECT pg_catalog.setval('public.notifications_notification_id_seq', 5, true);
 
 
 --
+-- Name: notifications_notification_message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
+--
+
+SELECT pg_catalog.setval('public.notifications_notification_message_id_seq', 1, false);
+
+
+--
 -- Name: stats_pageobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 101, true);
+SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 120, true);
 
 
 --
 -- Name: stats_requestobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 1493, true);
+SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 1870, true);
 
 
 --
@@ -4686,11 +5288,43 @@ ALTER TABLE ONLY public.mcq_questionbank_tag
 
 
 --
+-- Name: notifications_message notifications_message_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_message
+    ADD CONSTRAINT notifications_message_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notifications_notification_message notifications_notificati_notification_id_message__478903ee_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification_message
+    ADD CONSTRAINT notifications_notificati_notification_id_message__478903ee_uniq UNIQUE (notification_id, message_id);
+
+
+--
+-- Name: notifications_notification_message notifications_notification_message_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification_message
+    ADD CONSTRAINT notifications_notification_message_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: notifications_notification notifications_notification_pkey; Type: CONSTRAINT; Schema: public; Owner: sk
 --
 
 ALTER TABLE ONLY public.notifications_notification
     ADD CONSTRAINT notifications_notification_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notifications_notification notifications_notification_user_id_b5e8c0ff_uniq; Type: CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification
+    ADD CONSTRAINT notifications_notification_user_id_b5e8c0ff_uniq UNIQUE (user_id);
 
 
 --
@@ -5046,17 +5680,17 @@ CREATE INDEX mcq_questionbank_user_id_b7672e56 ON public.mcq_questionbank USING 
 
 
 --
--- Name: notifications_notification_post_id_d84e1970; Type: INDEX; Schema: public; Owner: sk
+-- Name: notifications_notification_message_message_id_85f8427c; Type: INDEX; Schema: public; Owner: sk
 --
 
-CREATE INDEX notifications_notification_post_id_d84e1970 ON public.notifications_notification USING btree (post_id);
+CREATE INDEX notifications_notification_message_message_id_85f8427c ON public.notifications_notification_message USING btree (message_id);
 
 
 --
--- Name: notifications_notification_user_id_b5e8c0ff; Type: INDEX; Schema: public; Owner: sk
+-- Name: notifications_notification_message_notification_id_0562fcc5; Type: INDEX; Schema: public; Owner: sk
 --
 
-CREATE INDEX notifications_notification_user_id_b5e8c0ff ON public.notifications_notification USING btree (user_id);
+CREATE INDEX notifications_notification_message_notification_id_0562fcc5 ON public.notifications_notification_message USING btree (notification_id);
 
 
 --
@@ -5442,11 +6076,19 @@ ALTER TABLE ONLY public.mcq_questionbank
 
 
 --
--- Name: notifications_notification notifications_notification_post_id_d84e1970_fk_home_post_id; Type: FK CONSTRAINT; Schema: public; Owner: sk
+-- Name: notifications_notification_message notifications_notifi_message_id_85f8427c_fk_notificat; Type: FK CONSTRAINT; Schema: public; Owner: sk
 --
 
-ALTER TABLE ONLY public.notifications_notification
-    ADD CONSTRAINT notifications_notification_post_id_d84e1970_fk_home_post_id FOREIGN KEY (post_id) REFERENCES public.home_post(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.notifications_notification_message
+    ADD CONSTRAINT notifications_notifi_message_id_85f8427c_fk_notificat FOREIGN KEY (message_id) REFERENCES public.notifications_message(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: notifications_notification_message notifications_notifi_notification_id_0562fcc5_fk_notificat; Type: FK CONSTRAINT; Schema: public; Owner: sk
+--
+
+ALTER TABLE ONLY public.notifications_notification_message
+    ADD CONSTRAINT notifications_notifi_notification_id_0562fcc5_fk_notificat FOREIGN KEY (notification_id) REFERENCES public.notifications_notification(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

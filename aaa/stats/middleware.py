@@ -35,7 +35,6 @@ class SimpleMiddleware:
         if response.status_code == 200:
             tz = pytz.timezone('Asia/Kolkata')
             date = datetime.datetime.now(tz).date()
-            print(date)
             x = RequestObj.objects.create(date = datetime.datetime.now(tz).date())
             if user:
                 x.user = user
@@ -44,12 +43,13 @@ class SimpleMiddleware:
                 page.count += 1
                 page.save()
             except Exception as e:
-                print('new pageobj created')
                 page = PageObj.objects.create(url=path, count = 1)
 
             x.location = ip
             x.page = page
             x.save()
+            print(dir(response))
+
 
 
 

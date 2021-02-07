@@ -77,10 +77,10 @@
  {% if post.pdf %}
  <b>Attached Pdfs</b>
  <div class="home-post-pdf">
-     <a href="/media/{{post.pdf}}"><p>{{post.pdf_name}}: /media/{{post.pdf}}</p></a>
+     <a href="/media/{{post.pdf}}">{{post.pdf_name}} /media/{{post.pdf}}</a>
  </div>
  {% endif  %}
- <nav onclick="showcommentsdh('comments{{ post.pk  }}')" style="display: flex; justify-content: flex-start; height: auto;">
+ <nav onclick="showcommentsdh('comments{{ post.pk  }}')" style="display: flex; justify-content: flex-start; height: auto; color: white;">
    {% if request.user.is_authenticated and request.user.is_staff %}
    <a >{{ post.get_comments_length }}</a>
    {% elif request.user.is_authenticated and request.user.is_staff == False %}

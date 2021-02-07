@@ -14,7 +14,7 @@
 <div class="upcoming flex-column">
 
 <h1 style="color: #000066;letter-spacing: 1px;align-self: center">Conferences</h1>
-{% if request.user.is_admin %}
+{% if request.user.is_staff %}
 <b class="center"><a href="{% url 'archives:createconference' %}?createconference=True"> Create Conference</a></b>
 {% endif %}
 

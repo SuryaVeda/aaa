@@ -1,21 +1,11 @@
 
 {% load static %}
 <div class="home-container">
-    {% if request.user.is_authenticated and request.user.is_staff %}
-    {% if messages.extratags == request.user.email %}
-    {% for message in messages %}
-    <p style="color: red; font-weight: 600; text-decoration: underline">{{message}}</p>
-    {% endfor %}
 
-
-    {% endif %}
-
-
-    {% endif %}
 
       <div class="someclass">
         <div class="blue-block flex-column">
-          <a class="center"  href="{% url 'home:postForm'  %}" >Add POST | QUESTION </a>
+        <p class="center">  <a   href="{% url 'home:postForm'  %}" >Add POST | QUESTION</a> |  <a href="{% url 'archives:createconference' %}?createconference=True"> CONFERENCE</a> | <a href="{% url 'archives:createlecture' %}"> LECTURE</a></p>
 
         </div>
         {% if lectures %}

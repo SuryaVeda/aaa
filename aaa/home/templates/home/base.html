@@ -7,10 +7,11 @@
   <title>All about anesthesia</title>
   <meta name=viewport content="width=device-width, initial-scale=1">
 
+<link rel="stylesheet" href="{% static 'home/css/simplepicker.css' %}">
+<script type="text/javascript" src="{% static 'home/js/simplepicker.js' %}">
 
+</script>
 
-  <link rel="stylesheet" href="{% static 'home/css/simplepicker.css' %}">
-  <script src="{% static 'home/js/simplepicker.js' %}"></script>
 
 
 
@@ -41,6 +42,14 @@
 
 #datepicker {
   background-color: white;
+}
+
+.errorlist li {
+  color: red;
+  font-size: 15px;
+}
+.new {
+  background-color: #C0C0C0	;
 }
 .bold-red {
     color: red;
@@ -108,6 +117,10 @@
   word-wrap: break-word;
 
 }
+.icon {
+  height: 30px;
+  width: 30px;
+}
 .button-style {
   margin: 10px;
     border-radius: 4px;
@@ -144,24 +157,33 @@
     font-size: 35px;
 }
 
+nav {
+  background-color: #000066;
+  height: 50px;
+
+}
 nav .stacks{
-    background-color: white;
+  background-color: #000066;
     display: none;
 }
-nav{
+nav .stacks img {
+}
+nav .navbar{
+    padding-top:  20px;
     display: flex;
     background-color: #000066;
     flex-flow: row wrap;
-    height: 50px;
+    height: 40px;
+
     justify-content: space-evenly;
     align-items: flex-start;
 }
 
-nav a {
+.navbar a {
     text-decoration: none;
-    font-family: 'Overlock', cursive;
-    color: white;
-    border:12px solid #000066;
+    font-family: 'Source Serif Pro', serif;
+    margin-right:  5px;
+     color: white;
     font-size: 16px;
 }
 
@@ -249,6 +271,19 @@ nav .search_icon:hover{
 
 nav .search_input{
     display: none;
+}
+.navyclass{
+width: 100%;
+position: fixed;
+top: 0;
+}
+#not-box {
+  display: none;
+  flex-flow: column wrap;
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  border: 3px solid yellow;
 }
 footer .neeche{
     height:80px;
@@ -529,7 +564,7 @@ justify-content: flex-start;
 .home-post{
     display: flex;
     flex-flow: column wrap;
-    width: 60%;
+    width: 70%;
     align-self: center;
     background-color: white;
     height: auto;
@@ -537,6 +572,7 @@ justify-content: flex-start;
     border-right: 1px inset grey;
     border-radius: 8px;
     margin-top: 60px;
+    overflow: scroll;
 
 
 }
@@ -546,6 +582,9 @@ justify-content: flex-start;
   align-self: center;
 }
 .home-post p {
+  word-wrap: break-word;
+}
+.home-post a {
   word-wrap: break-word;
 }
 .someclass{
@@ -570,6 +609,16 @@ justify-content: flex-start;
 
 }
 .home-post-link a {
+  width: 100%;
+  word-wrap: break-word;
+
+}
+.home-post-pdf p {
+  width: 100%;
+  word-wrap: break-word;
+
+}
+.home-post-pdf a {
   width: 100%;
   word-wrap: break-word;
 
@@ -760,10 +809,17 @@ justify-content: flex-start;
     flex-flow: column wrap;
     align-items: center;
     justify-content: center;
-    border: 5px solid green;
+    border-top: 5px inset white;
+    border-right: 5px inset grey;
+    border-radius: 8px;
     height: 200px;
     width: 200px;
     margin: 50px 50px;
+    font-size: 12px;
+
+}
+.arch-box a {
+  text-decoration: none;
 }
 
 /*  Classes and tags for archdetail.html   */
@@ -904,23 +960,37 @@ justify-content: flex-start;
 
         }
         nav {
-            height: 45px;
-            display: flex;
-            flex-flow: column wrap;
-            justify-content: space-between;
-            align-items: flex-start;
+          flex-flow: column wrap;
 
         }
 
-        .nav-item{
-            display: none;
+        nav .navbar{
+            display: none ;
+            flex-flow: column wrap;
+            height: auto;
+            min-height: 40px;
         }
 
         nav .stacks{
             display: flex;
+            flex-flow: row wrap;
             margin: 0;
+            min-height: 40px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+          margin-bottom: 12px;
+
         }
 
+        #not-box {
+          display: none;
+          flex-flow: column wrap;
+          width: 98%;
+          background-color: white;
+          margin: 3px outset dimgrey;
+        }
 
         .comment-create-form textarea{
     width: 95%;
@@ -1032,9 +1102,11 @@ window.onclick = function (event) {
 
 } else {
 
-        var drop_down_list = document.getElementById('dropdownlist');
+        var drop_down_list = document.getElementsByClassName('dropdownlist');
         if (drop_down_list != null) {
-          drop_down_list.style.display = 'none';
+          for (var i = 0; i < drop_down_list.length; i++) {
+            drop_down_list[i].style.display = 'none';
+          }
         }
         var drop_down_list1 = document.getElementById('dropdownlist1');
 
@@ -1044,6 +1116,24 @@ window.onclick = function (event) {
 
     }
 };
+window.onscroll = function () {
+  console.log(this.pageYOffset);
+  var navy = document.getElementById('navy');
+
+  if (this.pageYOffset > 140) {
+    console.log('yaaaay');
+    navy.classList.add('navyclass');
+  }
+  else {
+    console.log('hello');
+    try {
+      navy.classList.remove('navyclass');
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+}
 window.onload = function () {
 
   try {
@@ -1085,26 +1175,15 @@ function expand(a, b) {
 
 }
 function openmenu() {
-var navitem =document.getElementsByClassName('nav-item');
-var iddrop =document.getElementById('drop');
-var iddrop1 =document.getElementById('drop1');
+var navbar =document.getElementsByClassName('navbar');
 var navform =document.getElementsByClassName('.navform');
 document.getElementById('navy').style.height='auto';
-for(var i = 0; i < navitem.length; i++){
-       navitem[i].style.display= 'block';}
-    iddrop.style.display= 'block';
-    iddrop1.style.display= 'block';
-
-for(var i = 0; i < navform.length; i++){
-       navform[i].style.display= 'block';}
-
+for(var i = 0; i < navbar.length; i++){
+       navbar[i].style.display= 'flex';}
 
 }
 
-function revealsearchinput() {
-    for(var i = 0; i < document.getElementsByClassName('search_input').length; i++){
-       document.getElementsByClassName('search_input')[i].style.display= 'inline';}
-}
+
 
 function dropdownlistfunction() {
     document.getElementById('dropdownlist1').style.display='flex';
@@ -1112,11 +1191,12 @@ function dropdownlistfunction() {
 
 function dropdownlist(a) {
 
-    var drop_down_list =document.getElementById('dropdownlist');
+    var drop_down_list =document.getElementsByClassName('dropdownlist');
     var myprof =document.getElementsByClassName('myprof');
 
 
-    drop_down_list.style.display = 'flex';
+    for(var i = 0; i < drop_down_list.length; i++) {
+      drop_down_list[i].style.display = 'flex';}
     for(var i = 0; i < myprof.length; i++) {
     myprof[i].style.display = 'block';}
 
@@ -1344,6 +1424,10 @@ function addsubjectintro() {
    document.getElementById('subject-intro-add').style.display = 'block';
 
 }
+function opennotifications() {
+  let nots = document.getElementById('not-box');
+  nots.style.display = 'flex';
+}
 
     </script>
 
@@ -1358,7 +1442,7 @@ function addsubjectintro() {
     <p style=" color: #000066">All About Anaesthesia</p>
 </div>
 
-<nav  id="navy">
+<nav id="navy">
 
   <!--Button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContents" aria-controls="navContents" aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-dark navbar-toggler-icon"></span>
@@ -1366,14 +1450,28 @@ function addsubjectintro() {
   <div class="collapse navbar-collapse" id="navContents -->
 
   <!-- Links -->
-    <div style=" margin: 0" class="stacks" onclick="openmenu()">
-        <img src="{% static 'home/images/stacks.png' %}" height="40px" width="40px">
-        <a style="background-color: #000066; color: white; align-self: center">Have a great day!</a>
-    </div>
-    {% if request.user %}
-      <a class="nav-link nav-item" href="{% url 'home:home' %}">Home</a>
-    <div class="dropdown1" >
-    <a  onclick=" dropdownlistfunction()" class="nav-item nav-link" >Sub specialities</a>
+  <div style=" margin: 0" class="stacks" >
+      <a onclick="openmenu()"><img  src="{% static 'home/images/stacks.png' %}" class="icon"></a>
+      <a class="nav-link nav-item" href="{% url 'home:home' %}"> <img class="icon" src="{% static 'home/images/home.png' %}" alt=""> </a>
+
+
+
+      {%if request.user.is_authenticated %}
+      <a class="nav-link nav-item" href="{% url 'home:yourposts' request.user.username %}"> <img class="icon" src="{% static 'home/images/blog.png' %}" alt=""> </a>
+
+      <a style="display: flex; flex-flow: row wrap; justify-items:center;align-items: center" href="{% url 'notifications:base' %}"> <img style="height: 15px;width: 15px;" src="{% static 'home/images/nots.png' %}" alt=""> <b style="background-color: red; color: white;align-self: flex-start;font-size: 12px; min-width: 10px">{% if request.user.notification.count %} {{ request.user.notification.count }}{% endif %}</b> </a>
+
+      <a  style="text-decoration: none; color: white;" href="{% url 'accounts:logout' %}"><img style="height: 20px;width: 20px; margin-right: 10px;" src="{% static 'home/images/logout.png' %}" alt=""></a>
+
+      {% else %}
+      <a class="nav-item nav-link" href="{% url 'accounts:login' %}"><img class="icon" src="{% static 'home/images/join.png' %}" alt=""> </a>
+    {% endif %}
+  </div>
+  <div class="navbar">
+    <a class="nav-link nav-item" href="{% url 'home:home' %}">Home</a>
+
+    <div class="dropdown1">
+        <a  onclick=" dropdownlistfunction()" class="nav-item nav-link" >Sub specialities</a>
 
         <div id="dropdownlist1" >
             {% if tag_speciality %}
@@ -1383,39 +1481,36 @@ function addsubjectintro() {
             {% endif %}
 
         </div>
+
+
     </div>
 
-      <a class="nav-link nav-item" href="{% url 'home:conf' %}">Conferences</a>
-      <a class="nav-link nav-item" href="{% url 'archives:lectures' %}">Lectures</a>
-      <a class="nav-link nav-item" href="{% url 'mcq:qa' %}" >QuestionBank</a>
+    <a class="nav-link nav-item" href="{% url 'home:conf' %}">Conferences</a>
+    <a class="nav-link nav-item" href="{% url 'archives:lectures' %}">Lectures</a>
+    <a class="nav-link nav-item" href="{% url 'mcq:qa' %}" >QuestionBank</a>
     <a class="nav-item nav-link" href="{% url 'home:speciality' 'NEET-SS' %}">NEET-SS</a>
-    {% if request.user.is_staff %}
-
-    {% endif %}
-
     <a class="nav-item nav-link" href="{% url 'home:search' %}">Search</a>
     {% if request.user.is_admin and request.user.email == 'vijay.adabala96@gmail.com' or request.user.email == 'suryaveda@hotmail.com'%}
         <a class="nav-item nav-link" href="{% url 'home:manage' %}">Manage</a>
         <a class="nav-item nav-link" href="{% url 'stats:stat' %}">Statistics</a>
     {% endif %}
-{% endif %}
+
+
     {%if request.user.is_authenticated %}
-    <div class="dropdown"  >
-        <a  onclick="dropdownlist(this);" class="nav-item nav-link" >P</a>
-        <div id="dropdownlist">
-            {%if request.user.is_authenticated %}
-    <a class="nav-link nav-item myprof" href="{% url 'accounts:myprofile' %}"> myProfile </a>
+    <a style="display: flex; flex-flow: row wrap; justify-items:center;align-items: center" href="{% url 'notifications:base' %}"> <img style="height: 15px;width: 15px;" src="{% static 'home/images/nots.png' %}" alt=""> <b style="background-color: red; color: white;align-self: flex-start;font-size: 12px; min-width: 10px">{% if request.user.notification.count %} {{ request.user.notification.count }}{% endif %}</b> </a>
+
     <a class="nav-link nav-item myprof" href="{% url 'accounts:logout' %}">Logout</a>
 
     {% else %}
     <a class="nav-link nav-item myprof" href="{% url 'accounts:login' %}">login</a>
     {%endif %}
 
-        </div>
-    </div>
-    {% else %}
-    <a class="nav-item nav-link" href="{% url 'accounts:login' %}">Join</a>
-{% endif %}
+
+
+  </div>
+
+
+
 </nav>
 <div id="empty">
 

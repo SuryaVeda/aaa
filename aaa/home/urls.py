@@ -8,6 +8,7 @@ app_name = 'home'
 
 urlpatterns = [
 path('posts/<int:pk>', views.PostDetail.as_view(), name = 'postdetail'),
+path('users/<str:username>', views.YourPost.as_view(), name = 'yourposts'),
 path('getnewposts/<int:pk>', views.GetPosts.as_view(), name = 'getposts'),
 path('', views.HomeView.as_view(), name = 'home'),
 path('refreshhome', views.refresh_home_page, name = 'refresh'),

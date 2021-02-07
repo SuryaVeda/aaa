@@ -1,3 +1,5 @@
+
+
 {% extends "home/base.html" %}
 {% load static %}
 {% block main %}
@@ -5,346 +7,41 @@
   .notification{
     display: flex;
     flex-flow: column wrap;
-    margin:40px;
+    align-self: center;
+    border-top: 1px inset white;
+    border-right: 1px inset grey;
+    border-radius: 8px;
+    margin-top: 10px;
+    min-height: 120px;
+    width: 70%;
+    overflow: none;
 
   }
+  @media screen and (max-width: 800px) {
+
+    .notification {
+      width: 100%;
+    }
+  }
 </style>
-<div class="notification home-container">
-
-  {% if lectures %}
-  {% for post in lectures %}
-  {% if post %}
-  <div class="home-post lecture">
-
-    <div class="flex-column">
-      <div class="flex-row" style="justify-content: space-between">
-        <h2 style="color: #800000; margin-bottom: 0"> {{ post.get_lecture_range }}</h2>
-        <div class="socialmediatags tags">
-          <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
-
-   <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
-   <a href="{{ post.get_absolute_url }}"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
-
-
-        </div>
-      </div>
-
-
-        <div class="regulartags tags">
-          {% for tag in post.get_tags %}
-          {% if tag.is_degree %}
-          <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
-          {% else %}
-          <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
-
-          {% endif %}
-          {% endfor %}
-        </div>
-
-
-    </div>
-    <p style="color: #000066"><b>{{post.posted_on}} </b></p>
-
-    <div class="home-post-heading">
-        <h3>{{post.heading | linebreaks }}</h3>
-
-        {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
-       <form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
-       {% csrf_token %}
-        <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Lecture" style="text-decoration: underline; color: #000066" >
-       </form>
-       {%endif %}
-
-
-
-    </div>
-
-   {% if post.img %}
-   <div class="home-post-img">
-       <img  src="/media/{{post.img}}" width="250px" height="250px">
-   </div>
-
-   {% endif  %}
-   {% if request.user.is_admin and request.user == post.user %}
-   <p><a href="{% url 'archives:adddetail' post.pk %}"><img src="{% static 'home/images/details.png' %}" height="30px" width="30px" alt=""></a></p>
-
-   {% endif %}
-   {% if post.get_post_details %}
-   {% for i in post.get_post_details %}
-   <div class="showsubjectintro">
-
-   <h2 style="text-decoration: underline; font-weight: 600; color: #000066;">{{i.heading}}
-     {% if request.user.is_admin %}
-     <a href="{% url 'archives:editdetails' i.pk post.pk%}"> <img src="{% static 'home/images/edit.png' %}" height="20px" width="20px" alt=""> </a><a style="margin-left: 10px" href="{% url 'archives:deletepostdetail' i.pk %}"><img src="{% static 'home/images/delete.png' %}" height="20px" width="20px"></a>
-
-     {% endif %}
-   </h2>
-
-       {% if i.details %}
-       <p>{{i.details|linebreaks }}</p>
-       {% else %}
-       {% endif %}
-   </div>
-   {% endfor %}
-   {% endif %}
-
-
-
-   {% if post.get_links %}
-   <h3>Attached Links</h3>
-   <form class="" action="{% url 'archives:sendmail' post.pk %}" method="post">
-     {% csrf_token %}
-     <button style="height: 50px;width: 80px;background-color: #000066;color:white;" type="submit" name="button"> Get Lecture link to your mail</button>
-   </form>
-   {% endif  %}
-
-   {% if post.pdf %}
-   <b>Attached Pdfs</b>
-   <div class="home-post-pdf">
-       <a href="{{post.pdf}}"><p>{{post.pdf_name}}: {{post.pdf}}</p></a>
-   </div>
-   {% endif  %}
-   <div class="blue-block flex-column" onclick="showcommentsdh('comments{{ post.pk  }}')"  style="min-height: 40px">
-     {% if request.user.is_staff %}
-     <a class="center">{{ post.get_comments_length }}</a>
-     {% else %}
-     <a href="{% url 'accounts:login' %}">Login to see/post comments</a>
-     {% endif %}
-
-   </div>
-   {% if request.user.is_staff %}
-   <div id="comments{{post.pk}}" class="comments ">
-     <script type="text/javascript">
-       var dhcomments{{post.pk}} = document.getElementById('comments{{ post.pk }}')
-       dhcomments{{post.pk}}.style.display = 'none';
-     </script>
-   {% if post.get_comments %}
-   <div class="home-post-comments">
-   {% for comment in post.get_comments %}
-       <div class="home-post-comment-single">
-           <div class="flex-row end-end">
-             <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}  </b>   </p>
-             {% if request.user.is_staff and request.user == comment.user%}
-             <p><a style="margin-right: 3px" onclick="deletecomment(event, {{comment.pk}})"><img src="{% static 'home/images/delete.png' %}" height="20px" width="20px" alt=""></a></p>
-                 {%endif %}
-           </div>
-
-
-     {% if comment.img %}
-
-   <div  class="home-post-img">
-       <img  src="/media/{{comment.img}}" width="250px" height="250px">
-   </div>
-
-   {% endif  %}
-
-
-
-   {% if comment.text %}
-   <div class="home-post-content">
-       <p>{{comment.text|linebreaks }}</p>
-   </div>
-   {% endif  %}
-
-
-
-
-   {% if comment.get_links %}
-           <b>Attached links</b>
-   {% for i in comment.get_links %}
-   <div class="home-post-link">
-       <a href="{{i.link}}"><p>{{i.link_name}}: {{i.link}}</p></a>
-   </div>
-   {%endfor%}
-   {% endif  %}
-   {% if comment.pdf %}
-           <b>Attached pdfs</b>
-   <div class="home-post-pdf">
-       <a href="{{comment.pdf}}"><p>{{comment.pdf_name}}: {{comment.pdf}}</p></a>
-   </div>
-   {% endif  %}
-           </div>
-   {% endfor %}
-   </div>
-   {% endif  %}
-   {% if request.user.is_staff %}
-   <div class="comment-create-form">
-    <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
-           {% csrf_token %}
-       <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
-
-       <button name="createcomment" type="submit" value="createcomment">Submit</button>
-       </form>
-
-       </div>
-   {% endif %}
-
-   </div>
-   {% endif %}
-   </div>
-  {% endif %}
-  {% endfor %}
-  {% endif %}
-
-{% if posts %}
-{% for post in posts %}
-{% if post %}
-<div class="home-post">
-
- <div class="flex-column">
-   <div class="flex-row" style="justify-content: space-between">
-     <p style="color: #000066"><b>{{post.posted_on}}</b> </p>
-     <div class="socialmediatags tags">
-
-       <a href="https://api.whatsapp.com/send?text={{ post.get_absolute_url }}" data-action="share/whatsapp/share"><img src="{% static 'home/images/whatsapp.png' %}" height=20px, width=20px alt=""> </a>
-<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ post.get_absolute_url }}" ><img src="{% static 'home/images/facebook.png' %}" height=20px, width=20px alt=""></a>
-<a href="{{ post.get_absolute_url }}"><img src="{% static 'home/images/copy.png' %}" height=20px, width=20px alt=""></a>
-
-
-     </div>
-   </div>
-
-
-     <div class="regulartags tags">
-       {% for tag in post.get_tags %}
-       {% if tag.is_degree %}
-       <p class="degree"><a style="margin:5px;text-decoration:none;color: white;" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a></p>
-       {% else %}
-       <p style="text-decoration:none; font-weight: 400;margin-right: 10px;text-align: center;" ><a id = '{{tag.name}}' style="margin: 5px;text-decoration: none" href="{% url 'home:speciality' tag.name %}">{{tag.name}}</a>  </p>
-
-       {% endif %}
-       {% endfor %}
-     </div>
-
-
- </div>
-
- {% if request.user.is_authenticated and request.user == post.user or request.user.is_admin%}
-<form onsubmit="deleteposte(event, {{post.pk}})" method="post" enctype="application/x-www-form-urlencoded">
-{% csrf_token %}
- <input type="submit" name = 'deletepostbtn{{post.pk}}' value="Delete Post" style="text-decoration: underline; color: #000066" >
-</form>
-{%endif %}
- <div class="home-post-heading">
-     <h3>{{post.heading | linebreaks }}</h3>
-
-
- </div>
-
-
- {% if post.img %}
- <div class="home-post-img">
-     <img  src="/media/{{post.img}}" width="250px" height="250px">
- </div>
-
- {% endif  %}
-
-
- {% if post.content %}
- <div class="home-post-content">
-     <p>{{post.content|linebreaks }}</p>
- </div>
- {% endif  %}
-
-
- {% if post.get_links %}
- <b>Attached links</b>
- {% for i in post.get_links %}
- <div class="home-post-link">
-     <a href="{{i.link}}"><p>{{i.link_name}}</p></a>
- </div>
- {%endfor%}
- {% endif  %}
-
- {% if post.pdf %}
- <b>Attached Pdfs</b>
- <div class="home-post-pdf">
-     <a href="{{post.pdf}}"><p>{{post.pdf_name}}: {{post.pdf}}</p></a>
- </div>
- {% endif  %}
- <nav onclick="showcommentsdh('comments{{ post.pk  }}')" style="display: flex; justify-content: flex-start; height: auto;">
-   {% if request.user.is_staff %}
-   <a >{{ post.get_comments_length }}</a>
-   {% else %}
-   <a href="{% url 'accounts:login' %}">Login to see/post comments</a>
-   {% endif %}
-
- </nav>
- {% if request.user.is_staff %}
- <div id="comments{{post.pk}}" class="comments ">
-   <script type="text/javascript">
-     var dhcomments{{post.pk}} = document.getElementById('comments{{ post.pk }}')
-     dhcomments{{post.pk}}.style.display = 'none';
-   </script>
- {% if post.get_comments %}
- <div class="home-post-comments">
- {% for comment in post.get_comments %}
-     <div class="home-post-comment-single">
-         <div class="flex-row end-end">
-           <p style="font-size: 14px;text-decoration:underline;color: #000066"><b>{{comment.user.username}} | {{comment.posted_on}}  </b>   </p>
-           {% if request.user.is_staff and request.user == comment.user%}
-           <p><a style="margin-right: 3px" onclick="deletecomment(event, {{comment.pk}})"><img src="{% static 'home/images/delete.png' %}" height="20px" width="20px" alt=""></a></p>
-               {%endif %}
-         </div>
-
-
-   {% if comment.img %}
-
- <div  class="home-post-img">
-     <img  src="/media/{{comment.img}}" width="250px" height="250px">
- </div>
-
- {% endif  %}
-
-
-
- {% if comment.text %}
- <div class="home-post-content">
-     <p>{{comment.text|linebreaks }}</p>
- </div>
- {% endif  %}
-
-
-
-
- {% if comment.get_links %}
-         <b>Attached links</b>
- {% for i in comment.get_links %}
- <div class="home-post-link">
-     <a href="{{i.link}}"><p>{{i.link_name}}: {{i.link}}</p></a>
- </div>
- {%endfor%}
- {% endif  %}
- {% if comment.pdf %}
-         <b>Attached pdfs</b>
- <div class="home-post-pdf">
-     <a href="{{comment.pdf}}"><p>{{comment.pdf_name}}: {{comment.pdf}}</p></a>
- </div>
- {% endif  %}
-         </div>
- {% endfor %}
- </div>
- {% endif  %}
- {% if request.user.is_staff %}
- <div class="comment-create-form">
-  <form enctype="multipart/form-data" method="post" action="{% url 'home:commentform' post.pk %}">
-         {% csrf_token %}
-     <p><textarea required type="text" name="text" placeholder="Enter Comment.."></textarea></p>
-
-     <button name="createcomment" type="submit" value="createcomment">Submit</button>
-     </form>
-
-     </div>
- {% endif %}
-
- </div>
- {% endif %}
-
-
- </div>
-{% endif %}
-
+<div class="flex-column">
+
+  {% if notifications %}
+{% if new_notifications %}
+{% for post in new_notifications %}
+<div onclick="window.location.href = '{{ post.post_url }}' " class="notification new">
+  <p>{{ post.text }}</p>
+
+</div>
 {% endfor %}
+{% endif %}
+{% for post in notifications %}
+<div onclick="window.location.href = '{{ post.post_url }}' " class="notification">
+  <p>{{ post.text }}</p>
+
+</div>
+{% endfor %}
+
 {% else %}
 <h2>No notifications to show</h2>
 {% endif %}

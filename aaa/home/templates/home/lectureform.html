@@ -29,8 +29,10 @@
 <div class="fullcover">
 
     <div class="postform">
-
         <form method="post" enctype="multipart/form-data">
+          <h2 style="align-self: center;color: red">Add a Lecture</h2>
+
+
         {% csrf_token %}
 
             {% for message in form.errors %}
@@ -71,7 +73,7 @@
       </div>
       <div id="endcalender">
       </div>
-      <b>When does Lecture start? : <input type="text" name="lecture_start_date" value="" required> <a onclick="showcalender('start');"><img src="{% static 'home/images/calendar.png' %}" height="20px" width = "20px" alt=""></a> <br> <br> When does conference end? : <input type="text" name="lecture_end_date" value="" required> <a onclick="showcalender('end');"> <img src="{% static 'home/images/calendar.png' %}" height="20px" width = "20px" alt=""></a>
+      <b>When does Lecture start? : <input type="text" name="lecture_start_date" value="" required> <a onclick="showcalender('start');"><img src="{% static 'home/images/calendar.png' %}" height="20px" width = "20px" alt=""></a> <br> <br> When does Lecture end? : <input type="text" name="lecture_end_date" value="" required> <a onclick="showcalender('end');"> <img src="{% static 'home/images/calendar.png' %}" height="20px" width = "20px" alt=""></a>
       </b>
     </div>
 

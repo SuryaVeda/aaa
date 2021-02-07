@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .models import Post,Comment, Tag, PostLink
+from notifications.mixins import CreateNotificationMixin
 from archives.models import Book, LecturePost
 from django.utils.decorators import method_decorator
 from accounts.models import User, ProfileDetail
-from home.mixins import ValidateLinkMixin, ValidateTextMixin, ValidateFileMixin
+from home.mixins import ValidateLinkMixin, ValidateTextMixin, ValidateFileMixin, GeneralContextMixin
 from .forms import CreatePostForm
 from .decorators import staff_required, admin_required
 from django.utils import timezone
@@ -47,7 +48,6 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         questionbank = QuestionBank.objects.all()
-        template_name = 'home/neet.html'
         context['questionbank'] = list(questionbank.filter(mcq=True))
         context['flashcards'] = list(questionbank.filter(flashcard=True))
         postslist = []
@@ -65,8 +65,6 @@ class HomeView(TemplateView):
         context['lectures'] = [i for i in LecturePost.objects.filter(lecture=True).order_by('-pk') if utc.localize(i.lecture_start_date) > today]
         context['conferences'] = [i for i in LecturePost.objects.filter(lecture=False).order_by('lecture_start_date') if utc.localize(i.lecture_start_date) > today]
         context['posts'] = postslist[0:15]
-        tag = Tag.objects.get(name='Conferences')
-        #context['oldposts'] = Post.objects.filter(tag=tag, conference=False).order_by('-pk')
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context['tag_speciality'] = list(tag_speciality)
         return context
@@ -167,6 +165,11 @@ class SearchView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
+        context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
+        searchInput = self.request.GET.get('searchinput')
+        if not searchInput:
+            context['someresults'] = True
+            return context
         context['posts'] = self.get_posts()
 
         context['lectures'] = self.get_lectures()
@@ -175,14 +178,10 @@ class SearchView(TemplateView):
         else:
             context['books'] = False
 
-        if  context['posts'] and context['books'] and context['lectures']:
+        if context['posts'] and context['books'] and context['lectures']:
             context['someresults'] = True
         else:
             context['someresults'] = False
-
-
-
-        context['tag_speciality'] = Tag.objects.filter(is_speciality=True)
         return context
 
 
@@ -262,6 +261,7 @@ def delete_tagdetail_view(request,pk,detail_pk):
 @staff_required
 def create_post_view(request):
     if request.user and request.user:
+        print('hello')
         template_name = 'home/home_post.html'
         form = CreatePostForm()
 
@@ -273,7 +273,7 @@ def create_post_view(request):
         return redirect('accounts:login')
 
 @method_decorator(staff_required, name = 'dispatch')
-class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, TemplateView):
+class PostView(CreateNotificationMixin,ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, TemplateView):
     template_name = 'home/home.html'
     def get_user(self):
         if self.request.user.is_staff:
@@ -289,7 +289,9 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                     self.save_comment(kwargs['pk'])
                     return redirect('home:refresh')
             if self.request.POST.get('homepostform'):
-                self.save_homepost()
+                result = self.save_homepost()
+                if not result:
+                    return redirect('home:postForm')
                 return redirect('home:refresh')
             if self.request.POST.get('addtagdetail'):
                 self.save_tagdetail(kwargs['pk'])
@@ -368,6 +370,11 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
         template_name = 'home/home_post.html'
         form = CreatePostForm()
         form = CreatePostForm(self.request.POST, self.request.FILES)
+        print(self.request.POST)
+        if not self.request.POST.get('tag'):
+            messages.error(self.request, 'Add a Tag/Subject.', extra_tags = self.request.user.email)
+            return False
+
         if form.is_valid():
             if self.request.user or self.request.user:
                 form.save(commit=False)
@@ -378,9 +385,9 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                 a.user = self.request.user
                 a.save()
                 post = a
-                """if post.user.is_staff:
-                    mess = Message.objects.create(post_url = post.get_absolute_url(), type = 'post', text = 'A new comment is added to {0}.. by user {1}'.format(post.heading[:10], post.user.username))
-                    mess.create_notifications()"""
+                if post.user.is_staff:
+                    mess = Message.objects.create(post_url = post.get_absolute_url(), type = 'post', text = 'A new post is added  {0}.. by user {1}'.format(post.heading[:10], post.user.username))
+                    mess.create_notifications(post.user)
 
                 if link_dict:
                     if link_dict['links']:
@@ -436,19 +443,7 @@ class PostView(ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, Template
                         x.link.add(linkobj)
             x.save()
             post.comments.add(x)
-            """if post.user.is_staff:
-                try:
-                    nots = Notification.objects.get(user = post.user)
-                except Exception as e:
-                    nots = Notification.objects.create(user=post.user, count = 0)
-                try:
-                    mess = Message.objects.get(post_url = post.get_absolute_url(), type = 'post')
-                except Exception as e:
-                    mess = Message.objects.create( text = 'A new comment is added to {0}.. by new user'.format(post.heading[:10]))
-                nots.message.add(mess)
-                nots.count += 1
-                nots.save()
-                """
+            self.create_comment_notification(post)
             post.save()
 
         except:
@@ -496,4 +491,33 @@ class PostDetail(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['post'] = Post.objects.get(pk=kwargs['pk'])
+        return context
+
+@method_decorator(staff_required, name = 'dispatch')
+class YourPost(TemplateView, GeneralContextMixin):
+    template_name = 'home/myposts.html'
+    def get(self, request, *args, **kwargs):
+        try:
+            z = self.get_context()
+            print(z)
+            username = kwargs['username']
+            x = User.objects.filter(username = username)
+            if x:
+                return super().get(request, *args, **kwargs)
+            else:
+                messages.error(request, 'invalid user', extra_tags = self.request.user.email)
+                return redirect('home:home')
+
+        except Exception as e:
+            return redirect('home:home')
+
+    def get_context_data(self, **kwargs):
+        context = self.get_context_data(**kwargs)
+        utc = pytz.UTC
+        tz = pytz.timezone('Asia/Kolkata')
+        today = datetime.datetime.now(tz)
+        context['lectures'] = [i for i in LecturePost.objects.filter(lecture=True, user = self.request.user).order_by('-pk') if utc.localize(i.lecture_start_date) > today]
+        context['conferences'] = [i for i in LecturePost.objects.filter(lecture=False, user = self.request.user).order_by('lecture_start_date') if utc.localize(i.lecture_start_date) > today]
+
+        context['posts'] = Post.objects.filter(user = self.request.user)
         return context

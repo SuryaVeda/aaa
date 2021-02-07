@@ -16,10 +16,11 @@ class CreatePostForm(ModelForm):
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
+    
     def __init__(self, *args, **kwargs):
         super(CreatePostForm, self).__init__(*args, **kwargs)
         self.fields['heading'].widget.attrs['placeholder'] = 'Post heading/Question/title'
-        self.fields['tag'].widget.attrs['placeholder'] = 'Tags'
+        self.fields['tag'].required = True
         self.fields['pdf_name'].widget.attrs['placeholder'] = 'name of pdf'
         self.fields['content'].widget = forms.Textarea(attrs={'rows': 4, 'cols': 15})
         self.fields['content'].widget.attrs['placeholder'] = 'Content of post/mcq/answer'

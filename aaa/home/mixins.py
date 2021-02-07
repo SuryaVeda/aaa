@@ -4,8 +4,16 @@ import bleach
 from django.contrib import messages
 from .models import *
 from accounts.models import Profile,User,ProfileDetail, Work, Degree, MedicalCollege
-from home.models import PostLink
+from home.models import PostLink, Tag
 
+
+
+class GeneralContextMixin:
+    def get_context_data(self, **kwargs):
+        context ={}
+        context['tag_speciality'] = list(Tag.objects.filter(is_speciality=True))
+
+        return context
 
 class ValidateLinkMixin:
     def clean_links(self):
@@ -14,7 +22,6 @@ class ValidateLinkMixin:
         name = self.request.POST.getlist('link_name')
         url = self.request.POST.getlist('link')
         if len(name) != len(url):
-            messages.error(self.request, 'kindly enter name or url')
             return False
         validator = URLValidator()
         if url:
@@ -29,7 +36,6 @@ class ValidateLinkMixin:
                         return False
                 else:
                     print('no url entered')
-                    messages.error(self.request, 'Do not submit form with empty url field')
                     return False
         if name:
             for i in name:
@@ -301,7 +307,6 @@ class ContactFormMixin:
                         return True
                 else:
                     print('no url entered')
-                    messages.error(self.request, 'Do not submit form with empty url field')
         if name:
             for i in name:
                 if i:

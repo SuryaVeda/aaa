@@ -11,6 +11,19 @@
     width: 250px;
     height: 250px;
 }
+@media screen and (max-width: 800px) {
+    .arch-box{
+      width: 100%;
+      margin: 0;
+      margin-top: 50px;
+    }
+    .arch-main{
+      width: 100%;
+    }
+    .arch-row{
+      width: 100%;
+    }
+}
 </style>
 <div class="arch-main">
 <h1 style="align-self: center">Question Bank</h1>
@@ -137,12 +150,7 @@
      }
 </style>
 <div class="mcqcover">
-    {% if messages.extratags == request.user.email %}
-    {% for message in messages %}
-    <b style="color: red;">{{message}}</b>
-    {% endfor %}
-
-    {% endif %}
+    
     <div class="questionbankheading">
          <h1 >{{tag.name}}</h1>
     <h2 >Question bank </h2>

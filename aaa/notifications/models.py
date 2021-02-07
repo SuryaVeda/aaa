@@ -3,6 +3,7 @@ from accounts.models import User
 from home.models import Post
 import pytz, datetime
 from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 # Create your models here.
 
 
@@ -23,11 +24,21 @@ class Message(models.Model):
     post_url = models.URLField(blank=True, null=True)
     type = models.CharField(blank=True,null=True, max_length=100)
     read = models.BooleanField(default=False, null = True)
-    def create_notifications(self):
-        users = list(Users.objects.filter(staff= True))
+    def create_notifications(self, post_user):
+        users = list(User.objects.filter(staff= True))
         for user in users:
-            if user.notification:
-                pass
-            else:
-                pass
+            if user != post_user:
+                try:
+                    notification = user.notification
+                    notification.count += 1
+                    print(self)
+                    notification.message.add(self)
+                    notification.save()
+                except ObjectDoesNotExist:
+                    notification = Notification.objects.create(user = user, count = 0)
+                    notification.count += 1
+                    print(self)
+                    notification.message.add(self)
+                    notification.save()
+
         return 'hello'
