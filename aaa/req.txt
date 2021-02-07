@@ -1,7 +1,12 @@
 asgiref==3.3.1
 bleach==3.2.1
+certifi==2020.12.5
+chardet==4.0.0
 dj-database-url==0.5.0
 Django==3.1.3
+-e git+https://github.com/mobolic/facebook-sdk.git@3fa89fec6a20dd070ccf57968c6f89256f237f54#egg=facebook_sdk
+humanize==3.2.0
+idna==2.10
 packaging==20.4
 Pillow==8.0.1
 psycopg2-binary==2.8.6
@@ -9,6 +14,8 @@ pyparsing==2.4.7
 python-decouple==3.3
 python-dotenv==0.15.0
 pytz==2020.4
+requests==2.25.1
 six==1.15.0
 sqlparse==0.4.1
+urllib3==1.26.2
 webencodings==0.5.1

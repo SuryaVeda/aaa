@@ -1,0 +1,14 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block main %}
+
+{% if lecture %}
+{% include "home/basetemplates/lecturebase.html" %}
+
+
+{% else %}
+{% include "home/basetemplates/conferencebase.html" %}
+{% endif %}
+
+
+{% endblock %}

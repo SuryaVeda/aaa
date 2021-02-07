@@ -39,10 +39,17 @@ class LecturePost(Post):
     lecture_end_date = models.DateTimeField(auto_now_add=False,auto_now=False, null=True,blank=True)
     post_details = models.ManyToManyField('accounts.ProfileDetail', blank=True)
     def get_absolute_url(self):
-        if settings.DEBUG:
-            return 'http://127.0.0.1:8000/archives/lectures'
+        if self.lecture:
+            if settings.DEBUG:
+                return 'http://127.0.0.1:8000/archives/lecturepost/{}'.format(self.pk)
+            else:
+                return 'https://allaboutanaesthesia.co/archives/lecturepost/{}'.format(self.pk)
         else:
-            return 'https://allaboutanaesthesia.co/archives/lectures'
+            if settings.DEBUG:
+                return 'http://127.0.0.1:8000/archives/conferencepost/{}'.format(self.pk)
+            else:
+                return 'https://allaboutanaesthesia.co/archives/conferencepost/{}'.format(self.pk)
+
 
     @property
     def get_post_details(self):

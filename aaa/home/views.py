@@ -20,6 +20,7 @@ from django.views import View
 from mcq.models import QuestionBank
 from notifications.models import Notification, Message
 from archives.models import LecturePost
+from fb.mixins import PublishInFacebook
 # Create your views here.
 class Manage(TemplateView):
     template_name = 'home/manage.html'
@@ -40,7 +41,7 @@ def email(request):
     send_mail( subject, message, email_from, recipient_list )
     return redirect('home:home')
 
-class HomeView(TemplateView):
+class HomeView(PublishInFacebook,TemplateView):
     template_name = 'home/home.html'
     posts = []
     postslist = []
@@ -65,6 +66,7 @@ class HomeView(TemplateView):
         context['lectures'] = [i for i in LecturePost.objects.filter(lecture=True).order_by('-pk') if utc.localize(i.lecture_start_date) > today]
         context['conferences'] = [i for i in LecturePost.objects.filter(lecture=False).order_by('lecture_start_date') if utc.localize(i.lecture_start_date) > today]
         context['posts'] = postslist[0:15]
+
         tag_speciality = Tag.objects.filter(is_speciality=True)
         context['tag_speciality'] = list(tag_speciality)
         return context
@@ -273,7 +275,7 @@ def create_post_view(request):
         return redirect('accounts:login')
 
 @method_decorator(staff_required, name = 'dispatch')
-class PostView(CreateNotificationMixin,ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, TemplateView):
+class PostView(PublishInFacebook,CreateNotificationMixin,ValidateLinkMixin, ValidateFileMixin, ValidateTextMixin, TemplateView):
     template_name = 'home/home.html'
     def get_user(self):
         if self.request.user.is_staff:
@@ -395,7 +397,12 @@ class PostView(CreateNotificationMixin,ValidateLinkMixin, ValidateFileMixin, Val
                             linkobj = PostLink.objects.create(user=self.get_user(), link=i[1], link_name=i[0])
                             a.link.add(linkobj)
                             a.save()
+                try:
+                    self.publish_facebook(a)
+                except Exception as e:
+                    print('cannot publish in facebook')
 
+                return True
             else:
                 print('not authenticated')
                 return redirect('home:postForm')

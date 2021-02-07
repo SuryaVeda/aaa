@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, DetailView
 from .models import *
 from home.decorators import staff_required, log_required
 from accounts.models import User, Profile, ProfileDetail
@@ -19,6 +19,16 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 # Create your views here.
+class LecturePostDetailView(DetailView):
+    model = LecturePost
+    template_name = 'archives/lecture_detail.html'
+    context_object_name = 'post'
+    extra_context = {'lecture':True}
+class ConferencePostDetailView(DetailView):
+    model = LecturePost
+    template_name = 'archives/lecture_detail.html'
+    context_object_name = 'post'
+    extra_context = {'lecture':False}
 
 
 class LecturePage(TemplateView):

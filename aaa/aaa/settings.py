@@ -71,6 +71,8 @@ else:
     ALLOWED_HOSTS = x.split(',')
     FILE_UPLOAD_PERMISSIONS = 0o640
 
+FB_ACCESS_TOKEN = os.getenv('fb_access_token')
+print(FB_ACCESS_TOKEN)
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
@@ -80,6 +82,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # Application definition
 
 INSTALLED_APPS = [
+    'fb',
     'stats',
     'notifications',
     'mcq',

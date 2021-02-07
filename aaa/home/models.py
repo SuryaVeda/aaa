@@ -171,6 +171,18 @@ class Post(models.Model):
                 return 'no heading'
         except:
             return 'some problem in post object'
+    def get_text(self):
+        text = []
+        text.append('Checkout post: {0}'.format(self.get_absolute_url()))
+        text.append(self.heading)
+        if self.content:
+            text.append(self.content)
+
+        if self.link.all():
+            for i in self.link.all():
+                text.append(i.link)
+
+        return '\n\n'.join(text)
     def get_absolute_url(self):
         if settings.DEBUG:
             return 'http://127.0.0.1:8000/posts/{}'.format(self.pk)
