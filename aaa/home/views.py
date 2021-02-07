@@ -51,14 +51,9 @@ class HomeView(PublishInFacebook,TemplateView):
         questionbank = QuestionBank.objects.all()
         context['questionbank'] = list(questionbank.filter(mcq=True))
         context['flashcards'] = list(questionbank.filter(flashcard=True))
-        postslist = []
-        oldpostslist = list(Post.objects.filter(lecture=False, conference=False).order_by('-date').prefetch_related())
+        postslist = list(Post.objects.filter(lecture=False, conference=False).order_by('-date').prefetch_related())
 
-        for i in oldpostslist:
-            if i.tag.filter(name = 'Conferences'):
-                continue
-            else:
-                postslist.append(i)
+
         print(len(postslist))
         utc = pytz.UTC
         tz = pytz.timezone('Asia/Kolkata')
