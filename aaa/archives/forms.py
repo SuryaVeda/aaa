@@ -9,6 +9,7 @@ from django.contrib.admin import widgets
 from django.shortcuts import redirect
 from django.contrib import messages
 from fb.mixins import PublishInFacebook
+from django.conf import settings
 
 class ProfileDetailForm(forms.ModelForm):
     # TODO: Define other fields here
@@ -131,10 +132,11 @@ class LecturePostForm(PublishInFacebook,CreatePostForm, ValidateLinkMixin):
             if linkdict['linkobj']:
                 [saveobj.link.add(i) for i in linkdict['linkobj']]
         print(saveobj)
-        try:
-            self.publish_facebook(saveobj)
-        except Exception as e:
-            print('cannot publish in fb')
+        if not settings.DEBUG:
+            try:
+                self.publish_facebook(saveobj)
+            except Exception as e:
+                print('cannot publish in fb')
         [saveobj.tag.add(i) for i in self.cleaned_data['tag']]
 
         return saveobj

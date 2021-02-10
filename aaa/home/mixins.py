@@ -71,7 +71,6 @@ class ValidateTextMixin:
 
                 except:
                     text_dict[i] = ''
-                    messages.error(self.request, 'enter valid text')
         return text_dict
 
 
@@ -85,7 +84,6 @@ class ValidateFileMixin:
             for i in imagelist:
                 img = self.request.FILES.get(i)
                 if not img:
-                    messages.error(self.request, '{0} not entered'.format(img))
                     continue
                 print(img.name.split('.'))
                 if len(img.name.split('.')) > 2:
@@ -139,7 +137,6 @@ class DetailFormMixin:
             self.myprofile.save()
 
         else:
-            messages.error(self.request, 'kindly fill the text field of form')
             return False
 
 

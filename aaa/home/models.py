@@ -251,7 +251,7 @@ class Post(models.Model):
         difference = humanize.naturaldelta(difference)
         try:
             #x = '{0}  |  {1} '.format(self.user.username, self.date.strftime('%d %b %Y %I %M %p'))
-            x = '{0}  |  {1} ago'.format(self.get_user(), difference)
+            x = '{0}  |  {1} ago'.format(self.user.username, difference)
 
             return x
         except:

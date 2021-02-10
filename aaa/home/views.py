@@ -392,11 +392,12 @@ class PostView(PublishInFacebook,CreateNotificationMixin,ValidateLinkMixin, Vali
                             linkobj = PostLink.objects.create(user=self.get_user(), link=i[1], link_name=i[0])
                             a.link.add(linkobj)
                             a.save()
-                try:
-                    self.publish_facebook(a)
-                except Exception as e:
-                    print('cannot publish in facebook')
 
+                if not settings.DEBUG:
+                    try:
+                        self.publish_facebook(a)
+                    except Exception as e:
+                        print('cannot publish in facebook')
                 return True
             else:
                 print('not authenticated')
