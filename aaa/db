@@ -2757,10 +2757,12 @@ COPY public.accounts_user (id, password, last_login, email, username, is_active,
 16	pbkdf2_sha256$216000$0cgFkSw1M7h9$2rVbaqrjCLZmPfwQeaJ/p6sJN3HGciMMOnRYVa3dmfA=	\N	sherkhan_5195@yahoo.com	sherkhan_5195@yahoo.	t	t	t	\N
 48	pbkdf2_sha256$216000$eRvwfH2Omq3i$ge9M/cJIlgoJRQ5XZPG+/RG+PjmAjazK5E0fl5r3MKs=	2021-01-30 18:00:12.606849+00	maiteciego@yahoo.com	MAITE	t	t	f	\N
 17	pbkdf2_sha256$216000$u12nNcUnJ1w4$dM3zR8lja8MaR1ElQghLh91ma7aox6AlFTljIecXOmw=	2020-12-23 16:15:37.721521+00	nitishtha220@gmail.com	Nitish	t	t	t	\N
+3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-02-11 05:37:27.30052+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
 18	pbkdf2_sha256$216000$Y269kX6KTayq$miEE07VMy9Q9MD0UemoB9KirVkdToMhSUxhxGIw+Tfs=	2020-12-23 16:54:59.679832+00	gpoojithareddy87@gmail.com	PR	t	t	t	\N
 44	pbkdf2_sha256$216000$TkdygkrKfpf3$ykVz54FiNn1Cj3xpU0IQO6z4OAW+8kIHbIMVigMJYg0=	2021-01-28 16:07:42.684592+00	surja.rgkmch@gmail.com	DrSurja	t	t	f	\N
 43	pbkdf2_sha256$216000$WibdMWllpzl3$q1CqHx4qNP8IQmdxxIPlid0LzKvpkocxYXBkzhz/uuo=	\N	jeganbalaji30@gmail.com	Balaji jegan	t	t	f	\N
 27	pbkdf2_sha256$216000$edJBAyu6ggzp$6JGBBF79m5W/GZnA2GAeMJJnrhhFVawSgXJdGQInGI0=	2021-01-15 12:38:48.529431+00	evnskoushik@gmail.com	Saikoushik	t	t	f	\N
+2	pbkdf2_sha256$216000$0kXdkMNbB2uK$HPDwHZ6k+4XWD/8HQ8aT/NuTPFmHnYtfcguORYgoWwU=	2021-02-12 14:22:23.268318+00	suryaveda@hotmail.com	sk	t	t	t	\N
 15	pbkdf2_sha256$216000$qz0q4R7ciIlX$AUfW411ykCKfiHIbtVhvpeUQ0fAaRz/DzerEGBqO8Ak=	2021-02-04 09:00:39.024929+00	drravishankarsharma4u@gmail.com	drravi86	t	t	t	\N
 47	pbkdf2_sha256$216000$5NMw2f5Lbiq6$gpTwUZmtq36utB5j6n8jyGEU0fB2ylI+rBp7DkYXPwo=	\N	chinnupranitha98@gmail.com	Pranitha 	t	t	f	\N
 12	pbkdf2_sha256$216000$sHvgjWqhvE1y$nMwfe1qf+jWZwS2MYCoz051eziLb3lhpKy5TlNSXNNw=	2021-01-27 04:56:23.238906+00	drnitiarora@gmail.com	drniyati	t	t	t	\N
@@ -2774,8 +2776,6 @@ COPY public.accounts_user (id, password, last_login, email, username, is_active,
 41	pbkdf2_sha256$216000$RKCWDUU5h5rK$qyRu8WqtrlFe+xtN8HOlmy2GXvAivTWgBvuMj1zxXpY=	\N	Farazahmed992@gmail.com	FA	t	t	f	\N
 46	pbkdf2_sha256$216000$BYFVvbEbPd2X$2kWSmGAoNiyj479BfVZDtejtYpzFsXWYM5eN4WQVl2Q=	\N	pranithabasa@gmail.com	Pranitha 	t	t	f	\N
 14	pbkdf2_sha256$216000$ocfIIkrRaw50$joqZymDOnht8lO2xqlNiuyWpWfw0J1xdtoknm0Ax5W8=	2021-02-04 04:34:03.436886+00	drsharma.ruhi@gmail.com	RSharma	t	t	t	\N
-2	pbkdf2_sha256$216000$0kXdkMNbB2uK$HPDwHZ6k+4XWD/8HQ8aT/NuTPFmHnYtfcguORYgoWwU=	2021-02-07 15:13:18.491176+00	suryaveda@hotmail.com	sk	t	t	t	\N
-3	pbkdf2_sha256$216000$qF66J0MerGnd$xcNqcJVb6y2T6DLyWazmN7EUGQRfJASqhlUX0PGb6JA=	2021-02-05 14:20:32.542585+00	vijay.adabala96@gmail.com	Vijay Adabala	t	t	t	\N
 51	pbkdf2_sha256$216000$lwD9u97bEIw4$j9klVZThawTb42+ohlV6PQEsvSbAkknOU0glfw3p+XM=	2021-02-06 11:55:20.495618+00	jananivijay00@gmail.com	Janani vijay	t	t	f	\N
 \.
 
@@ -3300,6 +3300,15 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 205	archives	0041_auto_20210204_1419	2021-02-04 08:49:11.87539+00
 206	home	0077_auto_20210204_1419	2021-02-04 08:49:11.977691+00
 207	stats	0008_auto_20210204_1419	2021-02-04 08:49:12.045573+00
+208	archives	0040_auto_20210204_1408	2021-02-07 21:32:57.484992+00
+209	archives	0041_auto_20210207_2324	2021-02-07 21:32:57.557753+00
+210	archives	0042_merge_20210208_0302	2021-02-07 21:32:57.561211+00
+211	home	0076_auto_20210204_1408	2021-02-07 21:32:57.659975+00
+212	home	0077_auto_20210207_2324	2021-02-07 21:32:57.766092+00
+213	home	0078_merge_20210208_0302	2021-02-07 21:32:57.769351+00
+214	stats	0008_auto_20210204_1408	2021-02-07 21:32:57.841873+00
+215	stats	0009_auto_20210207_2324	2021-02-07 21:32:58.016523+00
+216	stats	0010_merge_20210208_0302	2021-02-07 21:32:58.020437+00
 \.
 
 
@@ -3324,13 +3333,15 @@ dp81ze4ktu8dhjmq75jujscjsbd9qlhn	.eJxVzMEOwiAQBNB_4WwIbEtxPXr3G8jCglQNJKU9Gf9dmv
 e6q0e4akpjhonropxbrlfa9ph7fnwnqw	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1l4ctj:YOm2zc4vzO5y3gufJLKJ1KW1Tf4BrwnSl2gi13ihYVI	2021-02-10 04:57:43.142787+00
 d2s1ybnfzxa9w2ugcj2vfenml61vdsyl	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l8SZ8:p6GSny0dzANE5L4YAOrkmrmL0c7I2SHUkOkTFwSjfug	2021-02-20 18:44:18.521764+00
 3knicc9irwznycyxl992e6b47uojhbv2	.eJxVjDsOgzAQRO_iOrLArH8p03MGa71exySRkTBUUe4ekCiSaqR5b-YtAm5rCVvjJUxJXIUSl98uIj25HiA9sN5nSXNdlynKQ5EnbXKcE79up_t3ULCVfR2ti2AHctk6RX3PedBoSCsEa5Pf0xvD1mUNlICIsCMFMTGA7yIb8fkC5YU4QQ:1l4d12:Rcn8XiNqX3cvgYlxtQ7F2mRA-TUyLBN6m9fxPifwwdA	2021-02-10 05:05:16.674905+00
-tc24i9jzfqyl8y2d3hhrysz1nja4yigs	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l8kQX:lFD_I-OpLtf3M6rQ18qTPfbvHBhqtGVQuYWRgBEYPmI	2021-02-21 13:48:37.160024+00
 e05qjfwi7trus6wiyhv2b1b5b80tlfye	.eJxVjDsOwjAQBe_iGlnr-LMsJX3OYPmLA8iW4qRC3B0spYD2zcx7Mev2rdi9p9UukV2YRHb6Hb0Lj1QHiXdXb42HVrd18Xwo_KCdzy2m5_Vw_w6K62XUeM6YQvbaECk0EyiU0gEJrwiUIADSRmkRACeBKXrjCDErIcl_Xfb-ANx0Nm4:1l4myI:_VhCXDMLblUqB1Bn48WbZJMaAVDw_qmJbCJWO9y1lkg	2021-02-10 15:43:06.997964+00
 g0toldoe19p75m3qv03zc21n6em2cnl3	.eJxVjMEOwiAQRP-FsyFCWQoevfsNhGUXqRpISnsy_rtt0oMeZ96beYsQ16WEtfMcJhIXMThx-i0xpifXndAj1nuTqdVlnlDuijxol7dG_Loe7t9Bib1sa8t69JizNcmZqBgIMxiFGp3iTEzkfXTsLWICk_x5dGoLegB2BgjE5wsy4Di9:1l4pB0:IiMUJzEbumCa-LCP_rgRU1EHet_rm-Wc_REUw6ObdW4	2021-02-10 18:04:22.129158+00
-r8vj2li3iupzrrrfc9xcp9zpfhm5gvt2	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l8lkU:LsK4cfujFOHy696XP_1wP5K4nCCE05q-5dTTwH6lwvY	2021-02-21 15:13:18.493772+00
+h31htu77qbouecj57plreecgle2a5nev	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1l8ymJ:TUkz1rh13FvHdlrxcZ8BkywKULlFpe2EMzphLJSY0WQ	2021-02-22 05:08:03.967042+00
 8n1mf2v252hli4g0v39ifa15dymvxypo	.eJxVjEEOwiAURO_C2hDgQwGX7nsGAvxfqRqalHZlvLs06UKX8-bNvFmI-1bC3mgNM7Ir04pdfmGK-Un1aPAR633heanbOid-KPxsGx8XpNftdP8OSmylrx1Z1CbHQTnIyUuD0koNPfo4mJQ7VUQChXHkBSiwgAIIhTZSTZNlny_xEzdG:1l50HP:eNwLYfUM8vOWUizR2iivFxdOotu2s_t5N7BQniA44GA	2021-02-11 05:55:43.877359+00
+vzfe9qpghisuqxep48f0kyhqnv2ogrlj	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1lA3De:dkUjiaAAyH5czzhiIjNT0ZA1hUoycDUruhtXnDc1-TM	2021-02-25 04:04:42.925838+00
 s0eh3kcgn1l13b51ntphxtwez63i6mei	.eJxVjEEOwiAQRe_C2pBhoJS6dO8ZyACDVA0kpV0Z765NutDtf-_9l_C0rcVvnRc_J3EWxojT7xgoPrjuJN2p3pqMra7LHOSuyIN2eW2Jn5fD_Tso1Mu3dskykGawgCaqlGOIE6uskbRzkCJjxmwAtAFSITuEyZAdEC2M4-DE-wMTljeN:1l59pe:OeoPgDUalnHLnMY4JkWEQduMW97rUCvnH_-LStSfKis	2021-02-11 16:07:42.687411+00
+m6ll6305g541iwi1vcg51ixz45ppvfxp	.eJxVjEEOwiAQRe_C2hAYKASX7j0DgZlBqgaS0q6Md9cmXej2v_f-S8S0rTVug5c4kzgLI06_W0744LYDuqd26xJ7W5c5y12RBx3y2omfl8P9O6hp1G9tDXllPZbgCiUfENBkyJrBWQcBNaiCRU-OyxTYgSNvPYHXOVnDVon3B-JNN6c:1lA4fP:3FQ_MUYmiH0Qw5eE_XXluP95LU7o-ELfHYh0ktg9WZI	2021-02-25 05:37:27.303312+00
 zrg4s3oyvvcs5gykwgbzctq8mp79i7rm	.eJxVjEEOwiAQAP_C2RBAFopH776hWdhFqgaS0p6MfzckPeh1ZjJvMeO-lXnvvM4LiYuwIE6_MGJ6ch2GHljvTaZWt3WJciTysF3eGvHrerR_g4K9jK8znkw2yKAIrKbAecKoo7WonPWgE06eyQfIQcdz1gQKAzsO7L1G8fkCDFE4Qw:1l5XMN:iCBb3mgU5gwDDwL06ma5FI8V59HgH5w7u2l_5PTxIOc	2021-02-12 17:15:03.806227+00
+s4mntxivpw3w5mwij0hsu8wyzjwt43g0	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1lAZKx:4gNJuLhNxgepqLxWr_-1DSxhy8K8gKx408BLyQAy4Tg	2021-02-26 14:22:23.271232+00
 prt2pexok71wzfm1lv9pm1eq5q0nvquv	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l5fmj:7ltLeZCcbm32U1y9LMaTIujuVjYk_V_ySq6Ht0vy5fA	2021-02-13 02:14:49.428979+00
 j08skvb8wqo6doopdpjg99h9d9qa1ltq	.eJxVjEEOwiAQRe_C2hBAYEaX7j1DwzBTqRpISrsy3l2bdKHb_977LzWkdSnD2mUeJlZn5VEdfkdK-SF1I3xP9dZ0bnWZJ9Kbonfa9bWxPC-7-3dQUi_fmqwQEVNgY4KPEILYI_DJcORss8tivAcOLgMaG93IMjpARIjRI4l6fwAbgjgS:1l5uXc:gG502inhLe1uXKjm_4cA0nA9F1mxIRB9vtS9UP1gL6E	2021-02-13 18:00:12.613002+00
 my0801kybwb59m3g8wsp31lz7z3588v7	.eJxVjEEOwiAQRe_C2hBgGCgu3XsGMgxUqoYmpV0Z765NutDtf-_9l4i0rTVuvSxxyuIsjDj9bon4UdoO8p3abZY8t3WZktwVedAur3Muz8vh_h1U6vVbh4HBqqRdQSA22gGQVohgB4NszKhsCA6QsWhPJmgNnkMaEVL2AUi8P6erNng:1l67JJ:PWjhrGyFdzjYFx3D0XcqHxIhemEKzVVtNfV97YICy7w	2021-02-14 07:38:17.275863+00
@@ -3405,7 +3416,6 @@ COPY public.home_post (id, date, heading, content, user_id, pdf, pdf_name, img, 
 55	2021-01-28 11:03:18.098535+00	ISA Thiruvarur and Thanjavur joint invite  \r\nparthasarathy srinivasan is inviting you to a scheduled Zoom meeting.\r\n\r\nFRIDACE - Friday Anesthesia Continuing Education \r\nSpeaker Dr S Parthasarathy \r\nTopic: A to Y of Erector spinae plane block \r\n\r\nModerator : Dr Shashi Kiran MD DA DNB FICA \r\n Examiner - IDRA   \r\nProfessor - PGIMS Rohtak \r\n\r\nTime: Jan 29, 2021 06:00 PM India\r\n\r\nJoin Zoom Meeting\r\nhttps://zoom.us/j/6907913417?pwd=aWRkcVRVQzh5SXgrbWNuOVN4eHBpQT09\r\n\r\nMeeting ID: 690 791 3417\r\nPasscode: 1tZxj2	\N	3		\N		f	f
 59	2021-02-02 12:10:17.586092+00	Ever wondered if opioids can be used for non cancer pain??	How much? \r\nWhen?\r\nAssociated Risks?\r\nFind out the guidelines to prescribe opioids in chronic pain in non-cancer conditions below :	12	homePosts/pdf/2021/02/$D/1-s2.0-S0946672X16300207-main.pdf	\N		f	f
 61	2021-02-02 12:13:57.936052+00	ALL ABOUT PAIN POST 2 \r\nEver wondered the proper way to prescribe opioids in non cancer chronic pain patients??	How?\r\nWhen?\r\nWhy ?\r\nRisks?\r\nAll questions answered in the article mentioning GUIDELINES linked below..	12	homePosts/pdf/2021/02/$D/1-s2.0-S1526590008008316-main.pdf	\N		f	f
-62	2021-02-03 05:32:54.573706+00	NATIONAL WEBINAR	Pain Medicine- an emerging speciality. Scope and challenges	12		\N	Postimages/2021/02/$D/received_234954458183124_XUkQQ1T_EQeFhzk.jpg	f	f
 66	2021-02-04 09:31:02.765695+00	Good News! The West Bengal Joint Entrance Board organising the admission test for the Fellowship in Pain Management from this session 2021. Please find the Bulletin and forward to the students so that they don’t miss this opportunity. The total seats at the West Bengal University of Health Sciences - 10& 5 (total 15) presently at the ESIIPM & RGKMC respectively. Eligibility is MBBS or higher as in previous years. Post Graduate Fellows will be provided with stipend as per West Bengal Government norms at the ESIIPM.	\N	15	homePosts/pdf/2021/02/$D/FileHandler_3.pdf	\N		f	f
 67	2021-02-05 14:23:47.953466+00	ISACON AP 2021\r\n13th and 14th FEB	\N	3		\N		f	f
 \.
@@ -3419,7 +3429,6 @@ COPY public.home_post_comments (id, post_id, comment_id) FROM stdin;
 7	14	7
 8	13	8
 9	16	9
-14	62	14
 \.
 
 
@@ -3497,7 +3506,6 @@ COPY public.home_post_tag (id, post_id, tag_id) FROM stdin;
 103	59	1
 104	59	3
 107	61	3
-108	62	3
 112	66	3
 113	67	9
 114	67	1
@@ -3568,6 +3576,8 @@ COPY public.home_postlink (id, link, link_name, user_id) FROM stdin;
 59	https://allaboutanaesthesia.co/create_post	Trail	\N
 60	http://isaap.a1logics.live/WebPages/OnlineRegistration.aspx	ISACON AP 2021	\N
 61	http://isaap.a1logics.live/WebPages/OnlineRegistration.aspx	ISACON AP 2021	3
+62	https://allaboutanaesthesia.co/create_post	link address	\N
+63	https://allaboutanaesthesia.co/create_post	link address	3
 \.
 
 
@@ -3631,6 +3641,9 @@ COPY public.mcq_questionbank (id, date, question, answer, mcq, flashcard, qa, us
 5	2021-01-06	Definition of allodynia\na. An abnormal sensation, whether spontaneous or evoked\nb. An increased response to a stimulus which is normally painful \nc. Pain due to a stimulus which does not normally activate the nociceptive system\nd. Unpleasant sensation, whether spontaneous or evoked\n	c	t	f	f	3
 6	2021-01-06	Gate control theory was given by \na. Melzack and Wall\nb. Mc Gill\nc. Phulchand Prithvi Raj \nd. Bonica\n	a	f	t	f	3
 7	2021-01-07	Change of cbf with 1 mm hg change of paco2\na. 0.5 to 1 ml /100g/min\nb. 1 to 2  ml /100g/min\nc. 2 to 3  ml /100g/min\nd. 3 to 4  ml /100g/min\n	b	t	f	f	3
+8	2021-02-08	Stoppage of therapeutic dalteparin before epidural insertion\na.12 hrs before\nb.24 hrs before\nc.6 hrs before\nd.68 hrs before\n	b	t	f	f	3
+9	2021-02-08	Stoppage of therapeutic dalteparin before epidural insertion\na.12 hrs before\nb.24 hrs before\nc.6 hrs before\nd.68 hrs before\n	b	t	f	f	3
+10	2021-02-08	 4. Stoppage of therapeutic dalteparin before epidural insertion\na. 12 hrs before\nb. 24 hrs before\nc. 6 hrs before\nd. 68 hrs before\n	b	t	f	f	3
 \.
 
 
@@ -3655,6 +3668,12 @@ COPY public.mcq_questionbank_tag (id, questionbank_id, tag_id) FROM stdin;
 7	6	3
 8	7	4
 9	7	1
+10	8	5
+11	8	1
+12	9	5
+13	9	1
+14	10	5
+15	10	1
 \.
 
 
@@ -3668,7 +3687,7 @@ COPY public.notifications_message (id, date, text, post_url, type, read) FROM st
 3	2021-02-02 12:13:57.951826+00	A new comment is added to ALL ABOUT .. by user drniyati	https://allaboutanaesthesia.co/posts/61	post	f
 4	2021-02-03 05:32:54.664892+00	A new comment is added to NATIONAL W.. by user drniyati	https://allaboutanaesthesia.co/posts/62	post	f
 5	2021-02-03 05:34:30.367937+00	A new comment is added to Trail.. by user Vijay Adabala	https://allaboutanaesthesia.co/posts/63	post	f
-6	2021-02-03 05:35:31.568719+00	A new comment is added to Ex.. by user sk	https://allaboutanaesthesia.co/posts/64	post	f
+8	2021-02-13 09:31:15.060842+00	A new post is added  Testing.. by user Vijay Adabala	https://allaboutanaesthesia.co/posts/69	post	f
 \.
 
 
@@ -3677,6 +3696,42 @@ COPY public.notifications_message (id, date, text, post_url, type, read) FROM st
 --
 
 COPY public.notifications_notification (id, user_id, count) FROM stdin;
+7	3	0
+8	22	2
+9	35	2
+10	21	2
+11	37	2
+12	25	2
+13	19	2
+14	36	2
+15	13	2
+16	23	2
+17	50	2
+18	49	2
+19	31	2
+20	28	2
+21	32	2
+22	16	2
+23	48	2
+24	17	2
+25	18	2
+26	44	2
+27	43	2
+28	27	2
+29	15	2
+30	47	2
+31	12	2
+32	24	2
+33	33	2
+34	34	2
+35	38	2
+36	39	2
+37	45	2
+38	42	2
+39	41	2
+40	46	2
+41	14	2
+42	51	2
 6	2	0
 \.
 
@@ -3686,6 +3741,42 @@ COPY public.notifications_notification (id, user_id, count) FROM stdin;
 --
 
 COPY public.notifications_notification_message (id, notification_id, message_id) FROM stdin;
+37	8	8
+38	9	8
+39	10	8
+40	11	8
+41	12	8
+42	13	8
+43	14	8
+44	15	8
+45	16	8
+46	17	8
+47	18	8
+48	19	8
+49	20	8
+50	21	8
+51	22	8
+52	23	8
+53	24	8
+54	25	8
+55	26	8
+56	27	8
+57	28	8
+58	6	8
+59	29	8
+60	30	8
+61	31	8
+62	32	8
+63	33	8
+64	34	8
+65	35	8
+66	36	8
+67	37	8
+68	38	8
+69	39	8
+70	40	8
+71	41	8
+72	42	8
 \.
 
 
@@ -3694,78 +3785,97 @@ COPY public.notifications_notification_message (id, notification_id, message_id)
 --
 
 COPY public.stats_pageobj (id, url, count) FROM stdin;
-69	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA	31
+56	https://allaboutanaesthesia.co/managewebsite	90
 78	https://allaboutanaesthesia.co/mcq/6	12
 118	https://allaboutanaesthesia.co/getnewposts/11	9
 102	https://allaboutanaesthesia.co/getnewposts/17	2
-53	https://allaboutanaesthesia.co/	370
+75	https://allaboutanaesthesia.co/posts/13	17
 85	https://allaboutanaesthesia.co/mcq/1	8
-80	https://allaboutanaesthesia.co/posts/16	3
+141	https://allaboutanaesthesia.co/delete_post/62	1
 95	https://allaboutanaesthesia.co/archives/create-conference	7
 122	https://allaboutanaesthesia.co/delete_post/18	1
 59	https://allaboutanaesthesia.co/accounts/changeuserprivileges/27	1
 92	https://allaboutanaesthesia.co/archives/edit-lecture-detail/201/49	2
 99	https://allaboutanaesthesia.co/delete_post/50	1
 90	https://allaboutanaesthesia.co/getnewposts/16	1
-74	https://allaboutanaesthesia.co/posts/10	2
+60	https://allaboutanaesthesia.co/posts/11	7
 91	https://allaboutanaesthesia.co/getnewposts/19	2
-87	https://allaboutanaesthesia.co/posts/44	37
-65	https://allaboutanaesthesia.co/home/NEET-SS	23
-82	https://allaboutanaesthesia.co/home/PAIN-MEDICINE	8
+63	https://allaboutanaesthesia.co/conferences	96
+135	https://allaboutanaesthesia.co/users/Vijay Adabala	2
 112	https://allaboutanaesthesia.co/postform	2
-67	https://allaboutanaesthesia.co/posts/31	3
 72	https://allaboutanaesthesia.co/mcq/getnewquestions/1	34
-75	https://allaboutanaesthesia.co/posts/13	2
+64	https://allaboutanaesthesia.co/accounts/signin	165
 109	https://allaboutanaesthesia.co/mcq/4	2
-61	https://allaboutanaesthesia.co/home/CRITICAL-CARE	25
+81	https://allaboutanaesthesia.co/posts/15	8
 111	https://allaboutanaesthesia.co/home/ONCO-ANAESTHESIA	2
-76	https://allaboutanaesthesia.co/posts/14	2
+80	https://allaboutanaesthesia.co/posts/16	9
 114	https://allaboutanaesthesia.co/delete_post/64	1
-123	https://allaboutanaesthesia.co/posts/67	45
-81	https://allaboutanaesthesia.co/posts/15	2
+139	https://allaboutanaesthesia.co/posts/66	2
+123	https://allaboutanaesthesia.co/posts/67	69
 98	https://allaboutanaesthesia.co/accounts/profile	2
 71	https://allaboutanaesthesia.co/mcq/3	3
-55	https://allaboutanaesthesia.co/notifications/	12
-60	https://allaboutanaesthesia.co/posts/11	2
+54	https://allaboutanaesthesia.co/archives/lectures	87
+130	https://allaboutanaesthesia.co/posts/68	3
+88	https://allaboutanaesthesia.co/mcq/5	5
 93	https://allaboutanaesthesia.co/getnewposts/18	26
-58	https://allaboutanaesthesia.co/searchPage	15
+89	https://allaboutanaesthesia.co/posts/45	25
 100	https://allaboutanaesthesia.co/getnewposts/9	19
 115	https://allaboutanaesthesia.co/delete_post/63	3
 103	https://allaboutanaesthesia.co/delete_post/56	1
 116	https://allaboutanaesthesia.co/delete_post/65	1
+133	https://allaboutanaesthesia.co/mcq/refreshquestions	3
 83	https://allaboutanaesthesia.co/accounts/reset-your-password	15
 84	https://allaboutanaesthesia.co/accounts/passreset	6
-63	https://allaboutanaesthesia.co/conferences	89
-119	https://allaboutanaesthesia.co/posts/61	25
-89	https://allaboutanaesthesia.co/posts/45	12
+125	https://allaboutanaesthesia.co/posts/12	5
+131	https://allaboutanaesthesia.co/delete_post/68	1
+62	https://allaboutanaesthesia.co/posts/24	21
 97	https://allaboutanaesthesia.co/delete_post/53	1
 94	https://allaboutanaesthesia.co/posts/50	32
-57	https://allaboutanaesthesia.co/stats/	127
+69	https://allaboutanaesthesia.co/home/GENERAL-ANAESTHESIA	32
 105	https://allaboutanaesthesia.co/delete_post/57	1
-88	https://allaboutanaesthesia.co/mcq/5	4
+142	https://allaboutanaesthesia.co/posts/69	13
 96	https://allaboutanaesthesia.co/admin/jsi18n/	2
-104	https://allaboutanaesthesia.co/archives/create-lecture	3
-79	https://allaboutanaesthesia.co/posts/29	99
+82	https://allaboutanaesthesia.co/home/PAIN-MEDICINE	10
+74	https://allaboutanaesthesia.co/posts/10	8
 73	https://allaboutanaesthesia.co/mcq/getnewquestions/2	26
 106	https://allaboutanaesthesia.co/delete_post/58	1
 113	https://allaboutanaesthesia.co/getnewposts/20	12
-108	https://allaboutanaesthesia.co/home/NEURO-ANAESTHESIA	2
-70	https://allaboutanaesthesia.co/mcq/	19
+53	https://allaboutanaesthesia.co/	467
+137	https://allaboutanaesthesia.co/posts/59	2
+140	https://allaboutanaesthesia.co/mcq/deletequestions/13	1
 120	https://allaboutanaesthesia.co/mcq/2	1
-110	https://allaboutanaesthesia.co/mcq/createquestions/mcq	2
-66	https://allaboutanaesthesia.co/accounts/signup/staff_signup	91
-62	https://allaboutanaesthesia.co/posts/24	11
+58	https://allaboutanaesthesia.co/searchPage	18
+129	https://allaboutanaesthesia.co/archives/conferencepost/54	11
+136	https://allaboutanaesthesia.co/mcq/deletequestions/12	1
 121	https://allaboutanaesthesia.co/getnewposts/12	6
 117	https://allaboutanaesthesia.co/delete_post/60	1
 107	https://allaboutanaesthesia.co/home/CARDIO-ANAESTHESIA	2
-77	https://allaboutanaesthesia.co/posts/30	24
 101	https://allaboutanaesthesia.co/posts/54	2
-64	https://allaboutanaesthesia.co/accounts/signin	150
+110	https://allaboutanaesthesia.co/mcq/createquestions/mcq	9
+79	https://allaboutanaesthesia.co/posts/29	112
 68	https://allaboutanaesthesia.co/home/Conferences	36
-54	https://allaboutanaesthesia.co/archives/lectures	81
-86	https://allaboutanaesthesia.co/create_post	14
-56	https://allaboutanaesthesia.co/managewebsite	78
-124	https://allaboutanaesthesia.co/users/sk	5
+70	https://allaboutanaesthesia.co/mcq/	21
+126	https://allaboutanaesthesia.co/posts/43	8
+86	https://allaboutanaesthesia.co/create_post	18
+77	https://allaboutanaesthesia.co/posts/30	33
+87	https://allaboutanaesthesia.co/posts/44	46
+134	https://allaboutanaesthesia.co/mcq/deletequestions/11	1
+124	https://allaboutanaesthesia.co/users/sk	7
+138	https://allaboutanaesthesia.co/posts/62	1
+67	https://allaboutanaesthesia.co/posts/31	12
+128	https://allaboutanaesthesia.co/archives/lecturepost/40	8
+104	https://allaboutanaesthesia.co/archives/create-lecture	4
+76	https://allaboutanaesthesia.co/posts/14	8
+108	https://allaboutanaesthesia.co/home/NEURO-ANAESTHESIA	3
+119	https://allaboutanaesthesia.co/posts/61	27
+61	https://allaboutanaesthesia.co/home/CRITICAL-CARE	29
+127	https://allaboutanaesthesia.co/posts/55	8
+57	https://allaboutanaesthesia.co/stats/	152
+66	https://allaboutanaesthesia.co/accounts/signup/staff_signup	109
+132	https://allaboutanaesthesia.co/getnewposts/15	15
+65	https://allaboutanaesthesia.co/home/NEET-SS	29
+55	https://allaboutanaesthesia.co/notifications/	22
+143	https://allaboutanaesthesia.co/delete_post/69	1
 \.
 
 
@@ -3775,58 +3885,503 @@ COPY public.stats_pageobj (id, url, count) FROM stdin;
 
 COPY public.stats_requestobj (id, location, user_id, date, page_id) FROM stdin;
 2103	49.36.164.6	2	2021-02-07	53
+2164	66.220.149.38	\N	2021-02-08	74
 2104	49.36.164.6	\N	2021-02-07	53
 2105	49.36.164.6	\N	2021-02-07	64
+2165	69.171.249.6	\N	2021-02-08	74
 2106	49.36.164.6	2	2021-02-07	54
 2107	49.36.164.6	2	2021-02-07	53
+2166	66.220.149.5	\N	2021-02-08	74
 2108	49.36.164.6	\N	2021-02-07	53
 2109	49.36.164.6	\N	2021-02-07	64
+2167	173.252.87.7	\N	2021-02-08	74
 2110	49.36.164.6	\N	2021-02-07	64
 2111	49.36.164.6	\N	2021-02-07	53
+2168	66.220.149.17	\N	2021-02-08	53
 2112	49.36.164.6	\N	2021-02-07	66
 2113	49.36.164.6	\N	2021-02-07	64
+2169	173.252.87.12	\N	2021-02-08	60
 2114	49.36.164.6	2	2021-02-07	54
 2115	49.36.164.6	2	2021-02-07	53
+2170	173.252.111.24	\N	2021-02-08	60
 2116	49.36.164.6	2	2021-02-07	53
 2117	49.36.164.6	2	2021-02-07	55
+2171	173.252.95.20	\N	2021-02-08	60
 2118	49.36.164.6	2	2021-02-07	124
 2119	49.36.164.6	2	2021-02-07	56
+2172	173.252.87.17	\N	2021-02-08	125
 2120	49.36.164.6	2	2021-02-07	53
 2121	49.36.164.6	2	2021-02-07	121
+2173	173.252.107.19	\N	2021-02-08	125
 2122	49.36.164.6	2	2021-02-07	124
 2123	49.36.164.6	2	2021-02-07	63
+2174	66.220.149.17	\N	2021-02-08	125
 2124	223.181.5.251	2	2021-02-07	101
 2125	223.181.5.251	2	2021-02-07	53
+2175	69.171.249.117	\N	2021-02-08	76
 2126	223.181.5.251	2	2021-02-07	121
 2127	223.181.5.251	2	2021-02-07	55
+2176	173.252.87.15	\N	2021-02-08	76
 2128	223.181.5.251	\N	2021-02-07	53
 2129	223.181.5.251	2	2021-02-07	53
+2177	66.220.149.11	\N	2021-02-08	76
 2130	223.181.5.251	\N	2021-02-07	53
 2131	223.181.5.251	\N	2021-02-07	53
+2178	69.171.251.17	\N	2021-02-08	75
 2132	223.181.5.251	\N	2021-02-07	70
 2133	223.181.5.251	\N	2021-02-07	66
+2179	173.252.87.9	\N	2021-02-08	75
 2134	223.181.5.251	\N	2021-02-07	64
 2135	223.181.5.251	2	2021-02-07	54
+2180	66.220.149.113	\N	2021-02-08	75
 2136	223.181.5.251	2	2021-02-07	53
 2137	223.181.5.251	2	2021-02-07	124
+2181	173.252.87.16	\N	2021-02-08	75
 2138	223.181.5.251	2	2021-02-07	56
 2139	223.181.5.251	2	2021-02-07	56
 2140	49.36.164.6	2	2021-02-07	56
+2182	173.252.87.2	\N	2021-02-08	81
 2141	49.36.164.6	2	2021-02-07	55
+2183	173.252.87.7	\N	2021-02-08	81
 2142	49.36.164.6	2	2021-02-07	55
 2143	49.36.164.6	2	2021-02-07	53
 2144	49.36.164.6	2	2021-02-07	121
+2184	173.252.127.11	\N	2021-02-08	75
 2145	49.36.164.6	2	2021-02-07	63
 2146	49.36.164.6	2	2021-02-07	56
+2185	173.252.127.43	\N	2021-02-08	75
 2147	49.36.164.6	2	2021-02-07	57
+2186	173.252.127.37	\N	2021-02-08	75
 2148	49.36.164.6	2	2021-02-07	124
 2149	49.36.164.6	2	2021-02-07	53
+2187	173.252.127.37	\N	2021-02-08	75
 2150	49.36.164.6	2	2021-02-07	121
 2151	49.36.164.6	2	2021-02-08	53
 2152	49.36.164.6	2	2021-02-08	53
+2188	173.252.127.13	\N	2021-02-08	75
 2153	49.36.164.6	2	2021-02-08	56
+2189	173.252.127.24	\N	2021-02-08	75
 2154	49.36.164.6	2	2021-02-08	124
 2155	49.36.164.6	2	2021-02-08	53
+2190	173.252.87.8	\N	2021-02-08	80
+2156	49.36.164.6	2	2021-02-08	53
+2157	49.36.164.6	2	2021-02-08	61
+2191	66.220.149.23	\N	2021-02-08	81
+2158	49.36.164.6	2	2021-02-08	63
+2159	49.36.164.6	2	2021-02-08	54
+2192	173.252.111.113	\N	2021-02-08	80
+2160	49.36.164.6	2	2021-02-08	65
+2161	49.36.164.6	2	2021-02-08	56
+2193	173.252.127.12	\N	2021-02-08	75
+2162	49.36.164.6	2	2021-02-08	53
+2163	49.36.164.6	2	2021-02-08	86
+2194	173.252.127.13	\N	2021-02-08	75
+2195	173.252.127.43	\N	2021-02-08	75
+2196	66.220.149.34	\N	2021-02-08	80
+2197	173.252.127.119	\N	2021-02-08	62
+2198	173.252.87.20	\N	2021-02-08	62
+2199	173.252.87.117	\N	2021-02-08	62
+2200	173.252.111.119	\N	2021-02-08	126
+2201	173.252.87.3	\N	2021-02-08	126
+2202	66.220.149.2	\N	2021-02-08	62
+2203	66.220.149.43	\N	2021-02-08	126
+2204	66.220.149.7	\N	2021-02-08	79
+2205	69.171.249.1	\N	2021-02-08	77
+2206	173.252.95.13	\N	2021-02-08	77
+2207	173.252.79.7	\N	2021-02-08	79
+2208	173.252.79.117	\N	2021-02-08	79
+2209	173.252.79.118	\N	2021-02-08	79
+2210	66.220.149.113	\N	2021-02-08	77
+2211	173.252.87.4	\N	2021-02-08	67
+2212	66.220.149.116	\N	2021-02-08	67
+2213	66.220.149.4	\N	2021-02-08	67
+2214	66.220.149.4	\N	2021-02-08	67
+2215	173.252.79.11	\N	2021-02-08	79
+2216	173.252.79.2	\N	2021-02-08	79
+2217	173.252.79.117	\N	2021-02-08	79
+2218	173.252.107.13	\N	2021-02-08	67
+2219	66.220.149.19	\N	2021-02-08	67
+2220	173.252.79.116	\N	2021-02-08	79
+2221	173.252.79.4	\N	2021-02-08	79
+2222	173.252.79.5	\N	2021-02-08	79
+2223	173.252.87.116	\N	2021-02-08	87
+2224	66.220.149.18	\N	2021-02-08	67
+2225	66.220.149.18	\N	2021-02-08	87
+2226	69.171.251.14	\N	2021-02-08	87
+2227	69.171.249.4	\N	2021-02-08	127
+2228	173.252.111.12	\N	2021-02-08	87
+2229	66.220.149.12	\N	2021-02-08	89
+2230	66.220.149.111	\N	2021-02-08	127
+2231	66.220.149.48	\N	2021-02-08	89
+2232	66.220.149.111	\N	2021-02-08	89
+2233	66.220.149.111	\N	2021-02-08	89
+2234	66.220.149.39	\N	2021-02-08	127
+2243	173.252.87.5	\N	2021-02-08	128
+2235	66.220.149.30	\N	2021-02-08	89
+2336	49.36.164.6	2	2021-02-08	53
+2236	66.220.149.8	\N	2021-02-08	89
+2244	173.252.87.8	\N	2021-02-08	128
+2237	66.220.149.23	\N	2021-02-08	89
+2238	66.220.149.46	\N	2021-02-08	89
+2245	66.220.149.116	\N	2021-02-08	128
+2239	66.220.149.31	\N	2021-02-08	89
+2337	49.36.164.6	2	2021-02-08	57
+2240	66.220.149.47	\N	2021-02-08	89
+2246	173.252.87.111	\N	2021-02-08	129
+2241	66.220.149.48	\N	2021-02-08	123
+2242	66.220.149.39	\N	2021-02-08	123
+2247	173.252.107.24	\N	2021-02-08	129
+2338	49.36.164.6	2	2021-02-08	56
+2248	66.220.149.25	\N	2021-02-08	129
+2249	49.36.164.6	2	2021-02-08	53
+2339	49.36.164.6	2	2021-02-08	53
+2250	49.36.164.6	2	2021-02-08	53
+2251	49.36.164.6	2	2021-02-08	53
+2340	223.181.26.243	2	2021-02-08	82
+2252	49.36.164.6	2	2021-02-08	53
+2253	66.220.149.119	\N	2021-02-08	129
+2341	223.181.26.243	2	2021-02-08	63
+2254	66.220.149.39	\N	2021-02-08	127
+2255	66.220.149.43	\N	2021-02-08	128
+2342	223.181.26.243	2	2021-02-08	61
+2256	66.220.149.32	\N	2021-02-08	87
+2257	66.220.149.43	\N	2021-02-08	126
+2343	223.181.24.3	2	2021-02-08	56
+2258	66.220.149.18	\N	2021-02-08	128
+2259	66.220.149.41	\N	2021-02-08	87
+2344	223.181.24.3	2	2021-02-08	55
+2260	66.220.149.119	\N	2021-02-08	126
+2261	66.220.149.46	\N	2021-02-08	127
+2345	223.181.24.3	2	2021-02-08	124
+2262	66.220.149.120	\N	2021-02-08	129
+2263	66.220.149.112	\N	2021-02-08	77
+2346	223.181.24.3	2	2021-02-08	58
+2264	66.220.149.48	\N	2021-02-08	126
+2265	66.220.149.10	\N	2021-02-08	62
+2347	223.181.24.3	2	2021-02-08	57
+2266	66.220.149.1	\N	2021-02-08	75
+2267	66.220.149.8	\N	2021-02-08	81
+2348	37.120.156.6	\N	2021-02-09	53
+2268	66.220.149.17	\N	2021-02-08	80
+2269	66.220.149.4	\N	2021-02-08	77
+2349	180.163.220.4	\N	2021-02-09	53
+2270	49.36.164.6	2	2021-02-08	53
+2271	49.36.164.6	2	2021-02-08	53
+2350	180.163.220.4	\N	2021-02-09	53
+2272	49.15.200.14	\N	2021-02-08	123
+2273	106.207.191.86	15	2021-02-08	53
+2351	180.163.220.4	\N	2021-02-09	53
+2274	14.139.54.114	\N	2021-02-08	53
+2275	14.139.54.114	\N	2021-02-08	64
+2352	185.189.114.118	\N	2021-02-09	53
+2276	14.139.54.114	3	2021-02-08	54
+2277	14.139.54.114	3	2021-02-08	55
+2353	223.181.125.93	2	2021-02-09	57
+2278	14.139.54.114	3	2021-02-08	57
+2279	14.139.54.114	3	2021-02-08	56
+2354	223.181.125.93	2	2021-02-09	53
+2280	14.139.54.114	3	2021-02-08	63
+2281	14.139.54.114	3	2021-02-08	53
+2355	223.181.125.93	2	2021-02-09	57
+2282	14.139.54.114	3	2021-02-08	110
+2283	14.139.54.114	3	2021-02-08	53
+2356	223.181.125.93	2	2021-02-09	53
+2284	14.139.54.114	3	2021-02-08	53
+2285	14.139.54.114	3	2021-02-08	110
+2357	223.181.125.93	2	2021-02-09	53
+2286	14.139.54.114	3	2021-02-08	53
+2287	14.139.54.114	3	2021-02-08	53
+2358	106.195.112.50	\N	2021-02-09	53
+2288	14.139.54.114	3	2021-02-08	53
+2289	49.36.164.6	2	2021-02-08	53
+2359	223.181.125.93	2	2021-02-09	53
+2290	49.36.164.6	2	2021-02-08	86
+2291	173.252.107.27	\N	2021-02-08	130
+2360	157.42.248.243	\N	2021-02-09	119
+2292	173.252.95.12	\N	2021-02-08	130
+2293	49.36.164.6	2	2021-02-08	53
+2361	188.126.89.112	\N	2021-02-09	53
+2294	173.252.87.14	\N	2021-02-08	130
+2295	173.252.87.116	\N	2021-02-08	53
+2362	66.249.75.247	\N	2021-02-09	79
+2296	49.36.164.6	2	2021-02-08	131
+2297	49.36.164.6	2	2021-02-08	53
+2363	66.249.75.249	\N	2021-02-09	53
+2298	49.36.164.6	2	2021-02-08	110
+2299	49.36.164.6	2	2021-02-08	53
+2364	66.249.75.249	\N	2021-02-09	87
+2300	49.36.164.6	2	2021-02-08	132
+2301	49.36.164.6	2	2021-02-08	132
+2302	49.36.164.6	2	2021-02-08	110
+2303	49.36.164.6	2	2021-02-08	133
+2304	49.36.164.6	2	2021-02-08	53
+2305	49.36.164.6	2	2021-02-08	134
+2306	49.36.164.6	2	2021-02-08	53
+2307	27.63.132.61	3	2021-02-08	53
+2308	27.63.132.61	3	2021-02-08	55
+2309	27.63.132.61	3	2021-02-08	53
+2310	27.63.132.61	3	2021-02-08	135
+2311	27.63.132.61	3	2021-02-08	55
+2312	27.63.132.61	3	2021-02-08	53
+2313	27.63.132.61	3	2021-02-08	53
+2314	27.63.132.61	3	2021-02-08	110
+2315	27.63.132.61	3	2021-02-08	133
+2316	27.63.132.61	3	2021-02-08	53
+2317	27.63.132.61	3	2021-02-08	132
+2318	27.63.132.61	3	2021-02-08	132
+2319	27.63.132.61	3	2021-02-08	136
+2320	27.63.132.61	3	2021-02-08	53
+2321	27.63.132.61	3	2021-02-08	65
+2322	27.63.132.61	3	2021-02-08	53
+2323	27.63.132.61	3	2021-02-08	104
+2324	27.63.132.61	3	2021-02-08	63
+2325	173.252.83.13	\N	2021-02-08	129
+2326	173.252.83.13	\N	2021-02-08	129
+2327	173.252.83.14	\N	2021-02-08	129
+2328	173.252.87.120	\N	2021-02-08	129
+2329	27.63.132.61	3	2021-02-08	53
+2330	49.36.164.6	2	2021-02-08	110
+2331	49.36.164.6	2	2021-02-08	53
+2332	49.36.164.6	2	2021-02-08	110
+2333	49.36.164.6	2	2021-02-08	133
+2334	49.36.164.6	2	2021-02-08	53
+2335	49.36.164.6	2	2021-02-08	55
+2467	66.220.149.32	\N	2021-02-11	62
+2365	66.249.75.249	\N	2021-02-09	66
+2366	66.249.75.251	\N	2021-02-09	61
+2468	173.252.79.24	\N	2021-02-11	127
+2367	18.223.21.123	\N	2021-02-09	53
+2368	66.249.75.249	\N	2021-02-09	66
+2469	173.252.79.5	\N	2021-02-11	127
+2369	66.249.75.249	\N	2021-02-10	137
+2370	66.249.75.247	\N	2021-02-10	123
+2470	173.252.79.16	\N	2021-02-11	125
+2371	66.249.75.251	\N	2021-02-10	138
+2372	66.249.75.249	\N	2021-02-10	119
+2471	173.252.79.16	\N	2021-02-11	125
+2373	66.249.75.247	\N	2021-02-10	139
+2374	49.36.168.54	2	2021-02-10	53
+2472	69.171.251.119	\N	2021-02-11	127
+2375	49.36.168.54	2	2021-02-10	55
+2376	49.36.168.54	2	2021-02-10	57
+2473	173.252.79.22	\N	2021-02-11	81
+2377	49.36.168.54	2	2021-02-10	57
+2378	49.36.168.54	2	2021-02-10	137
+2474	173.252.79.12	\N	2021-02-11	81
+2379	66.249.75.247	\N	2021-02-10	77
+2380	223.224.198.161	3	2021-02-10	53
+2475	103.55.72.216	\N	2021-02-11	53
+2381	223.224.198.161	3	2021-02-10	57
+2382	223.224.198.161	3	2021-02-10	56
+2476	49.36.168.54	\N	2021-02-11	57
+2383	175.101.104.19	\N	2021-02-10	123
+2384	175.101.104.19	\N	2021-02-10	123
+2477	49.36.168.54	\N	2021-02-11	57
+2385	175.101.104.19	\N	2021-02-10	123
+2386	157.47.250.218	\N	2021-02-10	108
+2478	49.36.168.54	\N	2021-02-11	64
+2387	49.36.168.54	2	2021-02-10	57
+2388	49.36.168.54	2	2021-02-10	123
+2479	49.36.168.54	2	2021-02-11	54
+2389	49.36.168.54	2	2021-02-10	63
+2390	49.36.168.54	2	2021-02-10	55
+2480	49.36.168.54	2	2021-02-11	57
+2391	49.36.168.54	2	2021-02-10	82
+2392	49.36.168.54	\N	2021-02-10	53
+2481	49.36.168.54	2	2021-02-11	53
+2393	49.36.168.54	\N	2021-02-10	132
+2394	49.36.168.54	\N	2021-02-10	65
+2482	49.36.168.54	2	2021-02-11	132
+2395	175.101.104.19	\N	2021-02-10	123
+2396	175.101.104.19	\N	2021-02-10	66
+2483	49.36.168.54	2	2021-02-11	55
+2397	175.101.104.19	\N	2021-02-10	53
+2398	175.101.104.19	\N	2021-02-10	132
+2484	49.36.168.54	2	2021-02-11	124
+2399	175.101.104.19	\N	2021-02-10	64
+2400	175.101.104.19	\N	2021-02-10	66
+2485	49.36.168.54	2	2021-02-11	53
+2401	175.101.104.19	\N	2021-02-10	53
+2402	49.36.168.54	2	2021-02-10	53
+2486	49.36.168.54	2	2021-02-11	132
+2403	49.36.168.54	2	2021-02-10	61
+2404	49.36.168.54	2	2021-02-10	86
+2487	49.36.168.54	2	2021-02-11	132
+2405	49.36.168.54	2	2021-02-10	54
+2406	49.36.168.54	2	2021-02-10	70
+2488	49.36.168.54	2	2021-02-11	140
+2407	49.36.168.54	2	2021-02-10	65
+2408	49.36.168.54	2	2021-02-10	58
+2489	49.36.168.54	2	2021-02-11	53
+2409	49.36.168.54	2	2021-02-10	56
+2410	49.36.168.54	2	2021-02-10	57
+2490	49.36.168.54	2	2021-02-11	132
+2411	49.36.168.54	\N	2021-02-10	53
+2412	49.36.168.54	\N	2021-02-10	66
+2491	49.36.168.54	2	2021-02-11	132
+2413	49.36.168.54	\N	2021-02-10	66
+2414	49.36.168.54	\N	2021-02-10	70
+2492	49.36.168.54	2	2021-02-11	132
+2415	49.36.168.54	\N	2021-02-10	88
+2416	49.36.168.54	\N	2021-02-10	65
+2493	49.36.168.54	2	2021-02-11	132
+2417	49.36.168.54	\N	2021-02-10	53
+2418	49.36.168.54	\N	2021-02-10	132
+2494	77.74.177.113	\N	2021-02-11	53
+2419	27.63.164.46	3	2021-02-10	53
+2420	27.63.164.46	3	2021-02-10	57
+2421	27.63.164.46	\N	2021-02-10	123
+2422	103.121.151.159	\N	2021-02-10	123
+2423	103.121.151.159	\N	2021-02-10	53
+2424	103.121.151.159	\N	2021-02-10	53
+2425	27.63.164.46	3	2021-02-10	53
+2426	27.63.164.46	3	2021-02-10	56
+2427	27.63.164.46	3	2021-02-10	55
+2428	27.63.164.46	3	2021-02-10	135
+2429	209.17.96.2	\N	2021-02-10	53
+2430	117.202.229.244	\N	2021-02-10	123
+2431	117.202.229.244	\N	2021-02-10	123
+2432	117.202.229.244	\N	2021-02-10	66
+2433	47.9.124.157	\N	2021-02-11	53
+2434	173.252.79.15	\N	2021-02-11	76
+2435	173.252.79.117	\N	2021-02-11	76
+2436	173.252.79.10	\N	2021-02-11	53
+2437	173.252.79.113	\N	2021-02-11	126
+2438	173.252.79.9	\N	2021-02-11	126
+2439	173.252.79.112	\N	2021-02-11	60
+2440	173.252.79.5	\N	2021-02-11	60
+2441	173.252.79.4	\N	2021-02-11	80
+2442	173.252.79.118	\N	2021-02-11	80
+2443	173.252.79.23	\N	2021-02-11	67
+2444	173.252.79.19	\N	2021-02-11	67
+2445	173.252.79.111	\N	2021-02-11	77
+2446	173.252.79.6	\N	2021-02-11	77
+2447	66.220.149.8	\N	2021-02-11	76
+2448	173.252.79.22	\N	2021-02-11	75
+2449	173.252.79.22	\N	2021-02-11	75
+2450	173.252.79.111	\N	2021-02-11	128
+2451	173.252.79.7	\N	2021-02-11	79
+2452	173.252.79.11	\N	2021-02-11	128
+2453	173.252.79.5	\N	2021-02-11	79
+2454	173.252.79.117	\N	2021-02-11	89
+2455	173.252.79.23	\N	2021-02-11	89
+2456	173.252.79.18	\N	2021-02-11	74
+2457	173.252.79.10	\N	2021-02-11	123
+2458	173.252.79.18	\N	2021-02-11	74
+2459	173.252.79.10	\N	2021-02-11	123
+2460	173.252.79.20	\N	2021-02-11	129
+2461	173.252.79.112	\N	2021-02-11	129
+2462	31.13.115.13	\N	2021-02-11	77
+2463	173.252.79.14	\N	2021-02-11	87
+2464	173.252.79.19	\N	2021-02-11	62
+2465	173.252.79.19	\N	2021-02-11	87
+2466	173.252.79.2	\N	2021-02-11	62
+2495	175.101.156.12	\N	2021-02-11	123
+2496	27.63.164.52	\N	2021-02-11	53
+2497	27.63.164.52	\N	2021-02-11	64
+2498	27.63.164.52	3	2021-02-11	54
+2499	27.63.164.52	3	2021-02-11	57
+2500	27.63.164.52	3	2021-02-11	53
+2501	27.63.164.52	3	2021-02-11	141
+2502	27.63.164.52	3	2021-02-11	53
+2503	13.66.139.87	\N	2021-02-11	58
+2504	13.66.139.87	\N	2021-02-11	64
+2505	27.63.162.46	2	2021-02-11	53
+2506	27.63.162.46	2	2021-02-11	132
+2507	27.63.162.46	2	2021-02-11	57
+2508	27.63.162.46	2	2021-02-11	53
+2509	27.63.162.46	2	2021-02-11	63
+2510	27.63.162.46	2	2021-02-11	63
+2511	27.63.162.46	2	2021-02-11	57
+2512	27.63.162.46	2	2021-02-11	56
+2513	27.63.162.46	2	2021-02-11	53
+2514	66.249.75.249	\N	2021-02-11	139
+2515	51.159.37.145	\N	2021-02-11	53
+2516	157.44.8.246	\N	2021-02-11	123
+2517	27.63.162.42	2	2021-02-11	53
+2518	27.63.162.42	2	2021-02-11	57
+2519	27.63.162.42	2	2021-02-11	56
+2520	175.101.104.19	\N	2021-02-12	123
+2521	175.101.104.19	\N	2021-02-12	69
+2522	175.101.104.19	\N	2021-02-12	123
+2523	175.101.104.19	\N	2021-02-12	123
+2524	175.101.104.19	\N	2021-02-12	123
+2525	175.101.104.19	\N	2021-02-12	64
+2526	175.101.104.19	\N	2021-02-12	64
+2527	59.93.102.212	\N	2021-02-12	123
+2528	59.93.102.212	\N	2021-02-12	123
+2529	59.93.102.212	\N	2021-02-12	123
+2530	59.93.102.212	\N	2021-02-12	66
+2531	59.93.102.212	\N	2021-02-12	64
+2532	173.252.83.10	\N	2021-02-12	128
+2533	173.252.83.23	\N	2021-02-12	62
+2534	173.252.83.15	\N	2021-02-12	62
+2535	173.252.83.6	\N	2021-02-12	89
+2536	14.139.54.114	\N	2021-02-12	53
+2537	14.139.54.114	\N	2021-02-12	64
+2538	34.239.253.84	\N	2021-02-12	64
+2539	14.139.54.114	\N	2021-02-12	64
+2540	14.139.54.114	\N	2021-02-12	53
+2541	14.139.54.114	\N	2021-02-12	53
+2542	14.139.54.114	\N	2021-02-12	66
+2543	14.139.54.114	\N	2021-02-12	64
+2544	14.139.54.114	\N	2021-02-12	64
+2545	14.139.54.114	\N	2021-02-12	66
+2546	14.139.54.114	\N	2021-02-12	64
+2547	89.187.168.152	\N	2021-02-12	53
+2548	106.223.132.94	\N	2021-02-12	53
+2549	106.223.132.94	\N	2021-02-12	66
+2550	106.223.132.94	\N	2021-02-12	53
+2551	106.223.132.94	\N	2021-02-12	64
+2552	106.223.132.94	2	2021-02-12	54
+2553	106.223.132.94	2	2021-02-12	57
+2554	106.223.132.94	2	2021-02-12	53
+2555	106.223.132.94	2	2021-02-12	56
+2556	106.223.132.94	2	2021-02-12	57
+2557	106.223.132.94	2	2021-02-12	53
+2558	106.223.132.94	2	2021-02-12	65
+2559	66.249.64.135	\N	2021-02-12	66
+2560	138.246.253.24	\N	2021-02-12	53
+2561	27.63.146.54	2	2021-02-13	56
+2562	27.63.146.54	2	2021-02-13	56
+2563	27.63.146.59	2	2021-02-13	57
+2564	49.36.171.168	3	2021-02-13	53
+2565	49.36.171.168	3	2021-02-13	53
+2566	49.36.171.168	3	2021-02-13	86
+2567	173.252.87.2	\N	2021-02-13	142
+2568	173.252.111.9	\N	2021-02-13	142
+2569	173.252.111.13	\N	2021-02-13	66
+2570	173.252.87.12	\N	2021-02-13	66
+2571	223.196.67.168	\N	2021-02-13	66
+2572	49.36.171.168	3	2021-02-13	53
+2573	173.252.83.14	\N	2021-02-13	66
+2574	173.252.87.19	\N	2021-02-13	142
+2575	173.252.87.112	\N	2021-02-13	142
+2576	173.252.87.120	\N	2021-02-13	66
+2577	173.252.87.111	\N	2021-02-13	66
+2578	106.215.187.114	15	2021-02-13	53
+2579	173.252.111.17	\N	2021-02-13	142
+2580	173.252.111.112	\N	2021-02-13	142
+2581	173.252.111.112	\N	2021-02-13	142
+2582	173.252.87.111	\N	2021-02-13	53
+2583	173.252.111.12	\N	2021-02-13	142
+2584	173.252.111.19	\N	2021-02-13	142
+2585	173.252.111.10	\N	2021-02-13	142
+2586	173.252.111.3	\N	2021-02-13	142
+2587	173.252.111.16	\N	2021-02-13	142
+2588	173.252.111.116	\N	2021-02-13	142
+2589	49.36.171.168	3	2021-02-13	143
+2590	49.36.171.168	3	2021-02-13	53
+2591	49.36.171.168	3	2021-02-13	57
+2592	106.215.212.157	\N	2021-02-13	53
+2593	106.215.148.133	\N	2021-02-13	53
+2594	137.97.94.83	\N	2021-02-13	53
+2595	31.171.155.9	\N	2021-02-13	53
+2596	27.63.146.59	2	2021-02-13	57
+2597	27.63.146.59	2	2021-02-13	55
+2598	27.63.146.59	2	2021-02-13	53
+2599	27.63.146.59	2	2021-02-13	57
+2600	27.63.146.59	2	2021-02-13	57
 \.
 
 
@@ -3974,7 +4529,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 27, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 207, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 216, true);
 
 
 --
@@ -4009,28 +4564,28 @@ SELECT pg_catalog.setval('public.home_post_comments_id_seq', 14, true);
 -- Name: home_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_id_seq', 67, true);
+SELECT pg_catalog.setval('public.home_post_id_seq', 69, true);
 
 
 --
 -- Name: home_post_link_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_link_id_seq', 32, true);
+SELECT pg_catalog.setval('public.home_post_link_id_seq', 33, true);
 
 
 --
 -- Name: home_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_post_tag_id_seq', 114, true);
+SELECT pg_catalog.setval('public.home_post_tag_id_seq', 116, true);
 
 
 --
 -- Name: home_postlink_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.home_postlink_id_seq', 61, true);
+SELECT pg_catalog.setval('public.home_postlink_id_seq', 63, true);
 
 
 --
@@ -4065,7 +4620,7 @@ SELECT pg_catalog.setval('public.mcq_qtag_id_seq', 1, false);
 -- Name: mcq_questionbank_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 7, true);
+SELECT pg_catalog.setval('public.mcq_questionbank_id_seq', 13, true);
 
 
 --
@@ -4079,42 +4634,42 @@ SELECT pg_catalog.setval('public.mcq_questionbank_links_id_seq', 1, false);
 -- Name: mcq_questionbank_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 9, true);
+SELECT pg_catalog.setval('public.mcq_questionbank_tag_id_seq', 19, true);
 
 
 --
 -- Name: notifications_message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.notifications_message_id_seq', 6, true);
+SELECT pg_catalog.setval('public.notifications_message_id_seq', 8, true);
 
 
 --
 -- Name: notifications_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.notifications_notification_id_seq', 6, true);
+SELECT pg_catalog.setval('public.notifications_notification_id_seq', 42, true);
 
 
 --
 -- Name: notifications_notification_message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.notifications_notification_message_id_seq', 1, false);
+SELECT pg_catalog.setval('public.notifications_notification_message_id_seq', 72, true);
 
 
 --
 -- Name: stats_pageobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 124, true);
+SELECT pg_catalog.setval('public.stats_pageobj_id_seq', 143, true);
 
 
 --
 -- Name: stats_requestobj_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sk
 --
 
-SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 2155, true);
+SELECT pg_catalog.setval('public.stats_requestobj_id_seq', 2600, true);
 
 
 --

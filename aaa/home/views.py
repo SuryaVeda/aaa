@@ -491,10 +491,16 @@ class GetPosts(View):
 
 class PostDetail(TemplateView):
     template_name = 'home/postdetail.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['post'] = Post.objects.get(pk=kwargs['pk'])
-        return context
+    def get(self, request, *args, **kwargs):
+        try:
+            post = Post.objects.get(pk=kwargs['pk'])
+            context = self.get_context_data()
+            context['post'] = post
+        except Exception as e:
+            messages.error(self.request, 'Post is deleted.')
+            return redirect('home:home')
+        return render(request, self.template_name, context)
+
 
 @method_decorator(staff_required, name = 'dispatch')
 class YourPost(TemplateView):
