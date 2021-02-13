@@ -18,12 +18,23 @@ class Notification(models.Model):
     def __str__(self):
         return self.user.email
 
+class CustomManager(models.Manager):
+    def delete_messages(self, url):
+        x = super().get_queryset().filter(post_url = url)
+        if x:
+            x.delete()
+        return True
+
+
+
+
 class Message(models.Model):
     date = models.DateTimeField(auto_now_add=True,auto_now=False, null=True)
     text = models.CharField(blank=True,null=True, max_length=200)
     post_url = models.URLField(blank=True, null=True)
     type = models.CharField(blank=True,null=True, max_length=100)
     read = models.BooleanField(default=False, null = True)
+    objects = CustomManager()
     def create_notifications(self, post_user):
         users = list(User.objects.filter(staff= True))
         for user in users:
@@ -40,5 +51,4 @@ class Message(models.Model):
                     print(self)
                     notification.message.add(self)
                     notification.save()
-
         return 'hello'

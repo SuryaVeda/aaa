@@ -190,6 +190,8 @@ def delete_post_view(request,pk):
         try:
             x = Post.objects.get(pk = pk)
             if x.user == request.user or request.user.is_admin:
+                print(x.get_absolute_url())
+                Message.objects.delete_messages(x.get_absolute_url())
                 x.delete()
                 ex = refresh_home_page(request)
                 print(ex.url)
